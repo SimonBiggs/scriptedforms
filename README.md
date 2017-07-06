@@ -12,6 +12,20 @@ https://wiki.winehq.org/Ubuntu
 
     sudo apt-get install --install-recommends winehq-staging wine-staging-compat
 
+## Download Bat to EXE Converter
+
+http://www.f2ko.de/en/b2e.php
+
+Extract portable `Bat_To_Exe_Converter_(x64).exe` to within directory: `./windows_libs/bat2execonv`
+
+## Install WinPython 3.5.2.1Zero.exe
+
+https://github.com/winpython/winpython/releases/download/1.7.20170401/WinPython-64bit-3.5.3.1Zero.exe
+
+Install to `./windows_libs/python`
+
+
+
 ## Install Windows Python
 
 https://www.python.org/ftp/python/3.5.3/python-3.5.3-amd64.exe

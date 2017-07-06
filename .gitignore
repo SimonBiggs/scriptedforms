@@ -143,3 +143,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+windows_libs/
