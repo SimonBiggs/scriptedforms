@@ -18,12 +18,10 @@ import os
 import socket
 
 import tornado.web
-from traitlets import Unicode
 
-from notebook.notebookapp import NotebookApp
-from notebook.base.handlers import IPythonHandler
+from kernel_gateway.gatewayapp import KernelGatewayApp
 
-class Angular(IPythonHandler):
+class Angular(tornado.web.RequestHandler):
     """Angular"""
     def get(self):
         """Angular"""
@@ -31,52 +29,63 @@ class Angular(IPythonHandler):
         self.render("index.html")
 
 
-class ScriptedForms(NotebookApp):
+class ScriptedForms(KernelGatewayApp):
 
-    default_url = Unicode('/forms/')
+    dev_mode_string = os.getenv('DEVMODE')
+    
+    if dev_mode_string == "True":
+        dev_mode = True
+    else:
+        dev_mode = False
+        
+    if dev_mode:
+        static_directory = "./angular-frontend/dist"
+    else:
+        static_directory = os.path.join(sys._MEIPASS, 'angular')
     
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('8.8.8.8', 1))
-        ip = s.getsockname()[0]
+        socket_test = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        socket_test.connect(('8.8.8.8', 1))
+        ip = socket_test.getsockname()[0]
     except:
         ip = socket.gethostbyname(socket.gethostname())
     
     port = 5000
 
-    def start(self):    
-        dev_mode_string = os.getenv('DEVMODE')
-        
-        if dev_mode_string == "True":
-            dev_mode = True
-        else:
-            dev_mode = False
-            
-        if dev_mode:
-            static_directory = "./angular-frontend/dist"
-        else:
-            static_directory = os.path.join(sys._MEIPASS, 'angular')  
-       
-        handlers = [
+    def init_webapp(self):
+        new_handlers = [
             ('/forms/assets/(.*)', tornado.web.StaticFileHandler, dict(
-                path=os.path.join(static_directory, 'assets'))),
+                path=os.path.join(self.static_directory, 'assets'))),
             (r'/forms/(styles.*\.bundle\.css)', tornado.web.StaticFileHandler, dict(
-                path=static_directory)),
+                path=self.static_directory)),
             (r'/forms/(inline.*\.bundle\.js)', tornado.web.StaticFileHandler, dict(
-                path=static_directory)),
+                path=self.static_directory)),
             (r'/forms/(vendor.*\.bundle\.js)', tornado.web.StaticFileHandler, dict(
-                path=static_directory)),
+                path=self.static_directory)),
             (r'/forms/(polyfills.*\.bundle\.js)', tornado.web.StaticFileHandler, dict(
-                path=static_directory)),
+                path=self.static_directory)),
             (r'/forms/(main.*\.bundle\.js)', tornado.web.StaticFileHandler, dict(
-                path=static_directory)),
-            ('/forms/.*', Angular)
+                path=self.static_directory)),
+            ('/forms/.*', Angular),
+            ('/?', tornado.web.RedirectHandler, {
+                'url' : '/forms/',
+                'permanent': False # want 302, not 301
+            })
         ]
+        original_handlers = self.personality.create_request_handlers()
+
+        def new_create_request_handlers():
+            return new_handlers + original_handlers
+
+        self.personality.create_request_handlers = new_create_request_handlers
+
+        super(ScriptedForms, self).init_webapp()
+
+    def start(self):
         
-        self.web_app.add_handlers(".*$", handlers)
-        self.web_app.settings['debug'] = dev_mode
-        self.web_app.settings['template_path'] = static_directory
-        self.web_app.settings['static_path'] = static_directory
+        self.web_app.settings['debug'] = self.dev_mode
+        self.web_app.settings['template_path'] = self.static_directory
+        self.web_app.settings['static_path'] = self.static_directory
         
         super(ScriptedForms, self).start()
 
