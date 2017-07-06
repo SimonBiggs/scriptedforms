@@ -12,3 +12,7 @@ cp -R ./windows_libs/python ./build/lib/python
 
 wine ./windows_libs/bat2exe.exe -bat ./bootstrap.bat -save ./build/scriptedforms.exe
 
+mkdir dist
+
+cd build
+zip -r ../dist/scriptedforms.zip app/ lib/ scriptedforms.exe
