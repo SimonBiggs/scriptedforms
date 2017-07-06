@@ -16,13 +16,21 @@ https://wiki.winehq.org/Ubuntu
 
 http://www.f2ko.de/en/b2e.php
 
-Extract portable `Bat_To_Exe_Converter_(x64).exe` to within directory: `./windows_libs/bat2execonv`
+Extract portable `Bat_To_Exe_Converter_(x64).exe` and rename it to be: `./windows_libs/bat2exe.exe`
 
 ## Install WinPython 3.5.2.1Zero.exe
 
 https://github.com/winpython/winpython/releases/download/1.7.20170401/WinPython-64bit-3.5.3.1Zero.exe
 
 Install to `./windows_libs/python`
+
+
+## Install Windows 7Zip portable
+
+https://nchc.dl.sourceforge.net/project/portableapps/7-Zip%20Portable/7-ZipPortable_16.04.paf.exe
+
+Install to `./windows_libs/7zip`
+
 
 
 
