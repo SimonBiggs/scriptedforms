@@ -1,0 +1,155 @@
+/* You can add global styles to this file, and also import other style files */
+
+.mat-sidenav {
+  width: 300px;
+  padding: 16px;
+  border-right: 1px solid #e0e0e0;
+  background-color: #fafafa !important;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/material-design-icons/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/assets/fonts/material-design-icons/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/assets/fonts/material-design-icons/MaterialIcons-Regular.woff) format('woff'),
+       url(/assets/fonts/material-design-icons/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  /* src: url(/assets/material-design-icons/MaterialIcons-Regular.eot); */ /* For IE6-8 */
+  src: local('Roboto'),
+       local('Roboto-Regular'),
+       /*url(/assets/material-design-icons/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/assets/material-design-icons/MaterialIcons-Regular.woff) format('woff'),*/
+       /*url(/assets/roboto-font/Roboto-Regular.otf) format('opentype'),*/
+       url(/assets/fonts/roboto/Roboto-Regular.ttf) format('truetype');
+}
+
+html {
+ font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.ng-valid[required] {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.fill-remaining-space {
+   /*This fills the remaining space, by using flexbox.  
+  Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.toolbar-logo {
+  height: 21px;
+  margin: 0 7px 2px 0;
+}
+
+.menu-button {
+  height: 21px;
+  margin: 0 5px 2px 0;
+}
+
+.content-frame {
+  margin: 50px 70px;
+  line-height: 150%;
+}
+
+.fixed-toolbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.mat-sidenav-container {
+  position: absolute !important; 
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin-top: 64px;
+}
+
+a {
+  word-wrap: break-word;
+}
+
+
+.primary-header-container {
+  background: #009688;
+}
+
+.primary-header {
+  padding: 50px;
+  color: #fff;
+  font-weight: 300;
+  margin: 0;
+  font-size: 35px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .primary-header {
+    padding: 24px 35px;
+    font-size: 25px;
+  }
+
+  .mat-sidenav-container {
+    margin-top: 56px;
+  }
+
+  .content-frame {
+    margin: 16px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .content-frame {
+    width: 960px;
+    margin: 50px auto;
+  }
+
+  /*.primary-header {
+    text-align: center;
+  }*/
+
+}

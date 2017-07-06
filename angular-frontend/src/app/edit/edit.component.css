@@ -1,0 +1,32 @@
+div.editor { 
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  right: 50%;
+}
+
+div.view-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  right: 0;
+  overflow: scroll;
+}
+
+div.view {
+  margin: 20px;
+}
+
+div.content {
+  top: 141px;
+}
+
+@media (max-width: 600px) {
+  div.content {
+    top: 77px;
+  }
+
+  div.editor { 
+    right: 0;
+  }
+}
