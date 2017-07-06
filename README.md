@@ -20,15 +20,15 @@ Unticked all settings except pip. Install to C:\python35
 
 ## Install dependencies
 
-    wine ~/.wine/drive_c/python35/Scripts/pip.exe install -r requirements.txt
+    ./reinstall_requirements.sh
 
 # Building
 
-    wine ~/.wine/drive_c/python35/Scripts/pyinstaller.exe --onefile python-server/hello_world.spec
+    production_build.sh
 
 # Running
 
-    wine ./dist/hello_world.exe
+    wine ./dist/ScriptedForms.exe
 
 
 
