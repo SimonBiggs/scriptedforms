@@ -25,32 +25,17 @@ https://github.com/winpython/winpython/releases/download/1.7.20170401/WinPython-
 Install to `./windows_libs/python`
 
 
-## Install Windows 7Zip portable
-
-https://nchc.dl.sourceforge.net/project/portableapps/7-Zip%20Portable/7-ZipPortable_16.04.paf.exe
-
-Install to `./windows_libs/7zip`
-
-
-
-
-## Install Windows Python
-
-https://www.python.org/ftp/python/3.5.3/python-3.5.3-amd64.exe
-
-Unticked all settings except pip. Install to C:\python35
-
 ## Install dependencies
 
-    ./reinstall_requirements.sh
+    ./install_requirements.sh
 
 # Building
 
-    production_build.sh
+    ./deployment_bundle.sh
 
 # Running
 
-    wine ./dist/ScriptedForms.exe
+    wine ./build/scriptedforms.exe 
 
 
 
