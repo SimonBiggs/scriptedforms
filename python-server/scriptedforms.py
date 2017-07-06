@@ -13,11 +13,15 @@
 
 """ScriptedForms"""
 
+import argparse
 import sys
 import os
 import socket
+import webbrowser
 
 import tornado.web
+
+from traitlets import Unicode, default
 
 from kernel_gateway.gatewayapp import KernelGatewayApp
 
@@ -30,6 +34,20 @@ class Angular(tornado.web.RequestHandler):
 
 
 class ScriptedForms(KernelGatewayApp):
+
+    # The following is a dummy inclusion to allow -m flag to be passed
+    # Pyinstaller is insistant on passing the -m flag...
+    m_env = 'KG_M'
+    m_default_value = ''
+    m = Unicode(m_default_value, config=True,
+        help="Dummy flag (KG_M env var)"
+    )
+
+    @default('m')
+    def ip_default(self):
+        return os.getenv(self.m_env, self.m_default_value)
+
+
 
     dev_mode_string = os.getenv('DEVMODE')
     
@@ -86,10 +104,15 @@ class ScriptedForms(KernelGatewayApp):
         self.web_app.settings['debug'] = self.dev_mode
         self.web_app.settings['template_path'] = self.static_directory
         self.web_app.settings['static_path'] = self.static_directory
+
+        webbrowser.open_new_tab('http://{}:{}'.format(self.ip, self.port))
         
         super(ScriptedForms, self).start()
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', help='DummyArg')
+    
     ScriptedForms.launch_instance()
 
 if __name__ == "__main__":
