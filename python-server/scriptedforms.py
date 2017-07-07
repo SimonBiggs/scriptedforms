@@ -33,8 +33,10 @@ dev_mode_string = os.getenv('DEVMODE')
 
 if dev_mode_string == "True":
     dev_mode = True
-else:
+elif dev_mode_string is None:
     dev_mode = False
+else:
+    raise Exception("Invalid devmode string")
     
 if dev_mode:
     static_directory = "./angular-frontend/dist"
@@ -89,15 +91,6 @@ class DownloadSource(IPythonHandler):
 class ScriptedForms(NotebookApp):
     default_url = Unicode('/forms/')
     
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('8.8.8.8', 1))
-        ip = s.getsockname()[0]
-    except:
-        ip = socket.gethostbyname(socket.gethostname())
-    
-    port = 5000
-
     def start(self):
         handlers = [
             ('/forms/assets/(.*)', tornado.web.StaticFileHandler, dict(
@@ -156,17 +149,32 @@ def define_password(password_filename):
 
 
 def main():
-    password_filename = 'password.txt'
-
-    if os.path.exists(password_filename):
-        with open(password_filename, 'r') as f:
-            password = f.read()
+    if dev_mode:
+        ScriptedForms.launch_instance(
+            password='', token='', port=8888, 
+            ip='localhost', port_retries=0, 
+            allow_origin='http://localhost:5000', open_browser=False,
+            trust_xheaders=True, tornado_settings={'debug':True})
     else:
-        password = define_password(password_filename)
-        with open(password_filename, 'w') as f:
-            f.write(password)
-    
-    ScriptedForms.launch_instance(password=password)
+        password_filename = 'password.txt'
+
+        if os.path.exists(password_filename):
+            with open(password_filename, 'r') as f:
+                password = f.read()
+        else:
+            password = define_password(password_filename)
+            with open(password_filename, 'w') as f:
+                f.write(password)
+                
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('8.8.8.8', 1))
+            ip = s.getsockname()[0]
+        except:
+            ip = socket.gethostbyname(socket.gethostname())
+
+        
+        ScriptedForms.launch_instance(password=password, port=5000, ip=ip)
 
 if __name__ == "__main__":
     main()

@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
       serverSettings: this.settings
     };
 
+    // Doesn't appear to take in the baseUrl
     this.contents = new ContentsManager(this.options)
 
     this.contents.newUntitled({path:'/tmp/touch', type:'file', ext:'py'}).catch(err => {
