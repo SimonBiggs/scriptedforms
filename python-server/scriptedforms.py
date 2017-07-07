@@ -13,11 +13,12 @@
 
 """ScriptedForms"""
 
-import argparse
+import zipfile
 import sys
 import os
 import socket
 import webbrowser
+
 
 import tornado.web
 from traitlets import Unicode
@@ -34,6 +35,41 @@ class Angular(IPythonHandler):
         """Angular"""
 
         self.render("index.html")
+
+
+class DownloadSource(IPythonHandler):
+    """Download Source"""
+    
+    def get(self):
+        """Download Source"""
+        
+        if os.name == 'nt':
+            mode = 'rb'
+        else:
+            mode = 'r'
+        
+        temp_zip_filename = 'scriptedforms.zip'
+                
+        with zipfile.ZipFile(temp_zip_filename, 'w') as zf:
+            for dirname, subdirs, files in os.walk('.'):
+                for filename in files:
+                    if os.path.basename(filename) != temp_zip_filename:
+                        zf.write(os.path.join(dirname, filename))
+
+
+        buf_size = 4096
+        self.set_header('Content-Type', 'application/octet-stream')
+        self.set_header('Content-Disposition', 'attachment; filename=' + temp_zip_filename)
+        
+        with open(temp_zip_filename, mode) as f:
+            while True:
+                data = f.read(buf_size)
+                if not data:
+                    break
+                self.write(data)
+        
+        os.remove(temp_zip_filename)
+        self.finish()
 
 
 class ScriptedForms(NotebookApp):
@@ -74,6 +110,7 @@ class ScriptedForms(NotebookApp):
                 path=static_directory)),
             (r'/forms/(main.*\.bundle\.js)', tornado.web.StaticFileHandler, dict(
                 path=static_directory)),
+            ('/forms/downloadsource', DownloadSource),
             ('/forms/.*', Angular)
         ]
         

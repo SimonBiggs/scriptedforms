@@ -3,11 +3,11 @@
       <md-icon>menu</md-icon>
     </button>
 
-  <a md-button routerLink="/home" routerLinkActive="active" href fxShow="false" fxShow.gt-xs>
+  <a md-button routerLink="/home" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
     <md-icon class="toolbar-logo">home</md-icon>HOME
   </a>
 
-  <a md-icon-button routerLink="/home" routerLinkActive="active" href fxShow="true" fxHide.gt-xs>
+  <a md-icon-button routerLink="/home" routerLinkActive="active" href fxShow="true" fxHide.gt-sm>
     <md-icon>home</md-icon>
   </a>
 
@@ -27,11 +27,11 @@
     <md-icon>visibility</md-icon>
   </a>
 
-  <a md-button routerLink="/edit" routerLinkActive="active" href fxShow="false" fxShow.gt-xs>
+  <a md-button routerLink="/edit" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
       <md-icon class="toolbar-logo">edit</md-icon>EDIT
   </a>
 
-  <a md-icon-button routerLink="/edit" routerLinkActive="active" href fxShow="true" fxHide.gt-xs>
+  <a md-icon-button routerLink="/edit" routerLinkActive="active" href fxShow="true" fxHide.gt-sm>
     <md-icon>edit</md-icon>
   </a>
 
@@ -49,9 +49,27 @@
   <a md-button routerLink="/share" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
       <md-icon class="toolbar-logo">share</md-icon>SHARE
     </a>
+
+  <a md-icon-button routerLink="/share" routerLinkActive="active" href fxShow="true" fxHide.gt-sm fxHide.xs>
+    <md-icon>share</md-icon>
+  </a>
   <!--Need to bundle source-->
-  <a md-button href="" fxShow="false" fxShow.gt-sm><img class="toolbar-logo" src="/forms/assets/img/python.svg">SOURCE</a>
-  <a md-button href="https://github.com/SimonBiggs/ScriptedQAForms" fxShow="false" fxShow.gt-sm><img class="toolbar-logo" src="/forms/assets/img/github-circle-white-transparent.svg">GITHUB</a>
+  <a md-button href="/forms/downloadsource" fxShow="false" fxShow.gt-sm>
+    <md-icon class="toolbar-logo">file_download</md-icon>SOURCE
+  </a>
+
+  <a md-icon-button href="/forms/downloadsource" fxShow="true" fxHide.gt-sm>
+    <md-icon>file_download</md-icon>
+  </a>
+
+
+  <a md-button href="https://github.com/SimonBiggs/scripted-forms" fxShow="false" fxShow.gt-sm>
+    <img class="toolbar-logo" src="/forms/assets/img/github-circle-white-transparent.svg">GITHUB
+  </a>
+
+  <a md-icon-button href="https://github.com/SimonBiggs/scripted-forms" fxShow="true" fxHide.gt-sm fxHide.xs>
+    <img src="/forms/assets/img/github-circle-white-transparent.svg">
+  </a>
 </md-toolbar>
 
 <md-sidenav-container #container>
@@ -67,6 +85,9 @@
       <a md-list-item routerLink="/trend" routerLinkActive="active" href (click)="sidenav.close()">Show trends</a>
       <md-divider></md-divider>
       <a md-list-item routerLink="/share" routerLinkActive="active" href (click)="sidenav.close()">Share forms</a>
+      <md-divider></md-divider>
+      <a md-list-item href="/assets/source_code.zip" (click)="sidenav.close()">Download webapp source</a>
+      <a md-list-item href="https://github.com/SimonBiggs/scripted-forms" (click)="sidenav.close()">View source on GitHub</a>
       <md-divider></md-divider>
     </md-nav-list>
   </md-sidenav>
