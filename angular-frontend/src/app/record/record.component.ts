@@ -65,7 +65,12 @@ export class RecordComponent implements OnInit {
       future.onIOPub = (msg) => {
         console.log(msg.content)
       }
-    })
+    }).catch(err => {
+      if (err.xhr.status == 403) {
+        window.location.pathname = '/login'
+      }
+      console.error(err);
+    });
 
 
   }

@@ -2,7 +2,7 @@
 
 rm -rf build dist
 
-# ./build_angular.sh
+./build_angular.sh
 
 mkdir -p build/lib
 mkdir -p build/app/python
@@ -24,5 +24,5 @@ rm -rf ./build/tmp
 
 mkdir dist
 
-# cd build
-# zip -r ../dist/scriptedforms.zip *
+cd build
+zip -r ../dist/scriptedforms.zip *

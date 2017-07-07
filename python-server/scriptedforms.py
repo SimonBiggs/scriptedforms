@@ -18,7 +18,7 @@ import sys
 import os
 import socket
 import webbrowser
-
+import tkinter as tk
 
 import tornado.web
 from traitlets import Unicode
@@ -29,12 +29,26 @@ from notebook.base.handlers import IPythonHandler
 from notebook.auth import passwd
 
 
+dev_mode_string = os.getenv('DEVMODE')
+
+if dev_mode_string == "True":
+    dev_mode = True
+else:
+    dev_mode = False
+    
+if dev_mode:
+    static_directory = "./angular-frontend/dist"
+else:
+    static_directory = os.path.join('app', 'angular')
+
+
 class Angular(IPythonHandler):
     """Angular"""
     def get(self):
         """Angular"""
 
-        self.render("index.html")
+        with open(os.path.join(static_directory, 'index.html'), 'r') as f:
+            self.write(f.read())
 
 
 class DownloadSource(IPythonHandler):
@@ -42,11 +56,6 @@ class DownloadSource(IPythonHandler):
     
     def get(self):
         """Download Source"""
-        
-        if os.name == 'nt':
-            mode = 'rb'
-        else:
-            mode = 'r'
         
         temp_zip_filename = 'scriptedforms.zip'
                 
@@ -61,6 +70,11 @@ class DownloadSource(IPythonHandler):
         self.set_header('Content-Type', 'application/octet-stream')
         self.set_header('Content-Disposition', 'attachment; filename=' + temp_zip_filename)
         
+        if os.name == 'nt':
+            mode = 'rb'
+        else:
+            mode = 'r'
+
         with open(temp_zip_filename, mode) as f:
             while True:
                 data = f.read(buf_size)
@@ -84,19 +98,7 @@ class ScriptedForms(NotebookApp):
     
     port = 5000
 
-    def start(self):    
-        dev_mode_string = os.getenv('DEVMODE')
-        
-        if dev_mode_string == "True":
-            dev_mode = True
-        else:
-            dev_mode = False
-            
-        if dev_mode:
-            static_directory = "./angular-frontend/dist"
-        else:
-            static_directory = os.path.join('app', 'angular')
-       
+    def start(self):
         handlers = [
             ('/forms/assets/(.*)', tornado.web.StaticFileHandler, dict(
                 path=os.path.join(static_directory, 'assets'))),
@@ -115,17 +117,56 @@ class ScriptedForms(NotebookApp):
         ]
         
         self.web_app.add_handlers(".*$", handlers)
-        self.web_app.settings['debug'] = dev_mode
-        self.web_app.settings['template_path'] = static_directory
-        self.web_app.settings['static_path'] = static_directory
         
         super(ScriptedForms, self).start()
 
 
-def main():
-    # password = passwd()
+def define_password(password_filename):
+    password_container = []
     
-    ScriptedForms.launch_instance()
+    root = tk.Tk()
+
+    root.wm_title("Define Password")
+
+    l1 = tk.Label(root, text="Please define a password:")
+    l2 = tk.Label(
+        root, text="A hash of this password will be saved in {}".format(password_filename))
+    l3 = tk.Label(
+        root, text="Delete {} to change password".format(password_filename))
+
+    e = tk.Entry(root, show="*", width=30, justify='center')
+
+    def send_password(event=None):
+        password_container.append(e.get())
+        root.destroy()
+
+    b = tk.Button(root, text="OK", command=send_password)
+    root.bind('<Return>', send_password)
+
+    l1.pack(pady=10)
+    e.pack()
+    b.pack(pady=15)
+    l2.pack(padx=20)
+    l3.pack(pady=10)
+    e.focus()
+    
+    root.mainloop()
+    
+    return passwd(password_container[0])
+
+
+def main():
+    password_filename = 'password.txt'
+
+    if os.path.exists(password_filename):
+        with open(password_filename, 'r') as f:
+            password = f.read()
+    else:
+        password = define_password(password_filename)
+        with open(password_filename, 'w') as f:
+            f.write(password)
+    
+    ScriptedForms.launch_instance(password=password)
 
 if __name__ == "__main__":
     main()
