@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 
 import { Router } from '@angular/router';
+
+import {
+  Kernel, Session, ServerConnection, ContentsManager
+} from '@jupyterlab/services';
 
 import { TitleService } from './title.service'
 
@@ -11,6 +15,11 @@ import { TitleService } from './title.service'
 })
 export class AppComponent implements OnInit {
   pageTitle: string;
+
+  settings: ServerConnection.ISettings
+  options: Session.IOptions
+
+  contents: ContentsManager
 
   constructor (
     private myTitleService: TitleService,
@@ -23,10 +32,31 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.updatePageTitle()
+
+    if(isDevMode()) {
+      this.settings = ServerConnection.makeSettings({ 
+        baseUrl: 'http://localhost:8888'
+      })
+    }
+    else {
+      this.settings = ServerConnection.makeSettings({})
+    }
+
+    this.options = {
+      serverSettings: this.settings
+    };
+
+    this.contents = new ContentsManager(this.options)
+
+    this.contents.newUntitled({path:'/tmp/touch', type:'file', ext:'py'}).catch(err => {
+      if (err.xhr.status == 403) {
+        window.location.pathname = '/login'
+      }
+      console.error(err);
+    })
   }
 
   updatePageTitle() {
     this.pageTitle = this.myTitleService.get();
   }
-
 }
