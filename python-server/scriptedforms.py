@@ -46,7 +46,10 @@ class Angular(IPythonHandler):
     """Angular"""
     def get(self):
         """Angular"""
-
+        
+        # if self.request.uri[-1] == "?":
+        #     self.redirect('/login')
+        # else:
         with open(os.path.join(static_directory, 'index.html'), 'r') as f:
             self.write(f.read())
 

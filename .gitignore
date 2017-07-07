@@ -145,3 +145,4 @@ ENV/
 .mypy_cache/
 
 windows_libs/
+password.txt
