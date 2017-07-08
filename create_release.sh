@@ -2,7 +2,9 @@
 
 rm -rf build dist
 
-./build_angular.sh
+cd angular-frontend
+yarn run deploy
+cd ../
 
 mkdir -p build/lib
 mkdir -p build/app/python

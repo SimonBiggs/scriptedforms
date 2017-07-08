@@ -14,10 +14,8 @@
 """ScriptedForms"""
 
 import zipfile
-import sys
 import os
 import socket
-import webbrowser
 import tkinter as tk
 
 import tornado.web

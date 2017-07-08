@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   settings: ServerConnection.ISettings
   options: Session.IOptions
-
+  
   contents: ContentsManager
 
   constructor (
