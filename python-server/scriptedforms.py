@@ -13,17 +13,18 @@
 
 """ScriptedForms"""
 
+import logging
 import zipfile
 import os
 import socket
 import tkinter as tk
 
 import tornado.web
+import tornado.autoreload
+from tornado.log import enable_pretty_logging
+
 from traitlets import Unicode
-
-from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler
-
 from notebook.auth import passwd
 
 
@@ -35,6 +36,11 @@ elif dev_mode_string is None:
     dev_mode = False
 else:
     raise Exception("Invalid devmode string")
+
+if dev_mode:
+    from kernel_gateway.gatewayapp import KernelGatewayApp as NotebookApp
+else:
+    from notebook.notebookapp import NotebookApp
     
 if dev_mode:
     static_directory = "./angular-frontend/dist"
@@ -53,6 +59,12 @@ class Angular(IPythonHandler):
 
 class DownloadSource(IPythonHandler):
     """Download Source"""
+
+    # def set_default_headers(self, *args, **kwargs):
+    #     if dev_mode:
+    #         self.set_header('Access-Control-Allow-Headers', 'X-XSRFToken,Content-Type')
+        
+    #     super(DownloadSource, self).set_default_headers()
     
     def get(self):
         """Download Source"""
@@ -111,6 +123,52 @@ class ScriptedForms(NotebookApp):
         
         super(ScriptedForms, self).start()
 
+    # A dirty hack to get tornado debug to work...
+    # based on https://github.com/jupyter/kernel_gateway/blob/master/kernel_gateway/gatewayapp.py
+    def init_webapp(self):
+
+        if dev_mode:
+            # Enable the same pretty logging the notebook uses
+            enable_pretty_logging()
+
+            # Configure the tornado logging level too
+            logging.getLogger().setLevel(self.log_level)
+
+            handlers = self.personality.create_request_handlers()
+
+            self.web_app = tornado.web.Application(
+                handlers=handlers,
+                debug=True,
+                kernel_manager=self.kernel_manager,
+                session_manager=self.session_manager,
+                contents_manager=self.contents_manager,
+                kernel_spec_manager=self.kernel_manager.kernel_spec_manager,
+                kg_auth_token=self.auth_token,
+                kg_allow_credentials=self.allow_credentials,
+                kg_allow_headers=self.allow_headers,
+                kg_allow_methods=self.allow_methods,
+                kg_allow_origin=self.allow_origin,
+                kg_expose_headers=self.expose_headers,
+                kg_max_age=self.max_age,
+                kg_max_kernels=self.max_kernels,
+                kg_api=self.api,
+                kg_personality=self.personality,
+                # Also set the allow_origin setting used by notebook so that the
+                # check_origin method used everywhere respects the value
+                allow_origin=self.allow_origin
+            )
+
+            # promote the current personality's "config" tagged traitlet values to webapp settings
+            for trait_name, trait_value in self.personality.class_traits(config=True).items():
+                kg_name = 'kg_' + trait_name
+                # a personality's traitlets may not overwrite the kernel gateway's
+                if kg_name not in self.web_app.settings:
+                    self.web_app.settings[kg_name] = trait_value.get(obj=self.personality)
+                else:
+                    self.log.warning('The personality trait name, %s, conflicts with a kernel gateway trait.', trait_name)
+        else:
+            super(ScriptedForms, self).init_webapp()
+
 
 def define_password(password_filename):
     password_container = []
@@ -152,7 +210,7 @@ def main():
             password='', token='', port=8888, 
             ip='localhost', port_retries=0, 
             allow_origin='http://localhost:5000', open_browser=False,
-            trust_xheaders=True, tornado_settings={'debug':True})
+            allow_headers='X-XSRFToken,Content-Type')
     else:
         password_filename = 'password.txt'
 
@@ -175,4 +233,7 @@ def main():
         ScriptedForms.launch_instance(password=password, port=5000, ip=ip)
 
 if __name__ == "__main__":
-    main()
+    if dev_mode:
+        main()
+    else:
+        main()
