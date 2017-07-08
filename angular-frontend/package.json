@@ -4,7 +4,7 @@
   "license": "AGPLv3+",
   "scripts": {
     "ng": "ng",
-    "dev": "export DEVMODE=True && python ../python-server/scriptedforms.py & ng serve --port 5000 --deploy-url /forms",
+    "dev": "ng serve --port 5000 --deploy-url /forms & export DEVMODE=True && python ../python-server/scriptedforms.py",
     "deploy": "ng build --no-aot --prod --deploy-url /forms",
     "start": "webpack-dev-server --port=4200",
     "build": "webpack",

@@ -59,20 +59,20 @@ class Angular(IPythonHandler):
 
 class DownloadSource(IPythonHandler):
     """Download Source"""
-
-    # def set_default_headers(self, *args, **kwargs):
-    #     if dev_mode:
-    #         self.set_header('Access-Control-Allow-Headers', 'X-XSRFToken,Content-Type')
-        
-    #     super(DownloadSource, self).set_default_headers()
-    
+   
     def get(self):
         """Download Source"""
         
         temp_zip_filename = 'scriptedforms.zip'
-                
+        
+        if dev_mode:
+            directory_to_walk = 'src'
+        else:
+            directory_to_walk = '.'
+
+
         with zipfile.ZipFile(temp_zip_filename, 'w') as zf:
-            for dirname, subdirs, files in os.walk('.'):
+            for dirname, subdirs, files in os.walk(directory_to_walk):
                 for filename in files:
                     if os.path.basename(filename) != temp_zip_filename:
                         zf.write(os.path.join(dirname, filename))
@@ -81,13 +81,8 @@ class DownloadSource(IPythonHandler):
         buf_size = 4096
         self.set_header('Content-Type', 'application/octet-stream')
         self.set_header('Content-Disposition', 'attachment; filename=' + temp_zip_filename)
-        
-        if os.name == 'nt':
-            mode = 'rb'
-        else:
-            mode = 'r'
 
-        with open(temp_zip_filename, mode) as f:
+        with open(temp_zip_filename, 'rb') as f:
             while True:
                 data = f.read(buf_size)
                 if not data:

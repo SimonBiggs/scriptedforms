@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
 
   settings: ServerConnection.ISettings
   options: Session.IOptions
+
+  sourceUrl: string
   
   contents: ContentsManager
 
@@ -34,11 +36,13 @@ export class AppComponent implements OnInit {
     this.updatePageTitle()
 
     if(isDevMode()) {
+      this.sourceUrl = 'http://localhost:8888/forms/downloadsource'
       this.settings = ServerConnection.makeSettings({ 
         baseUrl: 'http://localhost:8888'
       })
     }
     else {
+      this.sourceUrl = '/forms/downloadsource'
       this.settings = ServerConnection.makeSettings({})
     }
 

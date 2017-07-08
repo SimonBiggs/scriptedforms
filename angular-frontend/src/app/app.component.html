@@ -54,11 +54,11 @@
     <md-icon>share</md-icon>
   </a>
   <!--Need to bundle source-->
-  <a md-button href="/forms/downloadsource" fxShow="false" fxShow.gt-sm>
+  <a md-button href={{sourceUrl}} fxShow="false" fxShow.gt-sm>
     <md-icon class="toolbar-logo">file_download</md-icon>SOURCE
   </a>
 
-  <a md-icon-button href="/forms/downloadsource" fxShow="true" fxHide.gt-sm>
+  <a md-icon-button href={{sourceUrl}} fxShow="true" fxHide.gt-sm>
     <md-icon>file_download</md-icon>
   </a>
 
@@ -86,7 +86,7 @@
       <md-divider></md-divider>
       <a md-list-item routerLink="/share" routerLinkActive="active" href (click)="sidenav.close()">Share forms</a>
       <md-divider></md-divider>
-      <a md-list-item href="/forms/downloadsource" (click)="sidenav.close()">Download webapp source</a>
+      <a md-list-item href={{sourceUrl}} (click)="sidenav.close()">Download webapp source</a>
       <a md-list-item href="https://github.com/SimonBiggs/scripted-forms" (click)="sidenav.close()">View source on GitHub</a>
       <md-divider></md-divider>
     </md-nav-list>
