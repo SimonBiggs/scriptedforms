@@ -39,22 +39,25 @@ export class KernelService {
     };
    }
 
-  addToQueue(fn: () => Promise<any>) {
-    const prev = this.queue;
+  addToQueue(asyncFunction:() => Promise<any>): Promise<any>{
+    const previous = this.queue;
     return this.queue = (async () => {
-      await prev;
-      return await fn();
+      await previous;
+      return asyncFunction();
     })();
   }
 
-  permissionCheck(): void {
+  permissionCheck(): Promise<any> {
     this.startKernel()
     this.runCode(this.testcode)
     this.shutdownKernel()
+
+    return this.queue
   }
 
-  startKernel(inputkenel?: Kernel.IKernel): Promise<void> {
-    return this.addToQueue(async () => {
+  startKernel(): Promise<void> {
+    return this.addToQueue(async (): Promise<void> => {
+      console.log('Start Kernel Queue Item')
       await Kernel.startNew(this.options).then(newKernel => {
         this.kernel = newKernel
       }).catch(err => {
@@ -67,23 +70,33 @@ export class KernelService {
   }
 
   shutdownKernel(): Promise<void> {
-    return this.addToQueue(async () => {
+    return this.addToQueue(async (): Promise<void> => {
+      console.log('Shutdown Kernel Queue Item')
       await this.kernel.shutdown()
     })
   }
 
-  runCode(code: string): Kernel.IFuture  {
+  runCode(code: string): Promise<Object[]> { // : Promise<Kernel.IFuture>
     let future: Kernel.IFuture
-    
-    this.addToQueue(async () => {
+
+    const currentQueue = this.addToQueue(async (): Promise<Object[]> => {
+      console.log('Run Code Queue Item')
+      let dataCollection: Object[] = []
+
       future = this.kernel.requestExecute({ code: code })
       future.onIOPub = (msg => {
-        console.log(msg.content)
+        if (msg.content.data) {
+          dataCollection.push(msg.content.data)
+        }
+        if (msg.content.ename) {
+          dataCollection.push(msg.content)
+        }
+        // console.log(msg.content)
       })
       await future.done
+      return dataCollection
     })
-    
-    return future
-  }
 
+    return currentQueue
+  }
 }

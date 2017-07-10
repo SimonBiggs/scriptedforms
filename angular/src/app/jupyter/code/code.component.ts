@@ -13,7 +13,7 @@ import { KernelService } from '../kernel.service';
 })
 export class CodeComponent implements OnInit, AfterViewInit {
 
-  queue: Promise<Kernel.IFuture>
+  queue: Promise<Object[]>
 
   code: string
   @ViewChild('codecontainer') codecontainer: ElementRef
@@ -26,16 +26,13 @@ export class CodeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // console.log()
     this.code = this.codecontainer.nativeElement.innerHTML
-    console.log(this.code)
+    // console.log(this.code)
 
     this.queue = this.myKernelSevice.runCode(this.code)
-    this.queue.then(future => {
-      future.onIOPub = (msg => {
-        console.log(msg.content)
-      })
-      // console.log(future)
+
+    this.queue.then(data => {
+      console.log(data)
     })
   }
 

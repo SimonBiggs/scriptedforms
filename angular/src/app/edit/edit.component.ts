@@ -56,7 +56,14 @@ More text
 
  * A list
  * More
- * Third`
+ * Third
+
+Weird
+
+    an_error 
+
+`
+
 
   myAce: ace.Editor;
 
@@ -82,11 +89,11 @@ More text
 
   ngOnInit() {
     this.myTitleService.set('Create and Edit Forms')
-    this.myKernelSevice.startKernel()
+    // this.myKernelSevice.startKernel()
   }
 
   ngOnDestroy() {
-    this.myKernelSevice.shutdownKernel()
+    // this.myKernelSevice.shutdownKernel()
   }
 
   ngAfterViewInit() {
@@ -135,9 +142,20 @@ More text
 
   private createComponentFactory(compiler: Compiler, metadata: Component, 
                                  componentClass: any): ComponentFactory<any> {
-                                   
-    const cmpClass = componentClass || class RuntimeComponent { };
-    const decoratedCmp = Component(metadata)(cmpClass);
+    @Component(metadata)                
+    class RuntimeComponent implements OnInit, OnDestroy {
+      constructor(
+        private myKernelSevice: KernelService
+      ) { }
+
+      ngOnInit() {
+        this.myKernelSevice.startKernel()
+      }
+      
+      ngOnDestroy() {
+        this.myKernelSevice.shutdownKernel()
+      }
+    };
 
     @NgModule(
       { 
@@ -146,7 +164,7 @@ More text
           JupyterModule
         ],
         declarations: [
-          decoratedCmp
+          RuntimeComponent
         ] 
       }
     )
@@ -155,7 +173,7 @@ More text
     let module: ModuleWithComponentFactories<any> = (
       compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule));
     return module.componentFactories.find(
-      f => f.componentType === decoratedCmp);
+      f => f.componentType === RuntimeComponent);
   }
 
 
