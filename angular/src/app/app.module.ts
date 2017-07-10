@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -10,6 +10,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RoutingModule } from './app.routing';
 
 import { JupyterModule } from './jupyter/jupyter.module';
+
+import { AppErrorHandler } from './app-error-handler';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -45,7 +47,8 @@ import { ShareComponent } from './share/share.component';
     JupyterModule
   ],
   providers: [
-    TitleService
+    TitleService,
+    { provide: ErrorHandler, useClass: AppErrorHandler } 
   ],
   bootstrap: [AppComponent]
 })

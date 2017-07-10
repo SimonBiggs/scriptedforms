@@ -21,6 +21,7 @@ import { JupyterModule } from '../jupyter/jupyter.module';
 
 import { TitleService } from '../title.service'
 
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -63,6 +64,7 @@ More text
   myAce: ace.Editor;
 
   @ViewChild('editor') editor
+  @ViewChild('errorbox') errorbox
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -145,6 +147,9 @@ More text
       this.componentRef = null;
     }
     this.componentRef = this.container.createComponent(factory);
+
+    console.log(this.errorbox.nativeElement.innerHTML = "")
+
   }
 
   private createComponentFactory(compiler: Compiler, metadata: Component, 
@@ -158,7 +163,7 @@ More text
         imports: [
           CommonModule,
           JupyterModule
-        ], 
+        ],
         declarations: [
           decoratedCmp
         ] 
