@@ -4,10 +4,6 @@ import {
   Kernel, Session, ServerConnection
 } from '@jupyterlab/services';
 
-// The base url of the notebook server.
-
-
-
 import { TitleService } from '../title.service'
 
 @Component({
@@ -50,13 +46,6 @@ export class RecordComponent implements OnInit {
       kernelName: 'python3',
       serverSettings: this.settings
     };
-
-    // Kernel.listRunning().catch(err => {
-    //   if (err.xhr.status == 403) {
-    //     window.location.pathname = '/login'
-    //   }
-    //   console.error(err);
-    // })
 
     Kernel.startNew(this.options).then(kernel => {
 

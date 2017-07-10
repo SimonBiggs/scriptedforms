@@ -7,7 +7,9 @@ import { MaterialModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { RoutingModule } from './app.routing'
+import { RoutingModule } from './app.routing';
+
+import { JupyterModule } from './jupyter/jupyter.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -39,7 +41,8 @@ import { ShareComponent } from './share/share.component';
     RoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    JupyterModule
   ],
   providers: [
     TitleService

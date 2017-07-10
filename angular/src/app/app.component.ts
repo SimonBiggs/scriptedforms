@@ -50,16 +50,20 @@ export class AppComponent implements OnInit {
       serverSettings: this.settings
     };
 
-    // Doesn't appear to take in the baseUrl
-    this.contents = new ContentsManager(this.options)
-
-    this.contents.newUntitled({path:'/tmp/touch', type:'file', ext:'py'}).catch(err => {
+    Kernel.startNew(this.options).then(kernel => {
+      // this.sleep(2000)
+      kernel.shutdown()
+    }).catch(err => {
       if (err.xhr.status == 403) {
         window.location.pathname = '/login'
       }
       console.error(err);
-    })
+    });
   }
+
+  // async sleep(ms) {
+  //   await new Promise(resolve => setTimeout(resolve, ms));
+  // }
 
   updatePageTitle() {
     this.pageTitle = this.myTitleService.get();

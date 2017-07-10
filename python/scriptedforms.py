@@ -204,8 +204,9 @@ def main():
         ScriptedForms.launch_instance(
             password='', token='', port=8888, 
             ip='localhost', port_retries=0, 
-            allow_origin='http://localhost:5000', open_browser=False,
-            allow_headers='X-XSRFToken,Content-Type')
+            allow_origin='http://localhost:4200', open_browser=False,
+            allow_headers='X-XSRFToken,Content-Type',
+            allow_methods="DELETE")
     else:
         password_filename = 'password.txt'
 
@@ -225,7 +226,7 @@ def main():
             ip = socket.gethostbyname(socket.gethostname())
 
         
-        ScriptedForms.launch_instance(password=password, port=5000, ip=ip)
+        ScriptedForms.launch_instance(password=password, port=7878, ip=ip)
 
 if __name__ == "__main__":
     if dev_mode:

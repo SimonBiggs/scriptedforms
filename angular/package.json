@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "kernel": "export DEVMODE=True && python ../python/scriptedforms.py",
-    "forms": "ng serve --port 5000 --deploy-url /forms",
+    "forms": "ng serve --deploy-url /forms",
     "deploy": "ng build --no-aot --prod --deploy-url /forms",
     "start": "webpack-dev-server --port=4200",
     "build": "webpack",
