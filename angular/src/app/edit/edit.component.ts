@@ -25,7 +25,7 @@ import { TitleService } from '../title.service'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-  defaultTemplate = `
+  defaultForm = `
     import numpy as np
     import matplotlib.pyplot as plt
     %matplotlib inline
@@ -100,7 +100,7 @@ More text
       }
     })
 
-    this.myAce.setValue(this.defaultTemplate)
+    this.myAce.setValue(this.defaultForm)
     this.updateForm()
 
     // this.myAce.on('change', () => {
@@ -126,6 +126,7 @@ More text
       this.componentRef.destroy();
       this.componentRef = null;
     }
+    // this.myKernelSevice.shutdownKernel()
     this.componentRef = this.container.createComponent(factory);
 
     console.log(this.errorbox.nativeElement.innerHTML = "")
@@ -135,7 +136,7 @@ More text
   private createComponentFactory(compiler: Compiler, metadata: Component, 
                                  componentClass: any): ComponentFactory<any> {
                                    
-    const cmpClass = componentClass || class RuntimeComponent {};
+    const cmpClass = componentClass || class RuntimeComponent { };
     const decoratedCmp = Component(metadata)(cmpClass);
 
     @NgModule(

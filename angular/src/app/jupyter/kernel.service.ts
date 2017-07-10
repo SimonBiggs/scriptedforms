@@ -4,6 +4,7 @@ import {
   Kernel, KernelMessage, Session, ServerConnection
 } from '@jupyterlab/services';
 
+
 @Injectable()
 export class KernelService {
   settings: ServerConnection.ISettings
@@ -11,7 +12,7 @@ export class KernelService {
   session: Session.ISession;
   kernel: Kernel.IKernel
 
-  queue: Promise<any>
+  queue: Promise<any> = Promise.resolve()
 
   testcode = [
     'import numpy as np',
@@ -38,83 +39,51 @@ export class KernelService {
     };
    }
 
-  // permissionCheck(): Promise<void> {
-  //   let promise = this.startKernel().then(() => {
-  //     return this.runCode(this.testcode)
-  //   }).then((message) => {
-  //     // console.log(message)
-  //     return this.shutdownKernel()
-  //   })
+  addToQueue(fn: () => Promise<any>) {
+    const prev = this.queue;
+    return this.queue = (async () => {
+      await prev;
+      return await fn();
+    })();
+  }
 
-  //   return promise
-  // }
-
-  permissionCheck(): Promise<void> {
-    let dummykernel: Kernel.IKernel
-
-    let promise = Kernel.startNew(this.options).then(newkernel => {
-      dummykernel = newkernel
-      return Promise.resolve();
-    }).catch(err => {
-      if (err.xhr.status == 403) {
-        window.location.pathname = '/login'
-      }
-      console.error(err);
-    });
-
-    return promise.then(() => {
-      let future = dummykernel.requestExecute({ code: this.testcode })
-      return future.done
-    }).then(() => {
-      return dummykernel.shutdown()
-    })
+  permissionCheck(): void {
+    this.startKernel()
+    this.runCode(this.testcode)
+    this.shutdownKernel()
   }
 
   startKernel(inputkenel?: Kernel.IKernel): Promise<void> {
-    this.queue = Kernel.startNew(this.options)
-
-    this.queue = this.queue.then(newkernel => {
-      this.kernel = newkernel
-      return Promise.resolve();
-    }).catch(err => {
-      if (err.xhr.status == 403) {
-        window.location.pathname = '/login'
-      }
-      console.error(err);
-    });
-
-    return this.queue
+    return this.addToQueue(async () => {
+      await Kernel.startNew(this.options).then(newKernel => {
+        this.kernel = newKernel
+      }).catch(err => {
+        if (err.xhr.status == 403) {
+          window.location.pathname = '/login'
+        }
+        console.error(err);
+      })
+    })
   }
 
   shutdownKernel(): Promise<void> {
-    return this.queue.then(() => {
-      return this.kernel.shutdown()
+    return this.addToQueue(async () => {
+      await this.kernel.shutdown()
     })
   }
 
-  runCode(code: string): Kernel.IFuture {
-    let future = this.kernel.requestExecute({ code: code })
-
-    future.onIOPub = (msg) => {
-      console.log(msg.content)
-    }
-
-    // future.onReply = (msg) => {
-    //   console.log(msg.content)
-    // }
-
-    // console.log(future)
+  runCode(code: string): Kernel.IFuture  {
+    let future: Kernel.IFuture
+    
+    this.addToQueue(async () => {
+      future = this.kernel.requestExecute({ code: code })
+      future.onIOPub = (msg => {
+        console.log(msg.content)
+      })
+      await future.done
+    })
+    
     return future
   }
 
-  addToCodeQueue(code: string): Promise<Kernel.IFuture> {
-    let future: Kernel.IFuture
-    
-    return this.queue.then(() => {
-      future = this.runCode(code)
-      this.queue = future.done
-      // console.log(future)
-      return future
-    })
-  }
 }

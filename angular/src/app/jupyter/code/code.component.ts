@@ -30,9 +30,12 @@ export class CodeComponent implements OnInit, AfterViewInit {
     this.code = this.codecontainer.nativeElement.innerHTML
     console.log(this.code)
 
-    this.queue = this.myKernelSevice.addToCodeQueue(this.code)
+    this.queue = this.myKernelSevice.runCode(this.code)
     this.queue.then(future => {
-      console.log(future)
+      future.onIOPub = (msg => {
+        console.log(msg.content)
+      })
+      // console.log(future)
     })
   }
 
