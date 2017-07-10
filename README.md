@@ -2,6 +2,10 @@
 
 Using Ubuntu 16.04.2 -- http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso
 
+## Allow more listeners
+
+    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
 ## Install Wine-Staging
 
 https://wiki.winehq.org/Ubuntu
