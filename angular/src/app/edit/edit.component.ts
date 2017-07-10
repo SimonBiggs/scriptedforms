@@ -136,7 +136,7 @@ Weird
     // this.myKernelSevice.shutdownKernel()
     this.componentRef = this.container.createComponent(factory);
 
-    console.log(this.errorbox.nativeElement.innerHTML = "")
+    this.errorbox.nativeElement.innerHTML = ""
 
   }
 
