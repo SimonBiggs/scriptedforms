@@ -3,14 +3,10 @@ import {
     ViewChild, ViewContainerRef, ComponentRef,
     Compiler, ComponentFactory, NgModule, 
     ModuleWithComponentFactories, ComponentFactoryResolver,
-    isDevMode
+    isDevMode, ElementRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-
-import {
-  Kernel, Session, ServerConnection
-} from '@jupyterlab/services';
 
 import * as  MarkdownIt from 'markdown-it';
 
@@ -18,6 +14,7 @@ import * as ace from 'brace';
 import 'brace/mode/markdown';
 
 import { JupyterModule } from '../jupyter/jupyter.module';
+import { KernelService } from '../jupyter/kernel.service'
 
 import { TitleService } from '../title.service'
 
@@ -28,27 +25,32 @@ import { TitleService } from '../title.service'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-  defaultTemplate = `<!--<import>
-import numpy as np
-import matplotlib.pyplt as plt
-%matplotlib inline
-</import>-->
+  defaultTemplate = `
+    import numpy as np
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
 
 # Title
 
 Edit the text box on the left. 
-Press \`Ctrl + Enter\` to update the preview.
+Press "Ctrl + Enter" to update the preview. \`a = 1\`
 
-<!--<input>variable_1</input>-->
-<!--<input>variable_2</input>-->
-<!--<input>variable_3</input>-->
-<!--<input>variable_4</input>-->
-<!--<output>np.mean(
-    [variable_1, variable_2, variable_3, variable_4])</output>-->
-<!--<figure>plt.plot(
-    [variable_1, variable_2], [variable_3, variable_4])</figure>-->
+    b = 2
+    c = 3
+    d = 4
 
-<app-code></app-code>
+<!--<variable>a</variable>-->
+<!--<variable>b</variable>-->
+<!--<variable>c</variable>-->
+<!--<variable>d</variable>-->
+
+    result = np.mean([a, b, c, d])
+
+<!--<print>result</print>-->
+<!--<show>plt.plot([a, b], [c, d])</show>-->
+
+    np.linspace(0, 1, 5)
 
 More text
 
@@ -56,15 +58,10 @@ More text
  * More
  * Third`
 
-  settings: ServerConnection.ISettings
-  options: Session.IOptions
-  session: Session.ISession;
-  kernel: Kernel.IKernel
-
   myAce: ace.Editor;
 
   @ViewChild('editor') editor
-  @ViewChild('errorbox') errorbox
+  @ViewChild('errorbox') errorbox: ElementRef
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -79,38 +76,17 @@ More text
   constructor(
     private myTitleService: TitleService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private compiler: Compiler
+    private compiler: Compiler,
+    private myKernelSevice: KernelService
   ) { }
 
   ngOnInit() {
-    this.myTitleService.set('Create and Edit Forms');
-
-    if(isDevMode()) {
-      this.settings = ServerConnection.makeSettings({ 
-        baseUrl: 'http://localhost:8888'
-      })
-    }
-    else {
-      this.settings = ServerConnection.makeSettings({})
-    }
-
-    this.options = {
-      kernelName: 'python3',
-      serverSettings: this.settings
-    };
-
-    Kernel.startNew(this.options).then(kernel => {
-      this.kernel = kernel;
-    }).catch(err => {
-      if (err.xhr.status == 403) {
-        window.location.pathname = '/login'
-      }
-      console.error(err);
-    });
+    this.myTitleService.set('Create and Edit Forms')
+    this.myKernelSevice.startKernel()
   }
 
   ngOnDestroy() {
-    this.kernel.shutdown()
+    this.myKernelSevice.shutdownKernel()
   }
 
   ngAfterViewInit() {
@@ -120,16 +96,20 @@ More text
     this.myAce.commands.addCommand({
       name: "save", bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
       exec: () => {
-        this.compileTemplate(this.myAce.getValue())
+        this.updateForm()
       }
     })
 
     this.myAce.setValue(this.defaultTemplate)
-    this.compileTemplate(this.myAce.getValue())
+    this.updateForm()
 
     // this.myAce.on('change', () => {
-    //   this.compileTemplate(this.myAce.getValue())
+    //   this.updateForm()
     // })
+  }
+
+  updateForm() {
+    this.compileTemplate(this.myAce.getValue())
   }
 
 
