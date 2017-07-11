@@ -13,7 +13,8 @@ import { KernelService } from '../kernel.service';
 })
 export class CodeComponent implements OnInit, AfterViewInit {
 
-  queue: Promise<Object[]>
+  promise: Promise<Kernel.IFuture>
+  future: Kernel.IFuture
 
   code: string
   @ViewChild('codecontainer') codecontainer: ElementRef
@@ -29,11 +30,14 @@ export class CodeComponent implements OnInit, AfterViewInit {
     this.code = this.codecontainer.nativeElement.innerHTML
     // console.log(this.code)
 
-    this.queue = this.myKernelSevice.runCode(this.code)
-
-    this.queue.then(data => {
-      console.log(data)
+    this.promise = this.myKernelSevice.runCode(this.code)
+    this.promise.then(future => {
+      this.future = future
+      this.future.onIOPub = (msg => {
+        console.log(msg.content)
+      })
     })
+
   }
 
 }

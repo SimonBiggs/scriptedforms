@@ -76,25 +76,17 @@ export class KernelService {
     })
   }
 
-  runCode(code: string): Promise<Object[]> { // : Promise<Kernel.IFuture>
+  runCode(code: string): Promise<Kernel.IFuture> {
     let future: Kernel.IFuture
 
-    const currentQueue = this.addToQueue(async (): Promise<Object[]> => {
+    const currentQueue = this.addToQueue(async (): Promise<Kernel.IFuture> => {
       console.log('Run Code Queue Item')
-      let dataCollection: Object[] = []
 
       future = this.kernel.requestExecute({ code: code })
-      future.onIOPub = (msg => {
-        if (msg.content.data) {
-          dataCollection.push(msg.content.data)
-        }
-        if (msg.content.ename) {
-          dataCollection.push(msg.content)
-        }
-        // console.log(msg.content)
-      })
-      await future.done
-      return dataCollection
+      return future
+    })
+    this.addToQueue(async (): Promise<any> => { 
+      return await future.done
     })
 
     return currentQueue
