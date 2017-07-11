@@ -26,31 +26,57 @@ import { TitleService } from '../title.service'
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   defaultForm = `
+Import should always run when the Kernel is started up.
+
+<import>
+
+    import time
     import numpy as np
     import matplotlib.pyplot as plt
     %matplotlib inline
 
+</import>
 
 # Title
 
 Edit the text box on the left. 
-Press "Ctrl + Enter" to update the preview. \`a = 1\`
+Press "Ctrl + Enter" to update the preview. 
 
+<import>
+
+    a = 1
     b = 2
     c = 3
     d = 4
 
-<!--<variable>a</variable>-->
-<!--<variable>b</variable>-->
-<!--<variable>c</variable>-->
-<!--<variable>d</variable>-->
+<import>
+
+
+Live will run and re-run whenever one of the input boxes is changed.
+
+<live>
+
+<variable>a</variable>
+<variable>b</variable>
+<variable>c</variable>
+<variable>d</variable>
 
     result = np.mean([a, b, c, d])
 
-<!--<print>result</print>-->
-<!--<show>plt.plot([a, b], [c, d])</show>-->
+    result
+    
+    plt.plot([a, b], [c, d])
+
+</live>
+
+Wait groups will not run initially, they will only run when their respective
+button is pressed.
+
+<wait>
 
     np.linspace(0, 1, 5)
+
+</wait>
 
 More text
 
@@ -60,8 +86,31 @@ More text
 
 Weird
 
+Need to think of a way to allow intermittent prints to display... Need to be 
+able to pass the future to the code component while still have the queue wait
+till the code is complete.
+
+<wait>
+
+    print("Start Sleep")
+    time.sleep(10)
+    print("Finish Sleep")
+
+</wait>
+
+Test
+
+<wait>
+
     an_error 
 
+</wait>
+
+
+Make a button permanently down here that when clicked it force kills the
+server. This should make the queue now finish quite quickly. The item of 
+starting back up the kernel should still be placed on the queue, but it should
+resest quite quickly. After the reset all code from top to bottom is to be run.
 `
 
 
