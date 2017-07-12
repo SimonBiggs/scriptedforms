@@ -1,7 +1,7 @@
-import { 
+import {
     Component, OnInit, AfterViewInit, OnDestroy,
     ViewChild, ViewContainerRef, ComponentRef,
-    Compiler, ComponentFactory, NgModule, 
+    Compiler, ComponentFactory, NgModule,
     ModuleWithComponentFactories, ComponentFactoryResolver,
     isDevMode, ElementRef, ViewChildren, QueryList
 } from '@angular/core';
@@ -41,8 +41,8 @@ Import should always run when the Kernel is started up.
 
 # Title
 
-Edit the text box on the left. 
-Press "Ctrl + Enter" to update the preview. 
+Edit the text box on the left.
+Press "Ctrl + Enter" to update the preview.
 
 <import>
 
@@ -58,9 +58,9 @@ Live will run and re-run whenever one of the input boxes is changed.
 
 <live>
 
-Use a try except (or better test if variable exists, not try...) code send to 
+Use a try except (or better test if variable exists, not try...) code send to
 the kernel to read the current state of the input
-variables. Display the current value of the input value in the input box if 
+variables. Display the current value of the input value in the input box if
 python says it has one.
 
 <variable type="number">a</variable>
@@ -111,7 +111,7 @@ More text
 
 Weird
 
-Need to think of a way to allow intermittent prints to display... Need to be 
+Need to think of a way to allow intermittent prints to display... Need to be
 able to pass the future to the code component while still have the queue wait
 till the code is complete.
 
@@ -127,13 +127,13 @@ Test
 
 <wait>
 
-    an_error 
+    an_error
 
 </wait>
 
 
 Make a button permanently down here that when clicked it force kills the
-server. This should make the queue now finish quite quickly. The item of 
+server. This should make the queue now finish quite quickly. The item of
 starting back up the kernel should still be placed on the queue, but it should
 resest quite quickly. After the reset all code from top to bottom is to be run.
 `
@@ -162,7 +162,7 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
   ) { }
 
   ngOnInit() {
-    this.myTitleService.set('Create and Edit Forms')
+    this.myTitleService.set(null)
     // this.myKernelSevice.startKernel()
   }
 
@@ -202,7 +202,7 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
 
     let factory = this.createComponentFactory(
       this.compiler, metadata, null);
-    
+
     if (this.componentRef) {
       this.componentRef.destroy();
       this.componentRef = null;
@@ -214,9 +214,9 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
 
   }
 
-  private createComponentFactory(compiler: Compiler, metadata: Component, 
+  private createComponentFactory(compiler: Compiler, metadata: Component,
                                  componentClass: any): ComponentFactory<any> {
-    @Component(metadata)                
+    @Component(metadata)
     class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
       @ViewChildren(ImportComponent) importComponents: QueryList<ImportComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
@@ -230,14 +230,14 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
       ngOnInit() {
         this.myKernelSevice.startKernel()
       }
-      
+
       ngOnDestroy() {
         this.myKernelSevice.shutdownKernel()
       }
 
       ngAfterViewInit() {
         // The order here forces all import components to run first.
-        // Only then will the variable component fetch the variables. 
+        // Only then will the variable component fetch the variables.
         for (let importComponent of this.importComponents.toArray()) {
           importComponent.runCode()
         }
@@ -253,7 +253,7 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
     };
 
     @NgModule(
-      { 
+      {
         imports: [
           CommonModule,
           JupyterModule

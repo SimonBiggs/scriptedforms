@@ -1,4 +1,4 @@
-div.editor { 
+div.editor {
   position: absolute;
   left: 0;
   bottom: 0px;
@@ -18,15 +18,5 @@ div.view {
 }
 
 div.content {
-  top: 141px;
-}
-
-@media (max-width: 600px) {
-  div.content {
-    top: 77px;
-  }
-
-  div.editor { 
-    right: 0;
-  }
+  top: 0px;
 }
