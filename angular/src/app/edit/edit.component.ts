@@ -56,6 +56,11 @@ Live will run and re-run whenever one of the input boxes is changed.
 
 <live>
 
+Use a try except (or better test if variable exists, not try...) code send to 
+the kernel to read the current state of the input
+variables. Display the current value of the input value in the input box if 
+python says it has one.
+
 <variable>a</variable>
 <variable>b</variable>
 <variable>c</variable>
