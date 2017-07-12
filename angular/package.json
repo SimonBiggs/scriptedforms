@@ -29,7 +29,7 @@
     "@angular/router": "^4.0.0",
     "@jupyterlab/outputarea": "^0.8.2",
     "@jupyterlab/rendermime": "^0.8.2",
-    "@jupyterlab/services": "^0.46.0",
+    "@jupyterlab/services": "^0.47.1",
     "bokehjs": "0.12.4",
     "brace": "^0.10.0",
     "core-js": "^2.4.1",
@@ -73,7 +73,7 @@
     "stylus-loader": "^3.0.1",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0",
+    "typescript": "^2.4.1",
     "url-loader": "^0.5.7",
     "webpack": "~2.2.0",
     "webpack-dev-server": "~2.4.2"

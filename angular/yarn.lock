@@ -171,20 +171,6 @@
     "@types/codemirror" "0.0.38"
     codemirror "^5.24.2"
 
-"@jupyterlab/coreutils@^0.7.0":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-0.7.1.tgz#10628212d4edc4ddf8188bf8300375f229e312f3"
-  dependencies:
-    "@phosphor/algorithm" "^1.1.1"
-    "@phosphor/coreutils" "^1.1.1"
-    "@phosphor/disposable" "^1.1.1"
-    "@phosphor/messaging" "^1.2.1"
-    "@phosphor/signaling" "^1.2.1"
-    minimist "^1.2.0"
-    moment "^2.17.1"
-    path-posix "^1.0.0"
-    url-parse "^1.1.8"
-
 "@jupyterlab/coreutils@^0.8.1":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-0.8.1.tgz#abf40e5595c0bdc4f9567df20b514f68a0978c47"
@@ -240,17 +226,6 @@
     ansi_up "^1.3.0"
     marked "^0.3.6"
 
-"@jupyterlab/services@^0.46.0":
-  version "0.46.0"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.46.0.tgz#386834a0473275dd78468b503aa77042a70686d0"
-  dependencies:
-    "@jupyterlab/coreutils" "^0.7.0"
-    "@phosphor/algorithm" "^1.1.1"
-    "@phosphor/coreutils" "^1.1.1"
-    "@phosphor/disposable" "^1.1.1"
-    "@phosphor/signaling" "^1.2.1"
-    "@types/text-encoding" "0.0.30"
-
 "@jupyterlab/services@^0.47.1":
   version "0.47.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.47.1.tgz#51ac3bf06a96a38934635fbf9d46f59dad6b0874"
@@ -296,7 +271,7 @@
     "@phosphor/keyboard" "^1.1.2"
     "@phosphor/signaling" "^1.2.2"
 
-"@phosphor/coreutils@^1.1.1", "@phosphor/coreutils@^1.2.0", "@phosphor/coreutils@^1.3.0":
+"@phosphor/coreutils@^1.2.0", "@phosphor/coreutils@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@phosphor/coreutils/-/coreutils-1.3.0.tgz#63292d381c012c5ab0d0196e83ced829b7e04a42"
 
@@ -5413,9 +5388,9 @@ type-is@~1.6.15:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.4.tgz#3d38321828231e434f287514959c37a82b629f42"
 
-typescript@~2.2.0:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.2.tgz#606022508479b55ffa368b58fee963a03dfd7b0c"
+typescript@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.1.tgz#c3ccb16ddaa0b2314de031e7e6fee89e5ba346bc"
 
 uc.micro@^1.0.1, uc.micro@^1.0.3:
   version "1.0.3"

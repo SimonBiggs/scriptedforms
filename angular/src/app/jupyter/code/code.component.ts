@@ -66,18 +66,8 @@ export class CodeComponent implements OnInit, AfterViewInit {
       // })
       this.outputArea.future = this.future
       // console.log(this.outputArea)
-
-      this.future.done.then(() => {
-        this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
-        // console.log(this.outputcontainer)
-      })
+      this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
     })
-
-
-    // this.outputArea.
-    // this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
-
-
 
   }
 
