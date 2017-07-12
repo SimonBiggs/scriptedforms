@@ -128,6 +128,49 @@
   dependencies:
     tsickle "^0.21.0"
 
+"@jupyterlab/apputils@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.8.2.tgz#9ddfa2577a771ba1ca52888c1b5f0249759ff618"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@jupyterlab/services" "^0.47.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/commands" "^1.3.0"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/domutils" "^1.1.1"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/properties" "^1.1.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@phosphor/virtualdom" "^1.1.1"
+    "@phosphor/widgets" "^1.3.0"
+    "@types/sanitize-html" "^1.13.31"
+    sanitize-html "^1.14.1"
+
+"@jupyterlab/codeeditor@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codeeditor/-/codeeditor-0.8.1.tgz#dc398b8b65b4906dc387ae63d0b2ec8e49cd3a30"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@jupyterlab/services" "^0.47.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@phosphor/widgets" "^1.3.0"
+
+"@jupyterlab/codemirror@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codemirror/-/codemirror-0.8.1.tgz#11e0ec562a7d1fb9dad3c423a2720c2996d530d8"
+  dependencies:
+    "@jupyterlab/codeeditor" "^0.8.1"
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@types/codemirror" "0.0.38"
+    codemirror "^5.24.2"
+
 "@jupyterlab/coreutils@^0.7.0":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-0.7.1.tgz#10628212d4edc4ddf8188bf8300375f229e312f3"
@@ -142,6 +185,61 @@
     path-posix "^1.0.0"
     url-parse "^1.1.8"
 
+"@jupyterlab/coreutils@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-0.8.1.tgz#abf40e5595c0bdc4f9567df20b514f68a0978c47"
+  dependencies:
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/signaling" "^1.2.1"
+    ajv "^5.1.5"
+    minimist "^1.2.0"
+    moment "^2.17.1"
+    path-posix "^1.0.0"
+    url-parse "^1.1.8"
+
+"@jupyterlab/outputarea@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.8.2.tgz#b7abeaac73088bceacb4bb1ba815051d2a762a3f"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@jupyterlab/rendermime" "^0.8.2"
+    "@jupyterlab/services" "^0.47.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/dragdrop" "^1.1.1"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@phosphor/widgets" "^1.3.0"
+
+"@jupyterlab/rendermime-interfaces@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime-interfaces/-/rendermime-interfaces-0.2.1.tgz#5cd00922d67f678268cf3f931a1a0ef73c3eb683"
+  dependencies:
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/widgets" "^1.3.0"
+
+"@jupyterlab/rendermime@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.8.2.tgz#e9d12ce8b0a2f34fbc374fff64d5bd0e1c15bf74"
+  dependencies:
+    "@jupyterlab/apputils" "^0.8.2"
+    "@jupyterlab/codemirror" "^0.8.1"
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@jupyterlab/rendermime-interfaces" "^0.2.1"
+    "@jupyterlab/services" "^0.47.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/widgets" "^1.3.0"
+    "@types/marked" "0.0.28"
+    "@types/mathjax" "0.0.31"
+    ansi_up "^1.3.0"
+    marked "^0.3.6"
+
 "@jupyterlab/services@^0.46.0":
   version "0.46.0"
   resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.46.0.tgz#386834a0473275dd78468b503aa77042a70686d0"
@@ -149,6 +247,17 @@
     "@jupyterlab/coreutils" "^0.7.0"
     "@phosphor/algorithm" "^1.1.1"
     "@phosphor/coreutils" "^1.1.1"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@types/text-encoding" "0.0.30"
+
+"@jupyterlab/services@^0.47.1":
+  version "0.47.1"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.47.1.tgz#51ac3bf06a96a38934635fbf9d46f59dad6b0874"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.8.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
     "@phosphor/disposable" "^1.1.1"
     "@phosphor/signaling" "^1.2.1"
     "@types/text-encoding" "0.0.30"
@@ -176,28 +285,84 @@
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
 
-"@phosphor/coreutils@^1.1.1":
+"@phosphor/commands@^1.3.0", "@phosphor/commands@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@phosphor/commands/-/commands-1.4.0.tgz#7e236a4c015daf37a9586fde29188c3dac20162f"
+  dependencies:
+    "@phosphor/algorithm" "^1.1.2"
+    "@phosphor/coreutils" "^1.3.0"
+    "@phosphor/disposable" "^1.1.2"
+    "@phosphor/domutils" "^1.1.2"
+    "@phosphor/keyboard" "^1.1.2"
+    "@phosphor/signaling" "^1.2.2"
+
+"@phosphor/coreutils@^1.1.1", "@phosphor/coreutils@^1.2.0", "@phosphor/coreutils@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@phosphor/coreutils/-/coreutils-1.3.0.tgz#63292d381c012c5ab0d0196e83ced829b7e04a42"
 
-"@phosphor/disposable@^1.1.1":
+"@phosphor/disposable@^1.1.1", "@phosphor/disposable@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@phosphor/disposable/-/disposable-1.1.2.tgz#a192dd6a2e6c69d5d09d39ecf334dab93778060e"
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
 
-"@phosphor/messaging@^1.2.1":
+"@phosphor/domutils@^1.1.1", "@phosphor/domutils@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@phosphor/domutils/-/domutils-1.1.2.tgz#e2efeb052f398c42b93b89e9bab26af15cc00514"
+
+"@phosphor/dragdrop@^1.1.1", "@phosphor/dragdrop@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@phosphor/dragdrop/-/dragdrop-1.3.0.tgz#7ce6ad39d6ca216d62a56f78104d02a77ae67307"
+  dependencies:
+    "@phosphor/coreutils" "^1.3.0"
+    "@phosphor/disposable" "^1.1.2"
+
+"@phosphor/keyboard@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@phosphor/keyboard/-/keyboard-1.1.2.tgz#3e32234451764240a98e148034d5a8797422dd1f"
+
+"@phosphor/messaging@^1.2.1", "@phosphor/messaging@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@phosphor/messaging/-/messaging-1.2.2.tgz#7d896ddd3797b94a347708ded13da5783db75c14"
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/collections" "^1.1.2"
 
-"@phosphor/signaling@^1.2.1":
+"@phosphor/properties@^1.1.1", "@phosphor/properties@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@phosphor/properties/-/properties-1.1.2.tgz#78cc77eff452839da02255de48e814946cc09a28"
+
+"@phosphor/signaling@^1.2.1", "@phosphor/signaling@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@phosphor/signaling/-/signaling-1.2.2.tgz#3fcf97ca88e38bfb357fe8fe6bf7513347a514a9"
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
+
+"@phosphor/virtualdom@^1.1.1", "@phosphor/virtualdom@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@phosphor/virtualdom/-/virtualdom-1.1.2.tgz#ce55c86eef31e5d0e26b1dc96ea32bd684458f41"
+  dependencies:
+    "@phosphor/algorithm" "^1.1.2"
+
+"@phosphor/widgets@^1.3.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@phosphor/widgets/-/widgets-1.5.0.tgz#5f998e86f5fde78d8aa44d7dc147686ca661681e"
+  dependencies:
+    "@phosphor/algorithm" "^1.1.2"
+    "@phosphor/commands" "^1.4.0"
+    "@phosphor/coreutils" "^1.3.0"
+    "@phosphor/disposable" "^1.1.2"
+    "@phosphor/domutils" "^1.1.2"
+    "@phosphor/dragdrop" "^1.3.0"
+    "@phosphor/keyboard" "^1.1.2"
+    "@phosphor/messaging" "^1.2.2"
+    "@phosphor/properties" "^1.1.2"
+    "@phosphor/signaling" "^1.2.2"
+    "@phosphor/virtualdom" "^1.1.2"
+
+"@types/codemirror@0.0.38":
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.38.tgz#d07ad45baca499f37151455857ad08804274091e"
 
 "@types/es6-promise@^0.0.32":
   version "0.0.32"
@@ -231,6 +396,14 @@
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-0.0.2.tgz#5d9ad19e6e6508cdd2f2596df86fd0aade598660"
 
+"@types/marked@0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.0.28.tgz#44ba754e9fa51432583e8eb30a7c4dd249b52faa"
+
+"@types/mathjax@0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/mathjax/-/mathjax-0.0.31.tgz#6618b6555082311edbe0ad34cd93408eb43370da"
+
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.77"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.77.tgz#3e4d569a427f17085e1ee4ecd3c31befb56af7b5"
@@ -246,6 +419,10 @@
 "@types/rbush@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/rbush/-/rbush-2.0.2.tgz#d297564680491973ab9dc5ec3afd7470487f530a"
+
+"@types/sanitize-html@^1.13.31":
+  version "1.13.31"
+  resolved "https://registry.yarnpkg.com/@types/sanitize-html/-/sanitize-html-1.13.31.tgz#6d10581c302c5678532041ff5502c96121ef176c"
 
 "@types/selenium-webdriver@^2.53.35", "@types/selenium-webdriver@~2.53.39":
   version "2.53.42"
@@ -322,6 +499,15 @@ ajv@^4.11.2, ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+ajv@^5.1.5:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.2.2.tgz#47c68d69e86f5d953103b0074a9430dc63da5e39"
+  dependencies:
+    co "^4.6.0"
+    fast-deep-equal "^1.0.0"
+    json-schema-traverse "^0.3.0"
+    json-stable-stringify "^1.0.1"
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/align-text/-/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
@@ -359,6 +545,10 @@ ansi-regex@^2.0.0:
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
+
+ansi_up@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ansi_up/-/ansi_up-1.3.0.tgz#c9c946bfc0b9bb5eaa060684bf2abaafe68bbd44"
 
 any-promise@^1.3.0:
   version "1.3.0"
@@ -1019,6 +1209,10 @@ codelyzer@~2.0.0:
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
 
+codemirror@^5.24.2:
+  version "5.27.4"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.27.4.tgz#0e817c839bfea9959dd16cd48ae14acc0e43c3b6"
+
 color-convert@^1.3.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
@@ -1535,7 +1729,7 @@ domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
 
-domelementtype@1:
+domelementtype@1, domelementtype@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
 
@@ -1549,6 +1743,12 @@ domhandler@2.1:
   dependencies:
     domelementtype "1"
 
+domhandler@^2.3.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.4.1.tgz#892e47000a99be55bbf3774ffea0561d8879c259"
+  dependencies:
+    domelementtype "1"
+
 domutils@1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"
@@ -1558,6 +1758,13 @@ domutils@1.1:
 domutils@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
+  dependencies:
+    dom-serializer "0"
+    domelementtype "1"
+
+domutils@^1.5.1:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.6.2.tgz#1958cc0b4c9426e9ed367fb1c8e854891b0fa3ff"
   dependencies:
     dom-serializer "0"
     domelementtype "1"
@@ -1672,7 +1879,7 @@ ent@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ent/-/ent-2.2.0.tgz#e964219325a21d05f44466a2f686ed6ce5f5dd1d"
 
-entities@~1.1.1:
+entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
@@ -1848,6 +2055,10 @@ extract-text-webpack-plugin@^2.1.0:
 extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
+
+fast-deep-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
 fastparse@^1.1.1:
   version "1.1.1"
@@ -2306,6 +2517,17 @@ html-webpack-plugin@^2.19.0:
     lodash "^4.17.3"
     pretty-error "^2.0.2"
     toposort "^1.0.0"
+
+htmlparser2@^3.9.0:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
+  dependencies:
+    domelementtype "^1.3.0"
+    domhandler "^2.3.0"
+    domutils "^1.5.1"
+    entities "^1.1.1"
+    inherits "^2.0.1"
+    readable-stream "^2.0.2"
 
 htmlparser2@~3.3.0:
   version "3.3.0"
@@ -2826,6 +3048,10 @@ json-loader@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.4.tgz#8baa1365a632f58a3c46d20175fc6002c96e37de"
 
+json-schema-traverse@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
@@ -3156,6 +3382,10 @@ markdown-it@^8.3.1:
     linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.3"
+
+marked@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
 matcher-collection@^1.0.0:
   version "1.0.4"
@@ -4299,6 +4529,10 @@ regex-cache@^0.4.2:
     is-equal-shallow "^0.1.3"
     is-primitive "^2.0.0"
 
+regexp-quote@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/regexp-quote/-/regexp-quote-0.0.0.tgz#1e0f4650c862dcbfed54fd42b148e9bb1721fcf2"
+
 regexpu-core@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-1.0.0.tgz#86a763f58ee4d7c2f6b102e4764050de7ed90c6b"
@@ -4478,6 +4712,14 @@ rxjs@^5.0.1, rxjs@^5.1.0:
 safe-buffer@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.0.tgz#fe4c8460397f9eaaaa58e73be46273408a45e223"
+
+sanitize-html@^1.14.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.14.1.tgz#730ffa2249bdf18333effe45b286173c9c5ad0b8"
+  dependencies:
+    htmlparser2 "^3.9.0"
+    regexp-quote "0.0.0"
+    xtend "^4.0.0"
 
 sass-graph@^2.1.1:
   version "2.2.4"

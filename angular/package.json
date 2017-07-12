@@ -27,6 +27,8 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "@jupyterlab/outputarea": "^0.8.2",
+    "@jupyterlab/rendermime": "^0.8.2",
     "@jupyterlab/services": "^0.46.0",
     "bokehjs": "0.12.4",
     "brace": "^0.10.0",
