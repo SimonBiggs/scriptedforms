@@ -1,6 +1,21 @@
 <span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span>
 
 <md-input-container *ngIf="variableName">
-    <input *ngIf="inputType=='string'" mdInput [placeholder]="variableName" [(ngModel)]="variableString" type="text">
-    <input *ngIf="inputType=='number'" mdInput [placeholder]="variableName" [(ngModel)]="variableNumber" type="number">
+    <input 
+        *ngIf="inputType=='string'" 
+        mdInput 
+        [disabled]="!isFormReady" 
+        [placeholder]="variableName" 
+        [(ngModel)]="variableValue" 
+        (ngModelChange)="variableChanged($event)"
+        type="text">
+
+    <input 
+        *ngIf="inputType=='number'" 
+        mdInput 
+        [disabled]="!isFormReady" 
+        [placeholder]="variableName" 
+        [(ngModel)]="variableValue" 
+        (ngModelChange)="variableChanged($event)"
+        type="number">
 </md-input-container>

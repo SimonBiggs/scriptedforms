@@ -1,6 +1,6 @@
 import { 
   Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, 
-  ChangeDetectorRef
+  ChangeDetectorRef, EventEmitter, Output, OnChanges
 } from '@angular/core';
 
 import { Kernel } from '@jupyterlab/services';
@@ -13,17 +13,17 @@ import { KernelService } from '../kernel.service';
   styleUrls: ['./variable.component.css']
 })
 export class VariableComponent implements OnInit, AfterViewInit {
-  code: string
-  
-  promise: Promise<Kernel.IFuture>
-  future: Kernel.IFuture
+  fetchCode: string
+  setCode: string
+  isFormReady = false;
 
   @Input('type') inputType: string
+  @Output() variableChange = new EventEmitter<any>();
+
   @ViewChild('variablecontainer') variablecontainer: ElementRef
 
   variableName: string
-  variableString: string
-  variableNumber: number
+  variableValue: any
 
   constructor(
     private myChangeDetectorRef: ChangeDetectorRef,
@@ -31,13 +31,30 @@ export class VariableComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    if (!this.inputType.match('string') && !this.inputType.match('number')) {
+      throw new RangeError(`When creating a variable must declare the type as either 'string' or 'number'
+eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or 
+    &lt;variable type="number"&gt;name&lt;/variable&gt;`)
+    }
+  }
+
+  variableChanged(value) {
+    this.myChangeDetectorRef.detectChanges()
+    console.log('variable change')
+    this.setCode = `${this.variableName} = ${this.variableValue}`
+
+    this.myKernelSevice.runCode(this.setCode).then(future => {
+      return future.done
+    }).then(() => {
+      this.variableChange.emit(this.variableValue)
+    })   
   }
 
   ngAfterViewInit() {
     this.variableName = this.variablecontainer.nativeElement.innerHTML
     this.myChangeDetectorRef.detectChanges()
 
-    this.code = `
+    this.fetchCode = `
 if '${this.variableName}' in locals():
     print(${this.variableName})
 else:
@@ -46,17 +63,23 @@ else:
   }
 
   fetchVariable() {
-    this.promise = this.myKernelSevice.runCode(this.code)
-    this.promise.then(future => {
-      this.future = future
-      this.future.onIOPub = (msg => {
+    this.myKernelSevice.runCode(this.fetchCode).then(future => {
+      future.onIOPub = (msg => {
         if (msg.content.name == "stdout") {
-          // console.log(Number(msg.content.text))
-          this.variableNumber = Number(msg.content.text)
-          this.variableString = String(msg.content.text)
+          if (this.inputType.match('string')) {
+            this.variableValue = String(msg.content.text)
+          }
+          if (this.inputType.match('number')) {
+            this.variableValue = Number(msg.content.text)
+          }
+          this.myChangeDetectorRef.detectChanges()
         }
-        // console.log(msg.content)
       })
     })
+  }
+
+  formReady() {
+    this.isFormReady = true
+    this.myChangeDetectorRef.detectChanges()
   }
 }

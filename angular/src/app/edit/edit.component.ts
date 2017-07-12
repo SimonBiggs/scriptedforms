@@ -17,6 +17,7 @@ import { JupyterModule } from '../jupyter/jupyter.module';
 import { KernelService } from '../jupyter/kernel.service'
 import { ImportComponent } from '../jupyter/import/import.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
+import { LiveComponent } from '../jupyter/live/live.component';
 
 import { TitleService } from '../title.service'
 
@@ -219,6 +220,8 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
     class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
       @ViewChildren(ImportComponent) importComponents: QueryList<ImportComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
+      @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>
+
 
       constructor(
         private myKernelSevice: KernelService
@@ -234,13 +237,18 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
 
       ngAfterViewInit() {
         // The order here forces all import components to run first.
-        // Only then will the variable component fetch the variables.
+        // Only then will the variable component fetch the variables. 
         for (let importComponent of this.importComponents.toArray()) {
           importComponent.runCode()
         }
         for (let variableComponent of this.variableComponents.toArray()) {
           variableComponent.fetchVariable()
         }
+        this.myKernelSevice.queue.then(() => {
+          for (let liveComponent of this.liveComponents.toArray()) {
+            liveComponent.formReady()
+          }
+        })
       }
     };
 
