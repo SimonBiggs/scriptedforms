@@ -39,17 +39,12 @@ export class CodeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.code = this.codecontainer.nativeElement.innerHTML
-
     this.model = new OutputAreaModel()
-
     this.renderMime = new RenderMime()
     
     for (let factory of defaultRendererFactories) {
       this.renderMime.addFactory(factory)
     }
-
-    // console.log(this.renderMime)
-
 
     this.outputAreaOptions = {
       model: this.model,
@@ -57,18 +52,15 @@ export class CodeComponent implements OnInit, AfterViewInit {
     }
 
     this.outputArea = new OutputArea(this.outputAreaOptions)
-    
+  }
+
+  runCode() {
     this.promise = this.myKernelSevice.runCode(this.code)
     this.promise.then(future => {
       this.future = future
-      // this.future.onIOPub = (msg => {
-      //   console.log(msg.content)
-      // })
       this.outputArea.future = this.future
-      // console.log(this.outputArea)
       this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
     })
-
   }
 
 }

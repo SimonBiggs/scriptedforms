@@ -3,7 +3,7 @@ import {
     ViewChild, ViewContainerRef, ComponentRef,
     Compiler, ComponentFactory, NgModule, 
     ModuleWithComponentFactories, ComponentFactoryResolver,
-    isDevMode, ElementRef
+    isDevMode, ElementRef, ViewChildren, QueryList
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -15,9 +15,10 @@ import 'brace/mode/markdown';
 
 import { JupyterModule } from '../jupyter/jupyter.module';
 import { KernelService } from '../jupyter/kernel.service'
+import { ImportComponent } from '../jupyter/import/import.component';
+import { VariableComponent } from '../jupyter/variable/variable.component';
 
 import { TitleService } from '../title.service'
-
 
 @Component({
   selector: 'app-edit',
@@ -44,10 +45,10 @@ Press "Ctrl + Enter" to update the preview.
 
 <import>
 
-    a = 1
-    b = 2
-    c = 3
-    d = 4
+    a = 5
+    b = np.nan
+    c = np.nan
+    d = np.nan
 
 <import>
 
@@ -61,18 +62,36 @@ the kernel to read the current state of the input
 variables. Display the current value of the input value in the input box if 
 python says it has one.
 
-<variable>a</variable>
-<variable>b</variable>
-<variable>c</variable>
-<variable>d</variable>
+<variable type="number">a</variable>
+<variable type="number">b</variable>
+<variable type="number">c</variable>
+<variable type="number">d</variable>
 
-    result = np.mean([a, b, c, d])
-
-    result
-    
-    plt.plot([a, b], [c, d])
+    result = np.nanmean([a, b, c, d])
+    print(result)
 
 </live>
+
+Variable tags are always called first within live groups.
+
+<live>
+
+    x = np.linspace(-10, 10)
+    y = x ** power
+
+Power Value: <variable type="number">power</variable>
+
+    plt.plot(x, y)
+
+</live>
+
+<import>
+
+Import groups always run before all other groups.
+
+    power = 1
+
+</import>
 
 Wait groups will not run initially, they will only run when their respective
 button is pressed.
@@ -197,7 +216,10 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
   private createComponentFactory(compiler: Compiler, metadata: Component, 
                                  componentClass: any): ComponentFactory<any> {
     @Component(metadata)                
-    class RuntimeComponent implements OnInit, OnDestroy {
+    class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
+      @ViewChildren(ImportComponent) importComponents: QueryList<ImportComponent>
+      @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
+
       constructor(
         private myKernelSevice: KernelService
       ) { }
@@ -209,6 +231,17 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
       ngOnDestroy() {
         this.myKernelSevice.shutdownKernel()
       }
+
+      ngAfterViewInit() {
+        // The order here forces all import components to run first.
+        // Only then will the variable component fetch the variables.
+        for (let importComponent of this.importComponents.toArray()) {
+          importComponent.runCode()
+        }
+        for (let variableComponent of this.variableComponents.toArray()) {
+          variableComponent.fetchVariable()
+        }
+      }
     };
 
     @NgModule(
@@ -219,7 +252,7 @@ resest quite quickly. After the reset all code from top to bottom is to be run.
         ],
         declarations: [
           RuntimeComponent
-        ] 
+        ]
       }
     )
     class RuntimeComponentModule { }
