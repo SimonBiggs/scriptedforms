@@ -20,6 +20,8 @@ export class KernelService {
     '%matplotlib inline',
     'x = np.linspace(-10,10)',
     'y = x**2',
+    'print(x)',
+    'print(y)',
     'plt.plot(x, y)'
   ].join('\n')
 
