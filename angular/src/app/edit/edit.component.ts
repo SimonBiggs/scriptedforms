@@ -27,72 +27,48 @@ import { TitleService } from '../title.service'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-  defaultForm = `
-Import should always run when the Kernel is started up.
-
-<import>
+  defaultForm = `<import>
 
     import time
     import numpy as np
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-</import>
-
-# Title
-
-Edit the text box on the left.
-Press "Ctrl + Enter" to update the preview.
-
-<import>
-
     a = 5
     b = np.nan
     c = np.nan
-    d = np.nan
 
-<import>
+    power = 1
 
+</import>
+
+# Write a title here
+
+Edit the text box on the left.
+Press "Ctrl + Enter" to update the preview.
 
 Live will run and re-run whenever one of the input boxes is changed.
 
 <live>
 
-Use a try except (or better test if variable exists, not try...) code send to
-the kernel to read the current state of the input
-variables. Display the current value of the input value in the input box if
-python says it has one.
+    result = np.nanmean([a, b, c])
 
 <variable type="number">a</variable>
 <variable type="number">b</variable>
 <variable type="number">c</variable>
-<variable type="number">d</variable>
-
-    result = np.nanmean([a, b, c, d])
-    print(result)
+\`print("Average = " + str(result))\`
 
 </live>
-
-Variable tags are always called first within live groups.
 
 <live>
 
-    x = np.linspace(-10, 10)
-    y = x ** power
-
 Power Value: <variable type="number">power</variable>
 
-    plt.plot(x, y)
+    x = np.linspace(-10, 10)
+    y = x ** power
+    plt.plot(x, y);
 
 </live>
-
-<import>
-
-Import groups always run before all other groups.
-
-    power = 1
-
-</import>
 
 Wait groups will not run initially, they will only run when their respective
 button is pressed.

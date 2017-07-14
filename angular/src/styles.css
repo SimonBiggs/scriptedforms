@@ -68,7 +68,7 @@ html {
 }
 
 .fill-remaining-space {
-   /*This fills the remaining space, by using flexbox.  
+   /*This fills the remaining space, by using flexbox.
   Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
 }
@@ -98,7 +98,7 @@ html {
 }
 
 .mat-sidenav-container {
-  position: absolute !important; 
+  position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
@@ -152,4 +152,16 @@ a {
     text-align: center;
   }*/
 
+}
+
+import pre {
+  display: none;
+}
+
+.jp-OutputArea {
+  display: inline-block;
+}
+
+.jp-OutputArea-output * {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

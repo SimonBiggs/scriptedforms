@@ -11,6 +11,8 @@ import { ImportComponent } from './import/import.component';
 import { LiveComponent } from './live/live.component';
 import { WaitComponent } from './wait/wait.component';
 import { VariableComponent } from './variable/variable.component';
+import { NumberComponent } from './number/number.component';
+import { StringComponent } from './string/string.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { VariableComponent } from './variable/variable.component';
     ImportComponent,
     LiveComponent,
     WaitComponent,
-    VariableComponent
+    VariableComponent,
+    NumberComponent,
+    StringComponent
   ],
   providers: [
     KernelService
@@ -33,7 +37,9 @@ import { VariableComponent } from './variable/variable.component';
     ImportComponent,
     LiveComponent,
     WaitComponent,
-    VariableComponent
+    VariableComponent,
+    NumberComponent,
+    StringComponent
   ]
 })
 export class JupyterModule { }
