@@ -54,7 +54,11 @@ Open new terminal
 
 Start server:
 
-    ./run_dev.sh
+    cd angular
+    yarn run kernel
+    yarn run forms
+
+Open http://localhost:4200
 
 ## Recommended IDE
 
