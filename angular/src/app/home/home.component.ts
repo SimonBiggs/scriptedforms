@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { TitleService } from '../title.service'
 
@@ -10,11 +10,13 @@ import { TitleService } from '../title.service'
 export class HomeComponent implements OnInit {
 
   constructor(
+    private myChangeDetectorRef: ChangeDetectorRef,
     private myTitleService: TitleService
   ) { }
 
   ngOnInit() {
     this.myTitleService.set('Home');
+    this.myChangeDetectorRef.detectChanges()
   }
 
 }
