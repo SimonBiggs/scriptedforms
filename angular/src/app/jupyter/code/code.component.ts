@@ -37,6 +37,7 @@ export class CodeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.code = this.codecontainer.nativeElement.innerHTML
+    console.log(this.code)
     this.model = new OutputAreaModel()
     this.renderMime = new RenderMime(
       { initialFactories: defaultRendererFactories });

@@ -55,7 +55,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   // outputArea: OutputArea
   // model: OutputAreaModel
 
-  // nullSanitizer: ISanitizer
+  nullSanitizer: ISanitizer
 
   myAce: ace.Editor;
 
@@ -81,12 +81,14 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.inputArea = new InputArea({
+    this.nullSanitizer = {
+      sanitize: (value: string) => {return value}
+    }
 
-    // })
-
-    this.renderMime = new RenderMime(
-      { initialFactories: defaultRendererFactories });
+    this.renderMime = new RenderMime({
+      initialFactories: defaultRendererFactories,
+      sanitizer: this.nullSanitizer
+    });
 
     this.renderer = this.renderMime.createRenderer('text/markdown');
 
