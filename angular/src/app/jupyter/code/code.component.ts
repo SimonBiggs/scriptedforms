@@ -6,6 +6,10 @@ import { RenderMime, defaultRendererFactories } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 import { Kernel } from '@jupyterlab/services';
 
+import {
+  Mode, CodeMirrorEditor
+} from '@jupyterlab/codemirror';
+
 import { KernelService } from '../kernel.service';
 
 @Component({
@@ -29,14 +33,24 @@ export class CodeComponent implements OnInit, AfterViewInit {
   @ViewChild('outputcontainer') outputcontainer: ElementRef
 
   constructor(
-    private myKernelSevice: KernelService
+    private myKernelSevice: KernelService,
+    private _eRef: ElementRef
   ) { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.code = this.codecontainer.nativeElement.innerHTML
+    this.code = this.codecontainer.nativeElement.innerText
+    Mode.ensure('python').then((spec) => {
+      let el = document.createElement('div');
+      Mode.run(this.code, spec.mime, el);
+      this.codecontainer.nativeElement.innerHTML = el.innerHTML
+      this._eRef.nativeElement.classList.add('cm-s-jupyter')
+      this._eRef.nativeElement.classList.add('language-python')
+
+
+    })
     console.log(this.code)
     this.model = new OutputAreaModel()
     this.renderMime = new RenderMime(

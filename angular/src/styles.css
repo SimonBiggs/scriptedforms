@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('~@jupyterlab/codemirror/style/index.css');
+@import url('~@jupyterlab/rendermime/style/index.css');
+
 .mat-sidenav {
   width: 300px;
   padding: 16px;
@@ -158,10 +161,17 @@ a {
   display: none;
 } */
 
+pre {
+  margin: 1em 2em;
+  line-height: 1;
+}
+
 .jp-OutputArea {
   display: inline-block;
 }
 
-.jp-OutputArea-output * {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+ .jp-OutputArea-output * {
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+  overflow-x: inherit !important;
+  overflow-y: inherit !important;
 }

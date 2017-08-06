@@ -21,6 +21,8 @@ import { ISanitizer } from '@jupyterlab/apputils';
 
 import * as  MarkdownIt from 'markdown-it';
 
+import * as  hljs from 'highlight.js';
+
 import * as marked from 'marked';
 
 import * as ace from 'brace';
@@ -33,6 +35,10 @@ import { KernelService } from '../jupyter/kernel.service'
 import { ImportComponent } from '../jupyter/import/import.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
 import { LiveComponent } from '../jupyter/live/live.component';
+
+import {
+  Mode, CodeMirrorEditor
+} from '@jupyterlab/codemirror';
 
 // import { TitleService } from '../title.service'
 
@@ -48,6 +54,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   renderMime: RenderMime
   renderer: IRenderMime.IRenderer
   // mimeModel: MimeModel
+
+  myMarkdownIt: MarkdownIt.MarkdownIt
 
   defaultForm = FORMCONTENTS
 
@@ -66,11 +74,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private componentRef: ComponentRef<{}>;
 
-  private myMarkdownIt = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true
-  })
+
 
   constructor(
     // private myTitleService: TitleService,
@@ -81,6 +85,12 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
+
+
+
+
+
     this.nullSanitizer = {
       sanitize: (value: string) => {return value}
     }
@@ -114,26 +124,61 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     this.myAce = ace.edit(this.editor.nativeElement)
     this.myAce.getSession().setMode('ace/mode/markdown')
 
-    this.myAce.commands.addCommand({
-      name: "save", bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
-      exec: () => {
-        this.updateForm()
-      }
+    this.myAce.setValue(this.defaultForm)
+
+    Mode.ensure('python').then(() => {
+      return Mode.ensure('markdown')
+    }).then(() => {
+      this.myMarkdownIt = new MarkdownIt({
+        html: true,
+        linkify: true,
+        langPrefix: 'cm-s-jupyter language-',
+        typographer: true,
+        highlight: (str, lang) => {
+          return str
+          // let returnCode: string
+          // if (lang != 'python' && lang != 'markdown') {
+          //   // no language, no highlight
+          //   return str;
+          // }
+
+          // let el = document.createElement('div');
+          // Mode.run(str, lang, el);
+          // returnCode = '<span ngNonBindable>' + el.innerHTML + '</span>';
+          // return returnCode;
+        }
+      })
+
+      this.myAce.commands.addCommand({
+        name: "save", bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
+        exec: () => {
+          this.updateForm()
+        }
+      })
+
+      this.updateForm()
     })
 
-    this.myAce.setValue(this.defaultForm)
-    this.updateForm()
+
+
+
   }
 
   updateForm() {
-    let mimeModel = new MimeModel(
-      { data: { 'text/markdown': this.myAce.getValue() }});
-    this.renderer.renderModel(mimeModel)
+    // let mimeModel = new MimeModel(
+    //   { data: { 'text/markdown': this.myAce.getValue() }});
+    // this.renderer.renderModel(mimeModel)
 
-    this.renderer.renderModel(mimeModel).then(result => {
-      this.compileTemplate(this.renderer.node.innerHTML)
-      this.myChangeDetectorRef.detectChanges()
-    })
+    // this.renderer.renderModel(mimeModel).then(result => {
+    //   this.compileTemplate(this.renderer.node.innerHTML)
+    //   this.myChangeDetectorRef.detectChanges()
+    // })
+
+
+
+    this.compileTemplate(this.myMarkdownIt.render(this.myAce.getValue()))
+    this.myChangeDetectorRef.detectChanges()
+
     // this.nullSanitizer = {
     //   sanitize: (value: string) => {return value}
     // }
