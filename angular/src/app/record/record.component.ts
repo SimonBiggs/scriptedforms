@@ -1,6 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 
-import { TitleService } from '../title.service'
+// import { TitleService } from '../title.service'
 
 @Component({
   selector: 'app-record',
@@ -8,12 +8,12 @@ import { TitleService } from '../title.service'
   styleUrls: ['./record.component.css']
 })
 export class RecordComponent implements OnInit {
-  
+
   constructor(
-    private myTitleService: TitleService,
+    // private myTitleService: TitleService,
   ) { }
 
   ngOnInit() {
-    this.myTitleService.set('Record Results');
+    // this.myTitleService.set('Record Results');
   }
 }

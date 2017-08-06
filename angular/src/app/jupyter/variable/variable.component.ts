@@ -1,5 +1,5 @@
-import { 
-  Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, 
+import {
+  Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit,
   ChangeDetectorRef, EventEmitter, Output, OnChanges
 } from '@angular/core';
 
@@ -33,13 +33,13 @@ export class VariableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (!this.inputType.match('string') && !this.inputType.match('number')) {
       throw new RangeError(`When creating a variable must declare the type as either 'string' or 'number'
-eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or 
+eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
     &lt;variable type="number"&gt;name&lt;/variable&gt;`)
     }
   }
 
   variableChanged(value) {
-    this.myChangeDetectorRef.detectChanges()
+    // this.myChangeDetectorRef.detectChanges()
     console.log('variable change')
     this.setCode = `${this.variableName} = ${this.variableValue}`
 
@@ -47,7 +47,7 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
       return future.done
     }).then(() => {
       this.variableChange.emit(this.variableValue)
-    })   
+    })
   }
 
   ngAfterViewInit() {
@@ -72,7 +72,7 @@ else:
           if (this.inputType.match('number')) {
             this.variableValue = Number(msg.content.text)
           }
-          this.myChangeDetectorRef.detectChanges()
+          // this.myChangeDetectorRef.detectChanges()
         }
       })
     })
@@ -80,6 +80,6 @@ else:
 
   formReady() {
     this.isFormReady = true
-    this.myChangeDetectorRef.detectChanges()
+    // this.myChangeDetectorRef.detectChanges()
   }
 }

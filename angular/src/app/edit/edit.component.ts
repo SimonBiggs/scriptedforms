@@ -3,7 +3,8 @@ import {
     ViewChild, ViewContainerRef, ComponentRef,
     Compiler, ComponentFactory, NgModule,
     ModuleWithComponentFactories, ComponentFactoryResolver,
-    isDevMode, ElementRef, ViewChildren, QueryList
+    isDevMode, ElementRef, ViewChildren, QueryList,
+    ChangeDetectorRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -21,7 +22,7 @@ import { ImportComponent } from '../jupyter/import/import.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
 import { LiveComponent } from '../jupyter/live/live.component';
 
-import { TitleService } from '../title.service'
+// import { TitleService } from '../title.service'
 
 import { FORMCONTENTS } from './default-form'
 
@@ -51,14 +52,15 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   })
 
   constructor(
-    private myTitleService: TitleService,
+    // private myTitleService: TitleService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private compiler: Compiler,
-    private myKernelSevice: KernelService
+    private myKernelSevice: KernelService,
+    private myChangeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.myTitleService.set(null)
+    // this.myTitleService.set(null)
   }
 
   ngOnDestroy() {
@@ -81,6 +83,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateForm() {
     this.compileTemplate(this.myAce.getValue())
+    this.myChangeDetectorRef.detectChanges()
   }
 
 
@@ -114,7 +117,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       constructor(
-        private myKernelSevice: KernelService
+        private myKernelSevice: KernelService,
+        // private myChangeDetectorRef: ChangeDetectorRef
       ) { }
 
       ngOnInit() {
@@ -126,6 +130,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       ngAfterViewInit() {
+
         // The order here forces all import components to run first.
         // Only then will the variable component fetch the variables.
         for (let importComponent of this.importComponents.toArray()) {

@@ -1,8 +1,8 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 
-import { TitleService } from './title.service'
+// import { TitleService } from './title.service'
 import { KernelService } from './jupyter/kernel.service'
 
 @Component({
@@ -16,19 +16,19 @@ export class AppComponent implements OnInit {
   sourceUrl: string
 
   constructor (
-    private myTitleService: TitleService,
-    private myRouter: Router,
+    // private myTitleService: TitleService,
+    // private myRouter: Router,
     private myKernelSevice: KernelService
   ) {
-    myRouter.events.subscribe(() => {
-      this.updatePageTitle()
-    })
+    // myRouter.events.subscribe(() => {
+    //   this.updatePageTitle()
+    // })
 
     myKernelSevice.permissionCheck()
   }
 
   ngOnInit() {
-    this.updatePageTitle()
+    // this.updatePageTitle()
 
     if(isDevMode()) {
       this.sourceUrl = 'http://localhost:8888/forms/downloadsource'
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  updatePageTitle() {
-    this.pageTitle = this.myTitleService.get();
-  }
+  // updatePageTitle() {
+  //   this.pageTitle = this.myTitleService.get();
+  // }
 }

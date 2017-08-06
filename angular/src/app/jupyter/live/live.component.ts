@@ -1,6 +1,6 @@
-import { 
-  Component, OnInit, ContentChildren, QueryList, AfterViewInit, OnChanges,
-  SimpleChange
+import {
+  Component, OnInit, ContentChildren, QueryList, AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { VariableComponent } from '../variable/variable.component'
@@ -11,17 +11,20 @@ import { CodeComponent } from '../code/code.component'
   templateUrl: './live.component.html',
   styleUrls: ['./live.component.css']
 })
-export class LiveComponent implements OnInit, AfterViewInit, OnChanges {
-  
+export class LiveComponent implements OnInit, AfterViewInit {
+
   afterViewInit = false;
   isFormReady = false;
 
   @ContentChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>
 
-  constructor() { }
+  constructor(
+      private myChangeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -31,10 +34,6 @@ export class LiveComponent implements OnInit, AfterViewInit, OnChanges {
         value => this.variableChanged(value)
       )
     }
-  }
-
-  ngOnChanges() {
-
   }
 
   variableChanged(newVariable) {

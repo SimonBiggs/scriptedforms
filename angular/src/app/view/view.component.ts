@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TitleService } from '../title.service'
+// import { TitleService } from '../title.service'
 
 @Component({
   selector: 'app-view',
@@ -10,11 +10,11 @@ import { TitleService } from '../title.service'
 export class ViewComponent implements OnInit{
 
   constructor(
-    private myTitleService: TitleService,
+    // private myTitleService: TitleService,
   ) { }
 
   ngOnInit() {
-    this.myTitleService.set('View Written Results');
+    // this.myTitleService.set('View Written Results');
   }
 
 
