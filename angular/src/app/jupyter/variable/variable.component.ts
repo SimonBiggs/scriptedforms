@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit,
-  ChangeDetectorRef, EventEmitter, Output, OnChanges
+  ChangeDetectorRef, EventEmitter, Output
 } from '@angular/core';
 
 import { Kernel } from '@jupyterlab/services';
@@ -23,6 +23,7 @@ export class VariableComponent implements OnInit, AfterViewInit {
   @ViewChild('variablecontainer') variablecontainer: ElementRef
 
   variableName: string
+  oldVariableValue: any = null
   variableValue: any
 
   constructor(
@@ -43,11 +44,15 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
     console.log('variable change')
     this.setCode = `${this.variableName} = ${this.variableValue}`
 
-    this.myKernelSevice.runCode(this.setCode).then(future => {
-      return future.done
-    }).then(() => {
-      this.variableChange.emit(this.variableValue)
-    })
+    if (this.variableValue != this.oldVariableValue) {
+      this.myKernelSevice.runCode(this.setCode).then(future => {
+        return future.done
+      }).then(() => {
+        this.variableChange.emit(this.variableValue)
+      })
+      this.oldVariableValue = this.variableValue
+    }
+
   }
 
   ngAfterViewInit() {
