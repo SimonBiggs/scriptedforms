@@ -128,12 +128,12 @@
   dependencies:
     tsickle "^0.21.0"
 
-"@jupyterlab/apputils@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.8.2.tgz#9ddfa2577a771ba1ca52888c1b5f0249759ff618"
+"@jupyterlab/apputils@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.9.0.tgz#37e7013fb600abfcef74753ff51dde56de4963b1"
   dependencies:
-    "@jupyterlab/coreutils" "^0.8.1"
-    "@jupyterlab/services" "^0.47.1"
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@jupyterlab/services" "^0.48.0"
     "@phosphor/algorithm" "^1.1.1"
     "@phosphor/commands" "^1.3.0"
     "@phosphor/coreutils" "^1.2.0"
@@ -147,24 +147,41 @@
     "@types/sanitize-html" "^1.13.31"
     sanitize-html "^1.14.1"
 
-"@jupyterlab/codeeditor@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/codeeditor/-/codeeditor-0.8.1.tgz#dc398b8b65b4906dc387ae63d0b2ec8e49cd3a30"
+"@jupyterlab/cells@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/cells/-/cells-0.9.0.tgz#64203ce0b5c305e1569d447b1f1e0cb56d32efb0"
   dependencies:
-    "@jupyterlab/coreutils" "^0.8.1"
-    "@jupyterlab/services" "^0.47.1"
+    "@jupyterlab/apputils" "^0.9.0"
+    "@jupyterlab/codeeditor" "^0.9.0"
+    "@jupyterlab/codemirror" "^0.9.0"
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@jupyterlab/outputarea" "^0.9.0"
+    "@jupyterlab/rendermime" "^0.9.0"
+    "@jupyterlab/services" "^0.48.0"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@phosphor/virtualdom" "^1.1.1"
+    "@phosphor/widgets" "^1.3.0"
+
+"@jupyterlab/codeeditor@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codeeditor/-/codeeditor-0.9.0.tgz#1c118a26a38cb98518910693916d2809cff636e7"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@jupyterlab/services" "^0.48.0"
     "@phosphor/coreutils" "^1.2.0"
     "@phosphor/disposable" "^1.1.1"
     "@phosphor/messaging" "^1.2.1"
     "@phosphor/signaling" "^1.2.1"
     "@phosphor/widgets" "^1.3.0"
 
-"@jupyterlab/codemirror@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/codemirror/-/codemirror-0.8.1.tgz#11e0ec562a7d1fb9dad3c423a2720c2996d530d8"
+"@jupyterlab/codemirror@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codemirror/-/codemirror-0.9.0.tgz#49b08968ad679a8b58d6fb6f8f5b2781fd6ac1b7"
   dependencies:
-    "@jupyterlab/codeeditor" "^0.8.1"
-    "@jupyterlab/coreutils" "^0.8.1"
+    "@jupyterlab/codeeditor" "^0.9.0"
+    "@jupyterlab/coreutils" "^0.9.0"
     "@phosphor/algorithm" "^1.1.1"
     "@phosphor/disposable" "^1.1.1"
     "@phosphor/signaling" "^1.2.1"
@@ -186,13 +203,28 @@
     path-posix "^1.0.0"
     url-parse "^1.1.8"
 
-"@jupyterlab/outputarea@~0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.8.2.tgz#b7abeaac73088bceacb4bb1ba815051d2a762a3f"
+"@jupyterlab/coreutils@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-0.9.0.tgz#cf24a9a15ce433602bc00a80884314a7a91b0d7a"
   dependencies:
-    "@jupyterlab/coreutils" "^0.8.1"
-    "@jupyterlab/rendermime" "^0.8.2"
-    "@jupyterlab/services" "^0.47.1"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/messaging" "^1.2.1"
+    "@phosphor/signaling" "^1.2.1"
+    ajv "^5.1.5"
+    minimist "^1.2.0"
+    moment "^2.17.1"
+    path-posix "^1.0.0"
+    url-parse "^1.1.8"
+
+"@jupyterlab/outputarea@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.9.0.tgz#9cb87b3ce9d55c72019d6a1ae40b62cdb329027e"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@jupyterlab/rendermime" "^0.9.0"
+    "@jupyterlab/services" "^0.48.0"
     "@phosphor/algorithm" "^1.1.1"
     "@phosphor/coreutils" "^1.2.0"
     "@phosphor/disposable" "^1.1.1"
@@ -201,22 +233,22 @@
     "@phosphor/signaling" "^1.2.1"
     "@phosphor/widgets" "^1.3.0"
 
-"@jupyterlab/rendermime-interfaces@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime-interfaces/-/rendermime-interfaces-0.2.1.tgz#5cd00922d67f678268cf3f931a1a0ef73c3eb683"
+"@jupyterlab/rendermime-interfaces@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime-interfaces/-/rendermime-interfaces-0.3.0.tgz#fb2be9a94b34a17c7f6bacfc0148d69e368487cb"
   dependencies:
     "@phosphor/coreutils" "^1.2.0"
     "@phosphor/widgets" "^1.3.0"
 
-"@jupyterlab/rendermime@^0.8.2", "@jupyterlab/rendermime@~0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.8.2.tgz#e9d12ce8b0a2f34fbc374fff64d5bd0e1c15bf74"
+"@jupyterlab/rendermime@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.9.0.tgz#113598b52a42e945f44b41694cd50d911027d295"
   dependencies:
-    "@jupyterlab/apputils" "^0.8.2"
-    "@jupyterlab/codemirror" "^0.8.1"
-    "@jupyterlab/coreutils" "^0.8.1"
-    "@jupyterlab/rendermime-interfaces" "^0.2.1"
-    "@jupyterlab/services" "^0.47.1"
+    "@jupyterlab/apputils" "^0.9.0"
+    "@jupyterlab/codemirror" "^0.9.0"
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@jupyterlab/rendermime-interfaces" "^0.3.0"
+    "@jupyterlab/services" "^0.48.0"
     "@phosphor/algorithm" "^1.1.1"
     "@phosphor/coreutils" "^1.2.0"
     "@phosphor/disposable" "^1.1.1"
@@ -226,7 +258,18 @@
     ansi_up "^1.3.0"
     marked "^0.3.6"
 
-"@jupyterlab/services@^0.47.1", "@jupyterlab/services@~0.47.1":
+"@jupyterlab/services@^0.48.0":
+  version "0.48.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.48.0.tgz#aa79074ec4e867a33f4163feef4897d015d85399"
+  dependencies:
+    "@jupyterlab/coreutils" "^0.9.0"
+    "@phosphor/algorithm" "^1.1.1"
+    "@phosphor/coreutils" "^1.2.0"
+    "@phosphor/disposable" "^1.1.1"
+    "@phosphor/signaling" "^1.2.1"
+    "@types/text-encoding" "0.0.30"
+
+"@jupyterlab/services@~0.47.1":
   version "0.47.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.47.1.tgz#51ac3bf06a96a38934635fbf9d46f59dad6b0874"
   dependencies:
