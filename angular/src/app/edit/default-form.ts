@@ -27,7 +27,7 @@ Live will run and re-run whenever one of the input boxes is changed.
 <variable type="number">a</variable>
 <variable type="number">b</variable>
 <variable type="number">c</variable>
-\`print("Average = " + str(result))\`
+\`print("Average = {0:.4f}".format(result))\`
 
 </live>
 

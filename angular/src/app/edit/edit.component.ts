@@ -9,26 +9,12 @@ import {
 
 import { CommonModule } from '@angular/common';
 
-import {
-  RenderMime, defaultRendererFactories, IRenderMime, MimeModel
-} from '@jupyterlab/rendermime';
-import { renderMarkdown } from '@jupyterlab/rendermime';
-
-import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
-// import {  } from '@jupyterlab/cells';
-
-import { ISanitizer } from '@jupyterlab/apputils';
-
 import * as  MarkdownIt from 'markdown-it';
-
-import * as  hljs from 'highlight.js';
-
-import * as marked from 'marked';
 
 import * as ace from 'brace';
 import 'brace/mode/markdown';
 
-import { InputArea } from '@jupyterlab/cells';
+// import { InputArea } from '@jupyterlab/cells';
 
 import { JupyterModule } from '../jupyter/jupyter.module';
 import { KernelService } from '../jupyter/kernel.service'
@@ -50,20 +36,11 @@ import { FORMCONTENTS } from './default-form'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-  inputArea: InputArea
-  renderMime: RenderMime
-  renderer: IRenderMime.IRenderer
-  // mimeModel: MimeModel
+  // inputArea: InputArea
 
   myMarkdownIt: MarkdownIt.MarkdownIt
 
   defaultForm = FORMCONTENTS
-
-  // outputAreaOptions: OutputArea.IOptions
-  // outputArea: OutputArea
-  // model: OutputAreaModel
-
-  nullSanitizer: ISanitizer
 
   myAce: ace.Editor;
 
@@ -85,35 +62,6 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
-
-
-
-
-
-    this.nullSanitizer = {
-      sanitize: (value: string) => {return value}
-    }
-
-    this.renderMime = new RenderMime({
-      initialFactories: defaultRendererFactories,
-      sanitizer: this.nullSanitizer
-    });
-
-    this.renderer = this.renderMime.createRenderer('text/markdown');
-
-    // this.model = new OutputAreaModel()
-    // this.renderMime = new RenderMime(
-    //   { initialFactories: defaultRendererFactories });
-
-    // this.outputAreaOptions = {
-    //   model: this.model,
-    //   rendermime: this.renderMime
-    // }
-
-    // this.outputArea = new OutputArea(this.outputAreaOptions)
-
-    // this.outputArea.
     // this.myTitleService.set(null)
   }
 
@@ -132,21 +80,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.myMarkdownIt = new MarkdownIt({
         html: true,
         linkify: true,
-        langPrefix: 'cm-s-jupyter language-',
-        typographer: true,
-        highlight: (str, lang) => {
-          return str
-          // let returnCode: string
-          // if (lang != 'python' && lang != 'markdown') {
-          //   // no language, no highlight
-          //   return str;
-          // }
-
-          // let el = document.createElement('div');
-          // Mode.run(str, lang, el);
-          // returnCode = '<span ngNonBindable>' + el.innerHTML + '</span>';
-          // return returnCode;
-        }
+        typographer: true
       })
 
       this.myAce.commands.addCommand({
@@ -159,42 +93,16 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateForm()
     })
 
-
-
-
   }
 
   updateForm() {
-    // let mimeModel = new MimeModel(
-    //   { data: { 'text/markdown': this.myAce.getValue() }});
-    // this.renderer.renderModel(mimeModel)
+    let html = this.myMarkdownIt.render(this.myAce.getValue())
+    let escapedHtml = html.replace(
+      /{/g, "@~lb~@").replace(/}/g, "@~rb~@").replace(
+        /@~lb~@/g, "{{ '{' }}").replace(/@~rb~@/g, "{{ '}' }}");
 
-    // this.renderer.renderModel(mimeModel).then(result => {
-    //   this.compileTemplate(this.renderer.node.innerHTML)
-    //   this.myChangeDetectorRef.detectChanges()
-    // })
-
-
-
-    this.compileTemplate(this.myMarkdownIt.render(this.myAce.getValue()))
+    this.compileTemplate(escapedHtml)
     this.myChangeDetectorRef.detectChanges()
-
-    // this.nullSanitizer = {
-    //   sanitize: (value: string) => {return value}
-    // }
-
-    // let node = document.createElement("div");
-    // renderMarkdown({
-    //   host: node,
-    //   source: this.myAce.getValue(),
-    //   trusted: true,
-    //   sanitizer: this.nullSanitizer,
-    //   resolver: null,
-    //   linkHandler: null,
-    //   shouldTypeset: true
-    // }).then(() => {
-
-    // })
 
   }
 
@@ -212,7 +120,6 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.componentRef.destroy();
       this.componentRef = null;
     }
-    // this.myKernelSevice.shutdownKernel()
     this.componentRef = this.container.createComponent(factory);
 
     this.errorbox.nativeElement.innerHTML = ""
@@ -230,7 +137,6 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
       constructor(
         private myKernelSevice: KernelService,
-        // private myChangeDetectorRef: ChangeDetectorRef
       ) { }
 
       ngOnInit() {
