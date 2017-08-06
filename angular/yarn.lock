@@ -186,7 +186,7 @@
     path-posix "^1.0.0"
     url-parse "^1.1.8"
 
-"@jupyterlab/outputarea@^0.8.2":
+"@jupyterlab/outputarea@~0.8.2":
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.8.2.tgz#b7abeaac73088bceacb4bb1ba815051d2a762a3f"
   dependencies:
@@ -208,7 +208,7 @@
     "@phosphor/coreutils" "^1.2.0"
     "@phosphor/widgets" "^1.3.0"
 
-"@jupyterlab/rendermime@^0.8.2":
+"@jupyterlab/rendermime@^0.8.2", "@jupyterlab/rendermime@~0.8.2":
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.8.2.tgz#e9d12ce8b0a2f34fbc374fff64d5bd0e1c15bf74"
   dependencies:
@@ -226,7 +226,7 @@
     ansi_up "^1.3.0"
     marked "^0.3.6"
 
-"@jupyterlab/services@^0.47.1":
+"@jupyterlab/services@^0.47.1", "@jupyterlab/services@~0.47.1":
   version "0.47.1"
   resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-0.47.1.tgz#51ac3bf06a96a38934635fbf9d46f59dad6b0874"
   dependencies:
@@ -5384,13 +5384,13 @@ type-is@~1.6.15:
     media-typer "0.3.0"
     mime-types "~2.1.15"
 
+typescript@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.1.tgz#c3ccb16ddaa0b2314de031e7e6fee89e5ba346bc"
+
 "typescript@>=2.0.0 <2.4.0":
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.4.tgz#3d38321828231e434f287514959c37a82b629f42"
-
-typescript@~2.4.1:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
 
 uc.micro@^1.0.1, uc.micro@^1.0.3:
   version "1.0.3"
