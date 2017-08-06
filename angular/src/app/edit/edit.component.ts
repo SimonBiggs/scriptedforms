@@ -9,7 +9,19 @@ import {
 
 import { CommonModule } from '@angular/common';
 
+import {
+  RenderMime, defaultRendererFactories, IRenderMime, MimeModel
+} from '@jupyterlab/rendermime';
+import { renderMarkdown } from '@jupyterlab/rendermime';
+
+import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
+// import {  } from '@jupyterlab/cells';
+
+import { ISanitizer } from '@jupyterlab/apputils';
+
 import * as  MarkdownIt from 'markdown-it';
+
+import * as marked from 'marked';
 
 import * as ace from 'brace';
 import 'brace/mode/markdown';
@@ -33,8 +45,17 @@ import { FORMCONTENTS } from './default-form'
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   inputArea: InputArea
+  renderMime: RenderMime
+  renderer: IRenderMime.IRenderer
+  // mimeModel: MimeModel
 
   defaultForm = FORMCONTENTS
+
+  // outputAreaOptions: OutputArea.IOptions
+  // outputArea: OutputArea
+  // model: OutputAreaModel
+
+  // nullSanitizer: ISanitizer
 
   myAce: ace.Editor;
 
@@ -56,10 +77,31 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     private componentFactoryResolver: ComponentFactoryResolver,
     private compiler: Compiler,
     private myKernelSevice: KernelService,
-    private myChangeDetectorRef: ChangeDetectorRef
+    private myChangeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
+    // this.inputArea = new InputArea({
+
+    // })
+
+    this.renderMime = new RenderMime(
+      { initialFactories: defaultRendererFactories });
+
+    this.renderer = this.renderMime.createRenderer('text/markdown');
+
+    // this.model = new OutputAreaModel()
+    // this.renderMime = new RenderMime(
+    //   { initialFactories: defaultRendererFactories });
+
+    // this.outputAreaOptions = {
+    //   model: this.model,
+    //   rendermime: this.renderMime
+    // }
+
+    // this.outputArea = new OutputArea(this.outputAreaOptions)
+
+    // this.outputArea.
     // this.myTitleService.set(null)
   }
 
@@ -82,15 +124,38 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateForm() {
-    this.compileTemplate(this.myAce.getValue())
-    this.myChangeDetectorRef.detectChanges()
+    let mimeModel = new MimeModel(
+      { data: { 'text/markdown': this.myAce.getValue() }});
+    this.renderer.renderModel(mimeModel)
+
+    this.renderer.renderModel(mimeModel).then(result => {
+      this.compileTemplate(this.renderer.node.innerHTML)
+      this.myChangeDetectorRef.detectChanges()
+    })
+    // this.nullSanitizer = {
+    //   sanitize: (value: string) => {return value}
+    // }
+
+    // let node = document.createElement("div");
+    // renderMarkdown({
+    //   host: node,
+    //   source: this.myAce.getValue(),
+    //   trusted: true,
+    //   sanitizer: this.nullSanitizer,
+    //   resolver: null,
+    //   linkHandler: null,
+    //   shouldTypeset: true
+    // }).then(() => {
+
+    // })
+
   }
 
 
   compileTemplate(template: string) {
     let metadata = {
       selector: `app-runtime`,
-      template: this.myMarkdownIt.render(template)
+      template: template
     };
 
     let factory = this.createComponentFactory(

@@ -2,9 +2,7 @@ import {
   Component, OnInit, AfterViewInit, ViewChild, ElementRef
 } from '@angular/core';
 
-import {
-  RenderMime, defaultRendererFactories
-} from '@jupyterlab/rendermime';
+import { RenderMime, defaultRendererFactories } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 import { Kernel } from '@jupyterlab/services';
 
@@ -40,11 +38,8 @@ export class CodeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.code = this.codecontainer.nativeElement.innerHTML
     this.model = new OutputAreaModel()
-    this.renderMime = new RenderMime()
-
-    for (let factory of defaultRendererFactories) {
-      this.renderMime.addFactory(factory)
-    }
+    this.renderMime = new RenderMime(
+      { initialFactories: defaultRendererFactories });
 
     this.outputAreaOptions = {
       model: this.model,

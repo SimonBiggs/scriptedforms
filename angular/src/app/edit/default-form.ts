@@ -1,16 +1,17 @@
 export const FORMCONTENTS = `<import>
 
-    import time
-    import numpy as np
-    import matplotlib.pyplot as plt
-    %matplotlib inline
+\`\`\`
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
 
-    a = 5
-    b = np.nan
-    c = np.nan
+a = 5
+b = np.nan
+c = np.nan
 
-    power = 1
-
+power = 1
+\`\`\`
 </import>
 
 # Write a title here
@@ -22,7 +23,7 @@ Live will run and re-run whenever one of the input boxes is changed.
 
 <live>
 
-    result = np.nanmean([a, b, c])
+\`result = np.nanmean([a, b, c])\`
 
 <variable type="number">a</variable>
 <variable type="number">b</variable>
@@ -34,11 +35,11 @@ Live will run and re-run whenever one of the input boxes is changed.
 <live>
 
 Power Value: <variable type="number">power</variable>
-
-    x = np.linspace(-10, 10)
-    y = x ** power
-    plt.plot(x, y);
-
+\`\`\`
+x = np.linspace(-10, 10)
+y = x ** power
+plt.plot(x, y);
+\`\`\`
 </live>
 
 Wait groups will not run initially, they will only run when their respective
