@@ -32,7 +32,6 @@ import { FORMCONTENTS } from './default-form'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-
   myMarkdownIt: MarkdownIt.MarkdownIt
 
   defaultForm = FORMCONTENTS
@@ -63,6 +62,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
   }
 
+
+
   ngAfterViewInit() {
     this.myCodeMirror = CodeMirror(this.editor.nativeElement, {
       lineNumbers: true,
@@ -73,30 +74,39 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       extraKeys: {
         "Ctrl-Enter": () => {
           this.updateForm()
-        }
-      }
+        },
+        'Cmd-Right': 'goLineRight',
+        'End': 'goLineRight',
+        'Cmd-Left': 'goLineLeft',
+        'Tab': 'indentMore',
+        'Shift-Tab': 'indentLess',
+        'Cmd-Alt-[': 'indentAuto',
+        'Ctrl-Alt-[': 'indentAuto',
+        'Cmd-/': 'toggleComment',
+        'Ctrl-/': 'toggleComment',
+      },
+      smartIndent: true,
+      electricChars: true,
+      fixedGutter: true,
+      dragDrop: true
     })
 
+
+
     this.myCodeMirror.setValue(this.defaultForm)
+    this.myCodeMirror.refresh()
+    this.myCodeMirror.focus()
 
 
 
     Mode.ensure('python').then(() => {
-      return Mode.ensure('markdown')
+      return Mode.ensure('gfm')
     }).then(() => {
       this.myMarkdownIt = new MarkdownIt({
         html: true,
         linkify: true,
         typographer: true
       })
-
-      // CodeMirror.on(this.myCodeMirror, "keydown", (editor, event) => {
-      //   console.log(event.keyCode)
-      //   if (event.keyCode == 'Ctrl-Enter') {
-      //     this.updateForm()
-      //   }
-      // })
-
 
       this.updateForm()
     })
