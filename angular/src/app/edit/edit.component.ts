@@ -11,10 +11,8 @@ import { CommonModule } from '@angular/common';
 
 import * as  MarkdownIt from 'markdown-it';
 
-import * as ace from 'brace';
-import 'brace/mode/markdown';
-
-// import { InputArea } from '@jupyterlab/cells';
+import * as CodeMirror
+  from 'codemirror';
 
 import { JupyterModule } from '../jupyter/jupyter.module';
 import { KernelService } from '../jupyter/kernel.service'
@@ -22,9 +20,7 @@ import { ImportComponent } from '../jupyter/import/import.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
 import { LiveComponent } from '../jupyter/live/live.component';
 
-import {
-  Mode, CodeMirrorEditor
-} from '@jupyterlab/codemirror';
+import { Mode } from '@jupyterlab/codemirror';
 
 // import { TitleService } from '../title.service'
 
@@ -36,13 +32,12 @@ import { FORMCONTENTS } from './default-form'
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
-  // inputArea: InputArea
 
   myMarkdownIt: MarkdownIt.MarkdownIt
 
   defaultForm = FORMCONTENTS
 
-  myAce: ace.Editor;
+  myCodeMirror: CodeMirror.Editor;
 
   @ViewChild('editor') editor
   @ViewChild('errorbox') errorbox: ElementRef
@@ -69,10 +64,21 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.myAce = ace.edit(this.editor.nativeElement)
-    this.myAce.getSession().setMode('ace/mode/markdown')
+    this.myCodeMirror = CodeMirror(this.editor.nativeElement, {
+      lineNumbers: true,
+      mode: "gfm",
+      theme: 'jupyter',
+      indentUnit: 4,
+      extraKeys: {
+        "Ctrl-Enter": () => {
+          this.updateForm()
+        }
+      }
+    })
 
-    this.myAce.setValue(this.defaultForm)
+    this.myCodeMirror.setValue(this.defaultForm)
+
+
 
     Mode.ensure('python').then(() => {
       return Mode.ensure('markdown')
@@ -83,12 +89,13 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
         typographer: true
       })
 
-      this.myAce.commands.addCommand({
-        name: "save", bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
-        exec: () => {
-          this.updateForm()
-        }
-      })
+      // CodeMirror.on(this.myCodeMirror, "keydown", (editor, event) => {
+      //   console.log(event.keyCode)
+      //   if (event.keyCode == 'Ctrl-Enter') {
+      //     this.updateForm()
+      //   }
+      // })
+
 
       this.updateForm()
     })
@@ -96,7 +103,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateForm() {
-    let html = this.myMarkdownIt.render(this.myAce.getValue())
+    let html = this.myMarkdownIt.render(this.myCodeMirror.getValue())
     let escapedHtml = html.replace(
       /{/g, "@~lb~@").replace(/}/g, "@~rb~@").replace(
         /@~lb~@/g, "{{ '{' }}").replace(/@~rb~@/g, "{{ '}' }}");

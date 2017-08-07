@@ -1,15 +1,17 @@
 export const FORMCONTENTS = `<import>
 
-    import time
-    import numpy as np
-    import matplotlib.pyplot as plt
-    %matplotlib inline
+\`\`\`python
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
 
-    a = 5
-    b = np.nan
-    c = np.nan
+a = 5
+b = np.nan
+c = np.nan
 
-    power = 1
+power = 1
+\`\`\`
 
 </import>
 
@@ -35,9 +37,11 @@ Live will run and re-run whenever one of the input boxes is changed.
 
 Power Value: <variable type="number">power</variable>
 
-    x = np.linspace(-10, 10)
-    y = x ** power
-    plt.plot(x, y);
+\`\`\`python
+x = np.linspace(-10, 10)
+y = x ** power
+plt.plot(x, y);
+\`\`\`
 
 </live>
 
@@ -46,7 +50,9 @@ button is pressed.
 
 <wait>
 
-    np.linspace(0, 1, 5)
+\`\`\`python
+np.linspace(0, 1, 5)
+\`\`\`
 
 </wait>
 
@@ -64,9 +70,11 @@ till the code is complete.
 
 <wait>
 
-    print("Start Sleep")
-    time.sleep(10)
-    print("Finish Sleep")
+\`\`\`python
+print("Start Sleep")
+time.sleep(10)
+print("Finish Sleep")
+\`\`\`
 
 </wait>
 
@@ -74,7 +82,9 @@ Test
 
 <wait>
 
-    an_error
+\`\`\`python
+an_error
+\`\`\`
 
 </wait>
 
