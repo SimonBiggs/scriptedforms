@@ -1,10 +1,11 @@
-div.editor {
+div.editor-wrapper {
   position: absolute;
   left: 0;
   bottom: 0px;
   right: 50%;
   line-height: 120%;
   font-family: monospace;
+  overflow: scroll;
 }
 
 div.view-wrapper {

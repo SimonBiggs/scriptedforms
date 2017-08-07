@@ -69,6 +69,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       mode: "gfm",
       theme: 'jupyter',
       indentUnit: 4,
+      lineWrapping: true,
       extraKeys: {
         "Ctrl-Enter": () => {
           this.updateForm()
