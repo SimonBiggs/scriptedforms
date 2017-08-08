@@ -1,3 +1,8 @@
+# Download release built for Windows
+
+https://www.dropbox.com/sh/0t1zjpmf9j5edyf/AABLUrqkwTpIIZHiWlvHHZqUa?dl=1
+
+
 # Setting up development environment
 
 Using Ubuntu 16.04.2 -- http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso
