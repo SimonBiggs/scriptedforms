@@ -1,5 +1,6 @@
-# Download release built for Windows
+## Download link
 
+Windows:
 https://www.dropbox.com/sh/0t1zjpmf9j5edyf/AABLUrqkwTpIIZHiWlvHHZqUa?dl=1
 
 
