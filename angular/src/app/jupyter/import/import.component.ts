@@ -1,11 +1,11 @@
-import { 
+import {
   Component, OnInit, ContentChildren, QueryList, AfterViewInit
 } from '@angular/core';
 
 import { CodeComponent } from '../code/code.component'
 
 @Component({
-  selector: 'import',
+  selector: 'jupyter-import',
   templateUrl: './import.component.html',
   styleUrls: ['./import.component.css']
 })

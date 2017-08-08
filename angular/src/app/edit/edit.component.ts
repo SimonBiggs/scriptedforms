@@ -114,10 +114,26 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateForm() {
-    let html = this.myMarkdownIt.render(this.myCodeMirror.getValue())
-    let escapedHtml = html.replace(
-      /{/g, "@~lb~@").replace(/}/g, "@~rb~@").replace(
-        /@~lb~@/g, "{{ '{' }}").replace(/@~rb~@/g, "{{ '}' }}");
+    let rawMarkdown = this.myCodeMirror.getValue()
+    let customTags = rawMarkdown.replace(/\[import\]/g, "<jupyter-import>"
+    ).replace(/\[\/import\]/g, "</jupyter-import>"
+    ).replace(/\[number\]/g, '<jupyter-variable type="number">'
+    ).replace(/\[\/number\]/g, '</jupyter-variable>'
+    ).replace(/\[live\]/g, "<jupyter-live>"
+    ).replace(/\[\/live\]/g, "</jupyter-live>"
+    ).replace(/\[button\]/g, "<jupyter-button>"
+    ).replace(/\[\/button\]/g, "</jupyter-button>"
+    ).replace(/\[string\]/g, '<jupyter-variable type="string">'
+    ).replace(/\[\/string\]/g, "</jupyter-variable>")
+
+    let html = this.myMarkdownIt.render(customTags)
+    let escapedHtml = html.replace(/{/g, "@~lb~@"
+    ).replace(/}/g, "@~rb~@"
+    ).replace(/@~lb~@/g, "{{ '{' }}"
+    ).replace(/@~rb~@/g, "{{ '}' }}");
+
+    // console.log(html)
+
 
     this.compileTemplate(escapedHtml)
     this.myChangeDetectorRef.detectChanges()

@@ -1,4 +1,4 @@
-export const FORMCONTENTS = `<import>
+export const FORMCONTENTS = `[import]
 
 \`\`\`python
 import time
@@ -6,14 +6,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
 
-a = 5
-b = np.nan
-c = np.nan
+data = np.ones(3) * np.nan
+data[0] = 5
 
 power = 1
 \`\`\`
 
-</import>
+[/import]
 
 # Write a title here
 
@@ -22,20 +21,20 @@ Press "Ctrl + Enter" to update the preview.
 
 Live will run and re-run whenever one of the input boxes is changed.
 
-<live>
+[live]
 
-\`result = np.nanmean([a, b, c])\`
+\`result = np.nanmean(data)\`
 
-<variable type="number">a</variable>
-<variable type="number">b</variable>
-<variable type="number">c</variable>
+[number]data[0][/number]
+[number]data[1][/number]
+[number]data[2][/number]
 \`print("Average = {0:.4f}".format(result))\`
 
-</live>
+[/live]
 
-<live>
+[live]
 
-Power Value: <variable type="number">power</variable>
+Power Value: [number]power[/number]
 
 \`\`\`python
 x = np.linspace(-10, 10)
@@ -43,18 +42,29 @@ y = x ** power
 plt.plot(x, y);
 \`\`\`
 
-</live>
+[/live]
+
+
+[live]
+[string]a_string[/string]
+
+\`\`\`python
+print(a_string)
+\`\`\`
+
+[/live]
+
 
 Wait groups will not run initially, they will only run when their respective
 button is pressed.
 
-<wait>
+[button]
 
 \`\`\`python
 np.linspace(0, 1, 5)
 \`\`\`
 
-</wait>
+[/button]
 
 More text
 
@@ -68,7 +78,7 @@ Need to think of a way to allow intermittent prints to display... Need to be
 able to pass the future to the code component while still have the queue wait
 till the code is complete.
 
-<wait>
+[button]
 
 \`\`\`python
 print("Start Sleep")
@@ -76,17 +86,17 @@ time.sleep(10)
 print("Finish Sleep")
 \`\`\`
 
-</wait>
+[/button]
 
 Test
 
-<wait>
+[button]
 
 \`\`\`python
 an_error
 \`\`\`
 
-</wait>
+[/button]
 
 
 Make a button permanently down here that when clicked it force kills the

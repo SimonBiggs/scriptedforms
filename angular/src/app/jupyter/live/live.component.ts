@@ -7,7 +7,7 @@ import { VariableComponent } from '../variable/variable.component'
 import { CodeComponent } from '../code/code.component'
 
 @Component({
-  selector: 'live',
+  selector: 'jupyter-live',
   templateUrl: './live.component.html',
   styleUrls: ['./live.component.css']
 })

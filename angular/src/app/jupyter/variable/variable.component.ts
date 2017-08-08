@@ -8,7 +8,7 @@ import { Kernel } from '@jupyterlab/services';
 import { KernelService } from '../kernel.service';
 
 @Component({
-  selector: 'variable',
+  selector: 'jupyter-variable',
   templateUrl: './variable.component.html',
   styleUrls: ['./variable.component.css']
 })
