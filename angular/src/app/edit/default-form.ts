@@ -55,7 +55,7 @@ print(a_string)
 [/live]
 
 
-Wait groups will not run initially, they will only run when their respective
+Button groups will not run initially, they will only run when their respective
 button is pressed.
 
 [button]

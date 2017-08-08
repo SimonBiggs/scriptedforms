@@ -42,7 +42,14 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
   variableChanged(value) {
     // this.myChangeDetectorRef.detectChanges()
     console.log('variable change')
-    this.setCode = `${this.variableName} = ${this.variableValue}`
+    if (this.inputType.match('string')) {
+      let escapedQuotes = this.variableValue.replace(/\"/g, '\\"')
+      this.setCode = `${this.variableName} = "${escapedQuotes}"`
+    }
+    if (this.inputType.match('number')) {
+      this.setCode = `${this.variableName} = ${this.variableValue}`
+    }
+
 
     if (this.variableValue != this.oldVariableValue) {
       this.myKernelSevice.runCode(this.setCode).then(future => {
@@ -57,12 +64,13 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
 
   ngAfterViewInit() {
     this.variableName = this.variablecontainer.nativeElement.innerHTML
+    console.log(this.variableName)
     this.myChangeDetectorRef.detectChanges()
 
     this.fetchCode = `
-if '${this.variableName}' in locals():
+try:
     print(${this.variableName})
-else:
+except:
     print('')
 `
   }
