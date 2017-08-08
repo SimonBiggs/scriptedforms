@@ -51,7 +51,6 @@ export class CodeComponent implements OnInit, AfterViewInit {
 
 
     })
-    console.log(this.code)
     this.model = new OutputAreaModel()
     this.renderMime = new RenderMime(
       { initialFactories: defaultRendererFactories });
@@ -64,15 +63,14 @@ export class CodeComponent implements OnInit, AfterViewInit {
     this.outputArea = new OutputArea(this.outputAreaOptions)
   }
 
-  runCode() {
-    this.promise = this.myKernelSevice.runCode(this.code)
+  runCode(name: string) {
+    this.promise = this.myKernelSevice.runCode(this.code, name)
     this.promise.then(future => {
-      this.future = future
-      this.outputArea.future = this.future
-      this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
-      this.future.done.then(() => {
-        console.log(this.outputArea.model.length)
-      })
+      if (future) {
+        this.future = future
+        this.outputArea.future = this.future
+        this.outputcontainer.nativeElement.appendChild(this.outputArea.node)
+      }
     })
   }
 

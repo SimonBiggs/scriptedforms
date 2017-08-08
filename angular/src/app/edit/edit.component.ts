@@ -116,14 +116,14 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateForm() {
     let rawMarkdown = this.myCodeMirror.getValue()
-    let customTags = rawMarkdown.replace(/\[start\]/g, "<jupyter-start>"
-    ).replace(/\[\/start\]/g, "</jupyter-start>"
+    let customTags = rawMarkdown.replace(/\[start\]/g, "\n<jupyter-start>\n"
+    ).replace(/\[\/start\]/g, "\n</jupyter-start>\n"
+    ).replace(/\[live\]/g, "\n<jupyter-live>\n"
+    ).replace(/\[\/live\]/g, "\n</jupyter-live>\n"
+    ).replace(/\[button\]/g, "\n<jupyter-button>\n"
+    ).replace(/\[\/button\]/g, "\n</jupyter-button>\n"
     ).replace(/\[number\]/g, '<jupyter-variable type="number">'
     ).replace(/\[\/number\]/g, '</jupyter-variable>'
-    ).replace(/\[live\]/g, "<jupyter-live>"
-    ).replace(/\[\/live\]/g, "</jupyter-live>"
-    ).replace(/\[button\]/g, "<jupyter-button>"
-    ).replace(/\[\/button\]/g, "</jupyter-button>"
     ).replace(/\[string\]/g, '<jupyter-variable type="string">'
     ).replace(/\[\/string\]/g, "</jupyter-variable>")
 
@@ -165,7 +165,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
                                  componentClass: any): ComponentFactory<any> {
     @Component(metadata)
     class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
-      @ViewChildren(StartComponent) importComponents: QueryList<StartComponent>
+      @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
       @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>
       @ViewChildren(ButtonComponent) buttonComponents: QueryList<ButtonComponent>
@@ -190,22 +190,27 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       initialiseForm(){
         // The order here forces all import components to run first.
         // Only then will the variable component fetch the variables.
-        for (let importComponent of this.importComponents.toArray()) {
-          importComponent.runCode()
-        }
+        this.startComponents.toArray().forEach((startComponent, index) => {
+          startComponent.setId(index)
+          startComponent.runCode()
+        })
         for (let variableComponent of this.variableComponents.toArray()) {
           variableComponent.fetchVariable()
         }
         this.myKernelSevice.queue.then(() => {
-          for (let liveComponent of this.liveComponents.toArray()) {
+          this.liveComponents.toArray().forEach((liveComponent, index) => {
+            liveComponent.setId(index)
             liveComponent.formReady()
-          }
+          })
+
           for (let variableComponent of this.variableComponents.toArray()) {
             variableComponent.formReady()
           }
-          for (let buttonComponent of this.buttonComponents.toArray()) {
+
+          this.buttonComponents.toArray().forEach((buttonComponent, index) => {
+            buttonComponent.setId(index)
             buttonComponent.formReady()
-          }
+          })
         })
       }
     };

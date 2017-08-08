@@ -13,6 +13,7 @@ import { CodeComponent } from '../code/code.component'
 })
 export class LiveComponent implements OnInit, AfterViewInit {
 
+  liveId: number
   afterViewInit = false;
   isFormReady = false;
 
@@ -36,18 +37,20 @@ export class LiveComponent implements OnInit, AfterViewInit {
     }
   }
 
-  variableChanged(newVariable) {
+  variableChanged(variableName) {
     if (this.afterViewInit && this.isFormReady) {
-      for (let codeComponent of this.codeComponents.toArray()) {
-        codeComponent.runCode()
-      }
+      this.codeComponents.toArray().forEach((codeComponent, index) => {
+        codeComponent.runCode(
+          '"live"_' + String(this.liveId) + '_' + String(index))
+      })
     }
   }
 
   formReady() {
     this.isFormReady = true
-    // for (let variableComponent of this.variableComponents.toArray()) {
-    //   variableComponent.formReady()
-    // }
+  }
+
+  setId(id) {
+    this.liveId = id
   }
 }

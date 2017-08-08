@@ -12,6 +12,7 @@ import { KernelService } from '../kernel.service'
 })
 export class ButtonComponent implements OnInit, AfterViewInit {
 
+  buttonId: number;
   afterViewInit = false;
   isFormReady = false;
 
@@ -32,9 +33,10 @@ export class ButtonComponent implements OnInit, AfterViewInit {
 
   runCode() {
     if (this.afterViewInit && this.isFormReady) {
-      for (let codeComponent of this.codeComponents.toArray()) {
-        codeComponent.runCode()
-      }
+      this.codeComponents.toArray().forEach((codeComponent, index) => {
+        codeComponent.runCode(
+          '"button"_' + String(this.buttonId) + '_' + String(index))
+      })
       this.codeRunning = true
       this.myKernelSevice.queue.then(() => {
         this.codeRunning = false
@@ -44,6 +46,10 @@ export class ButtonComponent implements OnInit, AfterViewInit {
 
   formReady() {
     this.isFormReady = true
+  }
+
+  setId(id) {
+    this.buttonId = id
   }
 
 }

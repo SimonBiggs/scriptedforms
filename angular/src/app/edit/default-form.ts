@@ -1,18 +1,23 @@
 export const FORMCONTENTS = `[start]
-
 \`\`\`python
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
+\`\`\`
 
+\`\`\`
 data = np.ones(3) * np.nan
 data[0] = 5
-
-power = 1
-
-testing_outside = "hello"
 \`\`\`
+
+\`power = 1\`
+
+[/start]
+
+[start]
+
+\`testing_outside = "hello"\`
 
 [/start]
 
@@ -83,6 +88,12 @@ time.sleep(3)
 print("Finish Sleep")
 \`\`\`
 
+\`\`\`python
+print("Start Sleep2")
+time.sleep(1)
+print("Finish Sleep2")
+\`\`\`
+
 [/button]
 
 Test
@@ -96,8 +107,5 @@ an_error
 [/button]
 
 
-Make a button permanently down here that when clicked it force kills the
-server. This should make the queue now finish quite quickly. The item of
-starting back up the kernel should still be placed on the queue, but it should
-resest quite quickly. After the reset all code from top to bottom is to be run.
+Some final words and such
 `

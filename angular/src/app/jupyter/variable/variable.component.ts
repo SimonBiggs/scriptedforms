@@ -40,8 +40,7 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
   }
 
   variableChanged(value) {
-    // this.myChangeDetectorRef.detectChanges()
-    console.log('variable change')
+    // console.log('variable change')
     if (this.inputType.match('string')) {
       let escapedQuotes = this.variableValue.replace(/\"/g, '\\"')
       this.setCode = `${this.variableName} = "${escapedQuotes}"`
@@ -52,10 +51,20 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
 
 
     if (this.variableValue != this.oldVariableValue) {
-      this.myKernelSevice.runCode(this.setCode).then(future => {
-        return future.done
-      }).then(() => {
-        this.variableChange.emit(this.variableValue)
+      this.myKernelSevice.runCode(
+        this.setCode, '"set"_"' + this.variableName + '"'
+      ).then(future => {
+        if (future) {
+          return future.done
+        }
+        else {
+          return Promise.resolve('ignore')
+        }
+
+      }).then((status) => {
+        if (status != 'ignore') {
+          this.variableChange.emit(this.variableName)
+        }
       })
       this.oldVariableValue = this.variableValue
     }
@@ -64,7 +73,6 @@ eg: &lt;variable type="string"&gt;name&lt;/variable&gt; or
 
   ngAfterViewInit() {
     this.variableName = this.variablecontainer.nativeElement.innerHTML
-    console.log(this.variableName)
     this.myChangeDetectorRef.detectChanges()
 
     this.fetchCode = `
@@ -76,7 +84,7 @@ except:
   }
 
   fetchVariable() {
-    this.myKernelSevice.runCode(this.fetchCode).then(future => {
+    this.myKernelSevice.runCode(this.fetchCode, '"fetch"_"' + this.variableName + '"').then(future => {
       future.onIOPub = (msg => {
         if (msg.content.name == "stdout") {
           if (this.inputType.match('string')) {
@@ -85,7 +93,6 @@ except:
           if (this.inputType.match('number')) {
             this.variableValue = Number(msg.content.text)
           }
-          // this.myChangeDetectorRef.detectChanges()
         }
       })
     })
@@ -93,6 +100,5 @@ except:
 
   formReady() {
     this.isFormReady = true
-    // this.myChangeDetectorRef.detectChanges()
   }
 }

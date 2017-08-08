@@ -12,6 +12,9 @@ export class KernelService {
   session: Session.ISession;
   kernel: Kernel.IKernel
 
+  queueId = 0
+  queueLog = {}
+
   queue: Promise<any> = Promise.resolve()
 
   testcode = [
@@ -41,24 +44,29 @@ export class KernelService {
     };
    }
 
-  addToQueue(asyncFunction:() => Promise<any>): Promise<any>{
+  addToQueue(name: string, asyncFunction:(id: number) => Promise<any>): Promise<any>{
+    const currentQueueId = this.queueId
+
+    this.queueLog[currentQueueId] = name
+    this.queueId += 1
     const previous = this.queue;
     return this.queue = (async () => {
       await previous;
-      return asyncFunction();
+      delete this.queueLog[currentQueueId]
+      return asyncFunction(currentQueueId);
     })();
   }
 
   permissionCheck(): Promise<any> {
     this.startKernel()
-    this.runCode(this.testcode)
+    this.runCode(this.testcode, '"permissionCheck"_0')
     this.shutdownKernel()
 
     return this.queue
   }
 
   startKernel(): Promise<void> {
-    return this.addToQueue(async (): Promise<void> => {
+    return this.addToQueue(null, async (id:number): Promise<void> => {
       console.log('Start Kernel Queue Item')
       await Kernel.startNew(this.options).then(newKernel => {
         this.kernel = newKernel
@@ -72,7 +80,7 @@ export class KernelService {
   }
 
   shutdownKernel(): Promise<void> {
-    return this.addToQueue(async (): Promise<void> => {
+    return this.addToQueue(null, async (id:number): Promise<void> => {
       console.log('Shutdown Kernel Queue Item')
       await this.kernel.shutdown()
     })
@@ -88,19 +96,39 @@ export class KernelService {
     return this.startKernel()
   }
 
-  runCode(code: string): Promise<Kernel.IFuture> {
+  runCode(code: string, name: string): Promise<any> {
+    // console.log(this.queueLog)
     let future: Kernel.IFuture
+    let runCode: boolean
 
-    const currentQueue = this.addToQueue(async (): Promise<Kernel.IFuture> => {
-      console.log('Run Code Queue Item')
+    const currentQueue = this.addToQueue(
+      name, async (id:number): Promise<any> => {
+        runCode = true
+        for (let key in this.queueLog ) {
+          if (Number(key) > id && this.queueLog[key] == name) {
+            runCode = false
+            break
+          }
+        }
+        if (runCode) {
+          console.log('Run Code Queue Item')
+          future = this.kernel.requestExecute({ code: code })
+          return future
+        }
+        else {
+          return Promise.resolve()
+        }
+      }
+    )
+    this.addToQueue(null, async (id:number): Promise<any> => {
+      if (runCode) {
+        return await future.done
+      }
+      else {
+        return Promise.resolve()
+      }
 
-      future = this.kernel.requestExecute({ code: code })
-      return future
     })
-    this.addToQueue(async (): Promise<any> => {
-      return await future.done
-    })
-
     return currentQueue
   }
 }

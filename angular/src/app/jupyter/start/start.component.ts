@@ -11,6 +11,8 @@ import { CodeComponent } from '../code/code.component'
 })
 export class StartComponent implements OnInit, AfterViewInit {
 
+  startId: number
+
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>
 
   constructor() { }
@@ -22,8 +24,13 @@ export class StartComponent implements OnInit, AfterViewInit {
   }
 
   runCode() {
-    for (let codeComponent of this.codeComponents.toArray()) {
-      codeComponent.runCode()
-    }
+    this.codeComponents.toArray().forEach((codeComponent, index) => {
+      codeComponent.runCode(
+        '"start"_' + String(this.startId) + '_' + String(index))
+    })
+  }
+
+  setId(id) {
+    this.startId = id
   }
 }
