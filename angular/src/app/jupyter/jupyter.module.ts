@@ -7,7 +7,7 @@ import { MaterialModule } from '@angular/material'
 import { CodeComponent } from './code/code.component';
 
 import { KernelService } from './kernel.service';
-import { ImportComponent } from './import/import.component';
+import { StartComponent } from './start/start.component';
 import { LiveComponent } from './live/live.component';
 import { ButtonComponent } from './button/button.component';
 import { VariableComponent } from './variable/variable.component';
@@ -20,7 +20,7 @@ import { VariableComponent } from './variable/variable.component';
   ],
   declarations: [
     CodeComponent,
-    ImportComponent,
+    StartComponent,
     LiveComponent,
     ButtonComponent,
     VariableComponent
@@ -30,7 +30,7 @@ import { VariableComponent } from './variable/variable.component';
   ],
   exports: [
     CodeComponent,
-    ImportComponent,
+    StartComponent,
     LiveComponent,
     ButtonComponent,
     VariableComponent

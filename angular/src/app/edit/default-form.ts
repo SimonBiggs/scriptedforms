@@ -1,4 +1,4 @@
-export const FORMCONTENTS = `[import]
+export const FORMCONTENTS = `[start]
 
 \`\`\`python
 import time
@@ -12,7 +12,7 @@ data[0] = 5
 power = 1
 \`\`\`
 
-[/import]
+[/start]
 
 # Write a title here
 

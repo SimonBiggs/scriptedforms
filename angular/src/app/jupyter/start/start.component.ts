@@ -5,11 +5,11 @@ import {
 import { CodeComponent } from '../code/code.component'
 
 @Component({
-  selector: 'jupyter-import',
-  templateUrl: './import.component.html',
-  styleUrls: ['./import.component.css']
+  selector: 'jupyter-start',
+  templateUrl: './start.component.html',
+  styleUrls: ['./start.component.css']
 })
-export class ImportComponent implements OnInit, AfterViewInit {
+export class StartComponent implements OnInit, AfterViewInit {
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>
 

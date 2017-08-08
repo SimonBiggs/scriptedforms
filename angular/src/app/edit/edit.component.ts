@@ -16,7 +16,7 @@ import * as CodeMirror
 
 import { JupyterModule } from '../jupyter/jupyter.module';
 import { KernelService } from '../jupyter/kernel.service'
-import { ImportComponent } from '../jupyter/import/import.component';
+import { StartComponent } from '../jupyter/start/start.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
 import { LiveComponent } from '../jupyter/live/live.component';
 
@@ -115,8 +115,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateForm() {
     let rawMarkdown = this.myCodeMirror.getValue()
-    let customTags = rawMarkdown.replace(/\[import\]/g, "<jupyter-import>"
-    ).replace(/\[\/import\]/g, "</jupyter-import>"
+    let customTags = rawMarkdown.replace(/\[start\]/g, "<jupyter-start>"
+    ).replace(/\[\/start\]/g, "</jupyter-start>"
     ).replace(/\[number\]/g, '<jupyter-variable type="number">'
     ).replace(/\[\/number\]/g, '</jupyter-variable>'
     ).replace(/\[live\]/g, "<jupyter-live>"
@@ -164,7 +164,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
                                  componentClass: any): ComponentFactory<any> {
     @Component(metadata)
     class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
-      @ViewChildren(ImportComponent) importComponents: QueryList<ImportComponent>
+      @ViewChildren(StartComponent) importComponents: QueryList<StartComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
       @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>
 
