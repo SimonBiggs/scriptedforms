@@ -10,6 +10,8 @@ data = np.ones(3) * np.nan
 data[0] = 5
 
 power = 1
+
+testing_outside = "hello"
 \`\`\`
 
 [/start]
@@ -54,6 +56,7 @@ print(a_string)
 
 [/live]
 
+[string]testing_outside[/string]
 
 Button groups will not run initially, they will only run when their respective
 button is pressed.
@@ -61,7 +64,7 @@ button is pressed.
 [button]
 
 \`\`\`python
-np.linspace(0, 1, 5)
+print(testing_outside)
 \`\`\`
 
 [/button]
@@ -72,17 +75,11 @@ More text
  * More
  * Third
 
-Weird
-
-Need to think of a way to allow intermittent prints to display... Need to be
-able to pass the future to the code component while still have the queue wait
-till the code is complete.
-
 [button]
 
 \`\`\`python
 print("Start Sleep")
-time.sleep(10)
+time.sleep(3)
 print("Finish Sleep")
 \`\`\`
 

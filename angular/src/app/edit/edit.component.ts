@@ -19,6 +19,7 @@ import { KernelService } from '../jupyter/kernel.service'
 import { StartComponent } from '../jupyter/start/start.component';
 import { VariableComponent } from '../jupyter/variable/variable.component';
 import { LiveComponent } from '../jupyter/live/live.component';
+import { ButtonComponent } from '../jupyter/button/button.component';
 
 import { Mode } from '@jupyterlab/codemirror';
 
@@ -167,6 +168,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       @ViewChildren(StartComponent) importComponents: QueryList<StartComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
       @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>
+      @ViewChildren(ButtonComponent) buttonComponents: QueryList<ButtonComponent>
 
 
       constructor(
@@ -178,11 +180,14 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       ngOnDestroy() {
-        this.myKernelSevice.shutdownKernel()
+        this.myKernelSevice.forceShutdownKernel()
       }
 
       ngAfterViewInit() {
+        this.initialiseForm()
+      }
 
+      initialiseForm(){
         // The order here forces all import components to run first.
         // Only then will the variable component fetch the variables.
         for (let importComponent of this.importComponents.toArray()) {
@@ -194,6 +199,12 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.myKernelSevice.queue.then(() => {
           for (let liveComponent of this.liveComponents.toArray()) {
             liveComponent.formReady()
+          }
+          for (let variableComponent of this.variableComponents.toArray()) {
+            variableComponent.formReady()
+          }
+          for (let buttonComponent of this.buttonComponents.toArray()) {
+            buttonComponent.formReady()
           }
         })
       }

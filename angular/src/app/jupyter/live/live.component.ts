@@ -46,9 +46,8 @@ export class LiveComponent implements OnInit, AfterViewInit {
 
   formReady() {
     this.isFormReady = true
-    for (let variableComponent of this.variableComponents.toArray()) {
-      variableComponent.formReady()
-    }
+    // for (let variableComponent of this.variableComponents.toArray()) {
+    //   variableComponent.formReady()
+    // }
   }
-
 }

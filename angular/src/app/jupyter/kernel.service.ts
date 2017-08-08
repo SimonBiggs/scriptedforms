@@ -27,7 +27,7 @@ export class KernelService {
 
   constructor() {
     if(isDevMode()) {
-      this.settings = ServerConnection.makeSettings({ 
+      this.settings = ServerConnection.makeSettings({
         baseUrl: 'http://localhost:8888'
       })
     }
@@ -78,6 +78,16 @@ export class KernelService {
     })
   }
 
+  forceShutdownKernel(): Promise<void> {
+    this.queue = Promise.resolve()
+    return this.shutdownKernel()
+  }
+
+  resetKernel(): Promise<void> {
+    this.forceShutdownKernel()
+    return this.startKernel()
+  }
+
   runCode(code: string): Promise<Kernel.IFuture> {
     let future: Kernel.IFuture
 
@@ -87,7 +97,7 @@ export class KernelService {
       future = this.kernel.requestExecute({ code: code })
       return future
     })
-    this.addToQueue(async (): Promise<any> => { 
+    this.addToQueue(async (): Promise<any> => {
       return await future.done
     })
 

@@ -16,7 +16,7 @@ import { ShareComponent } from './share/share.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: EditComponent
   },
   {
     path: 'home',
