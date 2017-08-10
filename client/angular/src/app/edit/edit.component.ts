@@ -14,12 +14,12 @@ import * as  MarkdownIt from 'markdown-it';
 import * as CodeMirror
   from 'codemirror';
 
-import { JupyterModule } from '../jupyter/jupyter.module';
-import { KernelService } from '../jupyter/kernel.service'
-import { StartComponent } from '../jupyter/start/start.component';
-import { VariableComponent } from '../jupyter/variable/variable.component';
-import { LiveComponent } from '../jupyter/live/live.component';
-import { ButtonComponent } from '../jupyter/button/button.component';
+import { ScriptedFormsModule } from '../scripted-forms/scripted-forms.module';
+import { KernelService } from '../scripted-forms/kernel.service'
+import { StartComponent } from '../scripted-forms/start/start.component';
+import { VariableComponent } from '../scripted-forms/variable/variable.component';
+import { LiveComponent } from '../scripted-forms/live/live.component';
+import { ButtonComponent } from '../scripted-forms/button/button.component';
 
 import { Mode } from '@jupyterlab/codemirror';
 
@@ -219,7 +219,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         imports: [
           CommonModule,
-          JupyterModule
+          ScriptedFormsModule
         ],
         declarations: [
           RuntimeComponent

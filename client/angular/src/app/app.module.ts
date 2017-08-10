@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { RoutingModule } from './app.routing';
 
-import { JupyterModule } from './jupyter/jupyter.module';
+import { ScriptedFormsModule } from './scripted-forms/scripted-forms.module';
 
 import { AppErrorHandler } from './app-error-handler';
 
@@ -44,11 +44,11 @@ import { ShareComponent } from './share/share.component';
     MaterialModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    JupyterModule
+    ScriptedFormsModule
   ],
   providers: [
     TitleService,
-    { provide: ErrorHandler, useClass: AppErrorHandler } 
+    { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

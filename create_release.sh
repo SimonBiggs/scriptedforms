@@ -2,17 +2,17 @@
 
 rm -rf build dist
 
-cd angular
+cd client/angular
 yarn run deploy
-cd ../
+cd ../../
 
 mkdir -p build/lib
 mkdir -p build/app/python
 mkdir build/src
 mkdir build/tmp
 
-cp -R ./angular/dist ./build/app/angular
-cp ./python/scriptedforms.py ./build/app/python/scriptedforms.py
+cp -R ./client/angular/dist ./build/app/angular
+cp ./client/python/scriptedforms.py ./build/app/python/scriptedforms.py
 cp -R ./windows_libs/python ./build/lib/python
 
 git add -A; snapshot=`git stash create`; git archive -o ./build/tmp/scriptedforms.zip ${snapshot:-HEAD}

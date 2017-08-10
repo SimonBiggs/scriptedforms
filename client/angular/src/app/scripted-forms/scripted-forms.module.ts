@@ -36,4 +36,4 @@ import { VariableComponent } from './variable/variable.component';
     VariableComponent
   ]
 })
-export class JupyterModule { }
+export class ScriptedFormsModule { }
