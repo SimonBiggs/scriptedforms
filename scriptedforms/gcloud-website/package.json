@@ -1,7 +1,7 @@
 {
   "name": "scriptedforms-website",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "AGPLv3+",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

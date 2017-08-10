@@ -2,22 +2,24 @@
 
 rm -rf build dist
 
-cd client/angular
+cd ./scriptedforms/local-client
 yarn run deploy
 cd ../../
 
 mkdir -p build/lib
-mkdir -p build/app/python
+mkdir -p build/app/local-server
 mkdir build/src
 mkdir build/tmp
 
-cp -R ./client/angular/dist ./build/app/angular
-cp ./client/python/scriptedforms.py ./build/app/python/scriptedforms.py
+cp -R ./scriptedforms/local-client/dist ./build/app/local-client
+cp ./scriptedforms/local-server/scriptedforms.py ./build/app/local-server/scriptedforms.py
 cp -R ./windows_libs/python ./build/lib/python
 
 git add -A; snapshot=`git stash create`; git archive -o ./build/tmp/scriptedforms.zip ${snapshot:-HEAD}
 
 unzip ./build/tmp/scriptedforms.zip -d ./build/src
+rm -rf ./build/src/scriptedforms/gcloud-user-authentication
+rm -rf ./build/src/scriptedforms/gcloud-website
 cp LICENSE build/LICENSE
 
 wine ./windows_libs/bat2exe.exe -bat ./bootstrap.bat -save ./build/scriptedforms.exe

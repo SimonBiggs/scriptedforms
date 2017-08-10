@@ -42,10 +42,8 @@ if dev_mode:
 else:
     from notebook.notebookapp import NotebookApp
     
-if dev_mode:
-    static_directory = "./angular-frontend/dist"
-else:
-    static_directory = os.path.join('app', 'angular')
+
+static_directory = os.path.join('app', 'local-client')
 
 
 class Angular(IPythonHandler):
