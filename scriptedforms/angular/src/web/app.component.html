@@ -1,0 +1,102 @@
+<md-toolbar color="primary" class="mat-elevation-z10 fixed-toolbar">
+  <button md-icon-button (click)="sidenav.toggle()">
+      <md-icon>menu</md-icon>
+    </button>
+
+  <a md-button routerLink="/home" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
+    <md-icon class="toolbar-logo">home</md-icon>HOME
+  </a>
+
+  <a md-icon-button routerLink="/home" routerLinkActive="active" href fxShow="true" fxHide.gt-sm>
+    <md-icon>home</md-icon>
+  </a>
+
+  <a md-button routerLink="/record" routerLinkActive="active" href fxShow="false" fxShow.gt-xs>
+      <md-icon class="toolbar-logo">note_add</md-icon>RECORD
+  </a>
+
+  <a md-icon-button routerLink="/record" routerLinkActive="active" href fxShow="true" fxHide.gt-xs>
+    <md-icon>note_add</md-icon>
+  </a>
+
+  <a md-button routerLink="/view" routerLinkActive="active" href fxShow="false" fxShow.gt-xs>
+      <md-icon class="toolbar-logo">visibility</md-icon>VIEW
+  </a>
+  
+  <a md-icon-button routerLink="/view" routerLinkActive="active" href fxShow="true" fxHide.gt-xs>
+    <md-icon>visibility</md-icon>
+  </a>
+
+  <a md-button routerLink="/edit" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
+      <md-icon class="toolbar-logo">edit</md-icon>EDIT
+  </a>
+
+  <a md-icon-button routerLink="/edit" routerLinkActive="active" href fxShow="true" fxHide.gt-sm>
+    <md-icon>edit</md-icon>
+  </a>
+
+  <a md-button routerLink="/trend" routerLinkActive="active" href fxShow="false" fxShow.gt-xs>
+      <md-icon class="toolbar-logo">show_chart</md-icon>TREND
+  </a>
+
+  <a md-icon-button routerLink="/trend" routerLinkActive="active" href fxShow="true" fxHide.gt-xs>
+    <md-icon>show_chart</md-icon>
+  </a>
+
+
+  <!--<span>{{title}}</span>-->
+  <span class="fill-remaining-space"></span>
+  <a md-button routerLink="/share" routerLinkActive="active" href fxShow="false" fxShow.gt-sm>
+      <md-icon class="toolbar-logo">share</md-icon>SHARE
+    </a>
+
+  <a md-icon-button routerLink="/share" routerLinkActive="active" href fxShow="true" fxHide.gt-sm fxHide.xs>
+    <md-icon>share</md-icon>
+  </a>
+  <!--Need to bundle source-->
+  <a md-button href={{sourceUrl}} fxShow="false" fxShow.gt-sm>
+    <md-icon class="toolbar-logo">file_download</md-icon>SOURCE
+  </a>
+
+  <a md-icon-button href={{sourceUrl}} fxShow="true" fxHide.gt-sm>
+    <md-icon>file_download</md-icon>
+  </a>
+
+
+  <a md-button href="https://github.com/SimonBiggs/scripted-forms" fxShow="false" fxShow.gt-sm>
+    <img class="toolbar-logo" src="/forms/assets/img/github-circle-white-transparent.svg">GITHUB
+  </a>
+
+  <a md-icon-button href="https://github.com/SimonBiggs/scripted-forms" fxShow="true" fxHide.gt-sm fxHide.xs>
+    <img src="/forms/assets/img/github-circle-white-transparent.svg">
+  </a>
+</md-toolbar>
+
+<md-sidenav-container #container>
+
+  <md-sidenav #sidenav>
+    <h2>Scripted QA Forms</h2>
+    <md-nav-list>
+      <md-divider></md-divider>
+      <a md-list-item routerLink="/home" routerLinkActive="active" href (click)="sidenav.close(); ">Home</a>
+      <a md-list-item routerLink="/record" routerLinkActive="active" href (click)="sidenav.close()">Record results</a>
+      <a md-list-item routerLink="/view" routerLinkActive="active" href (click)="sidenav.close()">View written results</a>
+      <a md-list-item routerLink="/edit" routerLinkActive="active" href (click)="sidenav.close()">Create and edit forms</a>
+      <a md-list-item routerLink="/trend" routerLinkActive="active" href (click)="sidenav.close()">Show trends</a>
+      <md-divider></md-divider>
+      <a md-list-item routerLink="/share" routerLinkActive="active" href (click)="sidenav.close()">Share forms</a>
+      <md-divider></md-divider>
+      <a md-list-item href={{sourceUrl}} (click)="sidenav.close()">Download webapp source</a>
+      <a md-list-item href="https://github.com/SimonBiggs/scripted-forms" (click)="sidenav.close()">View source on GitHub</a>
+      <md-divider></md-divider>
+    </md-nav-list>
+  </md-sidenav>
+  
+  <div class="primary-header-container">
+    <h1 *ngIf="pageTitle" class="primary-header">{{pageTitle}}</h1>
+  </div>
+
+  <div class="content-frame">
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-container>
