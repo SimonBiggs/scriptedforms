@@ -4,36 +4,28 @@ import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@angular/material'
 
+import { FormWidgetsModule } from './form-widgets.module';
+
 import { CodeComponent } from './code/code.component';
 
 import { KernelService } from './kernel.service';
-import { StartComponent } from './start/start.component';
-import { LiveComponent } from './live/live.component';
-import { ButtonComponent } from './button/button.component';
-import { VariableComponent } from './variable/variable.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    FormWidgetsModule
   ],
   declarations: [
-    CodeComponent,
-    StartComponent,
-    LiveComponent,
-    ButtonComponent,
-    VariableComponent
+    FormComponent
   ],
   providers: [
     KernelService
   ],
   exports: [
-    CodeComponent,
-    StartComponent,
-    LiveComponent,
-    ButtonComponent,
-    VariableComponent
+    FormComponent
   ]
 })
 export class ScriptedFormsModule { }

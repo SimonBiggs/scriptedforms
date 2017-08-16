@@ -3,7 +3,7 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 // import { Router } from '@angular/router';
 
 // import { TitleService } from './title.service'
-import { KernelService } from '../scripted-forms/kernel.service'
+import { KernelService } from './scripted-forms/kernel.service'
 
 @Component({
   selector: 'app-root',

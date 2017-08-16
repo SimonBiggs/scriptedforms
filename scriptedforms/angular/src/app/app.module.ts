@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { RoutingModule } from './app.routing';
 
-import { ScriptedFormsModule } from '../scripted-forms/scripted-forms.module';
+import { ScriptedFormsModule } from './scripted-forms/scripted-forms.module';
 
 import { AppErrorHandler } from './app-error-handler';
 
@@ -24,7 +24,6 @@ import { TrendComponent } from './trend/trend.component';
 import { EditComponent } from './edit/edit.component';
 import { RecordComponent } from './record/record.component';
 import { ShareComponent } from './share/share.component';
-
 @NgModule({
   declarations: [
     AppComponent,

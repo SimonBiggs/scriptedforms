@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { RoutingModule } from './app.routing';
 
-import { ScriptedFormsModule } from '../scripted-forms/scripted-forms.module';
+import { ScriptedFormsModule } from '../app/scripted-forms/scripted-forms.module';
 
 import { AppErrorHandler } from './app-error-handler';
 
