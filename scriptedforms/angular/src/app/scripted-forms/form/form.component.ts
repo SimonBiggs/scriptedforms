@@ -20,6 +20,10 @@ import { VariableComponent } from '../variable/variable.component';
 import { LiveComponent } from '../live/live.component';
 import { ButtonComponent } from '../button/button.component';
 
+interface IRuntimeComponent {
+  initialiseForm: Function
+}
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -38,7 +42,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
-  private componentRef: ComponentRef<{}>;
+  private componentRef: ComponentRef<IRuntimeComponent>;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -112,6 +116,10 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.errorbox.nativeElement.innerHTML = ""
   }
 
+  activateForm() {
+    this.componentRef.instance.initialiseForm()
+  }
+
   private createComponentFactory(compiler: Compiler, metadata: Component,
                                  componentClass: any): ComponentFactory<any> {
     @Component(metadata)
@@ -131,11 +139,12 @@ export class FormComponent implements OnInit, AfterViewInit {
       }
 
       ngOnDestroy() {
-        this.myKernelSevice.forceShutdownKernel()
+        // this.myKernelSevice.forceShutdownKernel()
+        this.myKernelSevice.shutdownKernel()
       }
 
       ngAfterViewInit() {
-        this.initialiseForm()
+        // this.initialiseForm()
       }
 
       initialiseForm(){

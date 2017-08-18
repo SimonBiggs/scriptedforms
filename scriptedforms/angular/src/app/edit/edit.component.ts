@@ -70,4 +70,8 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.myChangeDetectorRef.detectChanges()
   }
 
+  activateForm() {
+    this.formComponent.activateForm()
+  }
+
 }

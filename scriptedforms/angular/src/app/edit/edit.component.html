@@ -1,4 +1,12 @@
 <div class="view-wrapper content">
+  <div align="right" class="view">
+    <button
+      md-raised-button
+      color=accent
+      (click)="activateForm()">
+        <md-icon>play_arrow</md-icon>Activate Form
+    </button>
+  </div>
   <app-form #form></app-form>
 </div>
 <div class="editor-wrapper content">
