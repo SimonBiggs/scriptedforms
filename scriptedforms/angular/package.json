@@ -5,10 +5,8 @@
   "scripts": {
     "ng": "ng",
     "kernel": "export DEVMODE=True && python ../python/kernel/scriptedforms.py",
-    "serve-app": "ng serve --app app --deploy-url /forms",
-    "serve-web": "ng serve --app web --deploy-url /forms",
-    "deploy-app": "ng build --app app --no-aot --prod --deploy-url /forms",
-    "deploy-web": "ng build --app web --no-aot --prod --deploy-url /forms",
+    "serve": "ng serve --deploy-url /forms",
+    "deploy": "ng build --no-aot --prod --deploy-url /forms",
     "start": "webpack-dev-server --port=4200",
     "build": "webpack",
     "test": "karma start ./karma.conf.js",
