@@ -1,24 +1,19 @@
-export const FORMCONTENTS = `[start]
-\`\`\`python
+export const FORMCONTENTS = `
+[trend name="Average Reading"]average[/trend]
+[trend name="Power Value"]power[/trend]
+
+[start]
+\`\`\`
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
-\`\`\`
 
-\`\`\`
 data = np.ones(3) * np.nan
 data[0] = 5
+power = 1
+testing_outside = "hello"
 \`\`\`
-
-\`power = 1\`
-
-[/start]
-
-[start]
-
-\`testing_outside = "hello"\`
-
 [/start]
 
 # Write a title here
@@ -30,12 +25,12 @@ Live will run and re-run whenever one of the input boxes is changed.
 
 [live]
 
-\`result = np.nanmean(data)\`
+\`average = np.nanmean(data)\`
 
 [number]data[0][/number]
 [number]data[1][/number]
-[number]data[2][/number]
-\`print("Average = {0:.4f}".format(result))\`
+[number]data[2][/number] Average = 
+\`print("{0:.4f}".format(average))\`
 
 [/live]
 
@@ -86,12 +81,6 @@ More text
 print("Start Sleep")
 time.sleep(3)
 print("Finish Sleep")
-\`\`\`
-
-\`\`\`python
-print("Start Sleep2")
-time.sleep(1)
-print("Finish Sleep2")
 \`\`\`
 
 [/button]

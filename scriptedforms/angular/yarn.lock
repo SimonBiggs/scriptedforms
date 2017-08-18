@@ -1091,9 +1091,9 @@ caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000712"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000712.tgz#89748396f9d7419d5fa27df3b48872dadbf8318a"
 
-"canvas2svg@git+https://github.com/bokeh/canvas2svg.git#v1.0.21":
+"canvas2svg@https://github.com/bokeh/canvas2svg#v1.0.21":
   version "1.0.21"
-  resolved "git+https://github.com/bokeh/canvas2svg.git#6c526739ab8b07fa335f51d5a78e15e021c2fe1b"
+  resolved "https://github.com/bokeh/canvas2svg#6c526739ab8b07fa335f51d5a78e15e021c2fe1b"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -3301,9 +3301,9 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
-"kiwi@git+https://github.com/bokeh/kiwi.git#6941045":
+"kiwi@https://github.com/bokeh/kiwi.git#6941045":
   version "0.1.0"
-  resolved "git+https://github.com/bokeh/kiwi.git#6941045"
+  resolved "https://github.com/bokeh/kiwi.git#6941045"
 
 latest-version@^3.0.0:
   version "3.1.0"
@@ -3851,9 +3851,9 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-"numbro@git+https://github.com/bokeh/numbro.git#e1b6c52":
+"numbro@https://github.com/bokeh/numbro.git#e1b6c52":
   version "1.6.2"
-  resolved "git+https://github.com/bokeh/numbro.git#e1b6c52"
+  resolved "https://github.com/bokeh/numbro.git#e1b6c52"
 
 oauth-sign@~0.8.1:
   version "0.8.2"
