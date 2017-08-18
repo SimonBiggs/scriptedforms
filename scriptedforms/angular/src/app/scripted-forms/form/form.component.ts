@@ -38,7 +38,7 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   formContents: string
 
-  @ViewChild('errorbox') errorbox: ElementRef
+  // @ViewChild('errorbox') errorbox: ElementRef
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -113,7 +113,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
     this.componentRef = this.container.createComponent(factory);
 
-    this.errorbox.nativeElement.innerHTML = ""
+    // this.errorbox.nativeElement.innerHTML = ""
   }
 
   activateForm() {
@@ -124,6 +124,8 @@ export class FormComponent implements OnInit, AfterViewInit {
                                  componentClass: any): ComponentFactory<any> {
     @Component(metadata)
     class RuntimeComponent implements OnInit, OnDestroy, AfterViewInit {
+      formActivation: boolean = false
+
       @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>
       @ViewChildren(VariableComponent) variableComponents: QueryList<VariableComponent>
       @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>
@@ -135,12 +137,14 @@ export class FormComponent implements OnInit, AfterViewInit {
       ) { }
 
       ngOnInit() {
-        this.myKernelSevice.startKernel()
+        // this.myKernelSevice.startKernel()
       }
 
       ngOnDestroy() {
         // this.myKernelSevice.forceShutdownKernel()
-        this.myKernelSevice.shutdownKernel()
+        if (this.formActivation) {
+          this.myKernelSevice.shutdownKernel()
+        }
       }
 
       ngAfterViewInit() {
@@ -148,30 +152,36 @@ export class FormComponent implements OnInit, AfterViewInit {
       }
 
       initialiseForm(){
-        // The order here forces all import components to run first.
-        // Only then will the variable component fetch the variables.
-        this.startComponents.toArray().forEach((startComponent, index) => {
-          startComponent.setId(index)
-          startComponent.runCode()
-        })
-        for (let variableComponent of this.variableComponents.toArray()) {
-          variableComponent.fetchVariable()
-        }
-        this.myKernelSevice.queue.then(() => {
-          this.liveComponents.toArray().forEach((liveComponent, index) => {
-            liveComponent.setId(index)
-            liveComponent.formReady()
-          })
+        if (this.formActivation == false) {
+          this.myKernelSevice.startKernel()
+          this.formActivation = true
 
+          // The order here forces all import components to run first.
+          // Only then will the variable component fetch the variables.
+          this.startComponents.toArray().forEach((startComponent, index) => {
+            startComponent.setId(index)
+            startComponent.runCode()
+          })
           for (let variableComponent of this.variableComponents.toArray()) {
-            variableComponent.formReady()
+            variableComponent.fetchVariable()
           }
+          this.myKernelSevice.queue.then(() => {
+            this.liveComponents.toArray().forEach((liveComponent, index) => {
+              liveComponent.setId(index)
+              liveComponent.formReady()
+            })
 
-          this.buttonComponents.toArray().forEach((buttonComponent, index) => {
-            buttonComponent.setId(index)
-            buttonComponent.formReady()
+            for (let variableComponent of this.variableComponents.toArray()) {
+              variableComponent.formReady()
+            }
+
+            this.buttonComponents.toArray().forEach((buttonComponent, index) => {
+              buttonComponent.setId(index)
+              buttonComponent.formReady()
+            })
           })
-        })
+        }
+
       }
     };
 

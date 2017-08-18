@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef
+    Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, ElementRef
 } from '@angular/core';
 
 import * as CodeMirror
@@ -21,8 +21,12 @@ export class EditComponent implements OnInit, AfterViewInit {
 
   defaultForm = FORMCONTENTS
 
+  renderQueueId = 0;
+  renderQueue: Promise<any> = Promise.resolve()
+
   myCodeMirror: CodeMirror.Editor;
 
+  @ViewChild('errorbox') errorbox: ElementRef
   @ViewChild('form') formComponent: FormComponent
   @ViewChild('editor') editor
 
@@ -44,7 +48,7 @@ export class EditComponent implements OnInit, AfterViewInit {
       lineWrapping: true,
       extraKeys: {
         "Ctrl-Enter": () => {
-          this.formComponent.setFormContents(this.myCodeMirror.getValue())
+          this.activateForm()
         },
         'Cmd-Right': 'goLineRight',
         'End': 'goLineRight',
@@ -68,10 +72,55 @@ export class EditComponent implements OnInit, AfterViewInit {
 
     this.formComponent.setFormContents(this.myCodeMirror.getValue())
     this.myChangeDetectorRef.detectChanges()
+
+    // CodeMirror.on(this.myCodeMirror, "change")
+    this.myCodeMirror.on("changes", () => {
+      this.codeMirrorChange()
+    })
+  }
+
+  async codeMirrorChange() {
+    this.throttledFormUpdate()
+  }
+
+  updateForm() {
+    this.errorbox.nativeElement.innerHTML = ""
+    this.formComponent.setFormContents(this.myCodeMirror.getValue())
   }
 
   activateForm() {
     this.formComponent.activateForm()
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  throttledFormUpdate() {
+    this.addToRenderQueue(async (id) => {
+      if (id == this.renderQueueId) {
+        await this.sleep(300)
+        if (id == this.renderQueueId) {
+          this.updateForm()
+        }
+      }  
+      return Promise.resolve()
+
+    })
+  }
+
+  addToRenderQueue(asyncFunction:(id: number) => Promise<any>): Promise<any>{
+    this.renderQueueId += 1
+    const currentQueueId = this.renderQueueId
+
+    const previous = this.renderQueue
+    return this.renderQueue = (async () => {
+      await previous;
+      return asyncFunction(currentQueueId).catch((err) => {
+        this.errorbox.nativeElement.innerHTML = err
+        return Promise.resolve()
+      });
+    })();
   }
 
 }
