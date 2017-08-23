@@ -37,11 +37,13 @@ elif dev_mode_string is None:
 else:
     raise Exception("Invalid devmode string")
 
-if dev_mode:
-    from kernel_gateway.gatewayapp import KernelGatewayApp as NotebookApp
-else:
-    from notebook.notebookapp import NotebookApp
-    
+# force dev_mode
+from kernel_gateway.gatewayapp import KernelGatewayApp as NotebookApp
+# if dev_mode:
+#     from kernel_gateway.gatewayapp import KernelGatewayApp as NotebookApp
+# else:
+#     from notebook.notebookapp import NotebookApp
+
 
 static_directory = os.path.join('app', 'angular')
 
@@ -57,12 +59,12 @@ class Angular(IPythonHandler):
 
 class DownloadSource(IPythonHandler):
     """Download Source"""
-   
+
     def get(self):
         """Download Source"""
-        
+
         temp_zip_filename = 'scriptedforms.zip'
-        
+
         if dev_mode:
             directory_to_walk = 'src'
         else:
@@ -86,14 +88,14 @@ class DownloadSource(IPythonHandler):
                 if not data:
                     break
                 self.write(data)
-        
+
         os.remove(temp_zip_filename)
         self.finish()
 
 
 class ScriptedForms(NotebookApp):
     default_url = Unicode('/forms/')
-    
+
     def start(self):
         handlers = [
             ('/forms/assets/(.*)', tornado.web.StaticFileHandler, dict(
@@ -111,9 +113,9 @@ class ScriptedForms(NotebookApp):
             ('/forms/downloadsource', DownloadSource),
             ('/forms/.*', Angular)
         ]
-        
+
         self.web_app.add_handlers(".*$", handlers)
-        
+
         super(ScriptedForms, self).start()
 
     # A dirty hack to get tornado debug to work...
@@ -165,7 +167,7 @@ class ScriptedForms(NotebookApp):
 
 def define_password(password_filename):
     password_container = []
-    
+
     root = tk.Tk()
 
     root.wm_title("Define Password")
@@ -191,43 +193,52 @@ def define_password(password_filename):
     l2.pack(padx=20)
     l3.pack(pady=10)
     e.focus()
-    
+
     root.mainloop()
-    
+
     return passwd(password_container[0])
 
 
 def main():
     if dev_mode:
         ScriptedForms.launch_instance(
-            password='', token='', port=8888, 
-            ip='localhost', port_retries=0, 
+            password='', token='', port=8888,
+            ip='localhost', port_retries=0,
             allow_origin='http://localhost:4200', open_browser=False,
             allow_headers='X-XSRFToken,Content-Type',
             allow_methods="DELETE")
     else:
-        password_filename = 'password.txt'
+        ScriptedForms.launch_instance(
+            password='', token='', port=8888,
+            ip='localhost', port_retries=0,
+            allow_origin='http://scriptedforms.com.au', open_browser=False,
+            allow_headers='X-XSRFToken,Content-Type',
+            allow_methods="DELETE")
 
-        if os.path.exists(password_filename):
-            with open(password_filename, 'r') as f:
-                password = f.read()
-        else:
-            password = define_password(password_filename)
-            with open(password_filename, 'w') as f:
-                f.write(password)
-                
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('8.8.8.8', 1))
-            ip = s.getsockname()[0]
-        except:
-            ip = socket.gethostbyname(socket.gethostname())
+        # password_filename = 'password.txt'
 
-        
-        ScriptedForms.launch_instance(password=password, port=7878, ip=ip)
+        # if os.path.exists(password_filename):
+        #     with open(password_filename, 'r') as f:
+        #         password = f.read()
+        # else:
+        #     password = define_password(password_filename)
+        #     with open(password_filename, 'w') as f:
+        #         f.write(password)
+
+        # try:
+        #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #     s.connect(('8.8.8.8', 1))
+        #     ip = s.getsockname()[0]
+        # except:
+        #     ip = socket.gethostbyname(socket.gethostname())
+
+
+        # ScriptedForms.launch_instance(password=password, port=7878, ip=ip)
 
 if __name__ == "__main__":
-    if dev_mode:
-        main()
-    else:
-        main()
+    main()
+    # if dev_mode:
+    #     main()
+    # else:
+    #     main()
+
