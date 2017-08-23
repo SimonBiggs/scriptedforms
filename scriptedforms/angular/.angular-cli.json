@@ -4,15 +4,15 @@
     "name": "electroninserts-staging"
   },
   "apps": [
-    { 
+    {
       "root": "src",
       "outDir": "dist",
       "assets": [
         "assets",
         "favicon.ico"
       ],
-      "index": "./app/index.html",
-      "main": "./app/main.ts",
+      "index": "index.html",
+      "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",

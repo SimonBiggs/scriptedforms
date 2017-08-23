@@ -211,7 +211,8 @@ def main():
         ScriptedForms.launch_instance(
             password='', token='', port=8888,
             ip='localhost', port_retries=0,
-            allow_origin='http://scriptedforms.com.au', open_browser=False,
+            allow_origin='https://scriptedforms.firebaseapp.com',
+            open_browser=False,
             allow_headers='X-XSRFToken,Content-Type',
             allow_methods="DELETE")
 

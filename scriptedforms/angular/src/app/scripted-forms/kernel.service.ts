@@ -38,7 +38,7 @@ export class KernelService {
       // this.settings = ServerConnection.makeSettings({})
       // Use local server
       this.settings = ServerConnection.makeSettings({
-        baseUrl: 'http://localhost:8888'
+        baseUrl: 'https://localhost:8888'
       })
     }
 
