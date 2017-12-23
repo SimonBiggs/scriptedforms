@@ -24,9 +24,33 @@ the Combined Licenses for the specific language governing permissions and
 limitations under the Combined Licenses. */
 
 
-/*
-The extension style.
-*/
+@import '~@phosphor/widgets/style/index.css';
+
+body {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
 .form {
   display: flex;
@@ -42,3 +66,4 @@ The extension style.
   box-shadow: var(--jp-toolbar-box-shadow);
   z-index: 1;
 }
+

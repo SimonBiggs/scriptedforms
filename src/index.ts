@@ -23,6 +23,8 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+import './styles';
+import 'hammerjs';
 
 import {
   Widget

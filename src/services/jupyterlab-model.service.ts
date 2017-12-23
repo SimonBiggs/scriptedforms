@@ -26,25 +26,112 @@
 import { Injectable } from '@angular/core';
 
 import {
-  IObservableString
+  IModelDB, IObservableString
  } from '@jupyterlab/observables';
 
  import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
-// import {
-//   FormModel
-// } from '../../jupyterlab-extension/model';
+import {
+  DocumentModel
+} from '@jupyterlab/docregistry';
+
+
+export
+namespace FormModel {
+  /**
+   * An options object for initializing a notebook model.
+   */
+  export
+  interface IOptions {
+    /**
+     * The language preference for the model.
+     */
+    languagePreference?: string;
+
+    /**
+     * A modelDB for storing notebook data.
+     */
+    modelDB?: IModelDB;
+
+    // formPath: string;
+  }
+}
+
+export
+class FormModel extends DocumentModel {
+  template: IObservableString;
+
+  constructor(options: FormModel.IOptions) {
+    super(options.languagePreference, options.modelDB);
+    // this.modelDB.setValue('formPath', options.formPath);
+    // this.modelDB.createString('formPath').insert(0, './testing.form.md')
+    this.modelDB.createString('template')
+    this.template = this.modelDB.get('template') as IObservableString;
+  }
+
+  /**
+   * Dispose of the resources held by the model.
+   */
+  dispose(): void {
+    // do something
+
+    // then
+    super.dispose();
+  }
+
+  /**
+   * Serialize the model to a string.
+   */
+  toString(): string {
+    return JSON.stringify(this.toJSON());
+  }
+
+  /**
+   * Deserialize the model from a string.
+   */
+  fromString(value: string): void {
+    this.fromJSON(JSON.parse(value));
+  }
+
+  /**
+   * Serialize the model to JSON.
+   */
+  toJSON() {
+    return {
+      template: this.getTemplate()
+    };
+  }
+
+  /**
+   * Deserialize the model from JSON.
+   */
+  fromJSON(value: any): void {
+    this.setTemplate(value.template);
+  }
+
+  setTemplate(template: string) {
+    // console.log(template)
+    this.template.clear()
+    this.template.insert(0, template);
+
+    // console.log(this.template.text)
+  }
+
+  getTemplate() {
+    return this.template.text
+  }
+}
 
 @Injectable()
 export class JupyterlabModelService {
-  formModel: any
+  formModel: FormModel
   modelReady = new PromiseDelegate<void>();
   template: IObservableString
 
-  setModel(model: any) {
-    this.formModel = model;
+  initialiseModel() {
+    this.formModel = new FormModel({});
     this.modelReady.resolve(undefined);
   }
 

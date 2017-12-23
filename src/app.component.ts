@@ -31,7 +31,7 @@ through the `setFormContents` function.
 */
 
 import {
-  Component, ViewChild
+  Component, ViewChild, OnInit
 } from '@angular/core';
 
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
@@ -47,13 +47,17 @@ import {
   template: `<div class="margin"><app-form-builder #form></app-form-builder></div>`,
   styles: [`.margin { margin: 20px;}`]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild('form') formBuilderComponent: FormBuilderComponent;
 
   constructor(
     private myKernelService: KernelService,
     private myJupyterlabModelService: JupyterlabModelService
   ) { }
+
+  ngOnInit () {
+    this.initialiseModel();
+  }
 
   /**
    * Set or update the template of the form.
@@ -65,9 +69,9 @@ export class AppComponent {
     this.formBuilderComponent.buildForm();
   }
 
-  // public setDocumentModel(model: FormModel) {
-  //   this.myJupyterlabModelService.setModel(model);
-  // }
+  public initialiseModel() {
+    this.myJupyterlabModelService.initialiseModel();
+  }
 
   public modelReady(): Promise<void> {
     return this.myJupyterlabModelService.modelReady.promise;

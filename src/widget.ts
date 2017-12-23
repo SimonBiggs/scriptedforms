@@ -31,10 +31,11 @@ class FormWidget extends Widget {
   constructor(options: SessionConnectOptions) {
     super()
 
-    this.form.addClass('form');
+    this.addClass('container')
 
     let layout = this.layout = new BoxLayout();
     this.form = new AngularWidget<AppComponent, AppModule>(AppComponent, AppModule)
+    this.form.addClass('form');
     let toolbar = new Widget();
     toolbar.addClass('toolbar');
 
