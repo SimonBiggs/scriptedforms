@@ -14,7 +14,7 @@
     "jupyterlab"
   ],
   "scripts": {
-    "build": "yarn run clean && yarn run copy && yarn run compile && yarn run sass",
+    "build": "yarn run clean && yarn run compile && yarn run sass",
     "copy": "cp -r ./src ./build ",
     "sass": "node-sass ./src/theme.scss ./build/theme.css",
     "compile": "tsc",

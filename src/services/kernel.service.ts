@@ -45,11 +45,15 @@ import {
   sessionStartCode
 } from './session-start-code';
 
+import {
+  SessionConnectOptions
+} from '../interfaces/session-connect-options';
+
 
 @Injectable()
 export class KernelService {
   services: ServiceManager;
-  path: string;
+  path: string = 'default_path';
   sessionConnected = new PromiseDelegate<void>();
 
   isNewSession: boolean;
@@ -75,10 +79,15 @@ export class KernelService {
     this.session.setPath(path);
   }
 
-  sessionConnect() {
+  sessionConnect(options: SessionConnectOptions) {
+    this.setServices(options.serviceManager);
+    if (options.path) {
+      this.setPath(options.path);
+    }
+    
     const settings = ServerConnection.makeSettings({});
 
-    const options = {
+    const startNewOptions = {
       kernelName: 'python3',
       serverSettings: settings,
       path: this.path
@@ -93,7 +102,7 @@ export class KernelService {
         // console.log('previous session ready');
       });
     }).catch(() => {
-      Session.startNew(options).then(session => {
+      Session.startNew(startNewOptions).then(session => {
         // console.log(session);
         this.sessionReady(session);
         this.isNewSession = true;

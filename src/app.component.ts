@@ -39,8 +39,8 @@ import { KernelService } from './services/kernel.service';
 import { JupyterlabModelService } from './services/jupyterlab-model.service';
 
 import {
-  ServiceManager
-} from '@jupyterlab/services';
+  SessionConnectOptions
+} from './interfaces/session-connect-options';
 
 @Component({
   selector: 'app-root',
@@ -76,14 +76,9 @@ export class AppComponent {
   /**
    * Given a Jupyterlab session manager either reconnect to existing kernel
    * or start a new kernel at the provided path.
-   * 
-   * @param services: The jupyterlab service manager.
-   * @param path: The kernel session filepath.
    */
-  public sessionConnect(services: ServiceManager, path: string) {
-    this.myKernelService.setServices(services);
-    this.myKernelService.setPath(path);
-    this.myKernelService.sessionConnect();
+  public sessionConnect(options: SessionConnectOptions) {
+    this.myKernelService.sessionConnect(options);
   }
 
   /**
