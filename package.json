@@ -14,21 +14,17 @@
     "jupyterlab"
   ],
   "scripts": {
-    "build": "jlpm run clean && jlpm run copy && jlpm run compile && jlpm run sass",
-    "copy": "cp -r ./src ./lib ",
-    "sass": "node-sass ./src/angular-app/theme.scss ./lib/angular-app/theme.css",
+    "build": "yarn run clean && yarn run copy && yarn run compile && yarn run sass",
+    "copy": "cp -r ./src ./build ",
+    "sass": "node-sass ./src/heme.scss ./build/theme.css",
     "compile": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf lib",
-    "prepack": "jlpm run build"
+    "clean": "rimraf build",
+    "prepack": "yarn run build"
   },
   "files": [
-    "lib/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}",
-    "schema/*.json"
+    "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
-  "jupyterlab": {
-    "extension": true
-  },
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/cdk": "5.0.0-rc.1",
@@ -38,7 +34,6 @@
     "@angular/forms": "^5.0.0",
     "@angular/material": "5.0.0-rc.1",
     "@angular/platform-browser": "^5.0.0",
-    "@jupyterlab/application": "0.13.1",
     "@jupyterlab/coreutils": "0.13.0",
     "@jupyterlab/docmanager": "0.13.0",
     "@jupyterlab/fileeditor-extension": "0.13.0",
