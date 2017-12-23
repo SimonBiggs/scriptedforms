@@ -1,0 +1,50 @@
+jupyterlab-form
+Copyright (C) 2017 Simon Biggs
+
+Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and GNU 
+Affrero General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version (the 
+"AGPL-3.0+").
+
+You may not use this file except in compiance with both the Apache-2.0 AND the 
+AGPL-3.0+ in combination.
+
+You may obtain a copy of the AGPL-3.0+ at
+
+    https://www.gnu.org/licenses/agpl-3.0.txt
+
+You may obtain a copy of the Apache-2.0 at 
+
+    https://www.apache.org/licenses/LICENSE-2.0.html
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the Apache-2.0 and the AGPL-3.0+ is distributed on an 
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express 
+or implied. See the Apache-2.0 and the AGPL-3.0+ for the specific language 
+governing permissions and limitations under the Apache-2.0 and the AGPL-3.0+.
+
+
+-------------------------------------------------------------------------------
+A comment on the justification for licensing under both the AGPL-3.0+ and the 
+Apache-2.0 in combination.
+-------------------------------------------------------------------------------
+
+Within Australian courts if there is any ambiguity in exclusion clauses they 
+will be interpreted narrowly. If liability for negligence is not expressly 
+excluded it may not be read as excluded within an Australian court 
+(https://eprints.qut.edu.au/7404/1/open_source_book.pdf page 80). 
+The same is true for clauses which seek to exclude liability for consequential 
+loss.
+
+The AGPL-3.0 does not explicitly mention negligence anywhere within its licence
+text.
+
+By combining the Apache-2.0 licence and the AGPL-3.0+ licence these 
+requirements of Australian Law can be addressed as well as taking advantage of 
+the strict copy-left of the AGPL-3.0+ licence.
+
+All code here is licenced under both the AGPL-3.0+ AND the Apache-2.0 licence.
+Your use and copying of this code is under the terms of BOTH of these licences,
+simultaneously, in combination.
+
+Their respective licences are found within the AGPL-3.0+ and Apache-2.0 files.

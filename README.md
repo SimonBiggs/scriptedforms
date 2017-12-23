@@ -1,113 +1,81 @@
-## Download link
+# JupyterLab Form
 
-Windows:
-https://www.dropbox.com/sh/0t1zjpmf9j5edyf/AABLUrqkwTpIIZHiWlvHHZqUa?dl=1
+[![Gitter chat](https://badges.gitter.im/simonbiggs/jupyterlab-form.png)](https://gitter.im/simonbiggs/jupyterlab-form)
 
+An extension for jupyterlab to create scripted forms.
 
-# Setting up development environment
+## Requirements
 
-Using Ubuntu 16.04.2 -- http://releases.ubuntu.com/16.04/ubuntu-16.04.2-desktop-amd64.iso
+Aquire Python3, JupyterLab, Node, npm, and git.
 
-## Allow more listeners
+One way to get these, which is simple and platform independent, is to download miniconda from https://conda.io/miniconda.html, install it, and then run the following:
 
-    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```bash
+conda install nodejs jupyterlab git -c conda-forge
+```
 
+I personally use Ubuntu and install node and npm via nvm (https://github.com/creationix/nvm), python3 with pyenv (https://github.com/pyenv/pyenv), and jupyterlab simply via pip as so:
 
-## Requirements to just run from source on Linux
+```bash
+pip install jupyterlab
+```
 
-### Install Python and python libraries
+## Installation
 
-    curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
-    
-Add the following to ~/.bashrc
+Once you have those requirements download and install jupyrerlab-forms by running the following:
 
-    export PATH="~/.pyenv/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+```bash
+git clone https://github.com/SimonBiggs/jupyterlab-form
+cd jupyterlab-form
+npm install
+jupyter labextension install
+jupyter lab
+```
 
-Open new terminal
-
-    sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-      libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-      xz-utils tk-dev
-    pyenv install 3.5.3
-    pyenv global 3.5.3
-
-
-#### Install python libraries
-
-    pip install -r ./python/requirements.txt
-    
-### Install Node and node libraries
-
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-    source ~/.bashrc
-    nvm install node
-    nvm use node
-
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    
-    sudo apt-get update && sudo apt-get install yarn
-
-#### Install node libraries
-    
-    cd angular
-    yarn
-    cd ../
-
-### Run server
-
-Start server:
-
-    cd angular
-    yarn run kernel
-    yarn run forms
-
-Open http://localhost:4200
-
-## Recommended IDE
-
-https://code.visualstudio.com/
+Then within the `launcher` tab press the `Form` button.
 
 
-## Requirements to be able to create Windows release
+## Development suggestions
+
+The following code snippets are intended to be run within the jupyterlab-form directory.
 
 
-### Install Wine-Staging
+### Once off dev set up
 
-https://wiki.winehq.org/Ubuntu
+To link the package to jupyterlab so that changes to the form extension are built
+with code changes run the following:
 
-    wget -nc https://dl.winehq.org/wine-builds/Release.key
-    sudo apt-key add Release.key
-    sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
-    sudo apt update
-    sudo apt-get install --install-recommends winehq-staging wine-staging-compat
+```bash
+jupyter labextension link
+```
 
-### Download Bat to EXE Converter
+Verify the link by running
 
-http://www.f2ko.de/en/b2e.php
+```bash
+jupyter labextension list
+```
 
-Extract portable `Bat_To_Exe_Converter_(x64).exe` and rename it to be: `./windows_libs/bat2exe.exe`
+### Run each development session
 
-### Install WinPython 3.5.2.1Zero.exe
+To have the extension auto compile the typescript when changes are made run the 
+following:
 
-https://github.com/winpython/winpython/releases/download/1.7.20170401/WinPython-64bit-3.5.3.1Zero.exe
+```bash
+npm run watch
+```
 
-Install to `./windows_libs/python`
+Then to have jupyterlab automatically update whenever changes are detected run
+jupyterlab in watch mode in a directory of your choosing:
 
-Run:
-    
-    ./set_up_dev_environment.sh
+```bash
+jupyter lab --watch
+```
 
-### Create release
+### Environment suggestions
 
-    ./create_release.sh
+To work on the typescript code base I highly recommend https://code.visualstudio.com/.
 
+I also recommend the following extensions:
 
-
-
-
-
-
-
+ * Git Lens (Eric Amodio)
+ * Angular Essentials (by John Papa)

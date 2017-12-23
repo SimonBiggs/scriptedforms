@@ -1,0 +1,69 @@
+{
+  "name": "@simonbiggs/jupyterlab-form",
+  "version": "0.6.0",
+  "license": "Apache-2.0 AND AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SimonBiggs/jupyterlab-form.git"
+  },
+  "description": "Interactive forms.",
+  "author": "Simon Biggs",
+  "main": "lib/jupyterlab-extension/index.js",
+  "keywords": [
+    "jupyter",
+    "jupyterlab"
+  ],
+  "scripts": {
+    "build": "jlpm run clean && jlpm run copy && jlpm run compile && jlpm run sass",
+    "copy": "cp -r ./src ./lib ",
+    "sass": "node-sass ./src/angular-app/theme.scss ./lib/angular-app/theme.css",
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf lib",
+    "prepack": "jlpm run build"
+  },
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "schema/*.json"
+  ],
+  "jupyterlab": {
+    "extension": true
+  },
+  "dependencies": {
+    "@angular/animations": "^5.0.0",
+    "@angular/cdk": "5.0.0-rc.1",
+    "@angular/common": "^5.0.0",
+    "@angular/compiler": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0",
+    "@angular/material": "5.0.0-rc.1",
+    "@angular/platform-browser": "^5.0.0",
+    "@jupyterlab/application": "0.13.1",
+    "@jupyterlab/coreutils": "0.13.0",
+    "@jupyterlab/docmanager": "0.13.0",
+    "@jupyterlab/fileeditor-extension": "0.13.0",
+    "@jupyterlab/launcher": "0.13.2",
+    "@jupyterlab/observables": "^0.2.0",
+    "@jupyterlab/outputarea": "0.13.0",
+    "@jupyterlab/rendermime": "0.13.0",
+    "@jupyterlab/services": "0.52.0",
+    "@phosphor/widgets": "^1.5.0",
+    "@simonbiggs/phosphor-angular-loader": "^0.6.0",
+    "@types/codemirror": "0.0.47",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/markdown-it": "0.0.4",
+    "core-js": "^2.5.1",
+    "hammerjs": "^2.0.8",
+    "json-stable-stringify": "^1.0.1",
+    "markdown-it": "^8.4.0",
+    "rxjs": "^5.5.2",
+    "zone.js": "^0.8.18"
+  },
+  "devDependencies": {
+    "@types/hammerjs": "^2.0.35",
+    "node-sass": "^4.5.3",
+    "rimraf": "^2.6.1",
+    "tslint": "^5.7.0",
+    "typescript": "^2.6.2"
+  }
+}

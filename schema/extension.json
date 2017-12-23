@@ -1,0 +1,13 @@
+{
+  "jupyter.lab.setting-icon-class": "jp-TextEditorIcon",
+  "jupyter.lab.setting-icon-label": "Editor",
+  "title": "Forms",
+  "description": "Form settings.",
+  "properties": {
+    "templateDirectory": {
+      "type": "string", "title": "Template Directory", "default": "",
+      "description": "The directory where form templates are drawn from."
+    }
+  },
+  "type": "object"
+}
