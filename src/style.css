@@ -23,34 +23,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
 the Combined Licenses for the specific language governing permissions and 
 limitations under the Combined Licenses. */
 
-
+@import '~@phosphor/dragdrop/style/index.css';
 @import '~@phosphor/widgets/style/index.css';
+@import './phosphor-styles/index.css';
+@import './phosphor-styles/content.css';
+@import './phosphor-styles/dockpanel.css';
+@import './phosphor-styles/tabbar.css';
 
-body {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
 
 .form {
   display: flex;

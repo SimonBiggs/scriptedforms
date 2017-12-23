@@ -27,7 +27,7 @@ import './styles';
 import 'hammerjs';
 
 import {
-  Widget
+  DockPanel, Widget
 } from '@phosphor/widgets';
 
 import {
@@ -42,12 +42,17 @@ import {
   demoFormContents
 } from './demo-form-contents';
 
-
 function main(): void {
+  let dock = new DockPanel();
+  dock.id = 'dock';
+  
   let serviceManager = new ServiceManager();
   let form = new FormWidget({serviceManager});
   form.updateTemplate(demoFormContents);
-  Widget.attach(form, document.body);
+
+  dock.addWidget(form)
+  window.onresize = () => { dock.update(); };
+  Widget.attach(dock, document.body);
 }
 
 window.onload = main;
