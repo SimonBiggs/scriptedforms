@@ -42,10 +42,6 @@ import {
   ServiceManager
 } from '@jupyterlab/services';
 
-import {
-  FormModel
-} from '../jupyterlab-extension/model';
-
 @Component({
   selector: 'app-root',
   template: `<div class="margin"><app-form-builder #form></app-form-builder></div>`,
@@ -69,9 +65,9 @@ export class AppComponent {
     this.formBuilderComponent.buildForm();
   }
 
-  public setDocumentModel(model: FormModel) {
-    this.myJupyterlabModelService.setModel(model);
-  }
+  // public setDocumentModel(model: FormModel) {
+  //   this.myJupyterlabModelService.setModel(model);
+  // }
 
   public modelReady(): Promise<void> {
     return this.myJupyterlabModelService.modelReady.promise;

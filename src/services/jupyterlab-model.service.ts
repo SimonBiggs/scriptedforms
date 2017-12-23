@@ -33,17 +33,17 @@ import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
-import {
-  FormModel
-} from '../../jupyterlab-extension/model';
+// import {
+//   FormModel
+// } from '../../jupyterlab-extension/model';
 
 @Injectable()
 export class JupyterlabModelService {
-  formModel: FormModel
+  formModel: any
   modelReady = new PromiseDelegate<void>();
   template: IObservableString
 
-  setModel(model: FormModel) {
+  setModel(model: any) {
     this.formModel = model;
     this.modelReady.resolve(undefined);
   }

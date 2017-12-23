@@ -10,7 +10,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "outDir": "./lib",
+    "outDir": "./build",
     "lib": [
       "es2017",
       "dom"
@@ -19,5 +19,5 @@
       "node_modules/@types"
     ]
   },
-  "include": ["src/angular-component/*", "src/jupyterlab-extension/*"]
+  "include": ["src/*"]
 }

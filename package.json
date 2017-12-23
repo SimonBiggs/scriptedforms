@@ -16,7 +16,7 @@
   "scripts": {
     "build": "yarn run clean && yarn run copy && yarn run compile && yarn run sass",
     "copy": "cp -r ./src ./build ",
-    "sass": "node-sass ./src/heme.scss ./build/theme.css",
+    "sass": "node-sass ./src/theme.scss ./build/theme.css",
     "compile": "tsc",
     "watch": "tsc -w",
     "clean": "rimraf build",
@@ -34,14 +34,9 @@
     "@angular/forms": "^5.0.0",
     "@angular/material": "5.0.0-rc.1",
     "@angular/platform-browser": "^5.0.0",
-    "@jupyterlab/coreutils": "0.13.0",
-    "@jupyterlab/docmanager": "0.13.0",
-    "@jupyterlab/fileeditor-extension": "0.13.0",
-    "@jupyterlab/launcher": "0.13.2",
-    "@jupyterlab/observables": "^0.2.0",
-    "@jupyterlab/outputarea": "0.13.0",
-    "@jupyterlab/rendermime": "0.13.0",
-    "@jupyterlab/services": "0.52.0",
+    "@jupyterlab/outputarea": "^0.13.1",
+    "@jupyterlab/rendermime": "^0.13.0",
+    "@jupyterlab/services": "^0.52.0",
     "@phosphor/widgets": "^1.5.0",
     "@simonbiggs/phosphor-angular-loader": "^0.6.0",
     "@types/codemirror": "0.0.47",
@@ -51,8 +46,8 @@
     "hammerjs": "^2.0.8",
     "json-stable-stringify": "^1.0.1",
     "markdown-it": "^8.4.0",
-    "rxjs": "^5.5.2",
-    "zone.js": "^0.8.18"
+    "rxjs": "^5.5.0",
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.35",
