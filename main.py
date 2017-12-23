@@ -2,8 +2,8 @@
 Copyright (c) Jupyter Development Team.
 Distributed under the terms of the Modified BSD License.
 """
-from notebook.notebookapp import NotebookApp
 import os
+from notebook.notebookapp import NotebookApp
 from jinja2 import FileSystemLoader
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 from traitlets import Unicode
@@ -29,12 +29,12 @@ class ExampleHander(IPythonHandler):
 class ExampleApp(NotebookApp):
     """A notebook app that runs the example."""
 
-    default_url = Unicode('/example')
+    default_url = Unicode('/scriptedforms')
 
     def start(self):
         handlers = [
-            (r'/example/?', ExampleHander),
-            (r"/example/(.*)", FileFindHandler,
+            (r'/scriptedforms/?', ExampleHander),
+            (r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'build')}),
         ]
         self.web_app.add_handlers(".*$", handlers)

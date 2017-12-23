@@ -14,7 +14,7 @@
     "jupyterlab"
   ],
   "scripts": {
-    "build": "yarn run clean && yarn run compile && yarn run sass",
+    "build": "yarn run clean && yarn run compile && yarn run sass && webpack",
     "copy": "cp -r ./src ./build ",
     "sass": "node-sass ./src/theme.scss ./build/theme.css",
     "compile": "tsc",
@@ -51,9 +51,12 @@
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.35",
+    "css-loader": "^0.28.7",
     "node-sass": "^4.5.3",
     "rimraf": "^2.6.1",
+    "style-loader": "^0.19.1",
     "tslint": "^5.7.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
   }
 }
