@@ -42,9 +42,17 @@ import {
   SessionConnectOptions
 } from './interfaces/session-connect-options';
 
+
 export
-class ScriptedFormWidget extends AngularWidget<AppComponent, AppModule> {
-  constructor(options: SessionConnectOptions) {
+namespace IScriptedFormsWidget {
+  export
+  interface IOptions extends SessionConnectOptions {}
+}
+
+
+export
+class ScriptedFormsWidget extends AngularWidget<AppComponent, AppModule> {
+  constructor(options: IScriptedFormsWidget.IOptions) {
     super(AppComponent, AppModule)
 
     this.run(() => {

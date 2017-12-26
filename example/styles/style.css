@@ -25,10 +25,10 @@ limitations under the Combined Licenses. */
 
 @import '~@phosphor/dragdrop/style/index.css';
 @import '~@phosphor/widgets/style/index.css';
-@import './phosphor-styles/index.css';
-@import './phosphor-styles/content.css';
-@import './phosphor-styles/dockpanel.css';
-@import './phosphor-styles/tabbar.css';
+@import './phosphor/index.css';
+@import './phosphor/content.css';
+@import './phosphor/dockpanel.css';
+@import './phosphor/tabbar.css';
 
 
 .form {

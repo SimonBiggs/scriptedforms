@@ -23,7 +23,7 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import './style.css';
+import './styles/style.css';
 import 'hammerjs';
 
 import {
