@@ -30,7 +30,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-string',
+  selector: 'variable-string',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>

@@ -50,7 +50,7 @@ import { CodeComponent } from '../code-module/code.component';
 import { VariableComponent } from '../types/variable-component';
 
 @Component({
-  selector: 'app-live',
+  selector: 'section-live',
   template: `<ng-content></ng-content>`
 })
 export class LiveComponent implements AfterViewInit {

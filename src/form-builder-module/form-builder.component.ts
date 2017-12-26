@@ -42,7 +42,7 @@ import * as  MarkdownIt from 'markdown-it';
 
 import { createFormComponentFactory } from './create-form-component-factory';
 
-import { JupyterlabModelService } from '../services/jupyterlab-model.service';
+import { ModelService } from '../services/model.service';
 
 import {
   PromiseDelegate
@@ -66,7 +66,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private compiler: Compiler,
-    private myJupyterlabModelService: JupyterlabModelService
+    private myModelService: ModelService
   ) { }
 
   ngOnInit() {
@@ -89,7 +89,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * has sufficiently initialised.
    */
   public buildForm() {
-    const markdownTemplate = this.myJupyterlabModelService.getTemplate()
+    const markdownTemplate = this.myModelService.getTemplate()
     this.viewInitialised.promise.then(() => {
       const htmlTemplate = this.convertTemplate(markdownTemplate);
 
@@ -106,28 +106,17 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * @returns The html template.
    */
   private convertTemplate(markdownTemplate: string): string {
-    // Replace the form syntax with their respective angular component tags
-    const customTags = markdownTemplate.replace(/\[start\]/g, '\n<app-start>\n'
-    ).replace(/\[\/start\]/g, '\n</app-start>\n'
-    ).replace(/\[live\]/g, '\n<app-live>\n'
-    ).replace(/\[\/live\]/g, '\n</app-live>\n'
-    ).replace(/\[button\]/g, '\n<app-button>\n'
-    ).replace(/\[\/button\]/g, '\n</app-button>\n'
-    ).replace(/\[number\]/g, '<app-number>'
-    ).replace(/\[\/number\]/g, '</app-number>'
-    ).replace(/\[string\]/g, '<app-string>'
-    ).replace(/\[\/string\]/g, '</app-string>'
-    ).replace(/\[table\]/g, '<app-table>'
-    ).replace(/\[\/table\]/g, '</app-table>'
-    ).replace(/\[tick\]/g, '<app-tick>'
-    ).replace(/\[\/tick\]/g, '</app-tick>'
-    ).replace(/\[toggle\]/g, '<app-toggle>'
-    ).replace(/\[\/toggle\]/g, '</app-toggle>'
-    ).replace(/\[slider\]/g, '<app-slider>'
-    ).replace(/\[\/slider\]/g, '</app-slider>');
+    // Add new lines around the sections
+    const addNewLines = markdownTemplate
+    .replace(/<section-start>/g, '\n<section-start>\n')
+    .replace(/<\/section-start>/g, '\n</section-start>\n')
+    .replace(/<section-live>/g, '\n<section-live>\n')
+    .replace(/<\/section-live>/g, '\n</section-live>\n')
+    .replace(/<section-button>/g, '\n<section-button>\n')
+    .replace(/<\/section-button>/g, '\n</section-button>\n');
 
     // Render the markdown to html
-    const html = this.myMarkdownIt.render(customTags);
+    const html = this.myMarkdownIt.render(addNewLines);
 
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'

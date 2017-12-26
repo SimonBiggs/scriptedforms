@@ -30,7 +30,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-toggle',
+  selector: 'variable-toggle',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>

@@ -30,7 +30,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-tick',
+  selector: 'variable-tick',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>

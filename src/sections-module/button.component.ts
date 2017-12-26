@@ -42,7 +42,7 @@ import { CodeComponent } from '../code-module/code.component';
 import { KernelService } from '../services/kernel.service';
 
 @Component({
-  selector: 'app-button',
+  selector: 'section-button',
   template: `
 <div>
   <ng-content></ng-content>

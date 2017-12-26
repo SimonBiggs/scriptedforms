@@ -37,7 +37,7 @@ import { VariableBaseComponent } from './variable-base.component';
 import { PandasTable } from '../interfaces/pandas-table'
 
 @Component({
-  selector: 'app-table',
+  selector: 'variable-table',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>

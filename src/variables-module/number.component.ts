@@ -23,14 +23,14 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { VariableBaseComponent } from './variable-base.component';
+import { NumberBaseComponent } from './number-base.component';
 
 import {
   Component, AfterViewInit
 } from '@angular/core';
 
 @Component({
-  selector: 'app-number',
+  selector: 'variable-number',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
@@ -45,6 +45,9 @@ import {
     (ngModelChange)="variableChanged($event)"
     (blur)="onBlur()" 
     (focus)="onFocus()"
+    [max]="max"
+    [min]="min"
+    [step]="step"
     type="number">
 </mat-input-container>`,
   styles: [
@@ -53,9 +56,4 @@ import {
   }
   `]
 })
-export class NumberComponent extends VariableBaseComponent implements AfterViewInit { 
-  updateVariableView(value: string | number) {
-    value = Number(value)
-    super.updateVariableView(value)
-  }
-}
+export class NumberComponent extends NumberBaseComponent implements AfterViewInit {}

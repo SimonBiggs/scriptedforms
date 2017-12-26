@@ -44,7 +44,7 @@ import { LiveComponent } from '../sections-module/live.component';
 import { ButtonComponent } from '../sections-module/button.component';
 
 @Component({
-  selector: 'app-start',
+  selector: 'section-start',
   template: `<ng-content></ng-content>
 <div align="right" *ngIf="(!hasStartRun)">
   <button

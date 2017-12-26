@@ -68,7 +68,7 @@ dataframe with all of the values in the dataframe being floats.
 
 A \`start\` section is defined as following:
 
-[start]
+<section-start>
 \`\`\`
 data = np.ones(3) * np.nan
 data[0] = 5
@@ -82,7 +82,7 @@ hello = False
 world = False
 bye = False
 \`\`\`
-[/start]
+</section-start>
 
 Whenever a jupyterlab services session is started
 code within the start sections is run first.
@@ -109,16 +109,16 @@ that live section is subsequently run.
 Here is a \`live\` section containing both number and slider that produces a 
 plot.
 
-[live]
-[number]data[0][/number]
-[number]data[1][/number]
-[number]data[2][/number]
+<section-live>
+<variable-number>data[0]</variable-number>
+<variable-number>data[1],-100,100</variable-number>
+<variable-number>data[2],0,1,0.01</variable-number>
 
-[slider]0,100,1,data[0][/slider]
-[slider]-100,100,20,data[1][/slider]
-[slider]0,1,0.01,data[2][/slider]
+<variable-slider>data[0]</variable-slider>
+<variable-slider>data[1],-100,100</variable-slider>
+<variable-slider>data[2],0,1,0.01</variable-slider>
 \`plt.plot(data, 'o');\`
-[/live]
+</section-live>
 
 The slider requires four inputs, the minimum, maximum, step size, and finally 
 the name of the python variable which is mapped to the slider.
@@ -131,12 +131,12 @@ python variable name.
 Table variables display a full pandas dataframe. The live code can update one
 part of the table as other parts are being edited.
 
-[live]
-[table]table[/table]
+<section-live>
+<variable-table>table</variable-table>
 \`\`\`
 table.iloc[:,3] = np.nanmean(table.iloc[:,0:3], axis=1)
 \`\`\`
-[/live]
+</section-live>
 
 #### The tick and toggle variables
 
@@ -145,10 +145,10 @@ boolean variable within python. They are provided for use cases such as check
 lists and pass fail tests. These variables can interact with each other in 
 interesting ways via the live Python code.
 
-[live]
-[tick]hello[/tick]
+<section-live>
+<variable-tick>hello</variable-tick>
 
-[tick]world[/tick]
+<variable-tick>world</variable-tick>
 \`\`\`
 if bye:
     hello = False
@@ -158,8 +158,8 @@ if hello and world:
     print('Hello World!')
 \`\`\`
 
-[toggle]bye[/toggle]
-[/live]
+<variable-toggle>bye</variable-toggle>
+</section-live>
 
 #### String variables
 
@@ -167,10 +167,10 @@ String variables fill the entire width of the container they are in. They also
 expand when new lines are provied. An example use case is an optional notes
 field.
 
-[live]
-[string]notes[/string]
+<section-live>
+<variable-string>notes</variable-string>
 \`print(notes)\`
-[/live]
+</section-live>
 
 ### Button sections
 
@@ -179,11 +179,11 @@ should not run whenever a user changes a variable.
 
 They are defined as following:
 
-[string]notes[/string]
+<variable-string>notes</variable-string>
 
-[button]
+<section-button>
 \`print(notes)\`
-[/button]
+</section-button>
 
 They will not run until their respective button is pressed.
 

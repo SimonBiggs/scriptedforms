@@ -23,47 +23,34 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 import {
-  Component, AfterViewInit
-} from '@angular/core';
+  PromiseDelegate
+} from '@phosphor/coreutils';
 
-import { NumberBaseComponent } from './number-base.component';
-// import { Slider } from '../interfaces/slider';
-
-// import * as  stringify from 'json-stable-stringify';
-
-@Component({
-  selector: 'variable-slider',
-  template: `
-<span #variablecontainer *ngIf="variableName === undefined">
-  <ng-content></ng-content>
-</span>
-
-<span class="container">{{variableName}}
-  <mat-slider class="variableSlider" *ngIf="variableName" 
-    [disabled]="!isFormReady"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumb-label]="true">
-  </mat-slider>
-</span>`,
-styles: [
-  `
-.container {
-  display: flex;
+export
+class FormModel {
+  template: BehaviorSubject<string>;
 }
-  
-.variableSlider {
-  flex-grow: 1;
-}
-`]
-})
-export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
-  min: number = 0
-  max: number = 100
+
+@Injectable()
+export class ModelService {
+  formModel: FormModel
+  modelReady = new PromiseDelegate<void>();
+  template: BehaviorSubject<string>
+
+  constructor () {
+    this.template = new BehaviorSubject('')
+    this.modelReady.resolve(undefined);
+  }
+
+  setTemplate(template: string) {
+    this.template.next(template)
+  }
+
+  getTemplate() {
+    return this.template.getValue()
+  }
 }

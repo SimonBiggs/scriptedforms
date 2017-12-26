@@ -31,7 +31,7 @@ import {
 
 @Component({})
 export class BooleanBaseComponent extends VariableBaseComponent implements AfterViewInit { 
-  variableValue: boolean;
+  // variableValue: boolean;
   updateVariableView(value: string) {
     if (value === 'True') {
       this.variableValue = true

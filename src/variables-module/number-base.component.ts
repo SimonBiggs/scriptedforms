@@ -23,47 +23,45 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+import { VariableBaseComponent } from './variable-base.component';
+
 import {
   Component, AfterViewInit
 } from '@angular/core';
 
-import { NumberBaseComponent } from './number-base.component';
-// import { Slider } from '../interfaces/slider';
+@Component({})
+export class NumberBaseComponent extends VariableBaseComponent implements AfterViewInit { 
+  min: number = null
+  max: number = null
+  step: number = 1
 
-// import * as  stringify from 'json-stable-stringify';
+  // variableValue: number
 
-@Component({
-  selector: 'variable-slider',
-  template: `
-<span #variablecontainer *ngIf="variableName === undefined">
-  <ng-content></ng-content>
-</span>
+  ngAfterViewInit() {
+    const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
+    const items = ngContent.split(',')
 
-<span class="container">{{variableName}}
-  <mat-slider class="variableSlider" *ngIf="variableName" 
-    [disabled]="!isFormReady"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumb-label]="true">
-  </mat-slider>
-</span>`,
-styles: [
-  `
-.container {
-  display: flex;
-}
-  
-.variableSlider {
-  flex-grow: 1;
-}
-`]
-})
-export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
-  min: number = 0
-  max: number = 100
+    console.log(items)
+
+    this.variableName = items[0]
+
+    if (items.length >= 1) {
+      this.min = Number(items[1])
+    }
+
+    if (items.length >= 2) {
+      this.max = Number(items[2])
+    }
+
+    if (items.length >= 3) {
+      this.step = Number(items[3])
+    }
+    
+    this.myChangeDetectorRef.detectChanges();
+  }
+ 
+  updateVariableView(value: string | number) {
+    value = Number(value)
+    super.updateVariableView(value)
+  }
 }
