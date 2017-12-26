@@ -1,6 +1,6 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "license": "Apache-2.0 AND AGPL-3.0",
   "repository": {
     "type": "git",
@@ -9,17 +9,14 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "main": "lib/index.js",
-  "keywords": [
-    "jupyter",
-    "jupyterlab"
-  ],
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "yarn run clean && yarn run compile && yarn run sass",
     "sass": "node-sass ./src/theme.scss ./lib/theme.css",
     "compile": "tsc",
     "watch": "tsc -w",
     "clean": "rimraf lib",
-    "prepack": "yarn run lib"
+    "prepack": "yarn run build"
   },
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
