@@ -1,29 +1,28 @@
 {
-  "name": "@simonbiggs/jupyterlab-form",
-  "version": "0.6.0",
+  "name": "@simonbiggs/scriptedforms",
+  "version": "0.1.0",
   "license": "Apache-2.0 AND AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SimonBiggs/jupyterlab-form.git"
+    "url": "https://github.com/SimonBiggs/scriptedforms.git"
   },
   "description": "Interactive forms.",
   "author": "Simon Biggs",
-  "main": "lib/jupyterlab-extension/index.js",
+  "main": "lib/index.js",
   "keywords": [
     "jupyter",
     "jupyterlab"
   ],
   "scripts": {
-    "build": "yarn run clean && yarn run compile && yarn run copy && yarn run sass && webpack",
-    "copy": "cp ./src/style.css ./build/style.css && cp -r ./src/phosphor-styles ./build/phosphor-styles",
-    "sass": "node-sass ./src/theme.scss ./build/theme.css",
+    "build": "yarn run clean && yarn run compile && yarn run sass",
+    "sass": "node-sass ./src/theme.scss ./lib/theme.css",
     "compile": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf build",
-    "prepack": "yarn run build"
+    "clean": "rimraf lib",
+    "prepack": "yarn run lib"
   },
   "files": [
-    "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
+    "lib/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
   "dependencies": {
     "@angular/animations": "^5.0.0",

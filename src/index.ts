@@ -27,32 +27,36 @@ import './styles';
 import 'hammerjs';
 
 import {
-  DockPanel, Widget
-} from '@phosphor/widgets';
+  AngularWidget
+} from '@simonbiggs/phosphor-angular-loader';
 
 import {
-  FormWidget
-} from './widget';
+  AppComponent
+} from './app.component';
 
 import {
-  ServiceManager
-} from '@jupyterlab/services';
+  AppModule
+} from './app.module';
 
 import {
-  demoFormContents
-} from './demo-form-contents';
+  SessionConnectOptions
+} from './interfaces/session-connect-options';
 
-function main(): void {
-  let dock = new DockPanel();
-  dock.id = 'dock';
-  
-  let serviceManager = new ServiceManager();
-  let form = new FormWidget({serviceManager});
-  form.updateTemplate(demoFormContents);
+export
+class ScriptedFormWidget extends AngularWidget<AppComponent, AppModule> {
+  constructor(options: SessionConnectOptions) {
+    super(AppComponent, AppModule)
 
-  dock.addWidget(form)
-  window.onresize = () => { dock.update(); };
-  Widget.attach(dock, document.body);
+    this.run(() => {
+      this.componentInstance.sessionConnect(options);
+    })
+  }
+
+  updateTemplate(template: string) {
+    this.run(() => {
+      this.componentInstance.modelReady().then(() => {
+        this.componentInstance.setTemplateAndBuildForm(template);
+      })
+    });
+  }
 }
-
-window.onload = main;

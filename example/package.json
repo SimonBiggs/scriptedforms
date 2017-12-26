@@ -1,0 +1,29 @@
+{
+  "name": "@simonbiggs/scriptedforms-example",
+  "version": "0.1.0",
+  "license": "Apache-2.0 AND AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SimonBiggs/scriptedforms.git"
+  },
+  "description": "Interactive forms.",
+  "author": "Simon Biggs",
+  "scripts": {
+    "build": "tsc && webpack"
+  },
+  "files": [
+    "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
+  ],
+  "dependencies": {
+    "@simonbiggs/scriptedforms": "^1.5.0",
+    "@simonbiggs/phosphor-angular-loader": "^0.6.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.19.1",
+    "tslint": "^5.7.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  }
+}

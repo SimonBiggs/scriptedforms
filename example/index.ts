@@ -23,19 +23,36 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-/*
-Import the required styles.
-*/
+import './styles';
+import 'hammerjs';
 
-import './theme.css';
+import {
+  DockPanel, Widget
+} from '@phosphor/widgets';
 
-/*
-This currently loads up the material design icons via the web. The later
-versions of angular material allow for these icons to be included in the
-bundle. Once I upgrade angular material this part will no longer be required.
-*/
-const link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-link.setAttribute('async', '');
-document.head.appendChild(link);
+import {
+  FormWidget
+} from './widget';
+
+import {
+  ServiceManager
+} from '@jupyterlab/services';
+
+import {
+  demoFormContents
+} from './demo-form-contents';
+
+function main(): void {
+  let dock = new DockPanel();
+  dock.id = 'dock';
+  
+  let serviceManager = new ServiceManager();
+  let form = new FormWidget({serviceManager});
+  form.updateTemplate(demoFormContents);
+
+  dock.addWidget(form)
+  window.onresize = () => { dock.update(); };
+  Widget.attach(dock, document.body);
+}
+
+window.onload = main;
