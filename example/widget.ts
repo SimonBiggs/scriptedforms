@@ -11,19 +11,8 @@ import {
 } from '@simonbiggs/phosphor-angular-loader';
 
 import {
-  AppComponent
-} from './app.component';
-
-import {
-  AppModule
-} from './app.module';
-
-import {
-  SessionConnectOptions
-} from './interfaces/session-connect-options';
-
-
-
+  ScriptedFormsWidget
+} from '@simonbiggs/scriptedforms';
 
 
 export

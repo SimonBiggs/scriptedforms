@@ -9,16 +9,16 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "build": "tsc && webpack"
+    "build": "tsc && copyfiles style.css build/style.css && webpack"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
   "dependencies": {
-    "@simonbiggs/scriptedforms": "^1.5.0",
-    "@simonbiggs/phosphor-angular-loader": "^0.6.0"
+    "@simonbiggs/scriptedforms": "^0.1.3"
   },
   "devDependencies": {
+    "copyfiles": "^1.2.0",
     "css-loader": "^0.28.7",
     "rimraf": "^2.6.1",
     "style-loader": "^0.19.1",
