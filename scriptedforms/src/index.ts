@@ -75,6 +75,12 @@ function runUtilityPython(serviceManager: ServiceManager, code: string): Promise
   })
 }
 
+function updateForm(contentsManager: ContentsManager, formFileName: string, formWidget: FormWidget) {
+  contentsManager.get(formFileName).then(model => {
+    let formContents = model.content
+    formWidget.updateTemplate(formContents)
+  })
+}
 
 function main(): void {
   let serviceManager = new ServiceManager();
@@ -83,21 +89,23 @@ function main(): void {
     'scriptedforms-config-data'
   ).textContent)
 
+  let formFileName = './' + formConfig.formFile
+
+  let formWidget = new FormWidget({serviceManager});
+  updateForm(contentsManager, formFileName, formWidget)
+
   runUtilityPython(serviceManager, watchdogPython).then(future => {
     future.onIOPub = (msg => {
-      console.log(msg.content.text)
+      let content = String(msg.content.text)
+      if (content.trim() == formFileName.trim()) {
+        updateForm(contentsManager, formFileName, formWidget)
+      }
     })
-  })
-
-  let form = new FormWidget({serviceManager});
-  contentsManager.get(formConfig.formFile).then(model => {
-    let formContents = model.content
-    form.updateTemplate(formContents)
   })
 
   let dock = new DockPanel();
   dock.id = 'dock';
-  dock.addWidget(form)
+  dock.addWidget(formWidget)
   window.onresize = () => { dock.update(); };
   Widget.attach(dock, document.body);
 }
