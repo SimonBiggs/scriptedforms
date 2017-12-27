@@ -33,8 +33,8 @@ import './theme.css';
 Jupyterlab Syntax Highlighting
 */
 // Can't get working :/
-// import '../node_modules/@jupyterlab/codemirror/style/index.css';
-// import '../node_modules/@jupyterlab/rendermime/style/index.css';
+import '../node_modules/@jupyterlab/codemirror/style/index.css';
+import '../node_modules/@jupyterlab/rendermime/style/index.css';
 
 /*
 This currently loads up the material design icons via the web. The later

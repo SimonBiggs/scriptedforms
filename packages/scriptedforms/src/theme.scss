@@ -31,6 +31,10 @@ A custom angular material design theme.
 @import '../node_modules/@angular/material/theming';
 // Plus imports for other components in your app.
 
+@import url('~@jupyterlab/codemirror/style/index.css');
+@import url('~@jupyterlab/rendermime/style/index.css');
+
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
