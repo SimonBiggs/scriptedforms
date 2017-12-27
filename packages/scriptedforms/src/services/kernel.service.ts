@@ -94,7 +94,7 @@ export class KernelService {
     };
 
     this.services.sessions.findByPath(this.path).then(model => {
-      Session.connectTo(model.id, settings).then(session => {
+      Session.connectTo(model, settings).then(session => {
         // console.log(session);
         this.sessionReady(session);
         this.isNewSession = false;

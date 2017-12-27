@@ -50,7 +50,9 @@ import {
 //   Observable
 // } from 'rxjs/Observable';
 
-import { RenderMime, defaultRendererFactories } from '@jupyterlab/rendermime';
+import {
+  RenderMimeRegistry, standardRendererFactories as initialFactories
+} from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 import { Kernel } from '@jupyterlab/services';
 
@@ -68,8 +70,8 @@ import { OutputService } from '../services/output.service';
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   name: string;
-  renderMimeOptions: RenderMime.IOptions;
-  renderMime: RenderMime;
+  renderMimeOptions: RenderMimeRegistry.IOptions;
+  renderMime: RenderMimeRegistry;
   model: OutputAreaModel;
   outputAreaOptions: OutputArea.IOptions;
   outputArea: OutputArea;
@@ -104,9 +106,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     // Initialise a JupyterLab output area
     this.model = new OutputAreaModel();
-    this.renderMime = new RenderMime({
-      initialFactories: defaultRendererFactories
-    });
+    this.renderMime = new RenderMimeRegistry({ initialFactories });
 
     this.outputAreaOptions = {
       model: this.model,

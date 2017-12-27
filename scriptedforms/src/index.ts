@@ -34,19 +34,16 @@ import {
 } from './widget';
 
 import {
-  ServiceManager, ContentsManager, ServerConnection, Session, Kernel
+  ServiceManager, ContentsManager, ServerConnection, Session
 } from '@jupyterlab/services';
 
 import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
-
-import {
-  watchdogPython
+  importsPython, watchdogPython, loopPython
 } from './watchdog';
 
 
-function connectToSession(serviceManager: ServiceManager, path: string) {
+function runWatchdog(serviceManager: ServiceManager, contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
+  const path = 'scriptedforms_watchdog_kernel'
   const settings = ServerConnection.makeSettings({});
   const startNewOptions = {
     kernelName: 'python3',
@@ -54,28 +51,37 @@ function connectToSession(serviceManager: ServiceManager, path: string) {
     path: path
   };
 
-  let sessionPromiseDelegate = new PromiseDelegate<Session.ISession>()
-
   serviceManager.sessions.findByPath(path).then(model => {
-    Session.connectTo(model.id, settings).then(session => {
-      sessionPromiseDelegate.resolve(session)
+    Session.connectTo(model, settings).then(session => {
+      session.kernel.interrupt().then(() => {
+        watchdogFormUpdate(session, contentsManager, formWidget, formFileName)
+      })
     });
   }).catch(() => {
     Session.startNew(startNewOptions).then(session => {
-      sessionPromiseDelegate.resolve(session)
+      session.kernel.requestExecute({code: importsPython})
+      session.kernel.requestExecute({code: watchdogPython})
+      watchdogFormUpdate(session, contentsManager, formWidget, formFileName)
     });
   });
-
-  return sessionPromiseDelegate.promise
 }
 
-function runUtilityPython(serviceManager: ServiceManager, code: string): Promise<Kernel.IFuture> {
-  return connectToSession(serviceManager, 'scriptedforms_utility_kernel').then(session => {
-    return session.kernel.requestExecute({code: code})
+function watchdogFormUpdate(session: Session.ISession, contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
+  let future = session.kernel.requestExecute({code: loopPython})
+  future.onIOPub = (msg => {
+    let content = String(msg.content.text).trim()
+    let files = content.split("\n")
+    console.log(files)
+    let match = files.some(item => {
+      return item === formFileName
+    })
+    if (match) {
+      updateForm(contentsManager, formWidget, formFileName)
+    }
   })
 }
 
-function updateForm(contentsManager: ContentsManager, formFileName: string, formWidget: FormWidget) {
+function updateForm(contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
   contentsManager.get(formFileName).then(model => {
     let formContents = model.content
     formWidget.updateTemplate(formContents)
@@ -91,22 +97,14 @@ function main(): void {
 
   let formFileName = './' + formConfig.formFile
 
-  let formWidget = new FormWidget({serviceManager});
-  updateForm(contentsManager, formFileName, formWidget)
+  let formWidget = new FormWidget({
+    serviceManager,
+    path: formFileName
+  });
 
-  runUtilityPython(serviceManager, watchdogPython).then(future => {
-    future.onIOPub = (msg => {
-      let content = String(msg.content.text).trim()
-      let files = content.split("\n")
-      console.log(files)
-      let match = files.some(item => {
-        return item === formFileName
-      })
-      if (match) {
-        updateForm(contentsManager, formFileName, formWidget)
-      }
-    })
-  })
+  updateForm(contentsManager, formWidget, formFileName)
+  runWatchdog(serviceManager, contentsManager, formWidget, formFileName)
+
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);
 }
