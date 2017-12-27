@@ -100,7 +100,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       const el = document.createElement('div');
       Mode.run(this.code, spec.mime, el);
       this.codecontainer.nativeElement.innerHTML = el.innerHTML;
-      this._eRef.nativeElement.classList.add('cm-s-jupyter');
+      this._eRef.nativeElement.classList.add('cm-s-default');
       this._eRef.nativeElement.classList.add('language-python');
     });
 
