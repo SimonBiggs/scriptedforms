@@ -2,45 +2,45 @@
 # yarn lockfile v1
 
 
-"@angular/animations@^5.0.0":
+"@angular/animations@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.1.2.tgz#464df9a9e30c7a8146118fdd9bff82cdfcf97d7e"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cdk@5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.0.0-rc.1.tgz#7d6d937fea50074962db8ce02664b164401d197d"
+"@angular/cdk@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.0.2.tgz#9d2505e5736a14a6b59d226280a7600559e6d707"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/common@^5.0.0":
+"@angular/common@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.1.2.tgz#b2659161575d463bb8b3e30e37434b26d70366b4"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler@^5.0.0":
+"@angular/compiler@^5.0.0", "@angular/compiler@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-5.1.2.tgz#4dfd0dd7fab39a14a1a104097c2f6af470ddabdb"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^5.0.0":
+"@angular/core@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.1.2.tgz#751070c0f4e5a8c4e2170204e08eca06391b84b1"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^5.0.0":
+"@angular/forms@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-5.1.2.tgz#fae4934ccdd41443efdee49b754c8b2a5587b12c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.0.0-rc.1.tgz#63456b7568c102b6bb7983a2837cc317350fe270"
+"@angular/material@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.0.2.tgz#99b758fed20cb4a715aee2a65cf98301dcd521df"
   dependencies:
     tslib "^1.7.1"
 
@@ -50,7 +50,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^5.0.0":
+"@angular/platform-browser@^5.0.0", "@angular/platform-browser@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-5.1.2.tgz#6faf926b9b41b6d54d873f3dcc4f31ad35fd0c38"
   dependencies:
