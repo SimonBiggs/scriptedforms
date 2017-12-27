@@ -49,13 +49,14 @@ class FormWidget extends Widget {
     let layout = this.layout = new BoxLayout();
     this.form = new ScriptedFormsWidget(options)
     this.form.addClass('form');
-    let toolbar = new Widget();
-    toolbar.addClass('toolbar');
+    // let toolbar = new Widget();
+    // toolbar.addClass('toolbar');
 
-    layout.addWidget(toolbar);
-    BoxLayout.setStretch(toolbar, 0);
+    // layout.addWidget(toolbar);
+    // BoxLayout.setStretch(toolbar, 0);
     layout.addWidget(this.form);
-    BoxLayout.setStretch(this.form, 1);
+    // BoxLayout.setStretch(this.form, 1);
+    BoxLayout.setStretch(this.form, 0);
   }
   
   updateTemplate(template: string) {

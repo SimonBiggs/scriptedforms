@@ -9,7 +9,7 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "build": "rimraf build && tsc && copyfiles -u 1 src/styles/*.css src/styles/**/*.css build && webpack"
+    "build": "yarn --cwd ../packages/scriptedforms build && rimraf build && tsc && copyfiles -u 1 src/*.css build && webpack"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"

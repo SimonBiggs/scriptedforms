@@ -23,10 +23,10 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import './styles/style.css';
+import './style.css';
 
 import {
-  DockPanel, Widget
+  Widget
 } from '@phosphor/widgets';
 
 import {
@@ -96,18 +96,19 @@ function main(): void {
 
   runUtilityPython(serviceManager, watchdogPython).then(future => {
     future.onIOPub = (msg => {
-      let content = String(msg.content.text)
-      if (content.trim() == formFileName.trim()) {
+      let content = String(msg.content.text).trim()
+      let files = content.split("\n")
+      console.log(files)
+      let match = files.some(item => {
+        return item === formFileName
+      })
+      if (match) {
         updateForm(contentsManager, formFileName, formWidget)
       }
     })
   })
-
-  let dock = new DockPanel();
-  dock.id = 'dock';
-  dock.addWidget(formWidget)
-  window.onresize = () => { dock.update(); };
-  Widget.attach(dock, document.body);
+  window.onresize = () => { formWidget.update(); };
+  Widget.attach(formWidget, document.body);
 }
 
 window.onload = main;

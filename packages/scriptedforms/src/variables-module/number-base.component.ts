@@ -41,7 +41,7 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
     const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
     const items = ngContent.split(',')
 
-    console.log(items)
+    // console.log(items)
 
     this.variableName = items[0]
 
