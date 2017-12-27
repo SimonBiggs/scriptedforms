@@ -51,3 +51,13 @@ body {
   max-width: 940px;
   margin: 0 auto; 
 }
+
+.output-container div .jp-RenderedText {
+  padding-left: 0;
+}
+
+.output-container div div .jp-OutputPrompt {
+  padding: 0;
+  flex: 0;
+  border: 0;
+}

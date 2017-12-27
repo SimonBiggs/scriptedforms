@@ -64,9 +64,7 @@ import { OutputService } from '../services/output.service';
 @Component({
   // By using the selector 'code' this overwrites the standard <code> html tag.
   selector: 'code',
-  template: `
-<span #outputcontainer></span>
-<span #codecontainer [hidden]="future != undefined"><ng-content></ng-content></span>`
+  template: `<span class="output-container" #outputcontainer></span><span #codecontainer [hidden]="future != undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   name: string;

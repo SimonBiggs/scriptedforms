@@ -43,19 +43,15 @@ import { KernelService } from '../services/kernel.service';
 
 @Component({
   selector: 'section-button',
-  template: `
-<div>
-  <ng-content></ng-content>
-  <div align="right">
-    <button
-    mat-mini-fab
-    (click)="runCode()"
-    [disabled]="!isFormReady || codeRunning">
-      <mat-icon>keyboard_return</mat-icon>
-    </button>
-  </div>
-</div>
-`
+  template: `<ng-content></ng-content>
+<div align="right">
+  <button
+  mat-mini-fab
+  (click)="runCode()"
+  [disabled]="!isFormReady || codeRunning">
+    <mat-icon>keyboard_return</mat-icon>
+  </button>
+</div>`
 })
 export class ButtonComponent implements AfterViewInit {
 
