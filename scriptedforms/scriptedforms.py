@@ -33,8 +33,8 @@ class ScriptedForms(NotebookApp):
 
     def start(self):
         handlers = [
-            (r'/scriptedforms/([^/]*)', ScriptedFormsHandler),
-            (r"/scriptedforms/javascript/(.*)", FileFindHandler,
+            (r'/scriptedforms/(.*\.form\.md)', ScriptedFormsHandler),
+            (r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'build')}),
         ]
         self.web_app.add_handlers(".*$", handlers)

@@ -69,14 +69,16 @@ function runWatchdog(serviceManager: ServiceManager, contentsManager: ContentsMa
 function watchdogFormUpdate(session: Session.ISession, contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
   let future = session.kernel.requestExecute({code: loopPython})
   future.onIOPub = (msg => {
-    let content = String(msg.content.text).trim()
-    let files = content.split("\n")
-    console.log(files)
-    let match = files.some(item => {
-      return item === formFileName
-    })
-    if (match) {
-      updateForm(contentsManager, formWidget, formFileName)
+    if (msg.content.text) {
+      let content = String(msg.content.text).trim()
+      let files = content.split("\n")
+      console.log(files)
+      let match = files.some(item => {
+        return item === formFileName
+      })
+      if (match) {
+        updateForm(contentsManager, formWidget, formFileName)
+      }
     }
   })
 }
