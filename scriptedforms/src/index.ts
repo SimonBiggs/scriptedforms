@@ -34,15 +34,60 @@ import {
 } from './widget';
 
 import {
-  ServiceManager, ContentsManager
+  ServiceManager, ContentsManager, ServerConnection, Session, Kernel
 } from '@jupyterlab/services';
+
+import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
+import {
+  watchdogPython
+} from './watchdog';
+
+
+function connectToSession(serviceManager: ServiceManager, path: string) {
+  const settings = ServerConnection.makeSettings({});
+  const startNewOptions = {
+    kernelName: 'python3',
+    serverSettings: settings,
+    path: path
+  };
+
+  let sessionPromiseDelegate = new PromiseDelegate<Session.ISession>()
+
+  serviceManager.sessions.findByPath(path).then(model => {
+    Session.connectTo(model.id, settings).then(session => {
+      sessionPromiseDelegate.resolve(session)
+    });
+  }).catch(() => {
+    Session.startNew(startNewOptions).then(session => {
+      sessionPromiseDelegate.resolve(session)
+    });
+  });
+
+  return sessionPromiseDelegate.promise
+}
+
+function runUtilityPython(serviceManager: ServiceManager, code: string): Promise<Kernel.IFuture> {
+  return connectToSession(serviceManager, 'scriptedforms_utility_kernel').then(session => {
+    return session.kernel.requestExecute({code: code})
+  })
+}
+
 
 function main(): void {
   let serviceManager = new ServiceManager();
   let contentsManager = new ContentsManager();
-  let formConfig = JSON.parse(document.getElementById('scriptedforms-config-data').textContent)
+  let formConfig = JSON.parse(document.getElementById(
+    'scriptedforms-config-data'
+  ).textContent)
 
-  console.log(formConfig)
+  runUtilityPython(serviceManager, watchdogPython).then(future => {
+    future.onIOPub = (msg => {
+      console.log(msg.content.text)
+    })
+  })
 
   let form = new FormWidget({serviceManager});
   contentsManager.get(formConfig.formFile).then(model => {

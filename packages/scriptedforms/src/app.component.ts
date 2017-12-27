@@ -34,6 +34,10 @@ import {
   Component, ViewChild
 } from '@angular/core';
 
+// import {
+//   Kernel
+// } from '@jupyterlab/services';
+
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 import { KernelService } from './services/kernel.service';
 import { ModelService } from './services/model.service';
