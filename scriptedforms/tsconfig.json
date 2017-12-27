@@ -19,5 +19,5 @@
       "node_modules/@types"
     ]
   },
-  "include": ["*"]
+  "include": ["src/*"]
 }

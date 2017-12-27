@@ -27,6 +27,8 @@
 Import the required styles.
 */
 
+import '@jupyterlab/codemirror/style/index.css'
+import '@jupyterlab/rendermime/style/index.css'
 import './theme.css';
 
 /*

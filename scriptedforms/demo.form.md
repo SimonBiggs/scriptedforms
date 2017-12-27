@@ -1,33 +1,4 @@
-// scriptedforms
-// Copyright (C) 2017 Simon Biggs
-
-// Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and 
-// GNU Affrero General Public License as published by the Free Software 
-// Foundation, either version 3 of the License, or (at your option) any later 
-// version (the "AGPL-3.0+").
-
-// You may not use this file except in compiance with both the Apache-2.0 AND 
-// the AGPL-3.0+ in combination (the "Combined Licenses").
-
-// You may obtain a copy of the AGPL-3.0+ at
-
-//     https://www.gnu.org/licenses/agpl-3.0.txt
-
-// You may obtain a copy of the Apache-2.0 at 
-
-//     https://www.apache.org/licenses/LICENSE-2.0.html
-
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the Combined Licenses is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
-// the Combined Licenses for the specific language governing permissions and 
-// limitations under the Combined Licenses.
-
-/*
-A default markdown form.
-*/
-
-export const demoFormContents = `# A Demo Form
+# A Demo Form
 
 ## Description
 
@@ -41,10 +12,10 @@ extra elements which are explained below.
 
 There are four kinds of sections:
 
- * \`start\`,
- * \`live\`,
- * \`button\`,
- * and \`output\`.
+ * `start`,
+ * `live`,
+ * `button`,
+ * and `output`.
 
 Code which is written inside of these defined sections is run
 as python code according to specific rules.
@@ -52,12 +23,12 @@ as python code according to specific rules.
 Within the form variable inputs can be included.
 There are six kinds of variable inputs:
 
- * \`number\`,
- * \`slider\`,
- * \`table\`,
- * \`tick\`,
- * \`toggle\`,
- * and \`string\`.
+ * `number`,
+ * `slider`,
+ * `table`,
+ * `tick`,
+ * `toggle`,
+ * and `string`.
 
 These are attached to a specific python variable which update on
 user input. Number and slider represent floats. String represents a Python
@@ -66,10 +37,10 @@ dataframe with all of the values in the dataframe being floats.
 
 ### Start sections
 
-A \`start\` section is defined as following:
+A `start` section is defined as following:
 
 <section-start>
-\`\`\`
+```
 data = np.ones(3) * np.nan
 data[0] = 5
 
@@ -81,7 +52,7 @@ table = pd.DataFrame(
 hello = False
 world = False
 bye = False
-\`\`\`
+```
 </section-start>
 
 Whenever a jupyterlab services session is started
@@ -99,14 +70,14 @@ a new form kernel can be found within the
 
 ### Live sections and demo of each of the variable types
 
-Each of the usable variables are demoed below making use of \`live\` sections.
+Each of the usable variables are demoed below making use of `live` sections.
 A live section is designed to contain both code and variable inputs. Whenever
 the user changes any variable within the live section all code within
 that live section is subsequently run.
 
 #### Number and slider variables
 
-Here is a \`live\` section containing both number and slider that produces a 
+Here is a `live` section containing both number and slider that produces a 
 plot.
 
 <section-live>
@@ -117,7 +88,7 @@ plot.
 <variable-slider>data[0]</variable-slider>
 <variable-slider>data[1],-100,100</variable-slider>
 <variable-slider>data[2],0,1,0.01</variable-slider>
-\`plt.plot(data, 'o');\`
+`plt.plot(data, 'o');`
 </section-live>
 
 The slider requires four inputs, the minimum, maximum, step size, and finally 
@@ -133,9 +104,9 @@ part of the table as other parts are being edited.
 
 <section-live>
 <variable-table>table</variable-table>
-\`\`\`
+```
 table.iloc[:,3] = np.nanmean(table.iloc[:,0:3], axis=1)
-\`\`\`
+```
 </section-live>
 
 #### The tick and toggle variables
@@ -149,14 +120,14 @@ interesting ways via the live Python code.
 <variable-tick>hello</variable-tick>
 
 <variable-tick>world</variable-tick>
-\`\`\`
+```
 if bye:
     hello = False
     world = False
 
 if hello and world:
     print('Hello World!')
-\`\`\`
+```
 
 <variable-toggle>bye</variable-toggle>
 </section-live>
@@ -169,7 +140,7 @@ field.
 
 <section-live>
 <variable-string>notes</variable-string>
-\`print(notes)\`
+`print(notes)`
 </section-live>
 
 ### Button sections
@@ -182,7 +153,7 @@ They are defined as following:
 <variable-string>notes</variable-string>
 
 <section-button>
-\`print(notes)\`
+`print(notes)`
 </section-button>
 
 They will not run until their respective button is pressed.
@@ -200,7 +171,7 @@ saved in a format that is easy to extract and trend.
 ## Future work
 
 It is the aim to have it so that the results of these forms can be
-saved in \`[formname]-[timestamp].results.json\` files.
+saved in `[formname]-[timestamp].results.json` files.
 Whenever a set of results are saved a copy of the template is included within
 the json.
 
@@ -217,4 +188,3 @@ There would also be targets, tasks can be assigned to multiple targets
 and assigned tasks can be schuduled to be completed over defined intervals.
 This would present an overview of all targets, their corresponding tasks,
 when the scheduled tasks were last completed, when they are next due by.
-`

@@ -1,6 +1,6 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "license": "Apache-2.0 AND AGPL-3.0",
   "repository": {
     "type": "git",
@@ -11,7 +11,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn run clean && yarn run compile && yarn run sass",
+    "build": "yarn run clean && yarn run copy && yarn run compile && yarn run sass",
+    "copy": "copyfiles -u 1 src/*.css lib/",
     "sass": "node-sass ./src/theme.scss ./lib/theme.css",
     "compile": "tsc",
     "watch": "tsc -w",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@types/hammerjs": "^2.0.35",
+    "copyfiles": "^1.2.0",
     "css-loader": "^0.28.7",
     "node-sass": "^4.5.3",
     "rimraf": "^2.6.1",

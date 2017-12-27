@@ -23,8 +23,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
 the Combined Licenses for the specific language governing permissions and 
 limitations under the Combined Licenses. */
 
-@import '~@phosphor/dragdrop/style/index.css';
-@import '~@phosphor/widgets/style/index.css';
+@import url('~@phosphor/dragdrop/style/index.css');
+@import url('~@phosphor/widgets/style/index.css');
 @import './phosphor/index.css';
 @import './phosphor/content.css';
 @import './phosphor/dockpanel.css';

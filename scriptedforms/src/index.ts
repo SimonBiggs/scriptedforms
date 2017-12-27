@@ -23,42 +23,38 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+import './styles/style.css';
 
 import {
-  BoxLayout, Widget
+  DockPanel, Widget
 } from '@phosphor/widgets';
 
 import {
-  ServiceManager
-} from '@jupyterlab/services';
+  FormWidget
+} from './widget';
 
 import {
-  ScriptedFormsWidget, IScriptedFormsWidget
-} from '@simonbiggs/scriptedforms';
+  ServiceManager, ContentsManager
+} from '@jupyterlab/services';
 
-export
-class FormWidget extends Widget {
-  serviceManager: ServiceManager;
-  form: ScriptedFormsWidget;
+function main(): void {
+  let serviceManager = new ServiceManager();
+  let contentsManager = new ContentsManager();
+  let formConfig = JSON.parse(document.getElementById('scriptedforms-config-data').textContent)
 
-  constructor(options: IScriptedFormsWidget.IOptions) {
-    super()
+  console.log(formConfig)
 
-    this.addClass('container')
+  let form = new FormWidget({serviceManager});
+  contentsManager.get(formConfig.formFile).then(model => {
+    let formContents = model.content
+    form.updateTemplate(formContents)
+  })
 
-    let layout = this.layout = new BoxLayout();
-    this.form = new ScriptedFormsWidget(options)
-    this.form.addClass('form');
-    let toolbar = new Widget();
-    toolbar.addClass('toolbar');
+  let dock = new DockPanel();
+  dock.id = 'dock';
+  dock.addWidget(form)
+  window.onresize = () => { dock.update(); };
+  Widget.attach(dock, document.body);
+}
 
-    layout.addWidget(toolbar);
-    BoxLayout.setStretch(toolbar, 0);
-    layout.addWidget(this.form);
-    BoxLayout.setStretch(this.form, 1);
-  }
-  
-  updateTemplate(template: string) {
-    this.form.updateTemplate(template);
-  }
-};
+window.onload = main;

@@ -23,36 +23,42 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import './styles/style.css';
-import 'hammerjs';
 
 import {
-  DockPanel, Widget
+  BoxLayout, Widget
 } from '@phosphor/widgets';
-
-import {
-  FormWidget
-} from './widget';
 
 import {
   ServiceManager
 } from '@jupyterlab/services';
 
 import {
-  demoFormContents
-} from './demo-form-contents';
+  ScriptedFormsWidget, IScriptedFormsWidget
+} from '../../packages/scriptedforms';
 
-function main(): void {
-  let dock = new DockPanel();
-  dock.id = 'dock';
+export
+class FormWidget extends Widget {
+  serviceManager: ServiceManager;
+  form: ScriptedFormsWidget;
+
+  constructor(options: IScriptedFormsWidget.IOptions) {
+    super()
+
+    this.addClass('container')
+
+    let layout = this.layout = new BoxLayout();
+    this.form = new ScriptedFormsWidget(options)
+    this.form.addClass('form');
+    let toolbar = new Widget();
+    toolbar.addClass('toolbar');
+
+    layout.addWidget(toolbar);
+    BoxLayout.setStretch(toolbar, 0);
+    layout.addWidget(this.form);
+    BoxLayout.setStretch(this.form, 1);
+  }
   
-  let serviceManager = new ServiceManager();
-  let form = new FormWidget({serviceManager});
-  form.updateTemplate(demoFormContents);
-
-  dock.addWidget(form)
-  window.onresize = () => { dock.update(); };
-  Widget.attach(dock, document.body);
-}
-
-window.onload = main;
+  updateTemplate(template: string) {
+    this.form.updateTemplate(template);
+  }
+};

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{form_file}}</title>
+  </head>
+  <body>
+    <script id='jupyter-config-data' type="application/json">
+      { 
+        "baseUrl": "{{base_url}}"
+      }
+    </script>
+    <script id='scriptedforms-config-data' type="application/json">
+      {
+        "formFile": "{{form_file}}"
+      }
+    </script>
+    <script src="/scriptedforms/javascript/bundle.js"></script>
+  </body>
+</html>

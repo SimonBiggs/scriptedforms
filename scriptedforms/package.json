@@ -9,14 +9,11 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "build": "rimraf build && tsc && copyfiles styles/*.css styles/**/*.css build && webpack"
+    "build": "rimraf build && tsc && copyfiles -u 1 src/styles/*.css src/styles/**/*.css build && webpack"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
-  "dependencies": {
-    "@simonbiggs/scriptedforms": "^0.1.10"
-  },
   "devDependencies": {
     "copyfiles": "^1.2.0",
     "css-loader": "^0.28.7",
@@ -25,5 +22,9 @@
     "tslint": "^5.7.0",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "@jupyterlab/services": "^0.52.0",
+    "@phosphor/widgets": "^1.5.0"
   }
 }
