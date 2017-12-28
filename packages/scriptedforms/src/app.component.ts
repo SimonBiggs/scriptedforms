@@ -64,9 +64,9 @@ export class AppComponent {
    * 
    * @param template: The template to set the form with
    */
-  public setTemplateAndBuildForm(template: string) {
+  public setTemplateAndBuildForm(template: string): Promise<void> {
     this.myModelService.setTemplate(template);
-    this.formBuilderComponent.buildForm();
+    return this.formBuilderComponent.buildForm();
   }
 
   public modelReady(): Promise<void> {

@@ -48,6 +48,10 @@ import {
 
 import { CommonModule } from '@angular/common';
 
+import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';
 
@@ -69,6 +73,11 @@ import { CodeComponent } from '../code-module/code.component';
 
 import { VariableComponent } from '../types/variable-component';
 
+export
+interface IFormComponent {
+  formViewInitialised: PromiseDelegate<void>
+}
+
 
 /**
  * Create a form component factory given an Angular template in the form of metadata.
@@ -79,13 +88,13 @@ import { VariableComponent } from '../types/variable-component';
  * @returns a factory which creates form components
  */
 export
-function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<any> {
-
+function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
   /**
    * The form component that is built each time the template changes
    */
   @Component(metadata)
-  class FormComponent {   
+  class FormComponent {
+    formViewInitialised = new PromiseDelegate<void>()
     variableComponents: VariableComponent[] = []
 
     // Sections
@@ -112,6 +121,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     ) { }
   
     ngAfterViewInit() {
+      this.formViewInitialised.resolve(null)
+
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
 

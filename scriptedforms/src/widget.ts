@@ -60,6 +60,9 @@ class FormWidget extends Widget {
   }
   
   updateTemplate(template: string) {
-    this.form.updateTemplate(template);
+    let priorOverflow = this.form.node.scrollTop
+    this.form.updateTemplate(template).then(() => {
+      this.form.node.scrollTop = priorOverflow
+    })
   }
 };

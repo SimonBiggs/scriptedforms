@@ -40,7 +40,7 @@ import {
 
 import * as  MarkdownIt from 'markdown-it';
 
-import { createFormComponentFactory } from './create-form-component-factory';
+import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
 
 import { ModelService } from '../services/model.service';
 
@@ -62,7 +62,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   errorboxDiv: HTMLDivElement;
 
-  private formComponentRef: ComponentRef<any>;
+  private formComponentRef: ComponentRef<IFormComponent>;
 
   constructor(
     private compiler: Compiler,
@@ -88,14 +88,20 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * This function makes sure to only begin building the form once the component
    * has sufficiently initialised.
    */
-  public buildForm() {
+  public buildForm(): Promise<void> {
     const markdownTemplate = this.myModelService.getTemplate()
+
+    let formViewInitialised = new PromiseDelegate<void>();
     this.viewInitialised.promise.then(() => {
       const htmlTemplate = this.convertTemplate(markdownTemplate);
 
       // Create the form component
-      this.createFormFromTemplate(htmlTemplate);
+      this.createFormFromTemplate(htmlTemplate).then(() => {
+        formViewInitialised.resolve(null)
+      })
     });
+
+    return formViewInitialised.promise
   }
 
   /**
@@ -133,7 +139,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * 
    * @param template The html Angular component template
    */
-  private createFormFromTemplate(template: string) {
+  private createFormFromTemplate(template: string): Promise<void> {
     const metadata = {
       selector: `app-form`,
       template: template
@@ -152,5 +158,6 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
+    return this.formComponentRef.instance.formViewInitialised.promise
   }
 }

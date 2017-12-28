@@ -27,6 +27,10 @@ import './styles';
 import 'hammerjs';
 
 import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
+import {
   AngularWidget
 } from '@simonbiggs/phosphor-angular-loader';
 
@@ -60,11 +64,17 @@ class ScriptedFormsWidget extends AngularWidget<AppComponent, AppModule> {
     })
   }
 
-  updateTemplate(template: string) {
+  updateTemplate(template: string): Promise<void> {
+    let formViewInitialised = new PromiseDelegate<void>();
+
     this.run(() => {
       this.componentInstance.modelReady().then(() => {
-        this.componentInstance.setTemplateAndBuildForm(template);
+        this.componentInstance.setTemplateAndBuildForm(template).then(() => {
+          formViewInitialised.resolve(null)
+        })
       })
     });
+
+    return formViewInitialised.promise
   }
 }
