@@ -1,0 +1,3 @@
+include scriptedforms/build/*bundle.js
+include scriptedforms/index.html
+include COPYING AGPL-3.0+ Apache-2.0

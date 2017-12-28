@@ -6,7 +6,7 @@
 # Foundation, either version 3 of the License, or (at your option) any later 
 # version (the "AGPL-3.0+").
 
-# You may not use this file except in compiance with both the Apache-2.0 AND 
+# You may not use this file except in compliance with both the Apache-2.0 AND 
 # the AGPL-3.0+ in combination (the "Combined Licenses").
 
 # You may obtain a copy of the AGPL-3.0+ at

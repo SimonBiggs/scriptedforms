@@ -1,12 +1,41 @@
+LICENCE_HEADER = """
+  --------------
+  Scripted Forms
+  --------------
+  Copyright (C) 2017 Simon Biggs
+
+  Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and 
+  GNU Affrero General Public License as published by the Free Software 
+  Foundation, either version 3 of the License, or (at your option) any later 
+  version (the "AGPL-3.0+").
+
+  You may not use this script except in compliance with both the Apache-2.0 AND 
+  the AGPL-3.0+ in combination (the "Combined Licenses").
+
+  You may obtain a copy of the AGPL-3.0+ at
+      <https://www.gnu.org/licenses/agpl-3.0.txt>
+
+  You may obtain a copy of the Apache-2.0 at
+      <https://www.apache.org/licenses/LICENSE-2.0.html>
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Combined Licenses is distributed on an "AS IS" BASIS, 
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
+  the Combined Licenses for the specific language governing permissions and 
+  limitations under the Combined Licenses.
+  
 """
-Copyright (c) Jupyter Development Team.
-Distributed under the terms of the Modified BSD License.
-"""
+
+import sys
 import os
-from notebook.notebookapp import NotebookApp
+import argparse
+# from glob import glob
+
 from jinja2 import FileSystemLoader
-from notebook.base.handlers import IPythonHandler, FileFindHandler
 from traitlets import Unicode
+
+from notebook.notebookapp import NotebookApp
+from notebook.base.handlers import IPythonHandler, FileFindHandler
 
 
 HERE = os.path.dirname(__file__)
@@ -29,9 +58,17 @@ class ScriptedFormsHandler(IPythonHandler):
 class ScriptedForms(NotebookApp):
     """A notebook app that runs the example."""
 
-    default_url = Unicode('/scriptedforms/demo.form.md')
+    name = 'ScriptedForms'
+    description = """
+        Scripted Forms
+
+        Open a scriptedform based on a template file.
+    """
+
+    default_url = '/scriptedforms/untitled.form.md'
 
     def start(self):
+        print(self.default_url)
         handlers = [
             (r'/scriptedforms/(.*\.form\.md)', ScriptedFormsHandler),
             (r"/scriptedforms/(.*)", FileFindHandler,
@@ -42,7 +79,24 @@ class ScriptedForms(NotebookApp):
 
 
 def main():
-    ScriptedForms.launch_instance()
+    print(LICENCE_HEADER)
+
+    parser = argparse.ArgumentParser(
+        description='Open a scriptedform based on a template file.')
+    parser.add_argument(
+        'filename', help='The form template filename to open')
+    args = parser.parse_args()
+
+    sys.argv = [sys.argv[0]]
+
+    if not(os.path.exists(args.filename)):
+        raise Exception('File does not exist')
+
+    if (args.filename[-8::] != '.form.md'):
+        raise Exception('Form template must have .form.md extension')
+
+    ScriptedForms.launch_instance(
+        default_url='/scriptedforms/{}'.format(args.filename))
 
 if __name__ == '__main__':
     main()
