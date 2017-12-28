@@ -29,6 +29,8 @@ This will eventually be how the variables are saved.
 Not yet implemented.
 */
 
+import { BehaviorSubject } from 'rxjs';
+
 import {
   Kernel
 } from '@jupyterlab/services';
@@ -46,8 +48,12 @@ import { VariableComponent } from '../types/variable-component';
 
 @Injectable()
 export class VariableService {
-  variableStore: VariableStore;
+  variableStore: BehaviorSubject<VariableStore> = new BehaviorSubject({});
   oldVariableStore: VariableStore;
+
+  timestamps: BehaviorSubject<{
+    [key: string]: number
+  }> = new BehaviorSubject({})
 
   componentStore: {
     [key: string]: VariableComponent
@@ -64,7 +70,8 @@ print('}')`
   ) { }
 
   resetVariableService() {
-    this.variableStore = {};
+    this.timestamps.next({});
+    this.variableStore.next({});
     this.oldVariableStore = {};
     this.componentStore = {};
     this.fetchAllCode = '';
@@ -108,7 +115,7 @@ except:
             textContent = textContent.concat(String(msg.content.text))
             try {
               let result = JSON.parse(textContent)
-              this.variableStore = result
+              this.variableStore.next(result)
               this.checkForChanges()
             } catch (err) {
               console.log(textContent)
@@ -119,31 +126,49 @@ except:
     })
   }
 
-  checkForChanges() {
-    const variableIdentifiers = Object.keys(this.componentStore);
-
-    for (let identifier of variableIdentifiers) {
-      if (this.variableStore[identifier].defined) {
-        if (this.oldVariableStore) {
-          if (stringify(this.variableStore[identifier]) != stringify(this.oldVariableStore[identifier])) {
-            this.updateComponentView(
-              this.componentStore[identifier], this.variableStore[identifier].value)
-          }
-        } else {
-          this.updateComponentView(
-            this.componentStore[identifier], this.variableStore[identifier].value)
-        } 
-      }
-    }
-    this.oldVariableStore = JSON.parse(JSON.stringify(this.variableStore));
-  }
-
   updateComponentView(component: any, value: VariableValue) {
     component.updateVariableView(value);
   }
 
+  updateTimestamp(identifier: string) {
+    let timestamps = this.timestamps.getValue()
+    timestamps[identifier] = Date.now()
+
+    this.timestamps.next(timestamps)
+  }
+
+  variableHasChanged(identifier: string) {
+    this.updateComponentView(
+      this.componentStore[identifier], this.variableStore.getValue()[identifier].value)
+    this.updateTimestamp(identifier)
+    
+
+    // console.log(this.timestamps)
+  }
+
+  checkForChanges() {
+    const variableIdentifiers = Object.keys(this.componentStore);
+
+    for (let identifier of variableIdentifiers) {
+      if (this.variableStore.getValue()[identifier].defined) {
+        if (this.oldVariableStore) {
+          if (stringify(this.variableStore.getValue()[identifier]) != stringify(this.oldVariableStore[identifier])) {
+            this.variableHasChanged(identifier)
+          }
+        } else {
+          this.variableHasChanged(identifier)
+        } 
+      }
+    }
+    this.oldVariableStore = JSON.parse(JSON.stringify(this.variableStore.getValue()));
+  }
+
   pushVariable(variableIdentifier: string, variableName: string, valueReference: string) {
     let pushCode = `${variableName} = ${valueReference}`
+
+    this.updateTimestamp(variableIdentifier)
+
+    // console.log(this.timestamps)
     
     this.oldVariableStore[variableIdentifier] = {
       defined: true,

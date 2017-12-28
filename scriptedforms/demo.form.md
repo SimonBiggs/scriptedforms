@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # A Demo Form
 
 ## Description
@@ -12,10 +14,10 @@ extra elements which are explained below.
 
 There are four kinds of sections:
 
- * `start`,
- * `live`,
- * `button`,
- * and `output`.
+* `start`,
+* `live`,
+* `button`,
+* and `output` [not yet implemented].
 
 Code which is written inside of these defined sections is run
 as python code according to specific rules.
@@ -23,12 +25,13 @@ as python code according to specific rules.
 Within the form variable inputs can be included.
 There are six kinds of variable inputs:
 
- * `number`,
- * `slider`,
- * `table`,
- * `tick`,
- * `toggle`,
- * and `string`.
+* `number`,
+* `slider`,
+* `table`,
+* `tick`,
+* `toggle`,
+* `string`,
+* and `dropdown` [not yet implemented].
 
 These are attached to a specific python variable which update on
 user input. Number and slider represent floats. String represents a Python
@@ -40,7 +43,8 @@ dataframe with all of the values in the dataframe being floats.
 A `start` section is defined as following:
 
 <section-start>
-```
+
+```python
 data = np.ones(3) * np.nan
 data[0] = 5
 
@@ -53,6 +57,7 @@ hello = False
 world = False
 bye = False
 ```
+
 </section-start>
 
 Whenever a jupyterlab services session is started
@@ -104,9 +109,11 @@ part of the table as other parts are being edited.
 
 <section-live>
 <variable-table>table</variable-table>
-```
+
+```python
 table.iloc[:,3] = np.nanmean(table.iloc[:,0:3], axis=1)
 ```
+
 </section-live>
 
 #### The tick and toggle variables
@@ -120,7 +127,8 @@ interesting ways via the live Python code.
 <variable-tick>hello</variable-tick>
 
 <variable-tick>world</variable-tick>
-```
+
+```python
 if bye:
     hello = False
     world = False
@@ -158,25 +166,26 @@ They are defined as following:
 
 They will not run until their respective button is pressed.
 
-### Output groups
+### Output sections [not yet implemented]
 
-Code placed within output groups will run after the code blocks within start, 
+Code placed within output groups will run after the code blocks within start,
 live or button sections are run.
 
 Any variable placed within an output group will format as a non-editable card.
 By placing key output variables within an output group their results will be
 saved in a format that is easy to extract and trend.
 
-
-## Future work
+## Form results saving [not yet implemented]
 
 It is the aim to have it so that the results of these forms can be
-saved in `[formname]-[timestamp].results.json` files.
+saved in `formname/formname-timestamp.results.json` files.
 Whenever a set of results are saved a copy of the template is included within
 the json.
 
 All variable inputs will be recorded along with the timestamp representing the
 time at which that input was last changed.
+
+## Accompanying modules [not yet implemented]
 
 Once this form extension is in a usable state the benefits will truly come to 
 light once a second extension is made  which takes the data and trends the 

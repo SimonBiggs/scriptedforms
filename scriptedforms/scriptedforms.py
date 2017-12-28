@@ -67,10 +67,7 @@ class ScriptedForms(NotebookApp):
         Open a scriptedform based on a template file.
     """
 
-    default_url = '/scriptedforms/untitled.form.md'
-
     def start(self):
-        print(self.default_url)
         handlers = [
             (r'/scriptedforms/(.*\.form\.md)', ScriptedFormsHandler),
             (r"/scriptedforms/(.*)", FileFindHandler,
