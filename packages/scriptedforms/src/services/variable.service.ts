@@ -45,7 +45,12 @@ import { VariableValue } from '../types/variable-value';
 
 import { VariableComponent } from '../types/variable-component';
 
+// TO DO
+// Make python only read each variable once. Variable store needs only to store
+// the value of each variable once.
 
+// A secondary variable, "variable component alignment" needs to align each 
+// variable to its component, possibly multiple components.
 @Injectable()
 export class VariableService {
   variableStore: BehaviorSubject<VariableStore> = new BehaviorSubject({});

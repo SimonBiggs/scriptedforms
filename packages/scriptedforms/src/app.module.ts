@@ -43,6 +43,8 @@ import { VariableService } from './services/variable.service';
 import { OutputService } from './services/output.service';
 import { ModelService } from './services/model.service';
 import { SaveService } from './services/save.service';
+import { WatchdogService } from './services/watchdog.service';
+import { TemplateService } from './services/template.service';
 
 import { FormBuilderModule } from './form-builder-module/form-builder.module';
 
@@ -71,6 +73,8 @@ import { AppComponent } from './app.component';
     VariableService,
     ModelService,
     SaveService,
+    WatchdogService,
+    TemplateService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]
 })
