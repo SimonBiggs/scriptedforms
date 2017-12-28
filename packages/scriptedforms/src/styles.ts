@@ -28,6 +28,7 @@ Import the required styles.
 */
 
 import './theme.css';
+import './style.css';
 
 /*
 Jupyterlab Syntax Highlighting

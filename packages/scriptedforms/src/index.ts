@@ -27,6 +27,10 @@ import './styles';
 import 'hammerjs';
 
 import {
+  BoxLayout, Widget
+} from '@phosphor/widgets';
+
+import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
@@ -78,3 +82,27 @@ class ScriptedFormsWidget extends AngularWidget<AppComponent, AppModule> {
     return formViewInitialised.promise
   }
 }
+
+export
+class FormWidget extends Widget {
+  form: ScriptedFormsWidget;
+
+  constructor(options: IScriptedFormsWidget.IOptions) {
+    super()
+    this.addClass('container')
+
+    let layout = this.layout = new BoxLayout();
+    this.form = new ScriptedFormsWidget(options)
+    this.form.addClass('form');
+
+    layout.addWidget(this.form);
+    BoxLayout.setStretch(this.form, 0);
+  }
+  
+  updateTemplate(template: string) {
+    let priorOverflow = this.form.node.scrollTop
+    this.form.updateTemplate(template).then(() => {
+      this.form.node.scrollTop = priorOverflow
+    })
+  }
+};

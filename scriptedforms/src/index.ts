@@ -31,7 +31,7 @@ import {
 
 import {
   FormWidget
-} from './widget';
+} from '../../packages/scriptedforms';
 
 import {
   ServiceManager, ContentsManager, ServerConnection, Session
