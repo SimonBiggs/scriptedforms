@@ -42,6 +42,7 @@ import { KernelService } from './services/kernel.service';
 import { VariableService } from './services/variable.service';
 import { OutputService } from './services/output.service';
 import { ModelService } from './services/model.service';
+import { SaveService } from './services/save.service';
 
 import { FormBuilderModule } from './form-builder-module/form-builder.module';
 
@@ -69,6 +70,7 @@ import { AppComponent } from './app.component';
     OutputService,
     VariableService,
     ModelService,
+    SaveService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]
 })
