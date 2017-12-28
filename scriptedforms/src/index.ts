@@ -97,7 +97,7 @@ function main(): void {
     'scriptedforms-config-data'
   ).textContent)
 
-  let formFileName = './' + formConfig.formFile
+  let formFileName = formConfig.formFile
 
   let formWidget = new FormWidget({
     serviceManager,

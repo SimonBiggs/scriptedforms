@@ -47,6 +47,8 @@ class ScriptedFormsHandler(IPythonHandler):
 
     def get(self, form_file):
         """Get the main page for the application's interface."""
+        form_file = os.path.relpath(form_file)
+
         return self.write(self.render_template("index.html",
             static=self.static_url, base_url=self.base_url,
             token=self.settings['token'], form_file=form_file))
@@ -89,14 +91,16 @@ def main():
 
     sys.argv = [sys.argv[0]]
 
-    if not(os.path.exists(args.filename)):
+    filename = os.path.relpath(args.filename)
+
+    if not(os.path.exists(filename)):
         raise Exception('File does not exist')
 
-    if (args.filename[-8::] != '.form.md'):
+    if (filename[-8::] != '.form.md'):
         raise Exception('Form template must have .form.md extension')
 
     ScriptedForms.launch_instance(
-        default_url='/scriptedforms/{}'.format(args.filename))
+        default_url='/scriptedforms/{}'.format(filename))
 
 if __name__ == '__main__':
     main()
