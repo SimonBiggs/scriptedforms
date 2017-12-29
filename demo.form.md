@@ -168,10 +168,18 @@ field.
 
 #### Dropdown variables
 
-Dropdown variables are a string variable where
+Dropdown allow predifined options to be available in a dropdown list. When
+defining a dropdown variable the first input is the python variable name. All
+remaining inputs are give the options for the dropdown. All options must be
+separated by commas. Surrounding whitespace is ignored.
 
 <section-live>
-<variable-dropdown>machine,1234,2345,George</variable-dropdown>
+<variable-dropdown>
+  machine,
+  1234,
+  2345,
+  George
+</variable-dropdown>
 
 ```python
 print(machine)

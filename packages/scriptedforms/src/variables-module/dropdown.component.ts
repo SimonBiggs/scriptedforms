@@ -48,17 +48,19 @@ import {
 </mat-form-field>`
 })
 export class DropdownComponent extends StringBaseComponent implements AfterViewInit {
-  options: string[];
+  options: string[] = [];
 
   ngAfterViewInit() {
     const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
-    console.log(ngContent)
+    // console.log(ngContent)
     const items = ngContent.split(',')
 
-    console.log(items)
+    // console.log(items)
 
-    this.variableName = items[0]
-    this.options = items.slice(1)
+    this.variableName = items[0].trim()
+    items.slice(1).forEach(item => {
+      this.options = this.options.concat([item.trim()])
+    })
     console.log(this.options)
     
     this.myChangeDetectorRef.detectChanges();

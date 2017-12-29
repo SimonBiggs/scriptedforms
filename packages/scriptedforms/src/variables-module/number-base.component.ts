@@ -43,7 +43,7 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
 
     // console.log(items)
 
-    this.variableName = items[0]
+    this.variableName = items[0].trim()
 
     if (items.length >= 1) {
       this.min = Number(items[1])
