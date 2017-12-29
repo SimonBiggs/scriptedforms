@@ -30,26 +30,37 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'variable-string',
+  selector: 'variable-dropdown',
   template: `
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
 </span>
-<mat-input-container class="variableString" *ngIf="variableName">
-  <textarea
-    matInput matTextareaAutosize
+<mat-form-field>
+  <mat-select 
     [disabled]="!isFormReady"
     [placeholder]="variableName"
     [(ngModel)]="variableValue"
     (ngModelChange)="variableChanged($event)"
     (blur)="onBlur()" 
-    (focus)="onFocus()"
-    type="text" class="variableString"></textarea>
-</mat-input-container>`,
-styles: [
-  `.variableString {
-  width: 100%;
-}
-`]
+    (focus)="onFocus()">
+    <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+  </mat-select>
+</mat-form-field>`
 })
-export class StringComponent extends StringBaseComponent implements AfterViewInit {}
+export class DropdownComponent extends StringBaseComponent implements AfterViewInit {
+  options: string[];
+
+  ngAfterViewInit() {
+    const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
+    console.log(ngContent)
+    const items = ngContent.split(',')
+
+    console.log(items)
+
+    this.variableName = items[0]
+    this.options = items.slice(1)
+    console.log(this.options)
+    
+    this.myChangeDetectorRef.detectChanges();
+  }
+}

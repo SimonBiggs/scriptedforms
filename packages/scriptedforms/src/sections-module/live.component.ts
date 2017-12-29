@@ -44,6 +44,7 @@ import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
 import { TableComponent } from '../variables-module/table.component';
 import { StringComponent } from '../variables-module/string.component';
+import { DropdownComponent } from '../variables-module/dropdown.component';
 
 import { CodeComponent } from '../code-module/code.component';
 
@@ -67,6 +68,7 @@ export class LiveComponent implements AfterViewInit {
   @ContentChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
   @ContentChildren(TableComponent) tableComponents: QueryList<TableComponent>;
   @ContentChildren(StringComponent) stringComponents: QueryList<StringComponent>;
+  @ContentChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
@@ -79,6 +81,7 @@ export class LiveComponent implements AfterViewInit {
     this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
+    this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
 
     for (const variableComponent of this.variableComponents) {
       variableComponent.variableChange.asObservable().subscribe(

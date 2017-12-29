@@ -31,7 +31,7 @@ import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
 
 import {
   MatButtonModule, MatInputModule, MatIconModule, MatCheckboxModule, 
-  MatSliderModule
+  MatSliderModule, MatSelectModule
 } from '@angular/material';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -62,6 +62,7 @@ import { AppComponent } from './app.component';
     MatInputModule,
     MatCheckboxModule,
     MatSliderModule,
+    MatSelectModule,
     FormBuilderModule
   ],
   entryComponents: [

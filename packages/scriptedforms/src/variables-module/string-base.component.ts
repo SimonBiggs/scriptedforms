@@ -23,12 +23,27 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { TickComponent } from '../variables-module/tick.component';
-import { ToggleComponent } from '../variables-module/toggle.component';
-import { NumberComponent } from '../variables-module/number.component';
-import { SliderComponent } from '../variables-module/slider.component';
-import { TableComponent } from '../variables-module/table.component';
-import { StringComponent } from '../variables-module/string.component';
-import { DropdownComponent } from '../variables-module/dropdown.component';
+import { VariableBaseComponent } from './variable-base.component';
 
-export type VariableComponent = NumberComponent | StringComponent | TableComponent | TickComponent | ToggleComponent | SliderComponent | DropdownComponent
+import {
+  Component, AfterViewInit
+} from '@angular/core';
+
+@Component({})
+export class StringBaseComponent extends VariableBaseComponent implements AfterViewInit { 
+  variableValue: string
+
+  updateVariableView(value: string) {
+    value = String(value)
+    super.updateVariableView(value)
+  }
+
+  pythonValueReference() {
+    const escapedString = this.variableValue
+    .replace(/\"/g, '\\"')
+    .replace(/\\/g, '\\\\')
+    const valueReference = `"""${String(escapedString)}"""`
+
+    return valueReference
+  }
+}

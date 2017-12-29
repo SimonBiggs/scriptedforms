@@ -33,7 +33,7 @@ import { FormsModule } from '@angular/forms';
 
 import {
   MatInputModule, MatTableModule, MatCheckboxModule, MatSlideToggleModule,
-  MatSliderModule
+  MatSliderModule, MatSelectModule
 } from '@angular/material';
 
 import { ToggleComponent } from './toggle.component';
@@ -44,6 +44,7 @@ import { SliderComponent } from './slider.component';
 import { TableComponent } from './table.component';
 
 import { StringComponent } from './string.component';
+import { DropdownComponent } from './dropdown.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { StringComponent } from './string.component';
     MatCheckboxModule,
     MatSlideToggleModule,
     MatSliderModule,
+    MatSelectModule,
     FormsModule
   ],
   declarations: [
@@ -61,16 +63,18 @@ import { StringComponent } from './string.component';
     TickComponent,
     NumberComponent,
     SliderComponent,
+    TableComponent,
     StringComponent,
-    TableComponent
+    DropdownComponent    
   ],
   exports: [
     ToggleComponent,
     TickComponent,
     NumberComponent,
     SliderComponent,
+    TableComponent,
     StringComponent,
-    TableComponent
+    DropdownComponent    
   ]
 })
 export class VariablesModule { }

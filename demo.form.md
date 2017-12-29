@@ -56,6 +56,8 @@ table = pd.DataFrame(
 hello = False
 world = False
 bye = False
+
+machine = None
 ```
 
 </section-start>
@@ -166,7 +168,16 @@ field.
 
 #### Dropdown variables
 
-Dropdown variables are a string variable where 
+Dropdown variables are a string variable where
+
+<section-live>
+<variable-dropdown>machine,1234,2345,George</variable-dropdown>
+
+```python
+print(machine)
+```
+
+</section-live>
 
 ### Button sections
 

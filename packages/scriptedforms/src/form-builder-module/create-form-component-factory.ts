@@ -67,6 +67,7 @@ import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
 import { TableComponent } from '../variables-module/table.component';
 import { StringComponent } from '../variables-module/string.component';
+import { DropdownComponent } from '../variables-module/dropdown.component';
 
 import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
@@ -111,6 +112,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     @ViewChildren(TableComponent) tableComponents: QueryList<TableComponent>;
 
     @ViewChildren(StringComponent) stringComponents: QueryList<StringComponent>;
+    @ViewChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
+
 
     // Code
     @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
@@ -131,7 +134,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
       this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray())
 
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
-
+      this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
+      
       this.initialiseForm();
     }
 
