@@ -25,6 +25,13 @@
 
 import './style.css';
 
+/*
+Jupyterlab Syntax Highlighting
+*/
+import '../node_modules/@jupyterlab/theme-light-extension/style/variables.css'
+import '../node_modules/@jupyterlab/codemirror/style/index.css';
+import '../node_modules/@jupyterlab/rendermime/style/index.css';
+
 import {
   Widget
 } from '@phosphor/widgets';

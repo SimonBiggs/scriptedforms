@@ -31,15 +31,6 @@ import './theme.css';
 import './style.css';
 
 /*
-Jupyterlab Syntax Highlighting
-*/
-// Can't get working :/
-import '../node_modules/@jupyterlab/theme-light-extension/style/variables.css'
-import '../node_modules/@jupyterlab/codemirror/style/index.css';
-import '../node_modules/@jupyterlab/rendermime/style/index.css';
-
-
-/*
 This currently loads up the material design icons via the web. The later
 versions of angular material allow for these icons to be included in the
 bundle. Once I upgrade angular material this part will no longer be required.

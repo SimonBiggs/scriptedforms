@@ -35,7 +35,7 @@ There are six kinds of variable inputs:
 
 These are attached to a specific python variable which update on
 user input. Number and slider represent floats. String represents a Python
-string. Tick and toggle are both booleans. The table variable is a pandas 
+string. Tick and toggle are both booleans. The table variable is a pandas
 dataframe with all of the values in the dataframe being floats.
 
 ### Start sections
@@ -64,13 +64,13 @@ Whenever a jupyterlab services session is started
 code within the start sections is run first.
 
 If you reopen or update the form template without restarting the kernel
-this code will not re-run however a button will appear that will allow you to 
+this code will not re-run however a button will appear that will allow you to
 manually re-run the code if need be.
 
 As can be seen from this code there are already a few namespaces included by
 default within the Python session. Some of these are for convenience, some are
-required for the proper running of the form. The code that is run at boot of 
-a new form kernel can be found within the 
+required for the proper running of the form. The code that is run at boot of
+a new form kernel can be found within the
 [source code](https://github.com/SimonBiggs/jupyterlab-form/blob/master/src/angular-app/services/session-start-code.ts).
 
 ### Live sections and demo of each of the variable types
@@ -82,25 +82,38 @@ that live section is subsequently run.
 
 #### Number and slider variables
 
-Here is a `live` section containing both number and slider that produces a 
+Here is a `live` section containing both number and slider that produces a
 plot.
 
 <section-live>
 <variable-number>data[0]</variable-number>
-<variable-number>data[1],-100,100</variable-number>
-<variable-number>data[2],0,10,0.1</variable-number>
+<variable-number>data[1], -100, 100</variable-number>
+<variable-number>data[2], 0, 10, 0.1</variable-number>
 
 <variable-slider>data[0]</variable-slider>
-<variable-slider>data[1],-100,100</variable-slider>
-<variable-slider>data[2],0,10,0.1</variable-slider>
+<variable-slider>
+  data[1],
+  -100,
+  100
+</variable-slider>
+<variable-slider>
+  data[2],
+  0,
+  10,
+  0.1
+</variable-slider>
 `plt.plot(data, 'o');`
 </section-live>
 
-The slider requires four inputs, the minimum, maximum, step size, and finally 
-the name of the python variable which is mapped to the slider.
+Both the number and the slider require at least one input, the python variable
+name. They both have three remaining optional inputs, minimum, maximum, and
+step size in that order. The inputs need to be separated by commas. White space
+is ignored.
 
-All other variable types apart from the slider only require one input, the
-python variable name.
+Should optional inputs not be given they are assigned the default values. In
+both the slider and number variables step size defaults to 1. In the number
+variable minimum and maximum defaults to not being set. On the slider the
+minimum defaults to 0, the maximum to 100.
 
 #### Table variables
 
@@ -120,7 +133,7 @@ table.iloc[:,3] = np.nanmean(table.iloc[:,0:3], axis=1)
 
 Tick and toggle variables are simply different representations of a True/False
 boolean variable within python. They are provided for use cases such as check
-lists and pass fail tests. These variables can interact with each other in 
+lists and pass fail tests. These variables can interact with each other in
 interesting ways via the live Python code.
 
 <section-live>
@@ -150,6 +163,10 @@ field.
 <variable-string>notes</variable-string>
 `print(notes)`
 </section-live>
+
+#### Dropdown variables
+
+Dropdown variables are a string variable where 
 
 ### Button sections
 
@@ -187,8 +204,8 @@ time at which that input was last changed.
 
 ## Accompanying modules [not yet implemented]
 
-Once this form extension is in a usable state the benefits will truly come to 
-light once a second extension is made  which takes the data and trends the 
+Once this form extension is in a usable state the benefits will truly come to
+light once a second extension is made  which takes the data and trends the
 results over time.
 
 Another extension of value would be a scheduling and overview extension

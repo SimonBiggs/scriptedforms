@@ -24,7 +24,10 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "@jupyterlab/codemirror": "^0.14.1",
+    "@jupyterlab/rendermime": "^0.14.1",
     "@jupyterlab/services": "^1.0.1",
+    "@jupyterlab/theme-light-extension": "^0.14.1",
     "@phosphor/widgets": "^1.5.0"
   }
 }
