@@ -23,41 +23,41 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+// import { Injectable } from '@angular/core';
+// import { BehaviorSubject } from 'rxjs';
 
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+// import {
+//   PromiseDelegate
+// } from '@phosphor/coreutils';
 
-export
-class FormModel {
-  template: BehaviorSubject<string>;
-}
+// export
+// class FormModel {
+//   template: BehaviorSubject<string>;
+// }
 
-// TO DO
-// Make model service contain template, timestamps, variables, and (outputs?).
+// // TO DO
+// // Make model service contain template, timestamps, variables, and (outputs?).
 
 
 
-// TO DO
-// Move this over to the template service
-@Injectable()
-export class ModelService {
-  formModel: FormModel
-  modelReady = new PromiseDelegate<void>();
-  template: BehaviorSubject<string>
+// // TO DO
+// // Move this over to the template service
+// @Injectable()
+// export class ModelService {
+//   formModel: FormModel
+//   modelReady = new PromiseDelegate<void>();
+//   template: BehaviorSubject<string>
 
-  constructor () {
-    this.template = new BehaviorSubject('')
-    this.modelReady.resolve(undefined);
-  }
+//   constructor () {
+//     this.template = new BehaviorSubject('')
+//     this.modelReady.resolve(undefined);
+//   }
 
-  setTemplate(template: string) {
-    this.template.next(template)
-  }
+//   setTemplate(template: string) {
+//     this.template.next(template)
+//   }
 
-  getTemplate() {
-    return this.template.getValue()
-  }
-}
+//   getTemplate() {
+//     return this.template.getValue()
+//   }
+// }

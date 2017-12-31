@@ -25,5 +25,73 @@
 
 import { Injectable } from '@angular/core';
 
+import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
+import {
+  ServerConnection, Session
+} from '@jupyterlab/services';
+
+import { JupyterService } from './jupyter.service';
+import { FileService } from './file.service';
+
+import {
+  watchdogJustFirstTimeCode, watchdogLoopCode
+} from './watchdog-code'
+
 @Injectable()
-export class WatchdogService {}
+export class WatchdogService {
+  formFirstPassComplete = new PromiseDelegate<void>();
+
+  constructor(
+    private myFileService: FileService,
+    private myJupyterService: JupyterService
+  ) { }
+
+  runWatchdogAfterFormReady() {
+    this.formFirstPassComplete.promise.then(() => {
+      this.runWatchdog()
+    })
+  }
+
+  runWatchdog() {
+    const path = 'scriptedforms_watchdog_kernel'
+    const settings = ServerConnection.makeSettings({});
+    const startNewOptions = {
+      kernelName: 'python3',
+      serverSettings: settings,
+      path: path
+    };
+  
+    this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
+      Session.connectTo(model, settings).then(session => {
+        session.kernel.interrupt().then(() => {
+          this.watchdogFormUpdate(session)
+        })
+      });
+    }).catch(() => {
+      Session.startNew(startNewOptions).then(session => {
+        session.kernel.requestExecute({code: watchdogJustFirstTimeCode})
+        this.watchdogFormUpdate(session)
+      });
+    });
+  }
+
+  watchdogFormUpdate(session: Session.ISession) {
+    let future = session.kernel.requestExecute({code: watchdogLoopCode})
+    future.onIOPub = (msg => {
+      if (msg.content.text) {
+        let content = String(msg.content.text).trim()
+        let files = content.split("\n")
+        console.log(files)
+        let match = files.some(item => {
+          return (item === this.myFileService.path.getValue()) || (item.includes('goutputstream'))
+        })
+        if (match) {
+          this.myFileService.loadFileContents()
+        }
+      }
+    })
+  }
+}

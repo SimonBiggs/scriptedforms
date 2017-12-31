@@ -37,65 +37,13 @@ import {
 } from '@phosphor/widgets';
 
 import {
-  FormWidget
+  ScriptedFormsWidget
 } from '../../packages/scriptedforms';
 
 import {
-  ServiceManager, ContentsManager, ServerConnection, Session
+  ServiceManager, ContentsManager
 } from '@jupyterlab/services';
 
-import {
-  importsPython, watchdogPython, loopPython
-} from './watchdog';
-
-
-function runWatchdog(serviceManager: ServiceManager, contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
-  const path = 'scriptedforms_watchdog_kernel'
-  const settings = ServerConnection.makeSettings({});
-  const startNewOptions = {
-    kernelName: 'python3',
-    serverSettings: settings,
-    path: path
-  };
-
-  serviceManager.sessions.findByPath(path).then(model => {
-    Session.connectTo(model, settings).then(session => {
-      session.kernel.interrupt().then(() => {
-        watchdogFormUpdate(session, contentsManager, formWidget, formFileName)
-      })
-    });
-  }).catch(() => {
-    Session.startNew(startNewOptions).then(session => {
-      session.kernel.requestExecute({code: importsPython})
-      session.kernel.requestExecute({code: watchdogPython})
-      watchdogFormUpdate(session, contentsManager, formWidget, formFileName)
-    });
-  });
-}
-
-function watchdogFormUpdate(session: Session.ISession, contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
-  let future = session.kernel.requestExecute({code: loopPython})
-  future.onIOPub = (msg => {
-    if (msg.content.text) {
-      let content = String(msg.content.text).trim()
-      let files = content.split("\n")
-      console.log(files)
-      let match = files.some(item => {
-        return (item === formFileName) || (item.includes('goutputstream'))
-      })
-      if (match) {
-        updateForm(contentsManager, formWidget, formFileName)
-      }
-    }
-  })
-}
-
-function updateForm(contentsManager: ContentsManager, formWidget: FormWidget, formFileName: string) {
-  contentsManager.get(formFileName).then(model => {
-    let formContents = model.content
-    formWidget.updateTemplate(formContents)
-  })
-}
 
 function main(): void {
   let serviceManager = new ServiceManager();
@@ -104,15 +52,15 @@ function main(): void {
     'scriptedforms-config-data'
   ).textContent)
 
-  let formFileName = formConfig.formFile
+  let path: string = formConfig.formFile
+  let renderType: 'template' | 'results' = formConfig.renderType
 
-  let formWidget = new FormWidget({
+  let formWidget = new ScriptedFormsWidget({
     serviceManager,
-    path: formFileName
+    contentsManager,
+    path,
+    renderType
   });
-
-  updateForm(contentsManager, formWidget, formFileName)
-  runWatchdog(serviceManager, contentsManager, formWidget, formFileName)
 
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);

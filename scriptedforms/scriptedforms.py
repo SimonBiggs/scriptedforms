@@ -48,10 +48,18 @@ class ScriptedFormsHandler(IPythonHandler):
     def get(self, form_file):
         """Get the main page for the application's interface."""
         form_file = os.path.relpath(form_file)
+        file_extension = os.path.splitext(form_file)[1].lower()
+
+        if file_extension == '.md':
+            render_type = 'template'
+
+        if file_extension == '.json':
+            render_type = 'results'
 
         return self.write(self.render_template("index.html",
             static=self.static_url, base_url=self.base_url,
-            token=self.settings['token'], form_file=form_file))
+            token=self.settings['token'], form_file=form_file, 
+            render_type=render_type))
 
     def get_template(self, name):
         return LOADER.load(self.settings['jinja2_env'], name)
@@ -69,7 +77,8 @@ class ScriptedForms(NotebookApp):
 
     def start(self):
         handlers = [
-            (r'/scriptedforms/(.*\.form\.md)', ScriptedFormsHandler),
+            (r'/scriptedforms/(.*\.md)', ScriptedFormsHandler),
+            (r'/scriptedforms/(.*\.json)', ScriptedFormsHandler),
             (r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'build')}),
         ]
@@ -93,8 +102,13 @@ def main():
     if not(os.path.exists(filename)):
         raise Exception('File does not exist')
 
-    if (filename[-8::] != '.form.md'):
-        raise Exception('Form template must have .form.md extension')
+    extension = os.path.splitext(filename)[1].lower()
+
+    if (extension != '.md') and (extension != '.json'):
+        raise Exception(
+            'Form template must have .md extension. Form results must have '
+            '.json extension. Please provide either a form template or form'
+            'results file for the server to start at.')
 
     ScriptedForms.launch_instance(
         default_url='/scriptedforms/{}'.format(filename))

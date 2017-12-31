@@ -174,8 +174,7 @@ remaining inputs are give the options for the dropdown. All options must be
 separated by commas. Surrounding whitespace is ignored.
 
 <section-live>
-<variable-dropdown>
-  machine,
+<variable-dropdown>machine,
   1234,
   2345,
   George

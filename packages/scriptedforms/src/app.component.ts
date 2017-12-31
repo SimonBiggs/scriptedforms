@@ -34,17 +34,32 @@ import {
   Component, ViewChild
 } from '@angular/core';
 
+import {
+  ServiceManager, ContentsManager
+} from '@jupyterlab/services';
+
 // import {
 //   Kernel
 // } from '@jupyterlab/services';
 
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 import { KernelService } from './services/kernel.service';
-import { ModelService } from './services/model.service';
+import { JupyterService } from './services/jupyter.service';
+import { WatchdogService } from './services/watchdog.service';
+import { FileService } from './services/file.service';
 
-import {
-  SessionConnectOptions
-} from './interfaces/session-connect-options';
+
+export
+namespace IScriptedForms {
+  export
+  interface IOptions {
+    serviceManager: ServiceManager,
+    contentsManager: ContentsManager,
+    path: string,
+    renderType: 'template' | 'results',
+    node: HTMLElement
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -56,30 +71,52 @@ export class AppComponent {
 
   constructor(
     private myKernelService: KernelService,
-    private myModelService: ModelService
+    private myJupyterService: JupyterService,
+    private myFileService: FileService,
+    private myWatchdogService: WatchdogService
   ) { }
+
+  public initiliseScriptedForms(options: IScriptedForms.IOptions) {      
+    this.myJupyterService.setServiceManager(options.serviceManager);
+    this.myJupyterService.setContentsManager(options.contentsManager);
+
+    this.myFileService.setNode(options.node);
+    this.myFileService.setPath(options.path);
+
+    this.myFileService.setRenderType(options.renderType);
+    this.myFileService.loadFileContents().then(() => {
+      this.myKernelService.sessionConnect();
+    })
+    
+    this.myWatchdogService.runWatchdogAfterFormReady();
+  }
+
+  public updateFileContents(fileContents: string) {
+    return this.myFileService.handleFileContents(fileContents);
+  }
+
 
   /**
    * Set or update the template of the form.
    * 
    * @param template: The template to set the form with
    */
-  public setTemplateAndBuildForm(template: string): Promise<void> {
-    this.myModelService.setTemplate(template);
-    return this.formBuilderComponent.buildForm();
-  }
+  // public setTemplateAndBuildForm(template: string): Promise<void> {
+  //   this.myModelService.setTemplate(template);
+  //   return this.formBuilderComponent.buildForm();
+  // }
 
-  public modelReady(): Promise<void> {
-    return this.myModelService.modelReady.promise;
-  }
+  // public modelReady(): Promise<void> {
+  //   return this.myModelService.modelReady.promise;
+  // }
 
   /**
    * Given a Jupyterlab session manager either reconnect to existing kernel
    * or start a new kernel at the provided path.
    */
-  public sessionConnect(options: SessionConnectOptions) {
-    this.myKernelService.sessionConnect(options);
-  }
+  // public sessionConnect(options: SessionConnectOptions) {
+  //   this.myKernelService.sessionConnect(options);
+  // }
 
   /**
    * Inform the kernel service that its path has changed.
@@ -87,6 +124,6 @@ export class AppComponent {
    * @param path: The kernel session filepath.
    */
   public pathChanged(path: string) {
-    this.myKernelService.pathChanged(path);
+    this.myFileService.path.next(path);
   }
 }

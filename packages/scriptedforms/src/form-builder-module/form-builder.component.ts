@@ -42,7 +42,9 @@ import * as  MarkdownIt from 'markdown-it';
 
 import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
 
-import { ModelService } from '../services/model.service';
+import { TemplateService, noTemplate } from '../services/template.service';
+import { FileService } from '../services/file.service';
+import { WatchdogService } from '../services/watchdog.service';
 
 import {
   PromiseDelegate
@@ -66,7 +68,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private compiler: Compiler,
-    private myModelService: ModelService
+    private myTemplateService: TemplateService,
+    private myWatchdogService: WatchdogService,
+    private myFileService: FileService
   ) { }
 
   ngOnInit() {
@@ -75,6 +79,12 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
       linkify: true,
       typographer: true
     });
+
+    this.myTemplateService.template.subscribe((template) => {
+      if (template !== noTemplate) {
+        this.buildForm(template);
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -88,20 +98,15 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * This function makes sure to only begin building the form once the component
    * has sufficiently initialised.
    */
-  public buildForm(): Promise<void> {
-    const markdownTemplate = this.myModelService.getTemplate()
-
-    let formViewInitialised = new PromiseDelegate<void>();
+  public buildForm(markdownTemplate: string) {
     this.viewInitialised.promise.then(() => {
       const htmlTemplate = this.convertTemplate(markdownTemplate);
 
       // Create the form component
       this.createFormFromTemplate(htmlTemplate).then(() => {
-        formViewInitialised.resolve(null)
+        this.myFileService.renderComplete.resolve(null);
       })
     });
-
-    return formViewInitialised.promise
   }
 
   /**
@@ -158,6 +163,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
+    this.formComponentRef.instance.formReady.promise.then(() => {
+      this.myWatchdogService.formFirstPassComplete.resolve(null)
+    })
     return this.formComponentRef.instance.formViewInitialised.promise
   }
 }

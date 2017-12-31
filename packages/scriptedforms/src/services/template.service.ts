@@ -24,6 +24,20 @@
 // limitations under the Combined Licenses.
 
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+export
+const noTemplate = '<no_template_provided>'
 
 @Injectable()
-export class TemplateService {}
+export class TemplateService {
+  template: BehaviorSubject<string> = new BehaviorSubject(noTemplate)
+
+  setTemplate(template: string) {
+    this.template.next(template)
+  }
+
+  getTemplate() {
+    return this.template.getValue()
+  }
+}

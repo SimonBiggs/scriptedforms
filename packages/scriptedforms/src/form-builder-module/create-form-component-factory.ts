@@ -76,7 +76,8 @@ import { VariableComponent } from '../types/variable-component';
 
 export
 interface IFormComponent {
-  formViewInitialised: PromiseDelegate<void>
+  formViewInitialised: PromiseDelegate<void>,
+  formReady: PromiseDelegate<void>
 }
 
 
@@ -96,6 +97,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
   @Component(metadata)
   class FormComponent {
     formViewInitialised = new PromiseDelegate<void>()
+    formReady = new PromiseDelegate<void>()
+
     variableComponents: VariableComponent[] = []
 
     // Sections
@@ -206,6 +209,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
             buttonComponent.setId(index);
             buttonComponent.formReady();
           });
+
+          this.formReady.resolve(null)
         });
       });
     }

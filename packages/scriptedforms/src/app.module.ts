@@ -41,10 +41,11 @@ import { AppErrorHandler } from './app-error-handler';
 import { KernelService } from './services/kernel.service';
 import { VariableService } from './services/variable.service';
 import { OutputService } from './services/output.service';
-import { ModelService } from './services/model.service';
-import { SaveService } from './services/save.service';
+// import { ModelService } from './services/model.service';
+import { FileService } from './services/file.service';
 import { WatchdogService } from './services/watchdog.service';
 import { TemplateService } from './services/template.service';
+import { JupyterService } from './services/jupyter.service';
 
 import { FormBuilderModule } from './form-builder-module/form-builder.module';
 
@@ -72,10 +73,11 @@ import { AppComponent } from './app.component';
     KernelService,
     OutputService,
     VariableService,
-    ModelService,
-    SaveService,
+    // ModelService,
+    FileService,
     WatchdogService,
     TemplateService,
+    JupyterService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]
 })

@@ -25,5 +25,20 @@
 
 import { Injectable } from '@angular/core';
 
+import {
+  ServiceManager, ContentsManager
+} from '@jupyterlab/services';
+
 @Injectable()
-export class SaveService {}
+export class JupyterService {
+  serviceManager: ServiceManager;
+  contentsManager: ContentsManager;
+
+  setServiceManager(serviceManager: ServiceManager) {
+    this.serviceManager = serviceManager;
+  }
+
+  setContentsManager(contentsManager: ContentsManager) {
+    this.contentsManager = contentsManager;
+  }
+}

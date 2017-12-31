@@ -30,9 +30,9 @@ import {
   BoxLayout, Widget
 } from '@phosphor/widgets';
 
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+import { 
+  ServiceManager, ContentsManager 
+} from '@jupyterlab/services';
 
 import {
   AngularWidget
@@ -46,63 +46,51 @@ import {
   AppModule
 } from './app.module';
 
-import {
-  SessionConnectOptions
-} from './interfaces/session-connect-options';
-
-
 export
 namespace IScriptedFormsWidget {
   export
-  interface IOptions extends SessionConnectOptions {}
+  interface IOptions {
+    serviceManager: ServiceManager,
+    contentsManager: ContentsManager,
+    path: string,
+    renderType: 'template' | 'results'
+  }
 }
 
-
 export
-class ScriptedFormsWidget extends AngularWidget<AppComponent, AppModule> {
+class AngularWrapperWidget extends AngularWidget<AppComponent, AppModule> {
   constructor(options: IScriptedFormsWidget.IOptions) {
     super(AppComponent, AppModule)
 
+    let scriptedFormsOptions = Object.assign({
+      node:this.node
+    }, options)
+
     this.run(() => {
-      this.componentInstance.sessionConnect(options);
+      this.componentInstance.initiliseScriptedForms(scriptedFormsOptions)
     })
   }
 
-  updateTemplate(template: string): Promise<void> {
-    let formViewInitialised = new PromiseDelegate<void>();
-
+  updateFileContents(template: string) {
     this.run(() => {
-      this.componentInstance.modelReady().then(() => {
-        this.componentInstance.setTemplateAndBuildForm(template).then(() => {
-          formViewInitialised.resolve(null)
-        })
-      })
+      this.componentInstance.updateFileContents(template)
     });
-
-    return formViewInitialised.promise
   }
 }
 
 export
-class FormWidget extends Widget {
-  form: ScriptedFormsWidget;
+class ScriptedFormsWidget extends Widget {
+  form: AngularWrapperWidget;
 
   constructor(options: IScriptedFormsWidget.IOptions) {
     super()
     this.addClass('container')
 
     let layout = this.layout = new BoxLayout();
-    this.form = new ScriptedFormsWidget(options)
+    this.form = new AngularWrapperWidget(options)
     this.form.addClass('form');
 
     layout.addWidget(this.form);
     BoxLayout.setStretch(this.form, 0);
-  }
-  
-  updateTemplate(template: string) {
-    let priorOverflow = this.form.node.scrollTop
-    this.form.updateTemplate(template).then(() => {
-      this.form.node.scrollTop = priorOverflow
-    })
   }
 };

@@ -31,29 +31,26 @@ at a time and in a well defined order. This queue also handles dropping repeat
 requests if the kernel is busy.
 */
 
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 import {
-  Kernel, Session, ServerConnection, ServiceManager
+  Kernel, Session, ServerConnection
 } from '@jupyterlab/services';
 
 import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
+import { JupyterService } from './jupyter.service';
+import { FileService } from './file.service';
+
 import {
   sessionStartCode
 } from './session-start-code';
 
-import {
-  SessionConnectOptions
-} from '../interfaces/session-connect-options';
-
 
 @Injectable()
-export class KernelService {
-  services: ServiceManager;
-  path: string = 'default_path';
+export class KernelService implements OnInit {
   sessionConnected = new PromiseDelegate<void>();
 
   isNewSession: boolean;
@@ -66,57 +63,51 @@ export class KernelService {
 
   queue: Promise<any> = this.sessionConnected.promise;
 
-  setServices(services: ServiceManager) {
-    this.services = services;
+  constructor(
+    private myJupyterService: JupyterService,
+    private myFileService: FileService
+  ) { }
+
+  ngOnInit() {
+    // this.sessionConnect()
   }
 
-  setPath(path: string) {
-    this.path = path;
-  }
-
-  pathChanged(path: string) {
-    this.setPath(path);
-    this.session.setPath(path);
-  }
-
-  sessionConnect(options: SessionConnectOptions) {
-    this.setServices(options.serviceManager);
-    if (options.path) {
-      this.setPath(options.path);
-    }
-    
+  sessionConnect() {   
     const settings = ServerConnection.makeSettings({});
-
+    const path = this.myFileService.path.getValue()
     const startNewOptions = {
       kernelName: 'python3',
       serverSettings: settings,
-      path: this.path
+      path: path
     };
 
-    this.services.sessions.findByPath(this.path).then(model => {
+    this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
       Session.connectTo(model, settings).then(session => {
         // console.log(session);
-        this.sessionReady(session);
         this.isNewSession = false;
-        this.sessionConnected.resolve(undefined);
+        this.sessionReady(session);
         // console.log('previous session ready');
       });
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
         // console.log(session);
-        this.sessionReady(session);
         this.isNewSession = true;
-        this.sessionConnected.resolve(undefined);
+        this.sessionReady(session);
         this.runCode(sessionStartCode, 'session_start_code')
         // console.log('new session ready');
       });
     });
-
   }
 
   sessionReady(session: Session.ISession) {
     this.session = session;
+
+    this.myFileService.path.subscribe((path) => {
+      this.session.setPath(path);
+    })
+
     this.kernel = this.session.kernel;
+    this.sessionConnected.resolve(undefined);
   }
 
   addToQueue(name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {
