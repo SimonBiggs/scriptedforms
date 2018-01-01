@@ -37,7 +37,7 @@ import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
 
 import {
-  watchdogJustFirstTimeCode, watchdogLoopCode
+  watchdogCode
 } from './watchdog-code'
 
 @Injectable()
@@ -66,21 +66,18 @@ export class WatchdogService {
   
     this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
       Session.connectTo(model, settings).then(session => {
-        session.kernel.interrupt().then(() => {
-          this.watchdogFormUpdate(session)
-        })
+        this.watchdogFormUpdate(session)
       });
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
-        session.kernel.requestExecute({code: watchdogJustFirstTimeCode})
+        session.kernel.requestExecute({code: watchdogCode})
         this.watchdogFormUpdate(session)
       });
     });
   }
 
   watchdogFormUpdate(session: Session.ISession) {
-    let future = session.kernel.requestExecute({code: watchdogLoopCode})
-    future.onIOPub = (msg => {
+    session.iopubMessage.connect((sender, msg) => {
       if (msg.content.text) {
         let content = String(msg.content.text).trim()
         let files = content.split("\n")

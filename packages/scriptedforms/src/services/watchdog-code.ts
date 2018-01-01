@@ -1,5 +1,5 @@
 export 
-const watchdogJustFirstTimeCode = `
+const watchdogCode = `
 import os
 import time
 from watchdog.observers import Observer
@@ -14,10 +14,4 @@ event_handler = MyHandler()
 observer = Observer()
 observer.schedule(event_handler, path='.', recursive=True)
 observer.start()
-`
-
-export
-const watchdogLoopCode = `
-while True:
-    time.sleep(1)
 `
