@@ -151,10 +151,10 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
   }
 
   pythonValueReference() {
-    return `json_table_to_df('${JSON.stringify(this.variableValue)}')`
+    return `scriptedforms.json_table_to_df('${JSON.stringify(this.variableValue)}')`
   }
 
-  pythonVariableReference() {
+  pythonVariableEvaluate() {
     return this.variableName.concat(".to_json(orient='table')")
   }
 

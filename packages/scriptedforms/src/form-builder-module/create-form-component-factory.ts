@@ -178,7 +178,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise(index);
         })
-        this.myVariableService.fetchAll()
+        this.myVariableService.allVariablesInitilised()
+        // this.myVariableService.fetchAll()
 
         // Wait until the code queue is complete before declaring form ready to
         // the various components.

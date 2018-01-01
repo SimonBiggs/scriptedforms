@@ -80,7 +80,7 @@ export class VariableBaseComponent implements AfterViewInit {
     return String(this.variableValue);
   }
 
-  pythonVariableReference() {
+  pythonVariableEvaluate() {
     return `json.dumps(str(${this.variableName}))`
   }
 

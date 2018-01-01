@@ -52,24 +52,19 @@ import { VariableValue } from '../types/variable-value';
 
 import { VariableComponent } from '../types/variable-component';
 
-// TO DO
-// Make the variable service attach itself to kernel iopubmessage
-// Don't specifically call the variable update. Instead make it so that each
-// iopubmessage calls back to updating the variables.
 
-// Think further about implications of two users editing one variable item.
-
-
-// TO DO
-// Make python only read each variable once. Variable store needs only to store
-// the value of each variable once.
-
-// A secondary variable, "variable component alignment" needs to align each 
-// variable to its component, possibly multiple components.
 @Injectable()
 export class VariableService {
   variableStore: BehaviorSubject<VariableStore> = new BehaviorSubject({});
   oldVariableStore: VariableStore;
+
+  variableIdentifierMap: {
+    [key: string]: string
+  } = {}
+
+  variableEvaluateMap: {
+    [key: string]: string
+  } = {}
 
   executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
   lastCode: BehaviorSubject<string> = new BehaviorSubject(null);
@@ -82,11 +77,7 @@ export class VariableService {
     [key: string]: VariableComponent
   } = {}
 
-  fetchAllCodeStart: string = `print('{"version": "0.1.0"')
-`
-  fetchAllCode: string = ''
-  fetchAllCodeEnd: string = `
-print('}')`
+  fetchVariablesCode: string = 'exec(scriptedforms_variable_handler.fetch_code)';
 
   constructor(
     private myKernelSevice: KernelService
@@ -103,8 +94,7 @@ print('}')`
 
     this.lastCode.subscribe((code) => {
       if (code) {
-        let fetchAllCode = this.fetchAllCodeStart.concat(this.fetchAllCode, this.fetchAllCodeEnd)
-        if (code !== fetchAllCode) {
+        if (code !== this.fetchVariablesCode) {
           this.fetchAll()
         }
       }
@@ -116,41 +106,57 @@ print('}')`
     this.variableStore.next({});
     this.oldVariableStore = {};
     this.componentStore = {};
-    this.fetchAllCode = '';
+    this.variableIdentifierMap = {};
+    this.variableEvaluateMap = {};
+  }
+
+  allVariablesInitilised() {
+    let initialiseHandlerCode = `scriptedforms_variable_handler = scriptedforms.VariableHandler("""${JSON.stringify(this.variableEvaluateMap)}""")`
+    this.myKernelSevice.runCode(initialiseHandlerCode, '"initialiseVariableHandler"')
+    .then((future: Kernel.IFuture) => {
+      future.done.then(() => {
+        this.fetchAll()
+      })
+    })    
+  }
+
+  appendToIdentifierMap(variableIdentifier: string, variableName: string) {
+    this.variableIdentifierMap[variableIdentifier] = variableName
+  }
+
+  appendToEvaluateMap(variableName: string, variableEvaluate: string) {
+    if (!(variableName in this.variableEvaluateMap)) {
+      this.variableEvaluateMap[variableName] = variableEvaluate
+    }
   }
 
   initialiseVariableComponent(component: VariableComponent) {
     const variableIdentifier = component.variableIdentifier
     this.componentStore[variableIdentifier] = component
     
-    const variableReference = component.pythonVariableReference();
-    this.appendToFetchAllCode(variableIdentifier, variableReference);
+    const variableEvaluate = component.pythonVariableEvaluate();
+    const variableName = component.variableName;
+
+    this.appendToIdentifierMap(variableIdentifier, variableName);
+    this.appendToEvaluateMap(variableName, variableEvaluate);
   }
 
-  appendToFetchAllCode(variableIdentifier: string, variableReference: string) {
-    let fetchCode = this.createFetchCode(variableReference);
-    let fetchAllCodeAppend = `print(',"${variableIdentifier}":')
-${fetchCode}`
+  convertToVariableStore(textContent: string) {
+    let result = JSON.parse(textContent)
 
-    this.fetchAllCode = this.fetchAllCode.concat(fetchAllCodeAppend)
-  }
-
-  createFetchCode(variableReference: string): string {
-    let fetchCode = `
-try:
-    print('{{ "defined": true, "value": {} }}'.format(${variableReference}))
-except:
-    print('{"defined": false}')
-`;
-    return fetchCode;
+    let newVariableStore: VariableStore = {}
+    Object.entries(this.variableIdentifierMap).forEach(
+      ([variableIdentifier, variableName]) => {
+        newVariableStore[variableIdentifier] = result[variableName]
+      }
+    );
+    this.variableStore.next(newVariableStore)
   }
 
   fetchAll() {
     let fetchComplete = new PromiseDelegate<void> ();
-
     this.myKernelSevice.runCode(
-      this.fetchAllCodeStart.concat(this.fetchAllCode, this.fetchAllCodeEnd), 
-      '"fetchAllVariables"')
+      this.fetchVariablesCode, '"fetchAllVariables"')
     .then((future: Kernel.IFuture) => {
       if (future) {
         let textContent = '';
@@ -158,8 +164,7 @@ except:
           if (msg.content.text) {
             textContent = textContent.concat(String(msg.content.text))
             try {
-              let result = JSON.parse(textContent)
-              this.variableStore.next(result)
+              this.convertToVariableStore(textContent)              
               this.checkForChanges()
             } catch (err) {
               console.log(textContent)
@@ -191,9 +196,6 @@ except:
     this.updateComponentView(
       this.componentStore[identifier], this.variableStore.getValue()[identifier].value)
     this.updateTimestamp(identifier)
-    
-
-    // console.log(this.timestamps)
   }
 
   checkForChanges() {
@@ -217,8 +219,6 @@ except:
     let pushCode = `${variableName} = ${valueReference}`
 
     this.updateTimestamp(variableIdentifier)
-
-    // console.log(this.timestamps)
     
     this.oldVariableStore[variableIdentifier] = {
       defined: true,
@@ -228,12 +228,8 @@ except:
     return this.myKernelSevice.runCode(
       pushCode, '"push"_"' + variableIdentifier + '"'
     ).then(future => {
-      // console.log(future)
       if (future) {
         const promise = future.done
-        // future.done.then(() => {
-        //   this.fetchAll();
-        // })
         return promise;
       } else {
         return Promise.resolve('ignore');
