@@ -46,6 +46,14 @@ import { VariableValue } from '../types/variable-value';
 import { VariableComponent } from '../types/variable-component';
 
 // TO DO
+// Make the variable service attach itself to kernel iopubmessage
+// Don't specifically call the variable update. Instead make it so that each
+// iopubmessage calls back to updating the variables.
+
+// Think further about implications of two users editing one variable item.
+
+
+// TO DO
 // Make python only read each variable once. Variable store needs only to store
 // the value of each variable once.
 

@@ -78,6 +78,7 @@ export class WatchdogService {
 
   watchdogFormUpdate(session: Session.ISession) {
     session.iopubMessage.connect((sender, msg) => {
+      // console.log(sender)
       if (msg.content.text) {
         let content = String(msg.content.text).trim()
         let files = content.split("\n")
