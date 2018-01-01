@@ -188,8 +188,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           // running.
           for (const codeComponent of this.codeComponents.toArray()) {
             codeComponent.aCodeRunCompleted.subscribe(() => {
-              // this.pullAllVariables()
-              this.myVariableService.fetchAll()
+              // this.myVariableService.fetchAll()
             });
           }
 

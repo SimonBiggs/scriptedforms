@@ -35,6 +35,7 @@
     "@jupyterlab/outputarea": "^0.14.1",
     "@jupyterlab/rendermime": "^0.14.1",
     "@jupyterlab/services": "^1.0.1",
+    "@phosphor/signaling": "^1.2.2",
     "@phosphor/widgets": "^1.5.0",
     "@simonbiggs/phosphor-angular-loader": "^0.6.0",
     "@types/codemirror": "0.0.47",

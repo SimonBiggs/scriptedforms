@@ -31,9 +31,16 @@ Not yet implemented.
 
 import { BehaviorSubject } from 'rxjs';
 
+// import { Slot } from '@phosphor/signaling';
 import {
-  Kernel
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
+import {
+  Kernel, KernelMessage
 } from '@jupyterlab/services';
+
+import { nbformat } from '@jupyterlab/coreutils';
 
 import * as  stringify from 'json-stable-stringify';
 
@@ -64,6 +71,9 @@ export class VariableService {
   variableStore: BehaviorSubject<VariableStore> = new BehaviorSubject({});
   oldVariableStore: VariableStore;
 
+  executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
+  lastCode: BehaviorSubject<string> = new BehaviorSubject(null);
+
   timestamps: BehaviorSubject<{
     [key: string]: number
   }> = new BehaviorSubject({})
@@ -80,7 +90,26 @@ print('}')`
 
   constructor(
     private myKernelSevice: KernelService
-  ) { }
+  ) {
+    this.myKernelSevice.sessionConnected.promise.then(() => {
+      this.myKernelSevice.session.iopubMessage.connect((session, msg) => {
+        if (KernelMessage.isExecuteInputMsg(msg)) {
+          let executeInputMessage: KernelMessage.IExecuteInputMsg = msg
+          this.executionCount.next(executeInputMessage.content.execution_count)
+          this.lastCode.next(executeInputMessage.content.code)
+        }
+      })
+    });
+
+    this.lastCode.subscribe((code) => {
+      if (code) {
+        let fetchAllCode = this.fetchAllCodeStart.concat(this.fetchAllCode, this.fetchAllCodeEnd)
+        if (code !== fetchAllCode) {
+          this.fetchAll()
+        }
+      }
+    })
+  }
 
   resetVariableService() {
     this.timestamps.next({});
@@ -117,6 +146,8 @@ except:
   }
 
   fetchAll() {
+    let fetchComplete = new PromiseDelegate<void> ();
+
     this.myKernelSevice.runCode(
       this.fetchAllCodeStart.concat(this.fetchAllCode, this.fetchAllCodeEnd), 
       '"fetchAllVariables"')
@@ -134,9 +165,15 @@ except:
               console.log(textContent)
             }
           }
-        }); 
+        });
+        future.done.then(() => {
+
+          fetchComplete.resolve(null);
+        })
       }
     })
+
+    return fetchComplete.promise
   }
 
   updateComponentView(component: any, value: VariableValue) {
@@ -194,9 +231,9 @@ except:
       // console.log(future)
       if (future) {
         const promise = future.done
-        future.done.then(() => {
-          this.fetchAll();
-        })
+        // future.done.then(() => {
+        //   this.fetchAll();
+        // })
         return promise;
       } else {
         return Promise.resolve('ignore');

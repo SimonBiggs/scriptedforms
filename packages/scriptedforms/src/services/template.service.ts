@@ -27,7 +27,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export
-const noTemplate = '<no_template_provided>'
+const noTemplate: string = null
 
 @Injectable()
 export class TemplateService {
