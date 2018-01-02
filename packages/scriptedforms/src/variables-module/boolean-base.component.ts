@@ -23,6 +23,8 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+// import { BehaviorSubject } from 'rxjs';
+
 import { VariableBaseComponent } from './variable-base.component';
 
 import {
@@ -31,12 +33,12 @@ import {
 
 @Component({})
 export class BooleanBaseComponent extends VariableBaseComponent implements AfterViewInit { 
-  // variableValue: boolean;
+
   updateVariableView(value: string) {
     if (value === 'True') {
-      this.variableValue.next(true)
+      this.variableValue = true
     } else if (value === 'False') {
-      this.variableValue.next(false)
+      this.variableValue = false
     } else {
       RangeError("Unexpected boolean response")
     }

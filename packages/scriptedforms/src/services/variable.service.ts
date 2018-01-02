@@ -32,9 +32,9 @@ Not yet implemented.
 import { BehaviorSubject } from 'rxjs';
 
 // import { Slot } from '@phosphor/signaling';
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+// import {
+//   PromiseDelegate
+// } from '@phosphor/coreutils';
 
 import {
   Kernel, KernelMessage
@@ -65,6 +65,8 @@ export class VariableService {
   variableEvaluateMap: {
     [key: string]: string
   } = {}
+
+  variableChangedObservable: BehaviorSubject<VariableStore> = new BehaviorSubject({});
 
   executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
   lastCode: BehaviorSubject<string> = new BehaviorSubject(null);
@@ -154,7 +156,7 @@ export class VariableService {
   }
 
   fetchAll() {
-    let fetchComplete = new PromiseDelegate<void> ();
+    // let fetchComplete = new PromiseDelegate<void> ();
     this.myKernelSevice.runCode(
       this.fetchVariablesCode, '"fetchAllVariables"')
     .then((future: Kernel.IFuture) => {
@@ -173,12 +175,12 @@ export class VariableService {
         });
         future.done.then(() => {
 
-          fetchComplete.resolve(null);
+          // fetchComplete.resolve(null);
         })
       }
     })
 
-    return fetchComplete.promise
+    // return fetchComplete.promise
   }
 
   updateComponentView(component: any, value: VariableValue) {
@@ -211,6 +213,10 @@ export class VariableService {
           this.variableHasChanged(identifier)
         } 
       }
+    }
+    let aVariableHasChanged = (stringify(this.variableStore.getValue()) != stringify(this.oldVariableStore));
+    if (aVariableHasChanged) {
+      this.variableChangedObservable.next(this.variableStore.getValue())
     }
     this.oldVariableStore = JSON.parse(JSON.stringify(this.variableStore.getValue()));
   }

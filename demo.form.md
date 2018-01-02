@@ -217,6 +217,17 @@ print('Submitted {} times!'.format(submit_count))
 
 </section-button>
 
+
+<section-button name="Super Submit" conditional="submit_count >= 10">
+
+```python
+print('SUPER SUBMIT!!!')
+
+exec(scriptedforms_variable_handler.fetch_code)
+```
+
+</section-button>
+
 ### Output sections [not yet implemented]
 
 Code placed within output groups will run after the code blocks within start,

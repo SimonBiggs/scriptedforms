@@ -35,7 +35,7 @@ function on click.
 */
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit, Input, ContentChild
+  Component, ContentChildren, QueryList, AfterViewInit, Input, ViewChild
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
@@ -46,7 +46,7 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
   selector: 'section-button',
   template: `<ng-content></ng-content>
 <div align="right">
-  <variable-conditional #conditional *ngIf="conditional">{{conditional}}</variable-conditional>
+  <variable-conditional #conditionalComponent *ngIf="conditional">{{conditional}}</variable-conditional>
   <button *ngIf="name"
   mat-raised-button color="accent"
   (click)="runCode()"
@@ -75,7 +75,7 @@ export class ButtonComponent implements AfterViewInit {
   codeRunning = false;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  @ContentChild('conditional') conditionalComponent: ConditionalComponent
+  @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent
 
   constructor(
     private myKernelSevice: KernelService
@@ -85,7 +85,9 @@ export class ButtonComponent implements AfterViewInit {
     this.afterViewInit = true;
 
     if (this.conditional) {
-      // this.conditionalComponent.
+      this.conditionalComponent.variableValueObservable.subscribe((value: boolean) => {
+        this.conditionalValue = value;
+      })
     }
   }
 

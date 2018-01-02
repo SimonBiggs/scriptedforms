@@ -37,6 +37,7 @@ import {
 import { StartComponent } from './start.component';
 import { LiveComponent } from './live.component';
 import { ButtonComponent } from './button.component';
+import { OutputComponent } from './output.component'
 
 import { VariablesModule } from '../variables-module/variables.module'
 
@@ -50,12 +51,14 @@ import { VariablesModule } from '../variables-module/variables.module'
   declarations: [
     StartComponent,
     LiveComponent,
-    ButtonComponent
+    ButtonComponent,
+    OutputComponent
   ],
   exports: [
     StartComponent,
     LiveComponent,
-    ButtonComponent
+    ButtonComponent,
+    OutputComponent
   ]
 })
 export class SectionsModule { }

@@ -59,6 +59,7 @@ import { SectionsModule } from '../sections-module/sections.module';
 import { StartComponent } from '../sections-module/start.component';
 import { LiveComponent } from '../sections-module/live.component';
 import { ButtonComponent } from '../sections-module/button.component';
+import { OutputComponent } from '../sections-module/output.component';
 
 import { VariablesModule } from '../variables-module/variables.module';
 import { ToggleComponent } from '../variables-module/toggle.component';
@@ -108,6 +109,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>;
     @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>;
     @ViewChildren(ButtonComponent) buttonComponents: QueryList<ButtonComponent>;
+    @ViewChildren(OutputComponent) outputComponents: QueryList<OutputComponent>;
 
     // Variables
     @ViewChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
@@ -213,6 +215,11 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           this.buttonComponents.toArray().forEach((buttonComponent, index) => {
             buttonComponent.setId(index);
             buttonComponent.formReady();
+          });
+
+          this.outputComponents.toArray().forEach((outputComponent, index) => {
+            outputComponent.setId(index);
+            outputComponent.formReady();
           });
 
           this.formReady.resolve(null)

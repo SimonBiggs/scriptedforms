@@ -23,7 +23,7 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { BehaviorSubject } from 'rxjs';
+// import { BehaviorSubject } from 'rxjs';
 
 import {
   Component, AfterViewInit
@@ -97,21 +97,21 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
     [key: string]: string | number 
   }> = new MatTableDataSource();
 
-  variableValue: BehaviorSubject<PandasTable> = new BehaviorSubject(null);
+  variableValue: PandasTable
   oldVariableValue: PandasTable
   isPandas = true
   focus: [number, string] = [null, null];
 
   updateVariableView(value: PandasTable) {
     let numRowsUnchanged: boolean
-    if (this.variableValue.getValue()) {
+    if (this.variableValue) {
       numRowsUnchanged = (
-        value.data.length == this.variableValue.getValue().data.length
+        value.data.length == this.variableValue.data.length
       )
     } else {
       numRowsUnchanged = false
     }
-    this.variableValue.next(value);
+    this.variableValue = value;
 
     let columns: string[] = []
     value.schema.fields.forEach(val => {
@@ -145,17 +145,15 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
   }
 
   onVariableChange() { 
-    let value = this.variableValue.getValue()
-    value.data = JSON.parse(JSON.stringify(this.dataSource.data));
-    this.variableValue.next(value)
+    this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
   }
 
   testIfDifferent() {
-    return !(stringify(this.variableValue.getValue()) === stringify(this.oldVariableValue));
+    return !(stringify(this.variableValue) === stringify(this.oldVariableValue));
   }
 
   pythonValueReference() {
-    return `scriptedforms.json_table_to_df('${JSON.stringify(this.variableValue.getValue())}')`
+    return `scriptedforms.json_table_to_df('${JSON.stringify(this.variableValue)}')`
   }
 
   pythonVariableEvaluate() {

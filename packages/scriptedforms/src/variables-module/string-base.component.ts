@@ -23,8 +23,6 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { BehaviorSubject } from 'rxjs';
-
 import { VariableBaseComponent } from './variable-base.component';
 
 import {
@@ -33,7 +31,7 @@ import {
 
 @Component({})
 export class StringBaseComponent extends VariableBaseComponent implements AfterViewInit { 
-  variableValue: BehaviorSubject<string>
+  variableValue: string
 
   updateVariableView(value: string) {
     value = String(value)
@@ -41,7 +39,7 @@ export class StringBaseComponent extends VariableBaseComponent implements AfterV
   }
 
   pythonValueReference() {
-    const escapedString = this.variableValue.getValue()
+    const escapedString = this.variableValue
     .replace(/\"/g, '\\"')
     .replace(/\\/g, '\\\\')
     const valueReference = `"""${String(escapedString)}"""`

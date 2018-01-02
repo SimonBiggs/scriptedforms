@@ -31,6 +31,6 @@ import {
 
 @Component({
   selector: 'variable-conditional',
-  template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span>`
+  template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
 })
 export class ConditionalComponent extends BooleanBaseComponent implements AfterViewInit { }

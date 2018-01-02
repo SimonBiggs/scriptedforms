@@ -33,8 +33,6 @@ The VariableComponent calls Python code to derive its value initially. Each
 time the value is changed it then recalls Python code to update the value.
 */
 
-import { BehaviorSubject } from 'rxjs';
-
 import {
   Component, ViewChild, ElementRef, AfterViewInit,
   ChangeDetectorRef, EventEmitter, Output
@@ -54,16 +52,21 @@ export class VariableBaseComponent implements AfterViewInit {
   variableIdentifier: string
 
   @Output() variableChange = new EventEmitter<any>();
+  @Output() variableValueObservable = new EventEmitter<VariableValue>();
   @ViewChild('variablecontainer') variablecontainer: ElementRef;
 
   variableName: string;
   oldVariableValue: VariableValue = null;
-  variableValue: BehaviorSubject<VariableValue> = new BehaviorSubject(null);
+  variableValue: VariableValue;
 
   constructor(
     public myChangeDetectorRef: ChangeDetectorRef,
     public myVariableService: VariableService
-  ) { }
+  ) {
+    this.variableChange.subscribe(() => {
+      this.variableValueObservable.next(this.variableValue)
+    })
+   }
 
   ngAfterViewInit() {
     this.variableName = this.variablecontainer.nativeElement.innerHTML.trim();
@@ -79,7 +82,7 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonValueReference() {
-    return String(this.variableValue.getValue());
+    return String(this.variableValue);
   }
 
   pythonVariableEvaluate() {
@@ -87,11 +90,11 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   testIfDifferent() {
-    return this.variableValue.getValue() != this.oldVariableValue
+    return this.variableValue != this.oldVariableValue
   }
 
   updateOldVariable() {
-    this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue.getValue()));
+    this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue));
   }
 
   onVariableChange() { }
@@ -112,8 +115,8 @@ export class VariableBaseComponent implements AfterViewInit {
 
   updateVariableView(value: VariableValue) {
     if (!this.isFocus) {
-      if (this.variableValue.getValue() != value) {
-        this.variableValue.next(value)
+      if (this.variableValue != value) {
+        this.variableValue = value
         this.updateOldVariable()
         this.variableChange.emit(this.variableName)
       }
