@@ -119,12 +119,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
   private convertTemplate(markdownTemplate: string): string {
     // Add new lines around the sections
     const addNewLines = markdownTemplate
-    .replace(/<section-start>/g, '\n<section-start>\n')
-    .replace(/<\/section-start>/g, '\n</section-start>\n')
-    .replace(/<section-live>/g, '\n<section-live>\n')
-    .replace(/<\/section-live>/g, '\n</section-live>\n')
-    .replace(/<section-button>/g, '\n<section-button>\n')
-    .replace(/<\/section-button>/g, '\n</section-button>\n');
+    .replace(/<\/?section-.+>/g, match => '\n' + match + '\n')
 
     // Render the markdown to html
     const html = this.myMarkdownIt.render(addNewLines);
