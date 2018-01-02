@@ -33,5 +33,6 @@ import { TableComponent } from '../variables-module/table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
+import { PasswordComponent } from '../variables-module/password.component';
 
-export type VariableComponent = NumberComponent | StringComponent | TableComponent | TickComponent | ToggleComponent | SliderComponent | DropdownComponent | ConditionalComponent
+export type VariableComponent = NumberComponent | StringComponent | TableComponent | TickComponent | ToggleComponent | SliderComponent | DropdownComponent | ConditionalComponent | PasswordComponent

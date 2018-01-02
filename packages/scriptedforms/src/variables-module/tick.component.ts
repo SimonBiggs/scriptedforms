@@ -40,7 +40,7 @@ import {
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged($event)"
   [disabled]="!isFormReady">
-  {{variableName}}
+  {{placeholderValue}}
 </mat-checkbox>`,
 })
 export class TickComponent extends BooleanBaseComponent implements AfterViewInit { }

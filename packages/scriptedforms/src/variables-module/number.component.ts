@@ -40,7 +40,7 @@ import {
   <input
     matInput
     [disabled]="!isFormReady"
-    [placeholder]="variableName"
+    [placeholder]="placeholderValue"
     [(ngModel)]="variableValue"
     (ngModelChange)="variableChanged($event)"
     (blur)="onBlur()" 

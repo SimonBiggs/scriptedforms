@@ -39,7 +39,7 @@ import {
   <textarea
     matInput matTextareaAutosize
     [disabled]="!isFormReady"
-    [placeholder]="variableName"
+    [placeholder]="placeholderValue"
     [(ngModel)]="variableValue"
     (ngModelChange)="variableChanged($event)"
     (blur)="onBlur()" 
@@ -52,4 +52,4 @@ styles: [
 }
 `]
 })
-export class StringComponent extends StringBaseComponent implements AfterViewInit {}
+export class StringComponent extends StringBaseComponent implements AfterViewInit { }

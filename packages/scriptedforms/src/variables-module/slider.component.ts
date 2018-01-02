@@ -39,7 +39,7 @@ import { NumberBaseComponent } from './number-base.component';
   <ng-content></ng-content>
 </span>
 
-<span class="container">{{variableName}}
+<span class="container">{{placeholderValue}}
   <mat-slider class="variableSlider" *ngIf="variableName" 
     [disabled]="!isFormReady"
     [(ngModel)]="variableValue"

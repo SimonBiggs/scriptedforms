@@ -46,6 +46,8 @@ import { TableComponent } from './table.component';
 import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
 
+import { PasswordComponent } from './password.component';
+
 
 @NgModule({
   imports: [
@@ -61,7 +63,8 @@ import { DropdownComponent } from './dropdown.component';
     SliderComponent,
     TableComponent,
     StringComponent,
-    DropdownComponent     
+    DropdownComponent,
+    PasswordComponent
   ],
   exports: [
     ToggleComponent,
@@ -71,7 +74,8 @@ import { DropdownComponent } from './dropdown.component';
     SliderComponent,
     TableComponent,
     StringComponent,
-    DropdownComponent    
+    DropdownComponent,
+    PasswordComponent
   ]
 })
 export class VariablesModule { }

@@ -34,8 +34,8 @@ time the value is changed it then recalls Python code to update the value.
 */
 
 import {
-  Component, ViewChild, ElementRef, AfterViewInit,
-  ChangeDetectorRef, EventEmitter, Output
+  Component, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input,
+  EventEmitter, Output
 } from '@angular/core';
 
 import { VariableService } from '../services/variable.service';
@@ -48,25 +48,24 @@ export class VariableBaseComponent implements AfterViewInit {
   isFormReady = false;
   isPandas = false;
   isFocus = false;
-  
+
   variableIdentifier: string
 
   @Output() variableChange = new EventEmitter<VariableValue>();
-  // @Output() variableValueObservable = new EventEmitter<VariableValue>();
-  @ViewChild('variablecontainer') variablecontainer: ElementRef;
 
-  variableName: string;
   oldVariableValue: VariableValue = null;
   variableValue: VariableValue;
+
+  @Input() placeholder?: string
+  placeholderValue: string
+  variableName: string;
+
+  @ViewChild('variablecontainer') variablecontainer: ElementRef;
 
   constructor(
     public myChangeDetectorRef: ChangeDetectorRef,
     public myVariableService: VariableService
-  ) {
-    // this.variableChange.asObservable().subscribe(() => {
-    //   this.variableValueObservable.next(this.variableValue)
-    // })
-   }
+  ) { }
 
    htmlDecode(input: string){
     let e = document.createElement('div');
@@ -76,13 +75,24 @@ export class VariableBaseComponent implements AfterViewInit {
     return result;
   }
 
-  ngAfterViewInit() {
+  loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement
     this.variableName = this.htmlDecode(element.innerHTML).trim();
+  }
 
-    // console.log(this.variableName)
+  ngAfterViewInit() {
+    this.loadVariableName()
+
+    if (this.placeholder) {
+      this.placeholderValue = this.placeholder
+    } else {
+      this.placeholderValue = this.variableName
+    }
+
     this.myChangeDetectorRef.detectChanges();
   }
+
+
 
   onBlur(tableCoords?: [number, string]) {
     this.isFocus = false;

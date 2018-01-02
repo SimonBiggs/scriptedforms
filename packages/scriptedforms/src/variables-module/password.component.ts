@@ -23,24 +23,40 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { BooleanBaseComponent } from './boolean-base.component';
+/*
+Component that handles both [string] and [number] inputs.
+
+In the future these should be more intelligently split out. Potentially create
+a base class from which the two types of inputs inherit.
+
+The VariableComponent calls Python code to derive its value initially. Each
+time the value is changed it then recalls Python code to update the value.
+*/
 
 import {
-  Component, AfterViewInit
+  Component
 } from '@angular/core';
 
-@Component({
-  selector: 'variable-toggle',
-  template: `
-<span #variablecontainer *ngIf="variableName === undefined">
-  <ng-content></ng-content>
-</span>
+import { StringBaseComponent } from './string-base.component';
 
-<mat-slide-toggle 
-  [(ngModel)]="variableValue"
-  (ngModelChange)="variableChanged($event)"
-  [disabled]="!isFormReady">
-  {{placeholderValue}}
-</mat-slide-toggle>`,
+@Component({
+  selector: 'variable-password',
+  template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span>
+<mat-input-container class="variable-password" *ngIf="variableName">
+  <input
+    matInput matTextareaAutosize
+    [disabled]="!isFormReady"
+    [placeholder]="placeholderValue"
+    [(ngModel)]="variableValue"
+    (ngModelChange)="variableChanged($event)"
+    (blur)="onBlur()" 
+    (focus)="onFocus()"
+    type="password" class="variable-password">
+</mat-input-container>`,
+styles: [
+  `.variable-password {
+  width: 100%;
+}
+`]
 })
-export class ToggleComponent extends BooleanBaseComponent implements AfterViewInit { }
+export class PasswordComponent extends StringBaseComponent { }

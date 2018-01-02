@@ -76,6 +76,7 @@ import { TableComponent } from '../variables-module/table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
+import { PasswordComponent } from '../variables-module/password.component';
 
 import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
@@ -126,6 +127,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
 
     @ViewChildren(StringComponent) stringComponents: QueryList<StringComponent>;
     @ViewChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
+    @ViewChildren(PasswordComponent) passwordComponents: QueryList<PasswordComponent>;
 
 
     // Code
@@ -160,6 +162,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
 
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
+      this.variableComponents = this.variableComponents.concat(this.passwordComponents.toArray())
       
       this.initialiseForm();
     }
@@ -188,7 +191,9 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           // be used to facilitate determining whether or not the code within
           // start component(s) have changed. If it has changed the code should
           // be re-run even if it isn't a new session.
-          if (this.myKernelSevice.isNewSession) {
+          if (startComponent.always === '') {
+            startComponent.runCode();
+          } else if (this.myKernelSevice.isNewSession) {
             startComponent.runCode();
           }
         });

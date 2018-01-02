@@ -36,7 +36,7 @@ required if new code is added into the [start] section.
 
 
 import {
-  Component, ContentChildren, QueryList
+  Component, ContentChildren, QueryList, Input
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
@@ -57,6 +57,7 @@ import { CodeComponent } from '../code-module/code.component';
 export class StartComponent {
   // liveComponents: QueryList<LiveComponent>;
   // buttonComponents: QueryList<ButtonComponent>;
+  @Input() always?: string;
 
   startId: number;
   hasStartRun = false;
