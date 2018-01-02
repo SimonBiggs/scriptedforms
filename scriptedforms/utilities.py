@@ -23,9 +23,12 @@
 # the Combined Licenses for the specific language governing permissions and 
 # limitations under the Combined Licenses.
 
+import os
 import json
 import pprint
 import pandas as pd
+
+HERE = os.path.dirname(__file__)
 
 def json_table_to_df(json_table):
     table = json.loads(json_table)
@@ -43,6 +46,21 @@ def json_table_to_df(json_table):
             df[column] = df[column].astype('float64')
 
     return df
+
+
+def print_file(filename):
+    with open(filename, 'r') as f:
+        contents = f.read()
+
+    print(contents)
+
+
+def print_apache():
+    print_file(os.path.join(HERE, '../Apache-2.0'))
+
+
+def print_agpl():
+    print_file(os.path.join(HERE, '../AGPL-3.0+'))
 
 
 class VariableHandler(object):

@@ -37,10 +37,8 @@ from traitlets import Unicode
 from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 
-
 HERE = os.path.dirname(__file__)
 LOADER = FileSystemLoader(HERE)
-
 
 class ScriptedFormsHandler(IPythonHandler):
     """Handle requests between the main app page and notebook server."""
