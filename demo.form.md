@@ -31,7 +31,7 @@ There are six kinds of variable inputs:
 * `tick`,
 * `toggle`,
 * `string`,
-* and `dropdown` [not yet implemented].
+* and `dropdown`.
 
 These are attached to a specific python variable which update on
 user input. Number and slider represent floats. String represents a Python
@@ -58,6 +58,8 @@ world = False
 bye = False
 
 machine = None
+
+submit_count = 0
 ```
 
 </section-start>
@@ -200,6 +202,20 @@ They are defined as following:
 </section-button>
 
 They will not run until their respective button is pressed.
+
+#### Button customistion
+
+Button sections are customisable, their content can be changed to words by
+changing the name property.
+
+<section-button name="Submit">
+
+```python
+submit_count += 1
+print('Submitted {} times!'.format(submit_count))
+```
+
+</section-button>
 
 ### Output sections [not yet implemented]
 

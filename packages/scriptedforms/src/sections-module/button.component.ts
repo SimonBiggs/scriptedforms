@@ -35,7 +35,7 @@ function on click.
 */
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit
+  Component, ContentChildren, QueryList, AfterViewInit, Input
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
@@ -45,15 +45,26 @@ import { KernelService } from '../services/kernel.service';
   selector: 'section-button',
   template: `<ng-content></ng-content>
 <div align="right">
-  <button
+  <button *ngIf="name"
+  mat-raised-button color="accent"
+  (click)="runCode()"
+  [disabled]="!isFormReady || codeRunning || !activateValue">
+    {{name}}
+  </button>
+  <button *ngIf="!name"
   mat-mini-fab
   (click)="runCode()"
-  [disabled]="!isFormReady || codeRunning">
+  [disabled]="!isFormReady || codeRunning || !activateValue">
     <mat-icon>keyboard_return</mat-icon>
   </button>
 </div>`
 })
 export class ButtonComponent implements AfterViewInit {
+
+  @Input() name?: string;
+  @Input() activate?: string
+
+  activateValue: boolean = true;
 
   buttonId: number;
   afterViewInit = false;
