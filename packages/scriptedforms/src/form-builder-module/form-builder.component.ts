@@ -111,6 +111,20 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     });
   }
 
+  stripStyleTags(html: string) {
+    let tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    let cssStyleNodes = Array.from(tmp.getElementsByTagName('style'));
+    let cssStyles: string[] = []
+
+    cssStyleNodes.forEach(node => {
+      cssStyles = cssStyles.concat([node.innerHTML])
+    })
+
+    tmp.remove()
+    return cssStyles
+  }
+
   /**
    * Convert the form template from markdown to its final html state.
    * 
@@ -123,15 +137,10 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     const addNewLines = markdownTemplate
     .replace(/<\/?section-.+>/g, match => '\n' + match + '\n')
 
-    let cssStyles: string[] = []
-    const extractStyles = addNewLines
-    .replace(/<style>(.*)<\/style>/g, (match, group1) => {
-      cssStyles = cssStyles.concat([group1])
-      return ''
-    })
-
     // Render the markdown to html
-    const html = this.myMarkdownIt.render(extractStyles);
+    const html = this.myMarkdownIt.render(addNewLines);
+
+    let cssStyles: string[] = this.stripStyleTags(html)
 
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'
@@ -156,6 +165,8 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
       template: template,
       styles: cssStyles
     };
+
+    console.log(metadata)
 
     // Create the form component factory
     const formFactory = createFormComponentFactory(this.compiler, metadata);
