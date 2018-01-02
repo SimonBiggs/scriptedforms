@@ -61,7 +61,7 @@ export class DropdownComponent extends StringBaseComponent implements AfterViewI
     items.slice(1).forEach(item => {
       this.options = this.options.concat([item.trim()])
     })
-    console.log(this.options)
+    // console.log(this.options)
     
     this.myChangeDetectorRef.detectChanges();
   }

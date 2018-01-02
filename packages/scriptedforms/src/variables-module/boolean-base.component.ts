@@ -43,6 +43,7 @@ export class BooleanBaseComponent extends VariableBaseComponent implements After
       RangeError("Unexpected boolean response")
     }
     this.updateOldVariable()
+    this.variableChange.emit(this.variableValue)
   }
 
   pythonValueReference() {

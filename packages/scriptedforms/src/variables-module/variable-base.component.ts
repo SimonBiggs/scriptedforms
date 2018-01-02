@@ -51,8 +51,8 @@ export class VariableBaseComponent implements AfterViewInit {
   
   variableIdentifier: string
 
-  @Output() variableChange = new EventEmitter<any>();
-  @Output() variableValueObservable = new EventEmitter<VariableValue>();
+  @Output() variableChange = new EventEmitter<VariableValue>();
+  // @Output() variableValueObservable = new EventEmitter<VariableValue>();
   @ViewChild('variablecontainer') variablecontainer: ElementRef;
 
   variableName: string;
@@ -63,9 +63,9 @@ export class VariableBaseComponent implements AfterViewInit {
     public myChangeDetectorRef: ChangeDetectorRef,
     public myVariableService: VariableService
   ) {
-    this.variableChange.subscribe(() => {
-      this.variableValueObservable.next(this.variableValue)
-    })
+    // this.variableChange.asObservable().subscribe(() => {
+    //   this.variableValueObservable.next(this.variableValue)
+    // })
    }
 
    htmlDecode(input: string){
@@ -80,7 +80,7 @@ export class VariableBaseComponent implements AfterViewInit {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement
     this.variableName = this.htmlDecode(element.innerHTML).trim();
 
-    console.log(this.variableName)
+    // console.log(this.variableName)
     this.myChangeDetectorRef.detectChanges();
   }
 
@@ -117,7 +117,7 @@ export class VariableBaseComponent implements AfterViewInit {
       this.myVariableService.pushVariable(this.variableIdentifier, this.variableName, valueReference)
       .then((status) => {
         if (status !== 'ignore') {
-          this.variableChange.emit(this.variableName);
+          this.variableChange.emit(this.variableValue);
         }
       });
       this.updateOldVariable();
@@ -127,9 +127,10 @@ export class VariableBaseComponent implements AfterViewInit {
   updateVariableView(value: VariableValue) {
     if (!this.isFocus) {
       if (this.variableValue != value) {
+        // console.log(this.variableName)
         this.variableValue = value
         this.updateOldVariable()
-        this.variableChange.emit(this.variableName)
+        this.variableChange.emit(this.variableValue)
       }
     }
   }

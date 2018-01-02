@@ -85,9 +85,13 @@ export class ButtonComponent implements AfterViewInit {
     this.afterViewInit = true;
 
     if (this.conditional) {
-      this.conditionalComponent.variableValueObservable.subscribe((value: boolean) => {
-        console.log(this.conditionalValue)
+      let value: any = this.conditionalComponent.variableValue
+      this.conditionalValue = value;
+      
+      this.conditionalComponent.variableChange.asObservable().subscribe((value: boolean) => {
+        console.log('conditional observable')
         this.conditionalValue = value;
+        console.log(this.conditionalValue)
       })
     }
   }

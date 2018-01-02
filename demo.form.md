@@ -218,6 +218,10 @@ print('Submitted {} times!'.format(submit_count))
 
 </section-button>
 
+Buttons can also be disabled using the conditional property. An example is the
+following button which is only enabled once the submit count becomes at least
+10.
+
 <section-button name="Super Submit" conditional="submit_count >= 10">
 
 ```python
@@ -228,8 +232,8 @@ print('SUPER SUBMIT!!!')
 
 ### Output sections
 
-Code placed within output groups will run after any input on the form is
-changed.
+Code placed within output groups will run after any variable on the form
+changes in value.
 
 <section-output>
 
