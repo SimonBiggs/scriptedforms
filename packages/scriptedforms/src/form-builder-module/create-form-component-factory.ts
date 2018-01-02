@@ -52,6 +52,10 @@ import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
+import {
+  MaterialModule
+} from '../material.module';
+
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';
 
@@ -244,6 +248,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     {
       imports: [
         CommonModule,
+        MaterialModule,
         SectionsModule,
         VariablesModule,
         CodeModule

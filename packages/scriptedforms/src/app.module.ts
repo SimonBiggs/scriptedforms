@@ -29,12 +29,9 @@ The root app module.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
 
-import {
-  MatButtonModule, MatInputModule, MatIconModule, MatCheckboxModule, 
-  MatSliderModule, MatSelectModule
-} from '@angular/material';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MaterialModule } from './material.module';
 
 import { AppErrorHandler } from './app-error-handler';
 
@@ -59,12 +56,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    MatButtonModule,
-    MatIconModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatSliderModule,
-    MatSelectModule,
+    MaterialModule,
     FormBuilderModule,
     // SectionsModule
   ],

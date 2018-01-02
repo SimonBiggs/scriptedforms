@@ -28,50 +28,31 @@ A module containing the form elements.
 */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import {
-  MaterialModule
-} from '../material.module';
-
-import { ToggleComponent } from './toggle.component';
-import { TickComponent } from './tick.component';
-import { ConditionalComponent } from './conditional.component';
-
-import { NumberComponent } from './number.component';
-import { SliderComponent } from './slider.component';
-import { TableComponent } from './table.component';
-
-import { StringComponent } from './string.component';
-import { DropdownComponent } from './dropdown.component';
+  MatInputModule, MatTableModule, MatCheckboxModule, MatSlideToggleModule,
+  MatSliderModule, MatSelectModule, MatExpansionModule
+} from '@angular/material';
 
 
 @NgModule({
   imports: [
-    CommonModule,
-    MaterialModule,
-    FormsModule
-  ],
-  declarations: [
-    ToggleComponent,
-    TickComponent,
-    ConditionalComponent,
-    NumberComponent,
-    SliderComponent,
-    TableComponent,
-    StringComponent,
-    DropdownComponent     
+    MatInputModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatExpansionModule
   ],
   exports: [
-    ToggleComponent,
-    TickComponent,
-    ConditionalComponent,
-    NumberComponent,
-    SliderComponent,
-    TableComponent,
-    StringComponent,
-    DropdownComponent    
+    MatInputModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatExpansionModule    
   ]
 })
-export class VariablesModule { }
+export class MaterialModule { }
