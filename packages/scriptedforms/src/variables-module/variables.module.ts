@@ -38,6 +38,7 @@ import {
 
 import { ToggleComponent } from './toggle.component';
 import { TickComponent } from './tick.component';
+import { ConditionalComponent } from './conditional.component';
 
 import { NumberComponent } from './number.component';
 import { SliderComponent } from './slider.component';
@@ -61,15 +62,17 @@ import { DropdownComponent } from './dropdown.component';
   declarations: [
     ToggleComponent,
     TickComponent,
+    ConditionalComponent,
     NumberComponent,
     SliderComponent,
     TableComponent,
     StringComponent,
-    DropdownComponent    
+    DropdownComponent     
   ],
   exports: [
     ToggleComponent,
     TickComponent,
+    ConditionalComponent,
     NumberComponent,
     SliderComponent,
     TableComponent,

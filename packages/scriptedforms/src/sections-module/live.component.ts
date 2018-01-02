@@ -40,9 +40,12 @@ import {
 
 import { ToggleComponent } from '../variables-module/toggle.component';
 import { TickComponent } from '../variables-module/tick.component';
+import { ConditionalComponent } from '../variables-module/conditional.component';
+
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
 import { TableComponent } from '../variables-module/table.component';
+
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
@@ -64,9 +67,12 @@ export class LiveComponent implements AfterViewInit {
 
   @ContentChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
   @ContentChildren(TickComponent) tickComponents: QueryList<TickComponent>;
+  @ContentChildren(ConditionalComponent) conditionalComponents: QueryList<ConditionalComponent>;
+
   @ContentChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
   @ContentChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
   @ContentChildren(TableComponent) tableComponents: QueryList<TableComponent>;
+
   @ContentChildren(StringComponent) stringComponents: QueryList<StringComponent>;
   @ContentChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
 
@@ -77,9 +83,12 @@ export class LiveComponent implements AfterViewInit {
 
     this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
+    this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
+
     this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray())
+
     this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
     this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
 

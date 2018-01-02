@@ -34,9 +34,9 @@ export class BooleanBaseComponent extends VariableBaseComponent implements After
   // variableValue: boolean;
   updateVariableView(value: string) {
     if (value === 'True') {
-      this.variableValue = true
+      this.variableValue.next(true)
     } else if (value === 'False') {
-      this.variableValue = false
+      this.variableValue.next(false)
     } else {
       RangeError("Unexpected boolean response")
     }

@@ -23,39 +23,14 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-/*
-A module containing the form elements.
-*/
-
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { BooleanBaseComponent } from './boolean-base.component';
 
 import {
-  MatButtonModule, MatIconModule
-} from '@angular/material';
+  Component, AfterViewInit
+} from '@angular/core';
 
-import { StartComponent } from './start.component';
-import { LiveComponent } from './live.component';
-import { ButtonComponent } from './button.component';
-
-import { VariablesModule } from '../variables-module/variables.module'
-
-@NgModule({
-  imports: [
-    CommonModule,
-    MatButtonModule, 
-    MatIconModule,
-    VariablesModule
-  ],
-  declarations: [
-    StartComponent,
-    LiveComponent,
-    ButtonComponent
-  ],
-  exports: [
-    StartComponent,
-    LiveComponent,
-    ButtonComponent
-  ]
+@Component({
+  selector: 'variable-conditional',
+  template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span>`
 })
-export class SectionsModule { }
+export class ConditionalComponent extends BooleanBaseComponent implements AfterViewInit { }

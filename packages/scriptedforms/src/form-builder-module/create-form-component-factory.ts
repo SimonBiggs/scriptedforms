@@ -63,9 +63,12 @@ import { ButtonComponent } from '../sections-module/button.component';
 import { VariablesModule } from '../variables-module/variables.module';
 import { ToggleComponent } from '../variables-module/toggle.component';
 import { TickComponent } from '../variables-module/tick.component';
+import { ConditionalComponent } from '../variables-module/conditional.component';
+
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
 import { TableComponent } from '../variables-module/table.component';
+
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
@@ -109,6 +112,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     // Variables
     @ViewChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
     @ViewChildren(TickComponent) tickComponents: QueryList<TickComponent>;
+    @ViewChildren(ConditionalComponent) conditionalComponents: QueryList<ConditionalComponent>;
 
     @ViewChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
     @ViewChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
@@ -131,6 +135,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
 
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
+      this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
 
       this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())

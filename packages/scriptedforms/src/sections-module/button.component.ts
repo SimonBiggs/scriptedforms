@@ -35,26 +35,28 @@ function on click.
 */
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit, Input
+  Component, ContentChildren, QueryList, AfterViewInit, Input, ContentChild
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
 import { KernelService } from '../services/kernel.service';
+import { ConditionalComponent } from '../variables-module/conditional.component';
 
 @Component({
   selector: 'section-button',
   template: `<ng-content></ng-content>
 <div align="right">
+  <variable-conditional #conditional *ngIf="conditional">{{conditional}}</variable-conditional>
   <button *ngIf="name"
   mat-raised-button color="accent"
   (click)="runCode()"
-  [disabled]="!isFormReady || codeRunning || !activateValue">
+  [disabled]="!isFormReady || codeRunning || !conditionalValue">
     {{name}}
   </button>
   <button *ngIf="!name"
   mat-mini-fab
   (click)="runCode()"
-  [disabled]="!isFormReady || codeRunning || !activateValue">
+  [disabled]="!isFormReady || codeRunning || !conditionalValue">
     <mat-icon>keyboard_return</mat-icon>
   </button>
 </div>`
@@ -62,9 +64,9 @@ import { KernelService } from '../services/kernel.service';
 export class ButtonComponent implements AfterViewInit {
 
   @Input() name?: string;
-  @Input() activate?: string
+  @Input() conditional?: string
 
-  activateValue: boolean = true;
+  conditionalValue: boolean = true;
 
   buttonId: number;
   afterViewInit = false;
@@ -73,6 +75,7 @@ export class ButtonComponent implements AfterViewInit {
   codeRunning = false;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
+  @ContentChild('conditional') conditionalComponent: ConditionalComponent
 
   constructor(
     private myKernelSevice: KernelService
@@ -80,6 +83,10 @@ export class ButtonComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.afterViewInit = true;
+
+    if (this.conditional) {
+      // this.conditionalComponent.
+    }
   }
 
   /**

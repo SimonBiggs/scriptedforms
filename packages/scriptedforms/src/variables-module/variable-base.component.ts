@@ -33,6 +33,8 @@ The VariableComponent calls Python code to derive its value initially. Each
 time the value is changed it then recalls Python code to update the value.
 */
 
+import { BehaviorSubject } from 'rxjs';
+
 import {
   Component, ViewChild, ElementRef, AfterViewInit,
   ChangeDetectorRef, EventEmitter, Output
@@ -56,7 +58,7 @@ export class VariableBaseComponent implements AfterViewInit {
 
   variableName: string;
   oldVariableValue: VariableValue = null;
-  variableValue: VariableValue;
+  variableValue: BehaviorSubject<VariableValue> = new BehaviorSubject(null);
 
   constructor(
     public myChangeDetectorRef: ChangeDetectorRef,
@@ -77,7 +79,7 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonValueReference() {
-    return String(this.variableValue);
+    return String(this.variableValue.getValue());
   }
 
   pythonVariableEvaluate() {
@@ -85,11 +87,11 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   testIfDifferent() {
-    return this.variableValue != this.oldVariableValue
+    return this.variableValue.getValue() != this.oldVariableValue
   }
 
   updateOldVariable() {
-    this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue));
+    this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue.getValue()));
   }
 
   onVariableChange() { }
@@ -110,8 +112,8 @@ export class VariableBaseComponent implements AfterViewInit {
 
   updateVariableView(value: VariableValue) {
     if (!this.isFocus) {
-      if (this.variableValue != value) {
-        this.variableValue = value
+      if (this.variableValue.getValue() != value) {
+        this.variableValue.next(value)
         this.updateOldVariable()
         this.variableChange.emit(this.variableName)
       }
