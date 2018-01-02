@@ -35,7 +35,7 @@ print(password)
 
 Scripted Forms
 
-Copyright (C) 2017 Simon Biggs
+Copyright (C) 2018 Simon Biggs
 
 This software is licensed under both the Apache License, Version 2.0
 (the "Apache-2.0") and the
@@ -75,7 +75,7 @@ scriptedforms.print_apache()
 </section-start>
   </mat-card-content>
   <mat-card-actions align="right">
-  <variable-tick placeholder="I agree to the terms and conditions of Apache-2.0">
+  <variable-tick placeholder="I agree to the terms and conditions of the Apache-2.0">
     i_agree_to_apache
   </variable-tick>
   </mat-card-actions>
@@ -98,13 +98,17 @@ scriptedforms.print_agpl()
 </section-start>
   </mat-card-content>
   <mat-card-actions align="right">
-  <variable-tick placeholder="I agree to the terms and conditions of AGPL-3.0+">
+  <variable-tick placeholder="I agree to the terms and conditions of the AGPL-3.0+">
     i_agree_to_agpl
   </variable-tick>
   </mat-card-actions>
 </mat-card>
 
 <br><br><br>
+
+
+Make it so that after button is pressed, and after the code future is complete
+the user gets redirected to a defined url. Specify this with "url" parameter.
 
 <section-button name="Submit" conditional="i_agree_to_agpl and i_agree_to_apache and user is not None and password is not None">
 
