@@ -2,6 +2,10 @@
 
 # New User
 
+Need to create a "password" variable.
+
+Need to create an expansion panel element for containing the licenses.
+
 <section-start>
 
 ```python
