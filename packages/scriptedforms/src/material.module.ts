@@ -31,12 +31,14 @@ import { NgModule } from '@angular/core';
 
 import {
   MatInputModule, MatTableModule, MatCheckboxModule, MatSlideToggleModule,
-  MatSliderModule, MatSelectModule, MatExpansionModule
+  MatSliderModule, MatSelectModule, MatExpansionModule, MatButtonModule,
+  MatIconModule
 } from '@angular/material';
-
 
 @NgModule({
   imports: [
+    MatButtonModule,
+    MatIconModule,
     MatInputModule,
     MatTableModule,
     MatCheckboxModule,
