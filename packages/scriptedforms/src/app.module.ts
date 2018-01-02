@@ -48,6 +48,7 @@ import { TemplateService } from './services/template.service';
 import { JupyterService } from './services/jupyter.service';
 
 import { FormBuilderModule } from './form-builder-module/form-builder.module';
+// import { SectionsModule } from './sections-module/sections.module';
 
 import { AppComponent } from './app.component';
 
@@ -64,7 +65,8 @@ import { AppComponent } from './app.component';
     MatCheckboxModule,
     MatSliderModule,
     MatSelectModule,
-    FormBuilderModule
+    FormBuilderModule,
+    // SectionsModule
   ],
   entryComponents: [
     AppComponent

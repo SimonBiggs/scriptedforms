@@ -40,8 +40,8 @@ import {
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
-import { LiveComponent } from '../sections-module/live.component';
-import { ButtonComponent } from '../sections-module/button.component';
+// import { LiveComponent } from '../sections-module/live.component';
+// import { ButtonComponent } from '../sections-module/button.component';
 
 @Component({
   selector: 'section-start',
@@ -55,18 +55,18 @@ import { ButtonComponent } from '../sections-module/button.component';
 </div>`
 })
 export class StartComponent {
-  liveComponents: QueryList<LiveComponent>;
-  buttonComponents: QueryList<ButtonComponent>;
+  // liveComponents: QueryList<LiveComponent>;
+  // buttonComponents: QueryList<ButtonComponent>;
 
   startId: number;
   hasStartRun = false;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
-  provideSections(liveComponents: QueryList<LiveComponent>, buttonComponents: QueryList<ButtonComponent>) {
-    this.liveComponents = liveComponents;
-    this.buttonComponents = buttonComponents;
-  }
+  // provideSections(liveComponents: QueryList<LiveComponent>, buttonComponents: QueryList<ButtonComponent>) {
+  //   this.liveComponents = liveComponents;
+  //   this.buttonComponents = buttonComponents;
+  // }
 
   runCode() {
     this.codeComponents.toArray().forEach(codeComponent => {

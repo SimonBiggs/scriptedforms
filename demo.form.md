@@ -222,18 +222,24 @@ print('Submitted {} times!'.format(submit_count))
 
 ```python
 print('SUPER SUBMIT!!!')
-
-exec(scriptedforms_variable_handler.fetch_code)
 ```
 
 </section-button>
 
-### Output sections [not yet implemented]
+### Output sections
 
 Code placed within output groups will run after the code blocks within start,
 live or button sections are run.
 
-Any variable placed within an output group will format as a non-editable card.
+<section-output>
+
+```python
+exec(scriptedforms_variable_handler.fetch_code)
+```
+
+</section-output>
+
+[Not yet implemented] Any variable placed within an output group will format as a non-editable card.
 By placing key output variables within an output group their results will be
 saved in a format that is easy to extract and trend.
 
