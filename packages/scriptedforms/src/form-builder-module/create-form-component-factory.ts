@@ -64,7 +64,7 @@ import { OutputComponent } from '../sections-module/output.component';
 import { VariablesModule } from '../variables-module/variables.module';
 import { ToggleComponent } from '../variables-module/toggle.component';
 import { TickComponent } from '../variables-module/tick.component';
-import { ConditionalComponent } from '../variables-module/conditional.component';
+// import { ConditionalComponent } from '../variables-module/conditional.component';
 
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
@@ -114,7 +114,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     // Variables
     @ViewChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
     @ViewChildren(TickComponent) tickComponents: QueryList<TickComponent>;
-    @ViewChildren(ConditionalComponent) conditionalComponents: QueryList<ConditionalComponent>;
+    // @ViewChildren(ConditionalComponent) conditionalComponents: QueryList<ConditionalComponent>;
 
     @ViewChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
     @ViewChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
@@ -137,7 +137,18 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
 
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
+      // this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
+
+      this.buttonComponents.toArray().forEach(buttonComponent => {
+        if (buttonComponent.conditional) {
+          this.variableComponents = this.variableComponents.concat([buttonComponent.conditionalComponent])
+        }
+      })
+
+      // this.conditionalComponents.changes.subscribe(() => {
+      //   console.log(this.conditionalComponents.toArray())
+      // })
+      // console.log(this.conditionalComponents.toArray())
 
       this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())

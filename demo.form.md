@@ -60,6 +60,7 @@ bye = False
 machine = None
 
 submit_count = 0
+output_count = 0
 ```
 
 </section-start>
@@ -217,7 +218,6 @@ print('Submitted {} times!'.format(submit_count))
 
 </section-button>
 
-
 <section-button name="Super Submit" conditional="submit_count >= 10">
 
 ```python
@@ -228,12 +228,15 @@ print('SUPER SUBMIT!!!')
 
 ### Output sections
 
-Code placed within output groups will run after the code blocks within start,
-live or button sections are run.
+Code placed within output groups will run after any input on the form is
+changed.
 
 <section-output>
 
 ```python
+output_count += 1
+print(output_count)
+
 exec(scriptedforms_variable_handler.fetch_code)
 ```
 

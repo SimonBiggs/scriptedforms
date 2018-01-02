@@ -68,8 +68,19 @@ export class VariableBaseComponent implements AfterViewInit {
     })
    }
 
+   htmlDecode(input: string){
+    let e = document.createElement('div');
+    e.innerHTML = input;
+    let result = e.childNodes[0].nodeValue;
+    e.remove()
+    return result;
+  }
+
   ngAfterViewInit() {
-    this.variableName = this.variablecontainer.nativeElement.innerHTML.trim();
+    let element: HTMLSpanElement = this.variablecontainer.nativeElement
+    this.variableName = this.htmlDecode(element.innerHTML).trim();
+
+    console.log(this.variableName)
     this.myChangeDetectorRef.detectChanges();
   }
 
