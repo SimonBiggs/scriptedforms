@@ -100,10 +100,12 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    */
   public buildForm(markdownTemplate: string) {
     this.viewInitialised.promise.then(() => {
-      const htmlTemplate = this.convertTemplate(markdownTemplate);
+      const convertedTemplate = this.convertTemplate(markdownTemplate);
+      const htmlTemplate = convertedTemplate['htmlTemplate']
+      const cssStyles = convertedTemplate['cssStyles']
 
       // Create the form component
-      this.createFormFromTemplate(htmlTemplate).then(() => {
+      this.createFormFromTemplate(htmlTemplate, cssStyles).then(() => {
         this.myFileService.renderComplete.resolve(null);
       })
     });
@@ -116,13 +118,20 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * 
    * @returns The html template.
    */
-  private convertTemplate(markdownTemplate: string): string {
+  private convertTemplate(markdownTemplate: string) {
     // Add new lines around the sections
     const addNewLines = markdownTemplate
     .replace(/<\/?section-.+>/g, match => '\n' + match + '\n')
 
+    let cssStyles: string[] = []
+    const extractStyles = addNewLines
+    .replace(/<style>(.*)<\/style>/g, (match, group1) => {
+      cssStyles = cssStyles.concat([group1])
+      return ''
+    })
+
     // Render the markdown to html
-    const html = this.myMarkdownIt.render(addNewLines);
+    const html = this.myMarkdownIt.render(extractStyles);
 
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'
@@ -131,7 +140,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     ).replace(/@~rb~@/g, '{{ "}" }}');
 
     const htmlTemplate = escapedHtml
-    return htmlTemplate
+    const result = {
+      htmlTemplate, cssStyles}
+    return result
   }
 
   /**
@@ -139,10 +150,11 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * 
    * @param template The html Angular component template
    */
-  private createFormFromTemplate(template: string): Promise<void> {
+  private createFormFromTemplate(template: string, cssStyles: string[]): Promise<void> {
     const metadata = {
       selector: `app-form`,
-      template: template
+      template: template,
+      styles: cssStyles
     };
 
     // Create the form component factory

@@ -32,13 +32,14 @@ import { NgModule } from '@angular/core';
 import {
   MatInputModule, MatTableModule, MatCheckboxModule, MatSlideToggleModule,
   MatSliderModule, MatSelectModule, MatExpansionModule, MatButtonModule,
-  MatIconModule
+  MatIconModule, MatCardModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
     MatInputModule,
     MatTableModule,
     MatCheckboxModule,
@@ -48,13 +49,16 @@ import {
     MatExpansionModule
   ],
   exports: [
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
     MatInputModule,
     MatTableModule,
     MatCheckboxModule,
     MatSlideToggleModule,
     MatSliderModule,
     MatSelectModule,
-    MatExpansionModule    
+    MatExpansionModule   
   ]
 })
 export class MaterialModule { }
