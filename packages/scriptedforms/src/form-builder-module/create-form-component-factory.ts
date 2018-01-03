@@ -47,6 +47,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { FormsModule }   from '@angular/forms';
 
 import {
   PromiseDelegate
@@ -89,7 +90,6 @@ interface IFormComponent {
   formReady: PromiseDelegate<void>
 }
 
-
 /**
  * Create a form component factory given an Angular template in the form of metadata.
  * 
@@ -100,6 +100,21 @@ interface IFormComponent {
  */
 export
 function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
+
+  const templateAppendTop = `
+
+<form (ngSubmit)="onSubmit()" #scriptedForm="ngForm">
+
+`
+  const templateAppendBottom = `
+  
+<button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button> 
+</form>
+
+  `
+
+  metadata.template = templateAppendTop + metadata.template + templateAppendBottom
+
   /**
    * The form component that is built each time the template changes
    */
@@ -137,6 +152,10 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
       private myKernelSevice: KernelService,
       private myVariableService: VariableService
     ) { }
+
+    onSubmit() {
+      console.log('submitted')
+    }
   
     ngAfterViewInit() {
       this.formViewInitialised.resolve(null)
@@ -253,6 +272,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     {
       imports: [
         CommonModule,
+        FormsModule,
         MaterialModule,
         SectionsModule,
         VariablesModule,

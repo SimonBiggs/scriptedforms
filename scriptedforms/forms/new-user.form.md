@@ -14,14 +14,14 @@ mat-card-content {
 
 # Create a New User
 
-<variable-string placeholder="Your full name">
+<variable-string placeholder="Your full name" required>
 user
 </variable-string>
 
 Need to make password, run the salt, to create a private key, then from the
 private key create a public key. Only send the public key to the server.
 <section-live>
-<variable-password placeholder="Create a password">
+<variable-password placeholder="Create a password" required>
 password
 </variable-password>
 
@@ -75,7 +75,7 @@ scriptedforms.print_apache()
 </section-start>
   </mat-card-content>
   <mat-card-actions align="right">
-  <variable-tick placeholder="I agree to the terms and conditions of the Apache-2.0">
+  <variable-tick placeholder="I agree to the terms and conditions of the Apache-2.0" required>
     i_agree_to_apache
   </variable-tick>
   </mat-card-actions>
@@ -98,7 +98,7 @@ scriptedforms.print_agpl()
 </section-start>
   </mat-card-content>
   <mat-card-actions align="right">
-  <variable-tick placeholder="I agree to the terms and conditions of the AGPL-3.0+">
+  <variable-tick placeholder="I agree to the terms and conditions of the AGPL-3.0+" required>
     i_agree_to_agpl
   </variable-tick>
   </mat-card-actions>
@@ -110,7 +110,7 @@ scriptedforms.print_agpl()
 Make it so that after button is pressed, and after the code future is complete
 the user gets redirected to a defined url. Specify this with "url" parameter.
 
-<section-button name="Submit" conditional="i_agree_to_agpl and i_agree_to_apache and user is not None and password is not None">
+<section-button name="Submit-Original" conditional="i_agree_to_agpl and i_agree_to_apache and user is not None and password is not None">
 
 ```python
 scriptedforms.save_signed_license_agreement()
@@ -119,3 +119,4 @@ scriptedforms.save_signed_license_agreement()
 </section-button>
 
 <br><br><br><br><br>
+

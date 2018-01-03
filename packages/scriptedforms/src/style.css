@@ -48,3 +48,9 @@ limitations under the Combined Licenses. */
   flex: 0;
   border: 0;
 }
+
+.floating-submit {
+  position: fixed !important;
+	bottom: 23px;
+	right: 40px;
+}
