@@ -101,19 +101,19 @@ interface IFormComponent {
 export
 function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
 
-  const templateAppendTop = `
+//   const templateAppendTop = `
 
-<form (ngSubmit)="onSubmit()" #scriptedForm="ngForm">
+// <form (ngSubmit)="onSubmit()" #scriptedForm="ngForm">
 
-`
-  const templateAppendBottom = `
+// `
+//   const templateAppendBottom = `
   
-<button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button> 
-</form>
+// <button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button> 
+// </form>
 
-  `
+//   `
 
-  metadata.template = templateAppendTop + metadata.template + templateAppendBottom
+//   metadata.template = templateAppendTop + metadata.template + templateAppendBottom
 
   /**
    * The form component that is built each time the template changes

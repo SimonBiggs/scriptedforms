@@ -55,13 +55,14 @@ import { PandasTable } from '../interfaces/pandas-table'
         </span>
         <mat-input-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
           <input
-            matInput
-            (blur)="onBlur([j, column])"
-            (focus)="onFocus([j, column])"
-            [disabled]="!isFormReady"
-            [(ngModel)]="row[column]"
-            (ngModelChange)="variableChanged($event)"
-            type="number">
+          [required]="required"
+          matInput
+          (blur)="onBlur([j, column])"
+          (focus)="onFocus([j, column])"
+          [disabled]="!isFormReady"
+          [(ngModel)]="row[column]"
+          (ngModelChange)="variableChanged()"
+          type="number">
         </mat-input-container>
       </mat-cell>
     </ng-container>
@@ -144,8 +145,9 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
     }
   }
 
-  onVariableChange() { 
+  onVariableChange(): Promise<void> { 
     this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
+    return Promise.resolve(null)
   }
 
   testIfDifferent() {

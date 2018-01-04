@@ -49,6 +49,8 @@ export class VariableBaseComponent implements AfterViewInit {
   isPandas = false;
   isFocus = false;
 
+  @Input() required?: string;
+
   variableIdentifier: string
 
   @Output() variableChange = new EventEmitter<VariableValue>();
@@ -118,20 +120,24 @@ export class VariableBaseComponent implements AfterViewInit {
     this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue));
   }
 
-  onVariableChange() { }
+  onVariableChange(): Promise<void> { 
+    return Promise.resolve(null)
+  }
 
-  variableChanged(value: VariableValue) {
-    this.onVariableChange()
-    if (this.testIfDifferent()) {
-      const valueReference = this.pythonValueReference()
-      this.myVariableService.pushVariable(this.variableIdentifier, this.variableName, valueReference)
-      .then((status) => {
-        if (status !== 'ignore') {
-          this.variableChange.emit(this.variableValue);
-        }
-      });
-      this.updateOldVariable();
-    }
+  variableChanged() {
+    this.onVariableChange().then(() => {
+      if (this.testIfDifferent()) {
+        const valueReference = this.pythonValueReference()
+        this.myVariableService.pushVariable(this.variableIdentifier, this.variableName, valueReference)
+        .then((status) => {
+          if (status !== 'ignore') {
+            this.variableChange.emit(this.variableValue);
+          }
+        });
+        this.updateOldVariable();
+      }
+    })
+
   }
 
   updateVariableView(value: VariableValue) {

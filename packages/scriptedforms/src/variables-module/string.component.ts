@@ -37,14 +37,15 @@ import {
 </span>
 <mat-input-container class="variableString" *ngIf="variableName">
   <textarea
-    matInput matTextareaAutosize
-    [disabled]="!isFormReady"
-    [placeholder]="placeholderValue"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    type="text" class="variableString"></textarea>
+  [required]="required"
+  matInput matTextareaAutosize
+  [disabled]="!isFormReady"
+  [placeholder]="placeholderValue"
+  [(ngModel)]="variableValue"
+  (ngModelChange)="variableChanged()"
+  (blur)="onBlur()" 
+  (focus)="onFocus()"
+  type="text" class="variableString"></textarea>
 </mat-input-container>`,
 styles: [
   `.variableString {

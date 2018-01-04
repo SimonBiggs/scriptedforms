@@ -38,17 +38,18 @@ import {
 
 <mat-input-container class="variableNumber" *ngIf="variableName" >
   <input
-    matInput
-    [disabled]="!isFormReady"
-    [placeholder]="placeholderValue"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    type="number">
+  [required]="required"
+  matInput
+  [disabled]="!isFormReady"
+  [placeholder]="placeholderValue"
+  [(ngModel)]="variableValue"
+  (ngModelChange)="variableChanged($event)"
+  (blur)="onBlur()" 
+  (focus)="onFocus()"
+  [max]="max"
+  [min]="min"
+  [step]="step"
+  type="number">
 </mat-input-container>`,
   styles: [
     `.variableNumber {

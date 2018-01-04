@@ -37,12 +37,13 @@ import {
 </span>
 <mat-form-field>
   <mat-select 
-    [disabled]="!isFormReady"
-    [placeholder]="placeholderValue"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()">
+  [required]="required"
+  [disabled]="!isFormReady"
+  [placeholder]="placeholderValue"
+  [(ngModel)]="variableValue"
+  (ngModelChange)="variableChanged($event)"
+  (blur)="onBlur()" 
+  (focus)="onFocus()">
     <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
   </mat-select>
 </mat-form-field>`

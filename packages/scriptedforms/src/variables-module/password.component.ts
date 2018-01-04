@@ -37,21 +37,34 @@ import {
   Component
 } from '@angular/core';
 
-import { StringBaseComponent } from './string-base.component';
+import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
+
+import * as bcrypt from 'bcryptjs';
+import * as forge from 'node-forge';
+import * as sha3 from 'js-sha3';
+
+console.log('sha3')
+console.log(sha3)
+console.log('forge')
+console.log(forge)
+
+import { VariableBaseComponent } from './variable-base.component';
 
 @Component({
   selector: 'variable-password',
   template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span>
 <mat-input-container class="variable-password" *ngIf="variableName">
   <input
-    matInput matTextareaAutosize
-    [disabled]="!isFormReady"
-    [placeholder]="placeholderValue"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    type="password" class="variable-password">
+  [required]="required"
+  matInput matTextareaAutosize
+  [disabled]="!isFormReady"
+  [placeholder]="placeholderValue"
+  [(ngModel)]="plainTextPassword"
+  (blur)="variableChanged()"
+  (keyup.enter)="variableChanged()"
+  type="password" class="variable-password">
 </mat-input-container>`,
 styles: [
   `.variable-password {
@@ -59,4 +72,73 @@ styles: [
 }
 `]
 })
-export class PasswordComponent extends StringBaseComponent { }
+export class PasswordComponent extends VariableBaseComponent {
+  saltPromise: Promise<string>
+  plainTextPassword: string
+  hashedPassword: string
+  rsaPrivateKey: string
+  rsaPublicKey: string
+
+  variableValue: string
+
+  createPrng() {
+    
+  }
+
+  getSalt(): Promise<string> {
+    if (!this.saltPromise) {
+      this.saltPromise = bcrypt.genSalt(10)
+    }
+    return this.saltPromise
+  }
+
+  hashPassword(): Promise<string> {
+    return this.getSalt().then((salt) => {
+      return bcrypt.hash(this.plainTextPassword, salt)
+    }).then(hashedPassword => {
+      this.hashedPassword = hashedPassword
+      return hashedPassword
+    })
+  }
+
+  async createRsaKeys() {
+    let forgeAny: any = forge
+    let prng: any = forgeAny.random.createInstance()
+    prng.seedFileSync = (needed: number) => {
+      return sha3.shake256(this.hashedPassword, needed * 8);
+    }
+    prng.generate(16)
+    let keypair = forge.pki.rsa.generateKeyPair({
+      bits: 1028,
+      prng: prng
+    })
+    this.rsaPrivateKey = forge.pki.privateKeyToPem(keypair.privateKey)
+    this.rsaPublicKey = forge.pki.publicKeyToPem(keypair.publicKey)
+
+    return this.rsaPublicKey
+  }
+
+
+  onVariableChange(): Promise<void> {
+    let promiseDelegate = new PromiseDelegate<void>()
+
+    this.hashPassword().then(() => {
+      return this.createRsaKeys()
+    })
+    .then(() => {
+      this.variableValue = this.rsaPublicKey
+      promiseDelegate.resolve(null)
+    })
+
+    return promiseDelegate.promise
+   }
+
+   pythonValueReference() {
+    const escapedString = this.variableValue
+    .replace(/\"/g, '\\"')
+    .replace(/\\/g, '\\\\')
+    const valueReference = `"""${String(escapedString)}"""`
+
+    return valueReference
+  }
+ }

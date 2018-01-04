@@ -18,8 +18,8 @@ mat-card-content {
 user
 </variable-string>
 
-Need to make password, run the salt, to create a private key, then from the
-private key create a public key. Only send the public key to the server.
+Still need to set up the local environment, then save the salt for permanent
+use.
 <section-live>
 <variable-password placeholder="Create a password" required>
 password
@@ -106,11 +106,10 @@ scriptedforms.print_agpl()
 
 <br><br><br>
 
-
 Make it so that after button is pressed, and after the code future is complete
 the user gets redirected to a defined url. Specify this with "url" parameter.
 
-<section-button name="Submit-Original" conditional="i_agree_to_agpl and i_agree_to_apache and user is not None and password is not None">
+<section-button name="Submit" conditional="i_agree_to_agpl and i_agree_to_apache and user is not None and password is not None">
 
 ```python
 scriptedforms.save_signed_license_agreement()
@@ -119,4 +118,3 @@ scriptedforms.save_signed_license_agreement()
 </section-button>
 
 <br><br><br><br><br>
-

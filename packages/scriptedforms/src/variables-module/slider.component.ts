@@ -41,15 +41,16 @@ import { NumberBaseComponent } from './number-base.component';
 
 <span class="container">{{placeholderValue}}
   <mat-slider class="variableSlider" *ngIf="variableName" 
-    [disabled]="!isFormReady"
-    [(ngModel)]="variableValue"
-    (ngModelChange)="variableChanged($event)"
-    (blur)="onBlur()" 
-    (focus)="onFocus()"
-    [max]="max"
-    [min]="min"
-    [step]="step"
-    [thumb-label]="true">
+  [required]="required"
+  [disabled]="!isFormReady"
+  [(ngModel)]="variableValue"
+  (ngModelChange)="variableChanged()"
+  (blur)="onBlur()" 
+  (focus)="onFocus()"
+  [max]="max"
+  [min]="min"
+  [step]="step"
+  [thumb-label]="true">
   </mat-slider>
 </span>`,
 styles: [
