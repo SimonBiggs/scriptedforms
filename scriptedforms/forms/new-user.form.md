@@ -117,4 +117,12 @@ scriptedforms.save_signed_license_agreement()
 
 </section-button>
 
+<section-button>
+
+```python
+exec(scriptedforms_variable_handler.fetch_code)
+```
+
+</section-button>
+
 <br><br><br><br><br>

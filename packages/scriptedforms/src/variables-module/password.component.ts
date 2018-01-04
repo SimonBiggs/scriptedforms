@@ -81,10 +81,6 @@ export class PasswordComponent extends VariableBaseComponent {
 
   variableValue: string
 
-  createPrng() {
-    
-  }
-
   getSalt(): Promise<string> {
     if (!this.saltPromise) {
       this.saltPromise = bcrypt.genSalt(10)
@@ -94,7 +90,9 @@ export class PasswordComponent extends VariableBaseComponent {
 
   hashPassword(): Promise<string> {
     return this.getSalt().then((salt) => {
-      return bcrypt.hash(this.plainTextPassword, salt)
+      // Adding user to salt not currently working
+      let user = this.myVariableService.pythonVariables['user'].value
+      return bcrypt.hash(this.plainTextPassword, salt + user)
     }).then(hashedPassword => {
       this.hashedPassword = hashedPassword
       return hashedPassword

@@ -66,6 +66,8 @@ export class VariableService {
     [key: string]: string
   } = {}
 
+  pythonVariables: VariableStore = {}
+
   variableChangedObservable: BehaviorSubject<VariableStore> = new BehaviorSubject({});
 
   executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
@@ -145,6 +147,8 @@ export class VariableService {
 
   convertToVariableStore(textContent: string) {
     let result = JSON.parse(textContent)
+
+    this.pythonVariables = result
 
     let newVariableStore: VariableStore = {}
     Object.entries(this.variableIdentifierMap).forEach(
