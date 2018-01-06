@@ -23,9 +23,9 @@
 # the Combined Licenses for the specific language governing permissions and 
 # limitations under the Combined Licenses.
 
+import sys
 import os
 import json
-import pprint
 import pandas as pd
 
 from ._version import __version__
@@ -66,8 +66,9 @@ def print_agpl():
 
 
 class VariableHandler(object):
-    def __init__(self, variable_evaluate_map):
+    def __init__(self, variable_evaluate_map, handlername):
         self.variable_evaluate_map = json.loads(variable_evaluate_map)
+        self.handlername = handlername
         
         self.timestamp = dict()
         for key in self.variable_evaluate_map:
@@ -81,25 +82,48 @@ class VariableHandler(object):
         for key in self.variable_evaluate_map:
             self.signature[key] = None
 
+        self.value = dict()
+        self.defined = dict()
+
 
     @property
     def fetch_code(self):
-        fetch_code_list = ["""
-print('{{"scriptedforms_version": "{}"')
-""".format(__version__)]
+        fetch_code_list = ["{}.value = dict()\n".format(self.handlername)]
         for key, evaluate in self.variable_evaluate_map.items():
             fetch_code_list.append("""
-print(',{0}:')
-
 try:
-    print('{{{{ "defined": true, "value": {{}}, "timestamp": {2}, "userid": {3}, "signature": {4} }}}}'.format({1}))
+    {0}.value['{1}'] = {2}
+    {0}.defined['{1}'] = True
 except:
-    print('{{ "defined": false }}')
-""".format(json.dumps(key), evaluate, json.dumps(self.timestamp[key]), json.dumps(self.userid[key]), json.dumps(self.signature[key])))
-
-        fetch_code_list.append("""
-print('}')""")
+    {0}.defined['{1}'] = False
+""".format(self.handlername, key, evaluate))
+        fetch_code_list.append("print({}.variables_json)".format(self.handlername))
 
         return ''.join(fetch_code_list)
 
 
+    @property
+    def variables_dict(self):
+        variables = dict()
+        variables['scriptedforms_version'] = __version__
+        for key in self.variable_evaluate_map:
+            if self.defined[key]:
+                variables[key] = {
+                    "value": self.value[key],
+                    "defined": True,
+                    "userid": self.userid[key],
+                    "timestamp": self.timestamp[key],
+                    "signature": self.signature[key]
+                }
+            else:
+                variables[key] = {
+                    "defined": False
+                }
+        return variables
+
+
+    @property
+    def variables_json(self):
+        json_string = json.dumps(self.variables_dict, indent=2, sort_keys=True)
+        json_string = json_string.replace('NaN', 'null')
+        return json_string

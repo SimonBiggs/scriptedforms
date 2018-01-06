@@ -37,8 +37,9 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
 
   // variableValue: number
 
-  ngAfterViewInit() {
-    const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
+  loadVariableName() {
+    let element: HTMLSpanElement = this.variablecontainer.nativeElement
+    const ngContent = this.htmlDecode(element.innerHTML).trim();
     const items = ngContent.split(',')
 
     // console.log(items)
@@ -56,12 +57,5 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
     if (items.length >= 3) {
       this.step = Number(items[3])
     }
-    
-    this.myChangeDetectorRef.detectChanges();
-  }
- 
-  updateVariableView(value: string | number) {
-    value = Number(value)
-    super.updateVariableView(value)
   }
 }

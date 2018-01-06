@@ -53,7 +53,7 @@ import {
 </mat-input-container>`,
   styles: [
     `.variableNumber {
-    width: 80px;
+    width: 200px;
   }
   `]
 })

@@ -51,9 +51,10 @@ import {
 export class DropdownComponent extends StringBaseComponent implements AfterViewInit {
   options: string[] = [];
 
-  ngAfterViewInit() {
-    const ngContent = String(this.variablecontainer.nativeElement.innerHTML.trim());
-    // console.log(ngContent)
+
+  loadVariableName() {
+    let element: HTMLSpanElement = this.variablecontainer.nativeElement
+    const ngContent = this.htmlDecode(element.innerHTML).trim();
     const items = ngContent.split(',')
 
     // console.log(items)
@@ -62,8 +63,5 @@ export class DropdownComponent extends StringBaseComponent implements AfterViewI
     items.slice(1).forEach(item => {
       this.options = this.options.concat([item.trim()])
     })
-    // console.log(this.options)
-    
-    this.myChangeDetectorRef.detectChanges();
   }
 }

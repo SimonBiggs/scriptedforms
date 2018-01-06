@@ -159,7 +159,7 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
   }
 
   pythonVariableEvaluate() {
-    return this.variableName.concat(".to_json(orient='table')")
+    return `json.loads(${this.variableName}.to_json(orient='table'))`
   }
 
   onBlur(tableCoords: [number, string]) {

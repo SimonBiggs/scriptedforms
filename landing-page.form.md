@@ -30,3 +30,5 @@ Need to fix router, so that clicking the following link doesn't reload the page
 ... is that even possible? ...yes it should be. Need to parse links within angular...
 
 [Create a new user](./new-user.form.md)
+
+[Demo form](./templates/demo.form.md)

@@ -109,7 +109,7 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonVariableEvaluate() {
-    return `json.dumps(${this.variableName})`
+    return `${this.variableName}`
   }
 
   testIfDifferent() {
