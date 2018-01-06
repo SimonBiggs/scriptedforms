@@ -73,9 +73,9 @@ class VariableHandler(object):
         for key in self.variable_evaluate_map:
             self.timestamp[key] = None
 
-        self.user = dict()
+        self.userid = dict()
         for key in self.variable_evaluate_map:
-            self.user[key] = None
+            self.userid[key] = None
 
         self.signature = dict()
         for key in self.variable_evaluate_map:
@@ -95,7 +95,7 @@ try:
     print('{{{{ "defined": true, "value": {{}}, "timestamp": {2}, "userid": {3}, "signature": {4} }}}}'.format({1}))
 except:
     print('{{ "defined": false }}')
-""".format(json.dumps(key), evaluate, json.dumps(self.timestamp[key]), json.dumps(self.user[key]), json.dumps(self.signature[key])))
+""".format(json.dumps(key), evaluate, json.dumps(self.timestamp[key]), json.dumps(self.userid[key]), json.dumps(self.signature[key])))
 
         fetch_code_list.append("""
 print('}')""")
