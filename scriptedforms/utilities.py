@@ -92,7 +92,7 @@ print('{{"scriptedforms_version": "{}"')
 print(',{0}:')
 
 try:
-    print('{{{{ "defined": true, "value": {{}}, "timestamp": {2}, "user": {3}, "signature": {4} }}}}'.format({1}))
+    print('{{{{ "defined": true, "value": {{}}, "timestamp": {2}, "userid": {3}, "signature": {4} }}}}'.format({1}))
 except:
     print('{{ "defined": false }}')
 """.format(json.dumps(key), evaluate, json.dumps(self.timestamp[key]), json.dumps(self.user[key]), json.dumps(self.signature[key])))
