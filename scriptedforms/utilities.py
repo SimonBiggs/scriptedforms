@@ -105,7 +105,7 @@ except:
     @property
     def variables_dict(self):
         variables = dict()
-        variables['scriptedforms_version'] = __version__
+        variables['_scriptedforms.__version__'] = __version__
         for key in self.variable_evaluate_map:
             if self.defined[key]:
                 variables[key] = {

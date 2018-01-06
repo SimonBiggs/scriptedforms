@@ -265,11 +265,7 @@ changes in value.
 output_count += 1
 print(output_count)
 
-json.loads(table.to_json(orient='table'))
-
-print(scriptedforms_variable_handler.fetch_code)
-
-exec(scriptedforms_variable_handler.fetch_code)
+print(scriptedforms_variable_handler.variables_json)
 ```
 
 </section-output>

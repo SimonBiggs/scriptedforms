@@ -217,6 +217,10 @@ if not i_agree_to_agpl:
 
 <section-output class="centre-output no-word-break">
 
+Set up "variable-string" to change its formatting when placed within an output
+section. Use variable string to display the following statment. Then it will be
+a variable output and will automatically appear on the file save as well.
+
 ```python
 print(statement_of_license_agreement)
 ```
