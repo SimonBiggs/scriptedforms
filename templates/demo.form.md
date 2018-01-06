@@ -265,7 +265,7 @@ changes in value.
 output_count += 1
 print(output_count)
 
-print(scriptedforms_variable_handler.variables_json)
+print(_scriptedforms_variable_handler.variables_json)
 ```
 
 </section-output>

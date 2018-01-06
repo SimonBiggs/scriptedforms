@@ -124,7 +124,7 @@ limitations under the Apache-2.0 and the AGPL-3.0+.
 <section-start class="centre-output" always>
 
 ```python
-scriptedforms.print_apache()
+_scriptedforms.print_apache()
 ```
 
 </section-start>
@@ -147,7 +147,7 @@ scriptedforms.print_apache()
 <section-start class="centre-output" always>
 
 ```python
-scriptedforms.print_agpl()
+_scriptedforms.print_agpl()
 ```
 
 </section-start>
@@ -234,7 +234,7 @@ print(statement_of_license_agreement)
 <section-button>
 
 ```python
-exec(scriptedforms_variable_handler.fetch_code)
+exec(_scriptedforms_variable_handler.fetch_code)
 ```
 
 </section-button>
