@@ -125,5 +125,5 @@ except:
     @property
     def variables_json(self):
         json_string = json.dumps(self.variables_dict, indent=2, sort_keys=True)
-        json_string = json_string.replace('NaN', 'null')
+        json_string = json_string.replace('NaN', 'null').replace('-Infinity', 'null').replace('Infinity', 'null')
         return json_string
