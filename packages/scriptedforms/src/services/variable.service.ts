@@ -159,6 +159,15 @@ export class VariableService {
     this.variableStore.next(newVariableStore)
   }
 
+  ifJsonString(string: string) {
+    try {
+      JSON.parse(string);
+    } catch (err) {
+        return false;
+    }
+    return true;
+  }
+
   fetchAll() {
     // let fetchComplete = new PromiseDelegate<void> ();
     this.myKernelSevice.runCode(
@@ -169,10 +178,10 @@ export class VariableService {
         future.onIOPub = (msg => {
           if (msg.content.text) {
             textContent = textContent.concat(String(msg.content.text))
-            try {
-              this.convertToVariableStore(textContent)              
+            if (this.ifJsonString(textContent)) {
+              this.convertToVariableStore(textContent)
               this.checkForChanges()
-            } catch (err) {
+            } else {
               console.log(textContent)
             }
           }

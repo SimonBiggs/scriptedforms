@@ -25,3 +25,4 @@
 
 from .scriptedforms import main
 from .utilities import *
+from ._version import version_info, __version__

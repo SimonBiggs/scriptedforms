@@ -87,29 +87,29 @@ class ScriptedForms(NotebookApp):
 def main():
     print(LICENCE_HEADER)
 
-    parser = argparse.ArgumentParser(
-        description='Open a scriptedform based on a template file.')
-    parser.add_argument(
-        'filename', help='The form template filename to open')
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(
+    #     description='Open a scriptedform based on a template file.')
+    # parser.add_argument(
+    #     'filename', help='The form template filename to open')
+    # args = parser.parse_args()
 
     sys.argv = [sys.argv[0]]
 
-    filename = os.path.relpath(args.filename)
+    # filename = os.path.relpath(args.filename)
 
-    if not(os.path.exists(filename)):
-        raise Exception('File does not exist')
+    # if not(os.path.exists(filename)):
+    #     raise Exception('File does not exist')
 
-    extension = os.path.splitext(filename)[1].lower()
+    # extension = os.path.splitext(filename)[1].lower()
 
-    if (extension != '.md') and (extension != '.json'):
-        raise Exception(
-            'Form template must have .md extension. Form results must have '
-            '.json extension. Please provide either a form template or form'
-            'results file for the server to start at.')
+    # if (extension != '.md') and (extension != '.json'):
+    #     raise Exception(
+    #         'Form template must have .md extension. Form results must have '
+    #         '.json extension. Please provide either a form template or form'
+    #         'results file for the server to start at.')
 
     ScriptedForms.launch_instance(
-        default_url='/scriptedforms/{}'.format(filename))
+        default_url='/scriptedforms/landing-page.form.md')
 
 if __name__ == '__main__':
     main()

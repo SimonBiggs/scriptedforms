@@ -27,9 +27,18 @@ limitations under the Combined Licenses."""
 import os
 from setuptools import setup
 
+repo_root = os.path.dirname(os.path.abspath(__file__))
+name = 'scriptedforms'
+pjoin = os.path.join
+
+version_ns = {}
+execfile(pjoin(repo_root, name, '_version.py'), version_ns)
+
+version = version_ns['__version__']
+
 setup(
     name="scriptedforms",
-    version="0.1.1",
+    version=version,
     author="Simon Biggs",
     author_email="mail@simonbiggs.net",
     description="Open a scripted form",

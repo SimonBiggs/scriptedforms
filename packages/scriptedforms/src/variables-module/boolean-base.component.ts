@@ -34,18 +34,6 @@ import {
 @Component({})
 export class BooleanBaseComponent extends VariableBaseComponent implements AfterViewInit { 
 
-  updateVariableView(value: string) {
-    if (value === 'True') {
-      this.variableValue = true
-    } else if (value === 'False') {
-      this.variableValue = false
-    } else {
-      RangeError("Unexpected boolean response")
-    }
-    this.updateOldVariable()
-    this.variableChange.emit(this.variableValue)
-  }
-
   pythonValueReference() {
     let valueReference: string;
     if (this.variableValue) {

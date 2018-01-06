@@ -28,6 +28,8 @@ import json
 import pprint
 import pandas as pd
 
+from ._version import __version__
+
 HERE = os.path.dirname(__file__)
 
 def json_table_to_df(json_table):
@@ -83,17 +85,17 @@ class VariableHandler(object):
     @property
     def fetch_code(self):
         fetch_code_list = ["""
-print('{"version": "0.1.0"')
-"""]
+print('{{"scriptedforms_version": "{}"')
+""".format(__version__)]
         for key, evaluate in self.variable_evaluate_map.items():
             fetch_code_list.append("""
-print(',"{0}":')
+print(',{0}:')
 
 try:
-    print('{{{{ "defined": true, "value": {{}}, "timestamp": "{2}", "user": "{3}", "signature": "{4}" }}}}'.format({1}))
+    print('{{{{ "defined": true, "value": {{}}, "timestamp": {2}, "user": {3}, "signature": {4} }}}}'.format({1}))
 except:
     print('{{ "defined": false }}')
-""".format(key, evaluate, self.timestamp[key], self.user[key], self.signature[key]))
+""".format(json.dumps(key), evaluate, json.dumps(self.timestamp[key]), json.dumps(self.user[key]), json.dumps(self.signature[key])))
 
         fetch_code_list.append("""
 print('}')""")

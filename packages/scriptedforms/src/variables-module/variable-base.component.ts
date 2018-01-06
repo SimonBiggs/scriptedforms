@@ -56,7 +56,7 @@ export class VariableBaseComponent implements AfterViewInit {
   @Output() variableChange = new EventEmitter<VariableValue>();
 
   oldVariableValue: VariableValue = null;
-  variableValue: VariableValue;
+  variableValue: VariableValue = null;
 
   @Input() placeholder?: string
   placeholderValue: string
@@ -109,7 +109,7 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonVariableEvaluate() {
-    return `json.dumps(str(${this.variableName}))`
+    return `json.dumps(${this.variableName})`
   }
 
   testIfDifferent() {

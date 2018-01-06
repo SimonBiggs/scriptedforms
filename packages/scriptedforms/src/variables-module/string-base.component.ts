@@ -33,11 +33,6 @@ import {
 export class StringBaseComponent extends VariableBaseComponent implements AfterViewInit { 
   variableValue: string
 
-  updateVariableView(value: string) {
-    value = String(value)
-    super.updateVariableView(value)
-  }
-
   pythonValueReference() {
     const escapedString = this.variableValue
     .replace(/\"/g, '\\"')

@@ -34,7 +34,11 @@ time the value is changed it then recalls Python code to update the value.
 */
 
 import {
-  Component
+  BehaviorSubject
+} from 'rxjs';
+
+import {
+  Component, OnInit
 } from '@angular/core';
 
 import {
@@ -45,10 +49,10 @@ import * as bcrypt from 'bcryptjs';
 import * as forge from 'node-forge';
 import * as sha3 from 'js-sha3';
 
-console.log('sha3')
-console.log(sha3)
-console.log('forge')
-console.log(forge)
+// console.log('sha3')
+// console.log(sha3)
+// console.log('forge')
+// console.log(forge)
 
 import { VariableBaseComponent } from './variable-base.component';
 
@@ -62,8 +66,8 @@ import { VariableBaseComponent } from './variable-base.component';
   [disabled]="!isFormReady"
   [placeholder]="placeholderValue"
   [(ngModel)]="plainTextPassword"
-  (blur)="variableChanged()"
-  (keyup.enter)="variableChanged()"
+  (keyup)="passwordTyping($event.code)"
+  (blur)="leavePasswordField()"
   type="password" class="variable-password">
 </mat-input-container>`,
 styles: [
@@ -72,7 +76,7 @@ styles: [
 }
 `]
 })
-export class PasswordComponent extends VariableBaseComponent {
+export class PasswordComponent extends VariableBaseComponent implements OnInit {
   saltPromise: Promise<string>
   plainTextPassword: string
   hashedPassword: string
@@ -80,6 +84,27 @@ export class PasswordComponent extends VariableBaseComponent {
   rsaPublicKey: string
 
   variableValue: string
+
+  passwordObservable: BehaviorSubject<string> = new BehaviorSubject(null);
+  
+  ngOnInit() {
+    let delay = this.passwordObservable.debounceTime(500)
+    delay.subscribe(() => {
+      this.variableChanged()
+    })
+  }
+
+  leavePasswordField() {
+    if (this.passwordObservable.getValue() != this.plainTextPassword) {
+      this.variableChanged()
+    }
+  }
+
+  passwordTyping(keyCode: string) {
+    if ((this.passwordObservable.getValue() != this.plainTextPassword) && (keyCode != 'Enter')){
+      this.passwordObservable.next(this.plainTextPassword)
+    }
+  }
 
   getSalt(): Promise<string> {
     if (!this.saltPromise) {
@@ -90,9 +115,7 @@ export class PasswordComponent extends VariableBaseComponent {
 
   hashPassword(): Promise<string> {
     return this.getSalt().then((salt) => {
-      // Adding user to salt not currently working
-      let user = this.myVariableService.pythonVariables['user'].value
-      return bcrypt.hash(this.plainTextPassword, salt + user)
+      return bcrypt.hash(this.plainTextPassword, salt)
     }).then(hashedPassword => {
       this.hashedPassword = hashedPassword
       return hashedPassword
@@ -119,14 +142,18 @@ export class PasswordComponent extends VariableBaseComponent {
 
   onVariableChange(): Promise<void> {
     let promiseDelegate = new PromiseDelegate<void>()
-
-    this.hashPassword().then(() => {
-      return this.createRsaKeys()
-    })
-    .then(() => {
-      this.variableValue = this.rsaPublicKey
+    if (this.plainTextPassword) {
+      this.hashPassword().then(() => {
+        return this.createRsaKeys()
+      })
+      .then(() => {
+        this.variableValue = this.rsaPublicKey
+        promiseDelegate.resolve(null)
+      })
+    } else {
+      this.variableValue = ''
       promiseDelegate.resolve(null)
-    })
+    }
 
     return promiseDelegate.promise
    }
