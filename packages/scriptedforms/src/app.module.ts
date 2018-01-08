@@ -30,7 +30,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
-import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -50,10 +50,6 @@ import { FormBuilderModule } from './form-builder-module/form-builder.module';
 
 import { AppComponent } from './app.component';
 
-const appRoutes: Routes = [
-  { path: '**', component: FormBuilderModule }
-];
-
 @NgModule({
   declarations: [
     AppComponent
@@ -62,7 +58,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     MaterialModule,
     FormBuilderModule
   ],
