@@ -31,7 +31,8 @@ through the `setFormContents` function.
 */
 
 import {
-  Component, ViewChild
+  Component
+  // , ViewChild
 } from '@angular/core';
 
 import {
@@ -42,7 +43,7 @@ import {
 //   Kernel
 // } from '@jupyterlab/services';
 
-import { FormBuilderComponent } from './form-builder-module/form-builder.component';
+// import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 import { KernelService } from './services/kernel.service';
 import { JupyterService } from './services/jupyter.service';
 import { WatchdogService } from './services/watchdog.service';
@@ -63,11 +64,15 @@ namespace IScriptedForms {
 
 @Component({
   selector: 'app-root',
-  template: `<div class="margin"><app-form-builder #form></app-form-builder></div>`,
+  template: `
+<div class="margin"><router-outlet></router-outlet></div>
+<div>Router outlet is above here</div>
+<div class="margin"><app-form-builder #form></app-form-builder></div>
+`,
   styles: [`.margin { margin: 20px;}`]
 })
 export class AppComponent {
-  @ViewChild('form') formBuilderComponent: FormBuilderComponent;
+  // @ViewChild('form') formBuilderComponent: FormBuilderComponent;
 
   constructor(
     private myKernelService: KernelService,

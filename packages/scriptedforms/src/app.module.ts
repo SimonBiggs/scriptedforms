@@ -30,6 +30,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
+import { RouterModule, Routes } from '@angular/router';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material.module';
@@ -39,16 +41,18 @@ import { AppErrorHandler } from './app-error-handler';
 import { KernelService } from './services/kernel.service';
 import { VariableService } from './services/variable.service';
 import { OutputService } from './services/output.service';
-// import { ModelService } from './services/model.service';
 import { FileService } from './services/file.service';
 import { WatchdogService } from './services/watchdog.service';
 import { TemplateService } from './services/template.service';
 import { JupyterService } from './services/jupyter.service';
 
 import { FormBuilderModule } from './form-builder-module/form-builder.module';
-// import { SectionsModule } from './sections-module/sections.module';
 
 import { AppComponent } from './app.component';
+
+const appRoutes: Routes = [
+  { path: '**', component: FormBuilderModule }
+];
 
 @NgModule({
   declarations: [
@@ -58,9 +62,9 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    RouterModule.forRoot(appRoutes),
     MaterialModule,
-    FormBuilderModule,
-    // SectionsModule
+    FormBuilderModule
   ],
   entryComponents: [
     AppComponent
@@ -69,7 +73,6 @@ import { AppComponent } from './app.component';
     KernelService,
     OutputService,
     VariableService,
-    // ModelService,
     FileService,
     WatchdogService,
     TemplateService,
