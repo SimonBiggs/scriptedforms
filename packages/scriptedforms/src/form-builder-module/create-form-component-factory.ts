@@ -43,7 +43,7 @@
 import {
   Component, ViewChildren, QueryList,
   Compiler, ComponentFactory, NgModule,
-  ModuleWithComponentFactories
+  ModuleWithComponentFactories, ElementRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -150,7 +150,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
   
     constructor(
       private myKernelSevice: KernelService,
-      private myVariableService: VariableService
+      private myVariableService: VariableService,
+      private elementRef: ElementRef
     ) { }
 
     onSubmit() {
@@ -158,6 +159,15 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     }
   
     ngAfterViewInit() {
+      // Replace links
+      let links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName("a"))
+      links.forEach(link => {
+        link.addEventListener('click', event => {
+          event.preventDefault();
+          window.history.pushState(null, null, link.href)
+        })
+      })
+
       this.formViewInitialised.resolve(null)
 
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())

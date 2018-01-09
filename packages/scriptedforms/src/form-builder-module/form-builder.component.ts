@@ -140,6 +140,8 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     // Render the markdown to html
     const html = this.myMarkdownIt.render(addNewLines);
 
+
+
     let cssStyles: string[] = this.stripStyleTags(html)
 
     // Escape '{}' characters as these are special characters within Angular

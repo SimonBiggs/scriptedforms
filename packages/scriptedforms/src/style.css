@@ -36,7 +36,7 @@ limitations under the Combined Licenses. */
 
 .form-contents {
   max-width: 940px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .output-container div .jp-RenderedText {
@@ -51,6 +51,6 @@ limitations under the Combined Licenses. */
 
 .floating-submit {
   position: fixed !important;
-	bottom: 23px;
-	right: 40px;
+  bottom: 23px;
+  right: 40px;
 }

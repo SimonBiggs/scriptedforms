@@ -1,70 +1,63 @@
 // scriptedforms
 // Copyright (C) 2017 Simon Biggs
 
-// Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and 
-// GNU Affrero General Public License as published by the Free Software 
-// Foundation, either version 3 of the License, or (at your option) any later 
+// Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and
+// GNU Affrero General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
 // version (the "AGPL-3.0+").
 
-// You may not use this file except in compliance with both the Apache-2.0 AND 
+// You may not use this file except in compliance with both the Apache-2.0 AND
 // the AGPL-3.0+ in combination (the "Combined Licenses").
 
 // You may obtain a copy of the AGPL-3.0+ at
 
 //     https://www.gnu.org/licenses/agpl-3.0.txt
 
-// You may obtain a copy of the Apache-2.0 at 
+// You may obtain a copy of the Apache-2.0 at
 
 //     https://www.apache.org/licenses/LICENSE-2.0.html
 
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the Combined Licenses is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
-// the Combined Licenses for the specific language governing permissions and 
+// distributed under the Combined Licenses is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+// the Combined Licenses for the specific language governing permissions and
 // limitations under the Combined Licenses.
 
 /*
 The root app module.
 */
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, ApplicationRef, ErrorHandler } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from "./material.module";
 
-import { MaterialModule } from './material.module';
+import { AppErrorHandler } from "./app-error-handler";
 
-import { AppErrorHandler } from './app-error-handler';
+import { KernelService } from "./services/kernel.service";
+import { VariableService } from "./services/variable.service";
+import { OutputService } from "./services/output.service";
+import { FileService } from "./services/file.service";
+import { WatchdogService } from "./services/watchdog.service";
+import { TemplateService } from "./services/template.service";
+import { JupyterService } from "./services/jupyter.service";
 
-import { KernelService } from './services/kernel.service';
-import { VariableService } from './services/variable.service';
-import { OutputService } from './services/output.service';
-import { FileService } from './services/file.service';
-import { WatchdogService } from './services/watchdog.service';
-import { TemplateService } from './services/template.service';
-import { JupyterService } from './services/jupyter.service';
+import { FormBuilderModule } from "./form-builder-module/form-builder.module";
 
-import { FormBuilderModule } from './form-builder-module/form-builder.module';
-
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
     MaterialModule,
     FormBuilderModule
   ],
-  entryComponents: [
-    AppComponent
-  ],
+  entryComponents: [AppComponent],
   providers: [
     KernelService,
     OutputService,
