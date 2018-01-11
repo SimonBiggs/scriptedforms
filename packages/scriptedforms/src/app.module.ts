@@ -43,6 +43,7 @@ import { FileService } from "./services/file.service";
 import { WatchdogService } from "./services/watchdog.service";
 import { TemplateService } from "./services/template.service";
 import { JupyterService } from "./services/jupyter.service";
+import { InitialisationService } from "./services/initialisation.service";
 
 import { FormBuilderModule } from "./form-builder-module/form-builder.module";
 
@@ -66,6 +67,7 @@ import { AppComponent } from "./app.component";
     WatchdogService,
     TemplateService,
     JupyterService,
+    InitialisationService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]
 })

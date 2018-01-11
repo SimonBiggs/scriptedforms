@@ -32,3 +32,5 @@ Need to fix router, so that clicking the following link doesn't reload the page
 [Create a new user](./new-user.form.md)
 
 [Demo form](./templates/demo.form.md)
+
+[bundle.js](./bundle.js)

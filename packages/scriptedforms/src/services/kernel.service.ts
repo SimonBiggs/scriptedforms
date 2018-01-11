@@ -42,7 +42,6 @@ import {
 } from '@phosphor/coreutils';
 
 import { JupyterService } from './jupyter.service';
-import { FileService } from './file.service';
 
 import {
   sessionStartCode
@@ -64,17 +63,15 @@ export class KernelService implements OnInit {
   queue: Promise<any> = this.sessionConnected.promise;
 
   constructor(
-    private myJupyterService: JupyterService,
-    private myFileService: FileService
+    private myJupyterService: JupyterService
   ) { }
 
   ngOnInit() {
     // this.sessionConnect()
   }
 
-  sessionConnect() {   
+  sessionConnect(path: string) {   
     const settings = ServerConnection.makeSettings({});
-    const path = this.myFileService.path.getValue()
     const startNewOptions = {
       kernelName: 'python3',
       serverSettings: settings,
@@ -102,9 +99,9 @@ export class KernelService implements OnInit {
   sessionReady(session: Session.ISession) {
     this.session = session;
 
-    this.myFileService.path.subscribe((path) => {
-      this.session.setPath(path);
-    })
+    // this.myFileService.path.subscribe((path) => {
+    //   this.session.setPath(path);
+    // })
 
     this.kernel = this.session.kernel;
     this.sessionConnected.resolve(undefined);

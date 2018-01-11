@@ -59,6 +59,7 @@ import {
 
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';
+import { FileService } from '../services/file.service';
 
 import { SectionsModule } from '../sections-module/sections.module';
 import { StartComponent } from '../sections-module/start.component';
@@ -151,6 +152,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     constructor(
       private myKernelSevice: KernelService,
       private myVariableService: VariableService,
+      private myFileService: FileService,
       private elementRef: ElementRef
     ) { }
 
@@ -161,11 +163,16 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     ngAfterViewInit() {
       // Replace links
       let links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName("a"))
+      
       links.forEach(link => {
-        link.addEventListener('click', event => {
-          event.preventDefault();
-          window.history.pushState(null, null, link.href)
-        })
+        let path = this.myFileService.urlToFilePath(link.href)
+        if (path !== null) {
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            window.history.pushState(null, null, link.href)
+            this.myFileService.openFile(path)
+          })
+        }
       })
 
       this.formViewInitialised.resolve(null)

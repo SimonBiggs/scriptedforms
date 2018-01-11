@@ -35,27 +35,17 @@ import {
   // , ViewChild
 } from "@angular/core";
 
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
+
 
 // import {
 //   Kernel
 // } from '@jupyterlab/services';
 
 // import { FormBuilderComponent } from './form-builder-module/form-builder.component';
-import { KernelService } from "./services/kernel.service";
-import { JupyterService } from "./services/jupyter.service";
-import { WatchdogService } from "./services/watchdog.service";
+
+import { IScriptedForms, InitialisationService } from './services/initialisation.service'
 import { FileService } from "./services/file.service";
 
-export namespace IScriptedForms {
-  export interface IOptions {
-    serviceManager: ServiceManager;
-    contentsManager: ContentsManager;
-    path: string;
-    renderType: "template" | "results";
-    node: HTMLElement;
-  }
-}
 
 @Component({
   selector: "app-root",
@@ -66,25 +56,12 @@ export class AppComponent {
   // @ViewChild('form') formBuilderComponent: FormBuilderComponent;
 
   constructor(
-    private myKernelService: KernelService,
-    private myJupyterService: JupyterService,
     private myFileService: FileService,
-    private myWatchdogService: WatchdogService
+    private myInitialisationService: InitialisationService
   ) {}
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
-    this.myJupyterService.setServiceManager(options.serviceManager);
-    this.myJupyterService.setContentsManager(options.contentsManager);
-
-    this.myFileService.setNode(options.node);
-    this.myFileService.setPath(options.path);
-
-    this.myFileService.setRenderType(options.renderType);
-    this.myFileService.loadFileContents().then(() => {
-      this.myKernelService.sessionConnect();
-    });
-
-    this.myWatchdogService.runWatchdogAfterFormReady();
+    this.myInitialisationService.initiliseScriptedForms(options)
   }
 
   public updateFileContents(fileContents: string) {

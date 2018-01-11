@@ -33,6 +33,12 @@ import {
 
 import { JupyterService } from './jupyter.service';
 import { TemplateService } from './template.service';
+import { KernelService } from './kernel.service';
+
+// https://stackoverflow.com/a/6969486/3912576
+function escapeRegExp(str: string) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
 
 @Injectable()
 export class FileService {
@@ -40,11 +46,14 @@ export class FileService {
   renderType: 'template' | 'results'
   node: HTMLElement
 
+  baseUrl = document.getElementsByTagName("base")[0].href
+
   renderComplete: PromiseDelegate<void>
 
   constructor(
     private myTemplateService: TemplateService,
-    private myJupyterService: JupyterService
+    private myJupyterService: JupyterService,
+    private myKernelService: KernelService
   ) { }
 
   setNode(node: HTMLElement) {
@@ -85,6 +94,43 @@ export class FileService {
 
   setPath(path: string) {
     this.path.next(path);
+  }
+
+  determineRenderType(path: string) {
+    let renderType: "template" | "results"
+    let extension = path.split('.').pop();
+    if (extension === 'md') {
+      renderType = "template"
+    } else if (extension === 'json') {
+      renderType = 'results'
+    } else {
+      throw RangeError('File extension not recognised.')
+    }
+
+    return renderType
+  }
+
+  openFile(path: string, renderType?: "template" | "results") {
+    this.setPath(path);
+
+    if (!renderType) {
+      renderType = this.determineRenderType(path)
+    }
+
+    this.setRenderType(renderType);
+    this.loadFileContents().then(() => {
+      this.myKernelService.sessionConnect(this.path.getValue());
+    });
+  }
+
+  urlToFilePath(url: string) {
+    let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|json))`)
+    let match = pattern.exec(url)
+    if (match !== null) {
+      return match[1]
+    } else {
+      return null
+    }
   }
 
 
