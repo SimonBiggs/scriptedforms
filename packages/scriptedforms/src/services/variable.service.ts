@@ -46,6 +46,7 @@ import * as  stringify from 'json-stable-stringify';
 
 import { Injectable } from '@angular/core';
 import { KernelService } from './kernel.service';
+import { FileService } from './file.service';
 
 import { VariableStore } from '../interfaces/variable-store'
 import { VariableValue } from '../types/variable-value';
@@ -68,6 +69,8 @@ export class VariableService {
 
   pythonVariables: VariableStore = {}
 
+  sessionsIopubConnected: string[] = []
+
   variableChangedObservable: BehaviorSubject<VariableStore> = new BehaviorSubject({});
 
   executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
@@ -86,18 +89,9 @@ export class VariableService {
   fetchVariablesCode: string = `exec(${this.handlerName}.fetch_code)`;
 
   constructor(
-    private myKernelSevice: KernelService
-  ) {
-    this.myKernelSevice.sessionConnected.promise.then(() => {
-      this.myKernelSevice.session.iopubMessage.connect((session, msg) => {
-        if (KernelMessage.isExecuteInputMsg(msg)) {
-          let executeInputMessage: KernelMessage.IExecuteInputMsg = msg
-          this.executionCount.next(executeInputMessage.content.execution_count)
-          this.lastCode.next(executeInputMessage.content.code)
-        }
-      })
-    });
-
+    private myKernelSevice: KernelService,
+    private myFileService: FileService
+  ) { 
     this.lastCode.subscribe((code) => {
       if (code) {
         if (code !== this.fetchVariablesCode) {
@@ -114,6 +108,26 @@ export class VariableService {
     this.componentStore = {};
     this.variableIdentifierMap = {};
     this.variableEvaluateMap = {};
+
+    this.myKernelSevice.sessionConnected.promise.then(() => {
+
+      let path: string = JSON.parse(JSON.stringify((this.myFileService.path.getValue())))
+      if (!this.sessionsIopubConnected.includes(path)) {
+        this.myKernelSevice.session.iopubMessage.connect((session, msg) => {
+          if (path === this.myFileService.path.getValue()) {
+            if (KernelMessage.isExecuteInputMsg(msg)) {
+              let executeInputMessage: KernelMessage.IExecuteInputMsg = msg
+              this.executionCount.next(executeInputMessage.content.execution_count)
+              this.lastCode.next(executeInputMessage.content.code)
+            }
+          }
+        })
+
+        this.sessionsIopubConnected.push(path)
+      }
+
+
+    });
   }
 
   allVariablesInitilised() {
@@ -231,6 +245,7 @@ export class VariableService {
     }
     let aVariableHasChanged = (stringify(this.variableStore.getValue()) != stringify(this.oldVariableStore));
     if (aVariableHasChanged) {
+      console.log(this.variableStore.getValue())
       this.variableChangedObservable.next(this.variableStore.getValue())
     }
     this.oldVariableStore = JSON.parse(JSON.stringify(this.variableStore.getValue()));

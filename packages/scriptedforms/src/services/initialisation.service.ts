@@ -25,11 +25,16 @@
 
 import { Injectable } from '@angular/core';
 
+// import {
+//   PromiseDelegate
+// } from '@phosphor/coreutils';
+
 import { ServiceManager, ContentsManager } from "@jupyterlab/services";
 
 import { JupyterService } from "./jupyter.service";
 import { WatchdogService } from "./watchdog.service";
 import { FileService } from "./file.service";
+// import { KernelService } from './kernel.service'
 
 export namespace IScriptedForms {
   export interface IOptions {
@@ -53,7 +58,7 @@ export class InitialisationService {
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
     this.myJupyterService.setServiceManager(options.serviceManager);
     this.myJupyterService.setContentsManager(options.contentsManager);
-
+    
     this.myFileService.setNode(options.node);
     this.myFileService.openFile(options.path, options.renderType)
     window.onpopstate = event => {

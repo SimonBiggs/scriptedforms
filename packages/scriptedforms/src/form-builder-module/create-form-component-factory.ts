@@ -233,7 +233,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
             startComponent.runCode();
           }
         });
-        this.myKernelSevice.isNewSession = false;
+        // this.myKernelSevice.isNewSession = false;
 
         // Variable components are initialised second
         this.myVariableService.resetVariableService();

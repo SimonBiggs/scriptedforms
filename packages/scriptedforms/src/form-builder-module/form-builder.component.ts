@@ -168,7 +168,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
       styles: cssStyles
     };
 
-    console.log(metadata)
+    // console.log(metadata)
 
     // Create the form component factory
     const formFactory = createFormComponentFactory(this.compiler, metadata);

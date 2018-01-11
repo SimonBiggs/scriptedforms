@@ -50,8 +50,8 @@ import {
 
 @Injectable()
 export class KernelService implements OnInit {
-  sessionConnected = new PromiseDelegate<void>();
-
+  sessionConnected: PromiseDelegate<void>
+  
   isNewSession: boolean;
 
   session: Session.ISession;
@@ -60,7 +60,7 @@ export class KernelService implements OnInit {
   queueId = 0;
   queueLog: any = {};
 
-  queue: Promise<any> = this.sessionConnected.promise;
+  queue: Promise<any>;
 
   constructor(
     private myJupyterService: JupyterService
@@ -70,7 +70,7 @@ export class KernelService implements OnInit {
     // this.sessionConnect()
   }
 
-  sessionConnect(path: string) {   
+  sessionConnect(path: string) {
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {
       kernelName: 'python3',

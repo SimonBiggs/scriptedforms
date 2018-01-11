@@ -70,7 +70,8 @@ export class FileService {
 
   handleFileContents(fileContents: string) {
     let priorOverflow = this.node.scrollTop
-    this.renderComplete = new PromiseDelegate()
+    this.renderComplete = new PromiseDelegate<void>()
+
     this.renderComplete.promise.then(() => {
       this.node.scrollTop = priorOverflow
     })
@@ -110,6 +111,11 @@ export class FileService {
     return renderType
   }
 
+  resetPromises() {
+    this.myKernelService.sessionConnected = new PromiseDelegate<void>();
+    this.myKernelService.queue = this.myKernelService.sessionConnected.promise
+  }
+
   openFile(path: string, renderType?: "template" | "results") {
     this.setPath(path);
 
@@ -118,6 +124,7 @@ export class FileService {
     }
 
     this.setRenderType(renderType);
+    this.resetPromises()
     this.loadFileContents().then(() => {
       this.myKernelService.sessionConnect(this.path.getValue());
     });
@@ -132,6 +139,5 @@ export class FileService {
       return null
     }
   }
-
 
 }
