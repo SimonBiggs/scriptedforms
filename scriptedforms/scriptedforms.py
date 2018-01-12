@@ -1,30 +1,26 @@
-LICENCE_HEADER = """
-  --------------
-  Scripted Forms
-  --------------
-  Copyright (C) 2017 Simon Biggs
+# Scripted Forms
+# Copyright (C) 2018 Simon Biggs
 
-  Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and 
-  GNU Affrero General Public License as published by the Free Software 
-  Foundation, either version 3 of the License, or (at your option) any later 
-  version (the "AGPL-3.0+").
+# This software is licensed under both the Apache License, Version 2.0
+# (the "Apache-2.0") and the
+# GNU Affrero General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version (the "AGPL-3.0+").
 
-  You may not use this script except in compliance with both the Apache-2.0 AND 
-  the AGPL-3.0+ in combination (the "Combined Licenses").
+# You may not use this software except in compliance with both the Apache-2.0 and
+# the AGPL-3.0+.
 
-  You may obtain a copy of the AGPL-3.0+ at
-      <https://www.gnu.org/licenses/agpl-3.0.txt>
+# Copies of these licenses can be found at:
 
-  You may obtain a copy of the Apache-2.0 at
-      <https://www.apache.org/licenses/LICENSE-2.0.html>
+# * AGPL-3.0+ -- https://www.gnu.org/licenses/agpl-3.0.txt
+# * Apache-2.0 -- https://www.apache.org/licenses/LICENSE-2.0.html
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Combined Licenses is distributed on an "AS IS" BASIS, 
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
-  the Combined Licenses for the specific language governing permissions and 
-  limitations under the Combined Licenses.
-  
-"""
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Apache-2.0 and the AGPL-3.0+ is distributed on an **"AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied. See
+# the Apache-2.0 and the AGPL-3.0+ for the specific language governing permissions and
+# limitations under the Apache-2.0 and the AGPL-3.0+.
+
 
 import sys
 import os
@@ -36,6 +32,8 @@ from traitlets import Unicode
 
 from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler, FileFindHandler
+
+from .directory_init import initialise_user_directory, get_user_directory
 
 HERE = os.path.dirname(__file__)
 LOADER = FileSystemLoader(HERE)
@@ -85,29 +83,25 @@ class ScriptedForms(NotebookApp):
 
 
 def main():
-    print(LICENCE_HEADER)
 
-    # parser = argparse.ArgumentParser(
-    #     description='Open a scriptedform based on a template file.')
-    # parser.add_argument(
-    #     'filename', help='The form template filename to open')
-    # args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='Scripted Forms.')
+    parser.add_argument(
+        '--init', dest='init', help='Reinitialise user directory', 
+        action='store_true')
+
+    args = parser.parse_args()
+    if args.init:
+        user_directory = initialise_user_directory()
+    else:
+        user_directory = get_user_directory()
+        
+    try:
+        os.chdir(user_directory)
+    except FileNotFoundError:
+        user_directory = initialise_user_directory()
+        os.chdir(user_directory)
 
     sys.argv = [sys.argv[0]]
-
-    # filename = os.path.relpath(args.filename)
-
-    # if not(os.path.exists(filename)):
-    #     raise Exception('File does not exist')
-
-    # extension = os.path.splitext(filename)[1].lower()
-
-    # if (extension != '.md') and (extension != '.json'):
-    #     raise Exception(
-    #         'Form template must have .md extension. Form results must have '
-    #         '.json extension. Please provide either a form template or form'
-    #         'results file for the server to start at.')
-
     ScriptedForms.launch_instance(
         default_url='/scriptedforms/landing-page.form.md')
 

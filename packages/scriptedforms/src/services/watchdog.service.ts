@@ -84,7 +84,7 @@ export class WatchdogService {
         let files = content.split("\n")
         console.log(files)
         let match = files.some(item => {
-          return (item === this.myFileService.path.getValue()) || (item.includes('goutputstream'))
+          return (item.replace('\\', '/') === this.myFileService.path.getValue()) || (item.includes('goutputstream'))
         })
         if (match) {
           this.myFileService.loadFileContents()
