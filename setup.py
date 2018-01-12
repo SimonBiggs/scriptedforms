@@ -32,7 +32,9 @@ name = 'scriptedforms'
 pjoin = os.path.join
 
 version_ns = {}
-execfile(pjoin(repo_root, name, '_version.py'), version_ns)
+with open(pjoin(repo_root, name, '_version.py')) as file:
+    code = file.read()
+    exec(code, version_ns)
 
 version = version_ns['__version__']
 
@@ -41,7 +43,7 @@ setup(
     version=version,
     author="Simon Biggs",
     author_email="mail@simonbiggs.net",
-    description="Open a scripted form",
+    description="ScriptedForms.",
     long_description=(
         ""
     ),
