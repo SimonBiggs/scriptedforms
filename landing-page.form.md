@@ -26,11 +26,39 @@ limitations under the Apache-2.0 and the AGPL-3.0+. -->
 
 # Scripted Forms
 
-Need to fix router, so that clicking the following link doesn't reload the page
-... is that even possible? ...yes it should be. Need to parse links within angular...
-
 [Create a new user](./new-user.form.md)
 
-[Demo form](./templates/demo.form.md)
 
-[bundle.js](./bundle.js)
+
+<section-start always>
+
+```python
+from glob import glob
+from IPython.display import display, Markdown
+```
+
+## Templates
+
+```python
+templates = glob('templates/*.form.md')
+
+display_string = []
+for template in templates:
+    display_string.append(' * [{0}]({0})\n'.format(template))
+
+display(Markdown(''.join(display_string)))
+```
+
+## Results
+
+```python
+results = glob('results/*.form.json')
+
+display_string = []
+for result in results:
+    display_string.append(' * [{0}]({0})\n'.format(result))
+
+display(Markdown(''.join(display_string)))
+```
+
+</section-start>

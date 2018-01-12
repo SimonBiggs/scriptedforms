@@ -92,7 +92,10 @@ def initialise_scriptedforms_directory():
 
     files_to_copy = set(proposed_files_to_copy)
     if not overwrite_files:
-        files_to_copy = files_to_copy.difference(set(already_exists))
+        base_already_exists = set([
+            os.path.relpath(filename, MODULE) for filename in already_exists])
+        files_to_copy = files_to_copy.difference(base_already_exists)
+
 
     with open(USER_CONFIG_FILE, 'w') as config_file:
         json.dump({'scriptedforms_directory': directory}, config_file)

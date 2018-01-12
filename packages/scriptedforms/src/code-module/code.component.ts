@@ -61,7 +61,7 @@ import {
 } from '@jupyterlab/codemirror';
 
 import { KernelService } from '../services/kernel.service';
-import { OutputService } from '../services/output.service';
+import { FileService } from '../services/file.service';
 
 @Component({
   // By using the selector 'code' this overwrites the standard <code> html tag.
@@ -87,7 +87,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private myKernelSevice: KernelService,
-    private myOutputService: OutputService,
+    // private myOutputService: OutputService,
+    private myFileService: FileService,
     private _eRef: ElementRef
   ) { }
 
@@ -117,10 +118,23 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     // Make any output area changes send a message to the Output Service
     // for the purpose of saving the output to the model
-    this.outputArea.model.changed.connect(() => {
+    this.aCodeRunCompleted.subscribe(() => {
       // when model is implemented shouldn't actually change to json, no need.
-      JSON.stringify(this.outputArea.model.toJSON());
-      this.myOutputService.setOutput(this.name, this.outputArea.model);
+      // JSON.stringify(this.outputArea.model.toJSON());
+      // this.myOutputService.setOutput(this.name, this.outputArea.model);
+      this.outputArea.future.done.then(() => {
+        let links: HTMLAnchorElement[] = Array.from(this.outputcontainer.nativeElement.getElementsByTagName("a"))
+        links.forEach(link => {
+          let path = this.myFileService.urlToFilePath(link.href)
+          if (path !== null) {
+            link.addEventListener('click', event => {
+              event.preventDefault();
+              window.history.pushState(null, null, link.href)
+              this.myFileService.openFile(path)
+            })
+          }
+        })
+      })
     });
   }
 
