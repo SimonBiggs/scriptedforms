@@ -39,7 +39,8 @@ SCRIPTEDFORMS_CONFIG_DIRECTORY = os.path.join(
 
 USER_CONFIG_FILE = os.path.join(SCRIPTEDFORMS_CONFIG_DIRECTORY, 'configuration.json')
 
-MODULE = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+DEFAULT_CONTENTS_PATH = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), 'scriptedforms_directory'))
 
 def get_scriptedforms_directory_config():
     with open(USER_CONFIG_FILE, 'r') as config_file:
@@ -68,10 +69,10 @@ def initialise_scriptedforms_directory():
         '*.md', 'start_scripted_forms.bat', 'users/*', 'templates/*',
         'results/*', 'AGPL-3.0+', 'Apache-2.0']
     module_files_to_copy = [
-        item for search in files_to_copy_glob for item in glob(os.path.join(MODULE, search))]
+        item for search in files_to_copy_glob for item in glob(os.path.join(DEFAULT_CONTENTS_PATH, search))]
 
     proposed_files_to_copy = [
-        os.path.relpath(filename, MODULE) for filename in module_files_to_copy]       
+        os.path.relpath(filename, DEFAULT_CONTENTS_PATH) for filename in module_files_to_copy]       
 
     already_exists = []
     for filepath in proposed_files_to_copy:
@@ -93,7 +94,7 @@ def initialise_scriptedforms_directory():
     files_to_copy = set(proposed_files_to_copy)
     if not overwrite_files:
         base_already_exists = set([
-            os.path.relpath(filename, MODULE) for filename in already_exists])
+            os.path.relpath(filename, DEFAULT_CONTENTS_PATH) for filename in already_exists])
         files_to_copy = files_to_copy.difference(base_already_exists)
 
 
@@ -101,7 +102,7 @@ def initialise_scriptedforms_directory():
         json.dump({'scriptedforms_directory': directory}, config_file)
 
     for filename in files_to_copy:
-        src = os.path.join(MODULE, filename)
+        src = os.path.join(DEFAULT_CONTENTS_PATH, filename)
         dst = os.path.join(directory, filename)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copyfile(src, dst)

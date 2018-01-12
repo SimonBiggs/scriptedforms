@@ -2,6 +2,4 @@ include scriptedforms/build/*bundle.js
 include scriptedforms/index.html
 include AGPL-3.0+ Apache-2.0
 
-include *.md
-include users/* templates/* results/*
-include start_scripted_forms.bat
+recursive-include scriptedforms/scriptedforms_directory
