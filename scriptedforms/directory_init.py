@@ -1,6 +1,6 @@
 LICENCE_HEADER = """
                 ================================
-                         Scripted Forms
+                         ScriptedForms
                  Copyright (C) 2018 Simon Biggs
                 ================================
 
@@ -41,14 +41,14 @@ USER_CONFIG_FILE = os.path.join(SCRIPTEDFORMS_CONFIG_DIRECTORY, 'configuration.j
 
 MODULE = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-def get_user_directory_config():
+def get_scriptedforms_directory_config():
     with open(USER_CONFIG_FILE, 'r') as config_file:
         configuration = json.load(config_file)
     
-    return configuration['user_directory']
+    return configuration['scriptedforms_directory']
 
 
-def initialise_user_directory():
+def initialise_scriptedforms_directory():
     print(LICENCE_HEADER)
     agree = input(
         'Do you agree? [Y/n]\n')
@@ -95,7 +95,7 @@ def initialise_user_directory():
         files_to_copy = files_to_copy.difference(set(already_exists))
 
     with open(USER_CONFIG_FILE, 'w') as config_file:
-        json.dump({'user_directory': directory}, config_file)
+        json.dump({'scriptedforms_directory': directory}, config_file)
 
     for filename in files_to_copy:
         src = os.path.join(MODULE, filename)
@@ -106,12 +106,12 @@ def initialise_user_directory():
     return directory
 
     
-def get_user_directory():
+def get_scriptedforms_directory():
     ensure_dir_exists(SCRIPTEDFORMS_CONFIG_DIRECTORY, mode=0o700)
 
     try:
-        user_directory = get_user_directory_config()
+        scriptedforms_directory = get_scriptedforms_directory_config()
     except FileNotFoundError:
-        user_directory = initialise_user_directory()
+        scriptedforms_directory = initialise_scriptedforms_directory()
 
-    return user_directory
+    return scriptedforms_directory

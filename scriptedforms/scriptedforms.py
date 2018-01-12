@@ -33,7 +33,8 @@ from traitlets import Unicode
 from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 
-from .directory_init import initialise_user_directory, get_user_directory
+from .directory_init import (
+    initialise_scriptedforms_directory, get_scriptedforms_directory)
 
 HERE = os.path.dirname(__file__)
 LOADER = FileSystemLoader(HERE)
@@ -84,22 +85,22 @@ class ScriptedForms(NotebookApp):
 
 def main():
 
-    parser = argparse.ArgumentParser(description='Scripted Forms.')
+    parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        '--init', dest='init', help='Reinitialise user directory', 
+        '--init', dest='init', help='Reinitialise ScriptedForms directory', 
         action='store_true')
 
     args = parser.parse_args()
     if args.init:
-        user_directory = initialise_user_directory()
+        scriptedforms_directory = initialise_scriptedforms_directory()
     else:
-        user_directory = get_user_directory()
+        scriptedforms_directory = get_scriptedforms_directory()
         
     try:
-        os.chdir(user_directory)
+        os.chdir(scriptedforms_directory)
     except FileNotFoundError:
-        user_directory = initialise_user_directory()
-        os.chdir(user_directory)
+        scriptedforms_directory = initialise_scriptedforms_directory()
+        os.chdir(scriptedforms_directory)
 
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
