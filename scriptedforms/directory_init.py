@@ -40,7 +40,7 @@ SCRIPTEDFORMS_CONFIG_DIRECTORY = os.path.join(
 USER_CONFIG_FILE = os.path.join(SCRIPTEDFORMS_CONFIG_DIRECTORY, 'configuration.json')
 
 DEFAULT_CONTENTS_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 'scriptedforms_directory'))
+    os.path.join(os.path.dirname(__file__), 'default-directory-contents'))
 
 def get_scriptedforms_directory_config():
     with open(USER_CONFIG_FILE, 'r') as config_file:
