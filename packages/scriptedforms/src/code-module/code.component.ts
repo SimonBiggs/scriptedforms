@@ -124,16 +124,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       // this.myOutputService.setOutput(this.name, this.outputArea.model);
       this.outputArea.future.done.then(() => {
         let links: HTMLAnchorElement[] = Array.from(this.outputcontainer.nativeElement.getElementsByTagName("a"))
-        links.forEach(link => {
-          let path = this.myFileService.urlToFilePath(link.href)
-          if (path !== null) {
-            link.addEventListener('click', event => {
-              event.preventDefault();
-              window.history.pushState(null, null, link.href)
-              this.myFileService.openFile(path)
-            })
-          }
-        })
+        this.myFileService.morphLinksToUpdateFile(links);
       })
     });
   }

@@ -40,8 +40,7 @@ export namespace IScriptedFormsWidget {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
-    path: string;
-    renderType: "template" | "results";
+    path: string
   }
 }
 

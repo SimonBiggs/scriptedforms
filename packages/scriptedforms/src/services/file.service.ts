@@ -30,6 +30,7 @@ import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
+import * as yaml from 'js-yaml';
 
 import { JupyterService } from './jupyter.service';
 import { TemplateService } from './template.service';
@@ -68,6 +69,10 @@ export class FileService {
     this.renderType = renderType
   }
 
+  loadResultsFile(fileContents: string) {
+    console.log(yaml.safeLoad(fileContents))
+  }
+
   handleFileContents(fileContents: string) {
     let priorOverflow = this.node.scrollTop
     this.renderComplete = new PromiseDelegate<void>()
@@ -80,7 +85,7 @@ export class FileService {
       this.myTemplateService.setTemplate(fileContents)
     }
     if (this.renderType === 'results') {
-      console.log('not yet implemented')
+      this.loadResultsFile(fileContents)
     }
 
     return this.renderComplete.promise
@@ -102,7 +107,7 @@ export class FileService {
     let extension = path.split('.').pop();
     if (extension === 'md') {
       renderType = "template"
-    } else if (extension === 'json') {
+    } else if (extension === 'yaml') {
       renderType = 'results'
     } else {
       throw RangeError('File extension not recognised.')
@@ -116,28 +121,37 @@ export class FileService {
     this.myKernelService.queue = this.myKernelService.sessionConnected.promise
   }
 
-  openFile(path: string, renderType?: "template" | "results") {
+  openFile(path: string) {
     this.setPath(path);
-
-    if (!renderType) {
-      renderType = this.determineRenderType(path)
-    }
-
-    this.setRenderType(renderType);
+    this.setRenderType(this.determineRenderType(path));
     this.resetPromises()
+    
     this.loadFileContents().then(() => {
       this.myKernelService.sessionConnect(this.path.getValue());
     });
   }
 
   urlToFilePath(url: string) {
-    let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|json))`)
+    let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`)
     let match = pattern.exec(url)
     if (match !== null) {
       return match[1]
     } else {
       return null
     }
+  }
+
+  morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
+    links.forEach(link => {
+      let path = this.urlToFilePath(link.href)
+      if (path !== null) {
+        link.addEventListener('click', event => {
+          event.preventDefault();
+          window.history.pushState(null, null, link.href)
+          this.openFile(path)
+        })
+      }
+    })
   }
 
 }

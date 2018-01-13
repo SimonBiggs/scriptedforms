@@ -41,7 +41,6 @@ export namespace IScriptedForms {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
     path: string;
-    renderType: "template" | "results";
     node: HTMLElement;
   }
 }
@@ -60,7 +59,7 @@ export class InitialisationService {
     this.myJupyterService.setContentsManager(options.contentsManager);
     
     this.myFileService.setNode(options.node);
-    this.myFileService.openFile(options.path, options.renderType)
+    this.myFileService.openFile(options.path)
     window.onpopstate = event => {
       let path = this.myFileService.urlToFilePath(window.location.href)
       if (path !== null) {

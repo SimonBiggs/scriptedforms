@@ -45,18 +45,10 @@ class ScriptedFormsHandler(IPythonHandler):
     def get(self, form_file):
         """Get the main page for the application's interface."""
         form_file = os.path.relpath(form_file)
-        file_extension = os.path.splitext(form_file)[1].lower()
-
-        if file_extension == '.md':
-            render_type = 'template'
-
-        if file_extension == '.json':
-            render_type = 'results'
 
         return self.write(self.render_template("index.html",
             static=self.static_url, base_url=self.base_url,
-            token=self.settings['token'], form_file=form_file, 
-            render_type=render_type))
+            token=self.settings['token'], form_file=form_file))
 
     def get_template(self, name):
         return LOADER.load(self.settings['jinja2_env'], name)
@@ -75,7 +67,7 @@ class ScriptedForms(NotebookApp):
     def start(self):
         handlers = [
             (r'/scriptedforms/(.*\.md)', ScriptedFormsHandler),
-            (r'/scriptedforms/(.*\.json)', ScriptedFormsHandler),
+            (r'/scriptedforms/(.*\.yaml)', ScriptedFormsHandler),
             (r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'build')}),
         ]

@@ -28,8 +28,6 @@ limitations under the Apache-2.0 and the AGPL-3.0+. -->
 
 [Create a new user](./new-user.form.md)
 
-
-
 <section-start always>
 
 ```python
@@ -52,7 +50,7 @@ display(Markdown(''.join(display_string)))
 ## Results
 
 ```python
-results = glob('results/*.form.json')
+results = glob('results/*.form.yaml')
 
 display_string = []
 for result in results:

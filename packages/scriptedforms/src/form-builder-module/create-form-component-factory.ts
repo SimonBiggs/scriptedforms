@@ -163,17 +163,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     ngAfterViewInit() {
       // Replace links
       let links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName("a"))
-      
-      links.forEach(link => {
-        let path = this.myFileService.urlToFilePath(link.href)
-        if (path !== null) {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.history.pushState(null, null, link.href)
-            this.myFileService.openFile(path)
-          })
-        }
-      })
+      this.myFileService.morphLinksToUpdateFile(links);
 
       this.formViewInitialised.resolve(null)
 

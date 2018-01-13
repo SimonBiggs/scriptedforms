@@ -53,13 +53,11 @@ function main(): void {
   ).textContent)
 
   let path: string = formConfig.formFile
-  let renderType: 'template' | 'results' = formConfig.renderType
 
   let formWidget = new ScriptedFormsWidget({
     serviceManager,
     contentsManager,
-    path,
-    renderType
+    path
   });
 
   window.onresize = () => { formWidget.update(); };
