@@ -38,10 +38,9 @@ import { AppErrorHandler } from "./app-error-handler";
 
 import { KernelService } from "./services/kernel.service";
 import { VariableService } from "./services/variable.service";
-import { OutputService } from "./services/output.service";
 import { FileService } from "./services/file.service";
 import { WatchdogService } from "./services/watchdog.service";
-import { TemplateService } from "./services/template.service";
+import { FormService } from "./services/form.service";
 import { JupyterService } from "./services/jupyter.service";
 import { InitialisationService } from "./services/initialisation.service";
 
@@ -61,11 +60,10 @@ import { AppComponent } from "./app.component";
   entryComponents: [AppComponent],
   providers: [
     KernelService,
-    OutputService,
     VariableService,
     FileService,
     WatchdogService,
-    TemplateService,
+    FormService,
     JupyterService,
     InitialisationService,
     { provide: ErrorHandler, useClass: AppErrorHandler }

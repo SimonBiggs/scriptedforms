@@ -42,7 +42,7 @@ import * as  MarkdownIt from 'markdown-it';
 
 import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
 
-import { TemplateService, noTemplate } from '../services/template.service';
+import { FormService } from '../services/form.service';
 import { FileService } from '../services/file.service';
 import { WatchdogService } from '../services/watchdog.service';
 
@@ -68,7 +68,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private compiler: Compiler,
-    private myTemplateService: TemplateService,
+    private myFormService: FormService,
     private myWatchdogService: WatchdogService,
     private myFileService: FileService
   ) { }
@@ -80,8 +80,8 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
       typographer: true
     });
 
-    this.myTemplateService.template.subscribe((template) => {
-      if (template !== noTemplate) {
+    this.myFormService.template.subscribe((template) => {
+      if (template !== null) {
         this.buildForm(template);
       }
     })

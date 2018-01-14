@@ -33,7 +33,7 @@ import {
 import * as yaml from 'js-yaml';
 
 import { JupyterService } from './jupyter.service';
-import { TemplateService } from './template.service';
+import { FormService } from './form.service';
 import { KernelService } from './kernel.service';
 
 // https://stackoverflow.com/a/6969486/3912576
@@ -52,7 +52,7 @@ export class FileService {
   renderComplete: PromiseDelegate<void>
 
   constructor(
-    private myTemplateService: TemplateService,
+    private myFormService: FormService,
     private myJupyterService: JupyterService,
     private myKernelService: KernelService
   ) { }
@@ -82,7 +82,7 @@ export class FileService {
     })
 
     if (this.renderType === 'template') {
-      this.myTemplateService.setTemplate(fileContents)
+      this.myFormService.setTemplate(fileContents)
     }
     if (this.renderType === 'results') {
       this.loadResultsFile(fileContents)
@@ -116,15 +116,10 @@ export class FileService {
     return renderType
   }
 
-  resetPromises() {
-    this.myKernelService.sessionConnected = new PromiseDelegate<void>();
-    this.myKernelService.queue = this.myKernelService.sessionConnected.promise
-  }
-
   openFile(path: string) {
     this.setPath(path);
     this.setRenderType(this.determineRenderType(path));
-    this.resetPromises()
+    this.myKernelService.loadingForm()
     
     this.loadFileContents().then(() => {
       this.myKernelService.sessionConnect(this.path.getValue());
