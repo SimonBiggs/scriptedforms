@@ -40,6 +40,7 @@ import { CodeComponent } from '../code-module/code.component';
 })
 export class OutputComponent {
   outputId: number;
+  sessionId: string
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
@@ -54,7 +55,7 @@ export class OutputComponent {
   }
 
   formReady() {
-    this.myVariableService.variableChangedObservable.subscribe(() => {
+    this.myVariableService.sessionVariableStore[this.sessionId].variableChangedObservable.subscribe(() => {
       this.runCode();
     })
   }
@@ -62,8 +63,8 @@ export class OutputComponent {
   setId(id: number) {
     this.outputId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.setName(
-        '"output"_' + String(this.outputId) + '_' + String(index));
+      codeComponent.codeComponentInit(
+        this.sessionId, '"output"_' + String(this.outputId) + '_' + String(index));
     });
   }
 }

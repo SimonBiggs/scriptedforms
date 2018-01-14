@@ -35,6 +35,7 @@ import * as yaml from 'js-yaml';
 import { JupyterService } from './jupyter.service';
 import { FormService } from './form.service';
 import { KernelService } from './kernel.service';
+import { VariableService } from './variable.service';
 
 // https://stackoverflow.com/a/6969486/3912576
 function escapeRegExp(str: string) {
@@ -54,7 +55,8 @@ export class FileService {
   constructor(
     private myFormService: FormService,
     private myJupyterService: JupyterService,
-    private myKernelService: KernelService
+    private myKernelService: KernelService,
+    private myVariableService: VariableService,
   ) { }
 
   setNode(node: HTMLElement) {
@@ -69,11 +71,11 @@ export class FileService {
     this.renderType = renderType
   }
 
-  loadResultsFile(fileContents: string) {
+  loadResultsFile(fileContents: string, sessionId: string) {
     console.log(yaml.safeLoad(fileContents))
   }
 
-  handleFileContents(fileContents: string) {
+  handleFileContents(fileContents: string, sessionId: string) {
     let priorOverflow = this.node.scrollTop
     this.renderComplete = new PromiseDelegate<void>()
 
@@ -82,19 +84,19 @@ export class FileService {
     })
 
     if (this.renderType === 'template') {
-      this.myFormService.setTemplate(fileContents)
+      this.myFormService.setTemplate(fileContents, sessionId)
     }
     if (this.renderType === 'results') {
-      this.loadResultsFile(fileContents)
+      this.loadResultsFile(fileContents, sessionId)
     }
 
     return this.renderComplete.promise
   }
 
-  loadFileContents(): Promise<void> {
-    return this.myJupyterService.contentsManager.get(this.path.getValue()).then(model => {
+  loadFileContents(path: string, sessionId: string): Promise<void> {
+    return this.myJupyterService.contentsManager.get(path).then(model => {
       let fileContents: string = model.content
-      return this.handleFileContents(fileContents)
+      return this.handleFileContents(fileContents, sessionId)
     })
   }
 
@@ -116,14 +118,19 @@ export class FileService {
     return renderType
   }
 
+  serviceSessionInitialisation(sessionId: string) {
+    this.myFormService.formInitialisation(sessionId);
+    this.myVariableService.variableInitialisation(sessionId);
+  }
+
   openFile(path: string) {
     this.setPath(path);
     this.setRenderType(this.determineRenderType(path));
-    this.myKernelService.loadingForm()
-    
-    this.loadFileContents().then(() => {
-      this.myKernelService.sessionConnect(this.path.getValue());
-    });
+    // this.myKernelService.loadingForm()
+    this.myKernelService.sessionConnect(path).then((sessionId: string) => {
+      this.serviceSessionInitialisation(sessionId);
+      return this.loadFileContents(path, sessionId)
+    })
   }
 
   urlToFilePath(url: string) {

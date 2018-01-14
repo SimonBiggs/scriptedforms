@@ -55,6 +55,7 @@ import { CodeComponent } from '../code-module/code.component';
 </div>`
 })
 export class StartComponent {
+  sessionId: string
   // liveComponents: QueryList<LiveComponent>;
   // buttonComponents: QueryList<ButtonComponent>;
   @Input() always?: string;
@@ -89,8 +90,8 @@ export class StartComponent {
   setId(id: number) {
     this.startId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.setName(
-        '"start"_' + String(this.startId) + '_' + String(index));
+      codeComponent.codeComponentInit(
+        this.sessionId, '"start"_' + String(this.startId) + '_' + String(index));
     });
 
   }

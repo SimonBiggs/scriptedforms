@@ -31,8 +31,7 @@ through the `setFormContents` function.
 */
 
 import {
-  Component
-  // , ViewChild
+  Component, ViewChild, AfterViewInit
 } from "@angular/core";
 
 
@@ -41,32 +40,37 @@ import {
 //   Kernel
 // } from '@jupyterlab/services';
 
-// import { FormBuilderComponent } from './form-builder-module/form-builder.component';
+import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 
 import { IScriptedForms, InitialisationService } from './services/initialisation.service'
 import { FileService } from "./services/file.service";
-
+import { FormService } from "./services/form.service";
 
 @Component({
   selector: "app-root",
-  template: `<div class="margin"><app-form-builder></app-form-builder></div>`,
+  template: `<div class="margin"><app-form-builder #formBuilderComponent></app-form-builder></div>`,
   styles: [`.margin { margin: 20px;}`]
 })
-export class AppComponent {
-  // @ViewChild('form') formBuilderComponent: FormBuilderComponent;
+export class AppComponent implements AfterViewInit {
+  @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
 
   constructor(
     private myFileService: FileService,
+    private myFormService: FormService,
     private myInitialisationService: InitialisationService
   ) {}
+
+  ngAfterViewInit() {
+    this.myFormService.formBuilderComponent = this.formBuilderComponent
+  }
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
     this.myInitialisationService.initiliseScriptedForms(options)
   }
 
-  public updateFileContents(fileContents: string) {
-    return this.myFileService.handleFileContents(fileContents);
-  }
+  // public updateFileContents(fileContents: string) {
+  //   return this.myFileService.handleFileContents(fileContents);
+  // }
 
   /**
    * Set or update the template of the form.

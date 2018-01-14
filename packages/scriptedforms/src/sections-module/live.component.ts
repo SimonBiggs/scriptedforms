@@ -59,7 +59,7 @@ import { VariableComponent } from '../types/variable-component';
   template: `<ng-content></ng-content>`
 })
 export class LiveComponent implements AfterViewInit {
-
+  sessionId: string
   variableComponents: VariableComponent[] = []
 
   liveId: number;
@@ -126,8 +126,8 @@ export class LiveComponent implements AfterViewInit {
     this.liveId = id;
 
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.setName(
-        '"live"_' + String(this.liveId) + '_' + String(index));
+      codeComponent.codeComponentInit(
+        this.sessionId, '"live"_' + String(this.liveId) + '_' + String(index));
     });
   }
 }

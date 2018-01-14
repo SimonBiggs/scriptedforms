@@ -63,11 +63,11 @@ export class AngularWrapperWidget extends AngularWidget<
     });
   }
 
-  updateFileContents(template: string) {
-    this.run(() => {
-      this.componentInstance.updateFileContents(template);
-    });
-  }
+  // updateFileContents(template: string) {
+  //   this.run(() => {
+  //     this.componentInstance.updateFileContents(template);
+  //   });
+  // }
 }
 
 export class ScriptedFormsWidget extends Widget {

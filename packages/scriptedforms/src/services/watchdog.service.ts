@@ -35,6 +35,7 @@ import {
 
 import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
+import { FormService } from './form.service';
 
 import {
   watchdogCode
@@ -46,7 +47,8 @@ export class WatchdogService {
 
   constructor(
     private myFileService: FileService,
-    private myJupyterService: JupyterService
+    private myJupyterService: JupyterService,
+    private myFormService: FormService
   ) { }
 
   runWatchdogAfterFormReady() {
@@ -83,11 +85,13 @@ export class WatchdogService {
         let content = String(msg.content.text).trim()
         let files = content.split("\n")
         console.log(files)
+        let path = this.myFileService.path.getValue()
+        let sessionId = this.myFormService.currentFormSessionId
         let match = files.some(item => {
-          return (item.replace('\\', '/') === this.myFileService.path.getValue()) || (item.includes('goutputstream'))
+          return (item.replace('\\', '/') === path) || (item.includes('goutputstream'))
         })
         if (match) {
-          this.myFileService.loadFileContents()
+          this.myFileService.loadFileContents(path, sessionId)
         }
       }
     })

@@ -84,12 +84,14 @@ import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
 
 import { VariableComponent } from '../types/variable-component';
+import { SectionComponent } from '../types/section-component';
 
 export
 interface IFormComponent {
   formViewInitialised: PromiseDelegate<void>,
   formReady: PromiseDelegate<void>
 }
+
 
 /**
  * Create a form component factory given an Angular template in the form of metadata.
@@ -100,7 +102,7 @@ interface IFormComponent {
  * @returns a factory which creates form components
  */
 export
-function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
+function createFormComponentFactory(sessionId: string, compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
 
 //   const templateAppendTop = `
 
@@ -125,6 +127,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     formReady = new PromiseDelegate<void>()
 
     variableComponents: VariableComponent[] = []
+    sectionComponents: SectionComponent[] = []
 
     // Sections
     @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>;
@@ -189,6 +192,11 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.passwordComponents.toArray())
+
+      this.sectionComponents = this.sectionComponents.concat(this.startComponents.toArray())
+      this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray())
+      this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray())
+      this.sectionComponents = this.sectionComponents.concat(this.outputComponents.toArray())
       
       this.initialiseForm();
     }
@@ -200,6 +208,14 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     private initialiseForm() {
       // Only begin initialisation once the kernel is connected
       this.myKernelSevice.sessionConnected.promise.then(() => {
+        console.log('Form initialisation')
+
+        this.sectionComponents.forEach(sectionComponent => {
+          sectionComponent.sessionId = sessionId;
+        })
+        this.variableComponents.forEach(variableComponent => {
+          variableComponent.sessionId = sessionId;
+        })
 
         // console.log('session connected');
         // console.log(this.startComponents);
@@ -219,32 +235,32 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           // be re-run even if it isn't a new session.
           if (startComponent.always === '') {
             startComponent.runCode();
-          } else if (this.myKernelSevice.isNewSession) {
+          } else if (this.myKernelSevice.sessionStore[sessionId].isNewSession) {
             startComponent.runCode();
           }
         });
         // this.myKernelSevice.isNewSession = false;
 
         // Variable components are initialised second
-        this.myVariableService.resetVariableService();
+        this.myVariableService.resetVariableService(sessionId);
         
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise(index);
         })
-        this.myVariableService.allVariablesInitilised()
+        this.myVariableService.allVariablesInitilised(sessionId)
         // this.myVariableService.fetchAll()
 
         // Wait until the code queue is complete before declaring form ready to
         // the various components.
-        this.myKernelSevice.queue.then(() => {
+        this.myKernelSevice.sessionStore[sessionId].queue.then(() => {
           
           // Make all variables update whenever a code component finishes
           // running.
-          for (const codeComponent of this.codeComponents.toArray()) {
-            codeComponent.aCodeRunCompleted.subscribe(() => {
-              // this.myVariableService.fetchAll()
-            });
-          }
+          // for (const codeComponent of this.codeComponents.toArray()) {
+          //   codeComponent.aCodeRunCompleted.subscribe(() => {
+          //     // this.myVariableService.fetchAll()
+          //   });
+          // }
 
           // Tell the live components that the form is ready
           this.liveComponents.toArray().forEach((liveComponent, index) => {

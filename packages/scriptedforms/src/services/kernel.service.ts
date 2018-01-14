@@ -61,7 +61,7 @@ export interface SessionStore {
 
 @Injectable()
 export class KernelService {
-  sessionConnected: PromiseDelegate<void>
+  sessionConnected: PromiseDelegate<string>
   sessionStore: SessionStore = {}
   currentSession: string = null;
 
@@ -107,13 +107,18 @@ export class KernelService {
   //   this.sessionStore[this.currentSession].isNewSession = isNewSession
   // }
 
-  loadingForm() {
-    this.currentSession = null;
-    this.sessionConnected = new PromiseDelegate<void>();
-    // this.queue = this.sessionConnected.promise
-  }
+  // loadingForm() {
+  //   this.currentSession = null;
+  //   this.sessionConnected = new PromiseDelegate<string>();
+  //   // this.queue = this.sessionConnected.promise
+  // }
 
-  sessionConnect(path: string) {
+  sessionConnect(path: string): Promise<string> {
+    this.sessionConnected = new PromiseDelegate<string>();
+    this.sessionConnected.promise.then(() => {
+      console.log(this.sessionStore)
+    })
+
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {
       kernelName: 'python3',
@@ -124,8 +129,8 @@ export class KernelService {
     this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
       if (model.id in this.sessionStore) {
         this.currentSession = model.id
-        this.sessionStore[this.currentSession].isNewSession = false
-        this.sessionConnected.resolve(null);
+        this.sessionStore[model.id].isNewSession = false
+        this.sessionConnected.resolve(model.id);
       } else {
         Session.connectTo(model, settings).then(session => {
           this.storeSession(session, false)
@@ -134,9 +139,11 @@ export class KernelService {
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
         this.storeSession(session, true)
-        this.runCode(this.currentSession, sessionStartCode, 'session_start_code')
+        this.runCode(session.id, sessionStartCode, 'session_start_code')
       });
     });
+
+    return this.sessionConnected.promise
   }
 
   storeSession(session: Session.ISession, isNewSession: boolean) {
@@ -149,13 +156,18 @@ export class KernelService {
       isNewSession: isNewSession
     }
     this.currentSession = session.id
-    this.sessionConnected.resolve(null);
+    this.sessionConnected.resolve(session.id);
   }
 
   addToQueue(sessionId: string, name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {
+    // if (name === null) {
+    //   console.log(asyncFunction)
+    //   throw new RangeError('Invalid queue item')
+    // }
     const currentQueueId = this.sessionStore[sessionId].queueId;
 
     this.sessionStore[sessionId].queueLog[currentQueueId] = name;
+    console.log(this.sessionStore[sessionId].queueLog)
     this.sessionStore[sessionId].queueId += 1;
     const previous = this.sessionStore[sessionId].queue;
     return this.sessionStore[sessionId].queue = (async () => {

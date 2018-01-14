@@ -23,18 +23,51 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { Injectable } from '@angular/core';
+import { Injectable
+  // , ComponentRef 
+} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
+import { IFormComponent } from '../form-builder-module/create-form-component-factory';
+import { FormBuilderComponent } from '../form-builder-module/form-builder.component'
+
+
+export interface FormStore {
+  [sessionId: string]: { 
+    template: BehaviorSubject<string>;
+    component: IFormComponent;
+  }
+}
 
 @Injectable()
 export class FormService {
-  template: BehaviorSubject<string> = new BehaviorSubject(null)
+  currentFormSessionId: string;
+  formStore: FormStore = {}
+  formBuilderComponent: FormBuilderComponent
 
-  setTemplate(template: string) {
-    this.template.next(template)
+  formInitialisation(sessionId: string) {
+    this.currentFormSessionId = sessionId
+    if (!(sessionId in this.formStore)) {
+      this.formStore[sessionId] = {
+        template: new BehaviorSubject(null),
+        component: null
+      }
+
+      this.formStore[sessionId].template.subscribe(template => {
+        if (template !== null) {
+          this.formBuilderComponent.buildForm(sessionId, template).then(component => {
+            this.formStore[sessionId].component = component
+          });
+        }
+      })
+    }
   }
 
-  getTemplate() {
-    return this.template.getValue()
+  setTemplate(template: string, sessionId: string) {
+    this.formStore[sessionId].template.next(template)
+  }
+
+  getTemplate(sessionId: string) {
+    return this.formStore[sessionId].template.getValue()
   }
 }

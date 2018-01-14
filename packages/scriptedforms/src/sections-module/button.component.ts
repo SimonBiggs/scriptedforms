@@ -66,6 +66,8 @@ export class ButtonComponent implements AfterViewInit {
   @Input() name?: string;
   @Input() conditional?: string
 
+  sessionId: string
+
   conditionalValue: boolean = true;
 
   buttonId: number;
@@ -105,7 +107,7 @@ export class ButtonComponent implements AfterViewInit {
         codeComponent.runCode();
       });
       this.codeRunning = true;
-      this.myKernelSevice.queue.then(() => {
+      this.myKernelSevice.sessionStore[this.sessionId].queue.then(() => {
         this.codeRunning = false;
       });
     }
@@ -135,8 +137,8 @@ export class ButtonComponent implements AfterViewInit {
   setId(id: number) {
     this.buttonId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.setName(
-        '"button"_' + String(this.buttonId) + '_' + String(index))
+      codeComponent.codeComponentInit(
+        this.sessionId, '"button"_' + String(this.buttonId) + '_' + String(index))
     });
   }
 

@@ -69,6 +69,7 @@ import { FileService } from '../services/file.service';
   template: `<span class="output-container" #outputcontainer></span><span #codecontainer [hidden]="future != undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
+  sessionId: string;
   name: string;
   renderMimeOptions: RenderMimeRegistry.IOptions;
   renderMime: RenderMimeRegistry;
@@ -130,7 +131,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.outputArea.dispose();
+    // this.outputArea.dispose();
   }
 
   /**
@@ -140,8 +141,9 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    *  
    * @param name A unique name for the code component
    */
-  setName(name: string) {
+  codeComponentInit(sessionId: string, name: string) {
     this.name = name;
+    this.sessionId = sessionId
   }
 
   /**
@@ -149,7 +151,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    * code.
    */
   runCode() {
-    this.promise = this.myKernelSevice.runCode(this.code, this.name);
+    this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
       if (future) {
         this.future = future;

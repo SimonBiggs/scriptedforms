@@ -42,7 +42,7 @@ import * as  MarkdownIt from 'markdown-it';
 
 import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
 
-import { FormService } from '../services/form.service';
+// import { FormService } from '../services/form.service';
 import { FileService } from '../services/file.service';
 import { WatchdogService } from '../services/watchdog.service';
 
@@ -68,7 +68,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private compiler: Compiler,
-    private myFormService: FormService,
+    // private myFormService: FormService,
     private myWatchdogService: WatchdogService,
     private myFileService: FileService
   ) { }
@@ -79,17 +79,11 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
       linkify: true,
       typographer: true
     });
-
-    this.myFormService.template.subscribe((template) => {
-      if (template !== null) {
-        this.buildForm(template);
-      }
-    })
   }
 
   ngAfterViewInit() {
     this.errorboxDiv = this.errorbox.nativeElement;
-    this.viewInitialised.resolve(undefined);
+    this.viewInitialised.resolve(null);
   }
 
   /**
@@ -98,15 +92,18 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * This function makes sure to only begin building the form once the component
    * has sufficiently initialised.
    */
-  public buildForm(markdownTemplate: string) {
-    this.viewInitialised.promise.then(() => {
+  public buildForm(sessionId: string, markdownTemplate: string): Promise<IFormComponent> {
+    return this.viewInitialised.promise.then(() => {
       const convertedTemplate = this.convertTemplate(markdownTemplate);
       const htmlTemplate = convertedTemplate['htmlTemplate']
       const cssStyles = convertedTemplate['cssStyles']
 
       // Create the form component
-      this.createFormFromTemplate(htmlTemplate, cssStyles).then(() => {
+      let formComponent = this.createFormFromTemplate(sessionId, htmlTemplate, cssStyles)
+      
+      return formComponent.formViewInitialised.promise.then(() => {
         this.myFileService.renderComplete.resolve(null);
+        return formComponent
       })
     });
   }
@@ -161,7 +158,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * 
    * @param template The html Angular component template
    */
-  private createFormFromTemplate(template: string, cssStyles: string[]): Promise<void> {
+  private createFormFromTemplate(sessionId: string, template: string, cssStyles: string[]): IFormComponent {
     const metadata = {
       selector: `app-form`,
       template: template,
@@ -171,7 +168,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     // console.log(metadata)
 
     // Create the form component factory
-    const formFactory = createFormComponentFactory(this.compiler, metadata);
+    const formFactory = createFormComponentFactory(sessionId, this.compiler, metadata);
 
     // If a form already exists remove it before continuing
     if (this.formComponentRef) {
@@ -186,6 +183,6 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     this.formComponentRef.instance.formReady.promise.then(() => {
       this.myWatchdogService.formFirstPassComplete.resolve(null)
     })
-    return this.formComponentRef.instance.formViewInitialised.promise
+    return this.formComponentRef.instance
   }
 }
