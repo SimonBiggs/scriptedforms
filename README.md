@@ -51,7 +51,7 @@ example package that creates a console script that then uses scriptedforms to
 boot up a GUI can be found within the [example](./example) directory.
 
 Within the [`README.md`](./example) file of that directory there is an
-explaination of how you might go about deploying your utility with its new GUI.
+explanation of how you might go about deploying your utility with its new GUI.
 
 ## Installing scriptedforms from the GitHub source
 
@@ -102,6 +102,6 @@ loss.
 
 The AGPL-3.0+ does not explicitly mention negligence anywhere within its
 license text. The Apache-2.0 does. In order to maintain familiarity within the
-software community, and to maintain compatability with other licenses instead
+software community, and to maintain compatibility with other licenses instead
 of appending these limitation of liability clauses to the AGPL-3.0+, instead,
 the Apache-2.0 was included as well.
