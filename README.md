@@ -14,9 +14,9 @@ markdown_contents = """
 
 <variable-string>your_name</variable-string>
 
-\`\`\`python
+```python
 print('Hello {}!'.format(name))
-\`\`\`
+```
 
 </section-live>
 """
