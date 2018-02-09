@@ -70,7 +70,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied. See
 the Apache-2.0 and the AGPL-3.0+ for the specific language governing permissions and
 limitations under the Apache-2.0 and the AGPL-3.0+.
 
-## Justification for licensing under both at the same time in combination
+### Justification for licensing under both at the same time in combination
 
 Within Australian courts if there is any ambiguity in liability exclusion
 clauses they will be interpreted narrowly. If liability for negligence is not
