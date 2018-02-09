@@ -53,9 +53,11 @@ boot up a GUI can be found within the [example](./example) directory.
 Within the [`README.md`](./example) file of that directory there is an
 explaination of how you might go about deploying your utility with its new GUI.
 
-## Development build
+## Installing scriptedforms from the GitHub source
 
-To install this package from the GitHub source you will need to build the javascript bundle. 
+The majority of users will not need to pay attention to this information.
+
+For those who wish to build scriptedforms from the source provided within this repository you will need to build the javascript bundle.
 To do this you will need to install yarn and then run the following in the same directory as the `package.json` file:
 
 ```bash
