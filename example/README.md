@@ -10,11 +10,19 @@ To run this example you need to download this repository. One way to do that
 is by downloading the [repository zip file](https://github.com/SimonBiggs/scriptedforms/archive/master.zip).
 
 Once you have download and extracted the repository navigate to 
-this `example` directory and then run the following:
+this `example` directory and then install this package by running the following:
 
 ```bash
 pip install -e .
 ```
+
+To then use the package, in any directory on your machine run:
+
+```bash
+example
+```
+
+This will then boot up the scriptedforms GUI in your default browser.
 
 As an extra benefit, if you have either `simple.md` or `complicated.md` open in
 the browser while you edit and save the file scriptedforms will automatically
