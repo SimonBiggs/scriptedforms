@@ -23,5 +23,5 @@
 # the Combined Licenses for the specific language governing permissions and 
 # limitations under the Combined Licenses.
 
-from .scriptedforms import load
+from .scriptedforms import load, main
 from ._version import version_info, __version__

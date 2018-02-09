@@ -80,8 +80,6 @@ def load(filepath):
     directory, filename = os.path.split(absolute_path)
 
     os.chdir(directory)
-
-    sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
         default_url='/scriptedforms/{}'.format(filename))
 
@@ -89,7 +87,7 @@ def load(filepath):
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        'filepath', dest='filepath', help='The file path of the form to open.')
+        'filepath', help='The file path of the form to open.')
 
     args = parser.parse_args()
     sys.argv = [sys.argv[0]]

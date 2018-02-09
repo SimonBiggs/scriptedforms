@@ -14,16 +14,15 @@ markdown_contents = """
 
 <variable-string>your_name</variable-string>
 
-`print('Hello {}!'.format(name))`
+`print('Hello {}!'.format(your_name))`
 
 </section-live>
 """
 
-with open(filename, 'w') as file:
-    file.write(markdown_contents)
+with open(filename, 'w') as f:
+    f.write(markdown_contents)
 
 sf.load(filename)
-
 ```
 
 
