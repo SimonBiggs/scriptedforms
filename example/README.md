@@ -28,6 +28,30 @@ As an extra benefit, if you have either `simple.md` or `complicated.md` open in
 the browser while you edit and save the file scriptedforms will automatically
 reload.
 
+## A possible method for creating your own package
+
+Firstly you need to change all instances of the package name "example" to your
+own package name.
+
+Here is a list of all of these instances within files:
+
+* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L4
+* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L11
+* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L15 (two instances)
+* https://github.com/SimonBiggs/scriptedforms/blob/master/example/MANIFEST.in#L1
+* https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/__init__.py#L1
+
+And then the example directory names need to be changed to your own package
+name as well as `example.py`.
+
+Then you need to create the functions you will be using within your GUI within
+`[your_package_name].py`. Then within your markdown form file import your
+package and create your GUI.
+
+Lastly, within https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/example.py#L10
+you will need to change the markdown filename to match the filename of your
+markdown file.
+
 ## A possible method for deploying on a user machine
 
 Lets say you have a really nifty script that does something great. But you want
