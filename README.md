@@ -43,6 +43,9 @@ use an `ipython` prompt or a jupyter notebook to run the above code.
 
 For a markdown file that presents all of the features of scriptedforms see
 [complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
+A section of that form is shown below as a screenshot:
+
+![Screenshot of an example form](./screenshot.png)
 
 ## Example that can be used as a template for deployment
 
