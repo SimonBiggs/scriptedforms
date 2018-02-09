@@ -109,7 +109,7 @@ export class VariableService {
   //   [key: string]: VariableComponent
   // } = {}
 
-  variableHandlerClass: string = '_scriptedforms._utilities._VariableHandler'
+  variableHandlerClass: string = '_VariableHandler'
   handlerName: string = '_scriptedforms_variable_handler'
   fetchVariablesCode: string = `exec(${this.handlerName}.fetch_code)`;
 

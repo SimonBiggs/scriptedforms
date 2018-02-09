@@ -31,5 +31,5 @@ import pandas as pd
 import matplotlib.pyplot as plt
 %matplotlib inline
 
-import scriptedforms as _scriptedforms
+from scriptedforms._utilities import _VariableHandler, _json_table_to_df
 `

@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # An example
 
 <section-start always>
@@ -7,7 +9,6 @@ from example import example
 ```
 
 </section-start>
-
 
 <section-live>
 
