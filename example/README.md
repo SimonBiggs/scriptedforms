@@ -31,8 +31,9 @@ reload.
 ## A possible method for deploying on a user machine
 
 Lets say you have a really nifty script that does something great. But you want
-to make a non-technical frontend for your work. A workflow to get your
-brilliant tool on a clients machine might be the following.
+to make a non-technical frontend for others within your company to interface
+with your work. A workflow to get your brilliant tool on a clients machine 
+might be the following.
 
 First drop your package on a network share.
 
