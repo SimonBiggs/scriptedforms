@@ -80,7 +80,6 @@ def load(filepath):
     directory, filename = os.path.split(absolute_path)
 
     os.chdir(directory)
-    print(glob('**', recursive=True))
 
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
