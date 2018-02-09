@@ -45,7 +45,7 @@ And then the example directory names need to be changed to your own package
 name as well as `example.py`.
 
 Then you need to create the functions you will be using within your GUI within
-`[your_package_name].py`. Then within your markdown form file import your
+`your_package_name.py`. Then within your markdown form file import your
 package and create your GUI.
 
 The [`complicated.md`](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md)
