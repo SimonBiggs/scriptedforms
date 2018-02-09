@@ -48,6 +48,10 @@ Then you need to create the functions you will be using within your GUI within
 `[your_package_name].py`. Then within your markdown form file import your
 package and create your GUI.
 
+The [`complicated.md`](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md)
+file hopefully will be helpful as a starting place to build what ever you might
+need.
+
 Lastly, within https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/example.py#L10
 you will need to change the markdown filename to match the filename of your
 markdown file.
