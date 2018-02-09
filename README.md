@@ -11,7 +11,7 @@ If you would like to quickly take scriptedforms for a spin first install it:
 pip install scriptedforms
 ```
 
-Then to copy the following into a python prompt:
+Then copy the following into a python prompt:
 
 ```python
 import scriptedforms as sf
