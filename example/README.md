@@ -10,13 +10,13 @@ To run this example you need to download this repository. One way to do that
 is by downloading the [repository zip file](https://github.com/SimonBiggs/scriptedforms/archive/master.zip).
 
 Once you have download and extracted the repository navigate to 
-this `example` directory and then install this package by running the following:
+this `example` directory and then install this package by running the following within a terminal:
 
 ```bash
 pip install -e .
 ```
 
-To then use the package, in any directory on your machine run:
+To then use the package, in any directory on your machine within a terminal run:
 
 ```bash
 example
