@@ -37,7 +37,7 @@ create_file(filename)
 sf.load(filename)
 ```
 
-Note that because scriptedforms heavily relies on the jupyter notebook server
+Note that because scriptedforms relies on the jupyter notebook server
 the above code cannot be run within a jupyter app itself. For example, that means that you cannot 
 use `ipython` or a jupyter notebook to run the above code.
 
