@@ -46,8 +46,8 @@ For a markdown file that presents all of the features of scriptedforms see
 ## Package example
 
 This is designed to be used as a quick and easy GUI for python packages. An
-example package that uses scriptedforms to boot up a GUI can be found within
-the [example](./example) directory.
+example package that creates a console script that then uses scriptedforms to
+boot up a GUI can be found within the [example](./example) directory.
 
 ## Software license agreement
 
