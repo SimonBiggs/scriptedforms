@@ -36,8 +36,8 @@ brilliant tool on a clients machine might be the following.
 
 First drop your package on a network share.
 
-Then download and install the latest Python3 Anaconda distribution from the 
-following link:
+Then download and install the latest Python3 Anaconda distribution from the
+following link on the computer of the user who will need to use your software:
 
  > <https://www.anaconda.com/download>
 
