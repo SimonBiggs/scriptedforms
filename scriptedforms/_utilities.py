@@ -30,9 +30,8 @@ import pandas as pd
 
 from ._version import __version__
 
-HERE = os.path.dirname(__file__)
 
-def json_table_to_df(json_table):
+def _json_table_to_df(json_table):
     table = json.loads(json_table)
     columns = [t['name'] for t in table['schema']['fields']]
     index = table['schema']['primaryKey'][0]
@@ -50,22 +49,7 @@ def json_table_to_df(json_table):
     return df
 
 
-def print_file(filename):
-    with open(filename, 'r') as f:
-        contents = f.read()
-
-    print(contents)
-
-
-def print_apache():
-    print_file(os.path.join(HERE, '../Apache-2.0'))
-
-
-def print_agpl():
-    print_file(os.path.join(HERE, '../AGPL-3.0+'))
-
-
-class VariableHandler(object):
+class _VariableHandler(object):
     def __init__(self, variable_evaluate_map, handlername):
         self.variable_evaluate_map = json.loads(variable_evaluate_map)
         self.handlername = handlername

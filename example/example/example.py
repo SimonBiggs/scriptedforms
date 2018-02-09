@@ -2,7 +2,7 @@ import scriptedforms as sf
 
 
 def main():
-    sf.open('example.md')
+    sf.load('example.md')
 
 
 if __name__ == "__main__":
