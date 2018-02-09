@@ -43,11 +43,14 @@ it cannot run from within a jupyter notebook instance.
 For a markdown file that presents all of the features of scriptedforms see
 [complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
 
-## Package example
+## Example that can be used as a template for deployment
 
 This is designed to be used as a quick and easy GUI for python packages. An
 example package that creates a console script that then uses scriptedforms to
 boot up a GUI can be found within the [example](./example) directory.
+
+Within the [`README.md`](./example) file of that directory there is an
+explaination of how you might go about deploying your utility with its new GUI.
 
 ## Software license agreement
 
