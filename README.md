@@ -55,7 +55,7 @@ explaination of how you might go about deploying your utility with its new GUI.
 
 ## Installing scriptedforms from the GitHub source
 
-The majority of users will not need to pay attention to this information.
+The majority of users will not need to pay attention this section.
 
 For those who wish to build scriptedforms from the source provided within this repository you will need to build the javascript bundle.
 To do this you will need to install yarn and then run the following in the same directory as the `package.json` file:
