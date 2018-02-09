@@ -7,7 +7,7 @@ def example(name):
 
 def main():
     here = os.path.dirname(__file__)
-    filepath = os.path.join(here, 'example.md')
+    filepath = os.path.join(here, 'simple.md')
     sf.load(filepath)
 
 
