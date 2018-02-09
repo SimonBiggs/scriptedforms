@@ -63,7 +63,7 @@ yarn
 yarn build
 ```
 
-After that you will be able to install the scriptedforms from the GitHub source.
+After that you will be able to install the scriptedforms package from the GitHub source.
 
 ## Software license agreement
 
