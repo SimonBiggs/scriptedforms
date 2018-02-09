@@ -44,7 +44,7 @@ it cannot run from within a jupyter notebook instance.
 
 This is designed to be used as a quick and easy GUI for python packages. An
 example package that uses scriptedforms to boot up a GUI can be found within
-the [./example](./example) directory.
+the [example](./example) directory.
 
 ## Software license agreement
 
