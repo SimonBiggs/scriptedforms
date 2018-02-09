@@ -40,6 +40,9 @@ sf.load(filename)
 Note that because scriptedforms heavily relies on the jupyter notebook server
 it cannot run from within a jupyter notebook instance.
 
+For a markdown file that presents all of the features of scriptedforms see
+[example/example/complicated.md](./example/example/complicated.md).
+
 ## Package example
 
 This is designed to be used as a quick and easy GUI for python packages. An
