@@ -39,7 +39,7 @@ sf.load(filename)
 
 Note that because scriptedforms relies on the jupyter notebook server
 the above code cannot be run within a jupyter app itself. For example, that means that you cannot 
-use `ipython` or a jupyter notebook to run the above code.
+use an `ipython` prompt or a jupyter notebook to run the above code.
 
 For a markdown file that presents all of the features of scriptedforms see
 [complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
