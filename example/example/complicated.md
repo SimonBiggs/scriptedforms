@@ -41,7 +41,7 @@ There are four kinds of sections:
 * `start`,
 * `live`,
 * `button`,
-* and `output` [not yet implemented].
+* and `output`.
 
 Code which is written inside of these defined sections is run
 as python code according to specific rules.
@@ -272,28 +272,3 @@ print(_scriptedforms_variable_handler.variables_json)
 </section-output>
 
 [Not yet implemented] Any variable placed within an output group will format as a non-editable card.
-By placing key output variables within an output group their results will be
-saved in a format that is easy to extract and trend.
-
-## Form results saving [not yet implemented]
-
-It is the aim to have it so that the results of these forms can be
-saved in `formname/formname-timestamp.results.json` files.
-Whenever a set of results are saved a copy of the template is included within
-the json.
-
-All variable inputs will be recorded along with the timestamp representing the
-time at which that input was last changed.
-
-## Accompanying modules [not yet implemented]
-
-Once this form extension is in a usable state the benefits will truly come to
-light once a second extension is made  which takes the data and trends the
-results over time.
-
-Another extension of value would be a scheduling and overview extension
-which defines a set of tasks. Each task can contain multiple forms.
-There would also be targets, tasks can be assigned to multiple targets
-and assigned tasks can be schuduled to be completed over defined intervals.
-This would present an overview of all targets, their corresponding tasks,
-when the scheduled tasks were last completed, when they are next due by.

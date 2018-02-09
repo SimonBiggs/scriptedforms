@@ -109,7 +109,7 @@ export class VariableService {
   //   [key: string]: VariableComponent
   // } = {}
 
-  scriptedformsModule: string = '_scriptedforms'
+  variableHandlerClass: string = '_VariableHandler'
   handlerName: string = '_scriptedforms_variable_handler'
   fetchVariablesCode: string = `exec(${this.handlerName}.fetch_code)`;
 
@@ -161,7 +161,7 @@ export class VariableService {
   }
 
   allVariablesInitilised(sessionId: string) {
-    let initialiseHandlerCode = `${this.handlerName} = ${this.scriptedformsModule}.VariableHandler("""${JSON.stringify(this.sessionVariableStore[sessionId].variableEvaluateMap)}""", "${this.handlerName}")`
+    let initialiseHandlerCode = `${this.handlerName} = ${this.variableHandlerClass}("""${JSON.stringify(this.sessionVariableStore[sessionId].variableEvaluateMap)}""", "${this.handlerName}")`
     this.myKernelSevice.runCode(sessionId, initialiseHandlerCode, '"initialiseVariableHandler"')
     .then((future: Kernel.IFuture) => {
       future.done.then(() => {

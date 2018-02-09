@@ -25,7 +25,7 @@
 import sys
 import os
 import argparse
-# from glob import glob
+from glob import glob
 
 from jinja2 import FileSystemLoader
 from traitlets import Unicode
@@ -33,13 +33,10 @@ from traitlets import Unicode
 from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 
-from .directory_init import (
-    initialise_scriptedforms_directory, get_scriptedforms_directory)
-
 HERE = os.path.dirname(__file__)
 LOADER = FileSystemLoader(HERE)
 
-class ScriptedFormsHandler(IPythonHandler):
+class _ScriptedFormsHandler(IPythonHandler):
     """Handle requests between the main app page and notebook server."""
 
     def get(self, form_file):
@@ -66,8 +63,7 @@ class ScriptedForms(NotebookApp):
 
     def start(self):
         handlers = [
-            (r'/scriptedforms/(.*\.md)', ScriptedFormsHandler),
-            (r'/scriptedforms/(.*\.yaml)', ScriptedFormsHandler),
+            (r'/scriptedforms/(.*\.md)', _ScriptedFormsHandler),
             (r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'build')}),
         ]
@@ -75,28 +71,29 @@ class ScriptedForms(NotebookApp):
         super(ScriptedForms, self).start()
 
 
-def main():
+def load(filepath):
 
+    absolute_path = os.path.abspath(filepath)
+    if not os.path.exists(absolute_path):
+        raise ValueError('file does not exist')
+
+    directory, filename = os.path.split(absolute_path)
+
+    os.chdir(directory)
+    ScriptedForms.launch_instance(
+        default_url='/scriptedforms/{}'.format(filename))
+
+
+def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        '--init', dest='init', help='Reinitialise ScriptedForms directory', 
-        action='store_true')
+        'filepath', help='The file path of the form to open.')
 
     args = parser.parse_args()
-    if args.init:
-        scriptedforms_directory = initialise_scriptedforms_directory()
-    else:
-        scriptedforms_directory = get_scriptedforms_directory()
-        
-    try:
-        os.chdir(scriptedforms_directory)
-    except FileNotFoundError:
-        scriptedforms_directory = initialise_scriptedforms_directory()
-        os.chdir(scriptedforms_directory)
-
     sys.argv = [sys.argv[0]]
-    ScriptedForms.launch_instance(
-        default_url='/scriptedforms/landing-page.form.md')
+
+    load(args.filepath)
+
 
 if __name__ == '__main__':
     main()

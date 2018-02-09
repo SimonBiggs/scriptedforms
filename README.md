@@ -1,5 +1,50 @@
 # Scripted Forms
 
+Quickly and easily create powerful front ends for python scripts and packages.
+
+## Quick start
+
+If you would like to quickly take scriptedforms for a spin first install it:
+
+```bash
+pip install scriptedforms
+```
+
+Then to copy the following into a python prompt:
+
+```python
+import scriptedforms as sf
+
+def create_file(filename):
+    markdown_contents = """
+    # An example
+
+    <section-live>
+
+    <variable-string>your_name</variable-string>
+
+    `print('Hello {}!'.format(your_name))`
+
+    </section-live>
+    """
+
+    with open(filename, 'w') as f:
+        f.write(markdown_contents)
+
+filename = 'example.md'
+create_file(filename)
+sf.load(filename)
+```
+
+Note that because scriptedforms heavily relies on the jupyter notebook server
+it cannot run from within a jupyter notebook instance.
+
+## Package example
+
+This is designed to be used as a quick and easy GUI for python packages. An
+example package that uses scriptedforms to boot up a GUI can be found within
+the [./example](./example) directory.
+
 ## Software license agreement
 
 Copyright (C) 2018 Simon Biggs
