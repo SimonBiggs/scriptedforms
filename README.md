@@ -1,6 +1,7 @@
 # Scripted Forms
 
-Quickly and easily create powerful front ends for python scripts and packages.
+Quickly and easily create powerful form like front ends for python scripts and
+packages using markdown.
 
 ## Quick start
 
