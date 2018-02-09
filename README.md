@@ -5,23 +5,24 @@
 ```python
 import scriptedforms as sf
 
+def create_file(filename):
+    markdown_contents = """
+    # An example
+
+    <section-live>
+
+    <variable-string>your_name</variable-string>
+
+    `print('Hello {}!'.format(your_name))`
+
+    </section-live>
+    """
+
+    with open(filename, 'w') as f:
+        f.write(markdown_contents)
+
 filename = 'example.md'
-
-markdown_contents = """
-# An example
-
-<section-live>
-
-<variable-string>your_name</variable-string>
-
-`print('Hello {}!'.format(your_name))`
-
-</section-live>
-"""
-
-with open(filename, 'w') as f:
-    f.write(markdown_contents)
-
+create_file(filename)
 sf.load(filename)
 ```
 
