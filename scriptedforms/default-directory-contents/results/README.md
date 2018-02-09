@@ -1,2 +1,0 @@
-# Results files description
-

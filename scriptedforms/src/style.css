@@ -35,3 +35,36 @@ body {
   padding: 0;
   overflow: hidden;
 }
+
+.container {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+}
+
+.form {
+  overflow: auto;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.form-contents {
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.output-container div .jp-RenderedText {
+  padding-left: 0;
+}
+
+.output-container div div .jp-OutputPrompt {
+  padding: 0;
+  flex: 0;
+  border: 0;
+}
+
+.floating-submit {
+  position: fixed !important;
+  bottom: 23px;
+  right: 40px;
+}
+  
