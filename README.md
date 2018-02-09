@@ -58,7 +58,7 @@ explaination of how you might go about deploying your utility with its new GUI.
 The majority of users will not need to pay attention this section.
 
 For those who wish to build scriptedforms from the source provided within this repository, instead of using pypi, the javascript bundle will need to be built.
-To do this you will need to [install `yarn`](https://yarnpkg.com/lang/en/docs/install/) and then run the following in the [same directory as the `package.json` file](./scriptedforms):
+To do this you will need to [install `yarn`](https://yarnpkg.com/lang/en/docs/install/) and then run the following in the [directory containing the `package.json` file](./scriptedforms):
 
 ```bash
 yarn
