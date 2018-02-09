@@ -71,9 +71,9 @@ following link on the computer of the user who will need to use your software:
  > <https://www.anaconda.com/download>
 
 On the computer in question within the console navigate to your package on the
-shared drive making sure your console's directory is sitting at the top level
-of your package, where `setup.py` is sitting. Then install your package using 
-the following in the console:
+shared drive making sure your console's working directory is at the top level
+of your package, where `setup.py` is located. Then install your package using 
+the following command within the console:
 
 ```bash
 pip install .
