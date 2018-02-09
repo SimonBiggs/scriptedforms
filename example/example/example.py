@@ -1,8 +1,14 @@
+import os
 import scriptedforms as sf
 
 
+def example(name):
+    print('Hello {}!'.format(name))
+
 def main():
-    sf.load('example.md')
+    here = os.path.dirname(__file__)
+    filepath = os.path.join(here, 'example.md')
+    sf.load(filepath)
 
 
 if __name__ == "__main__":

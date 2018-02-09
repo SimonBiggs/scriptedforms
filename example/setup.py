@@ -6,7 +6,7 @@ setup(
     author="Your Name",
     author_email="Your Email",
     description="Your short description",
-    long_description="Your long description"
+    long_description="Your long description",
     packages=[
         "example"
     ],

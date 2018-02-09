@@ -1,1 +1,1 @@
-include example/example.md
+include example/*.md
