@@ -28,7 +28,7 @@ As an extra benefit, if you have either `simple.md` or `complicated.md` open in
 the browser while you edit and save the file scriptedforms will automatically
 reload.
 
-## Deploying on a user machine
+## A possible method for deploying on a user machine
 
 Lets say you have a really nifty script that does something great. But you want
 to make a non-technical frontend for your work. A workflow to get your
