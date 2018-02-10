@@ -2,7 +2,7 @@
 
 # Scripted Forms
 
-Quickly create beautiful reactive form frontends for python packages with markdown and scriptedforms
+Quickly create beautiful reactive GUIs for python packages with the power of Jupyter baked in.
 
 ## Quick start
 
