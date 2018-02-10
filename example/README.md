@@ -39,7 +39,7 @@ Here is a list of all of these instances within files:
 * [`MANIFEST.in`](./MANIFEST.in#L1)
 * and [`your_package_name/__init__.py`](./example/__init__.py#L1)
 
-And then the example directory names need to be changed to your own package
+And then the `example` directory need to be changed to your own package
 name as well as `example.py`.
 
 Then you need to create the functions you will be using within your GUI within
