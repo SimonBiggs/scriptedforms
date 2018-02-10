@@ -121,3 +121,10 @@ license text. The Apache-2.0 does. In order to maintain familiarity within the
 software community, and to maintain compatibility with other licenses instead
 of appending these limitation of liability clauses to the AGPL-3.0+, instead,
 the Apache-2.0 was included as well.
+
+### A note about license requirements
+
+If you only ever use this code internally within your company to create GUIs
+the only people who need to have access to the source code are those users within
+your company. You do not need to share your code external to youe comoany if you
+only ever use this library internally.
