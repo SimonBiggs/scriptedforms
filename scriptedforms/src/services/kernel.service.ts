@@ -69,49 +69,21 @@ export class KernelService {
     private myJupyterService: JupyterService
   ) { }
 
-  // Set 
+  restartKernel(): Promise<string> {
+    this.sessionConnected = new PromiseDelegate<string>();
+    this.sessionStore[this.currentSession].kernel.restart().then(() => {
+      this.sessionStore[this.currentSession].queueId = 0
+      this.sessionStore[this.currentSession].queueLog = {}
+      this.sessionStore[this.currentSession].queue = Promise.resolve(null)
+      this.sessionStore[this.currentSession].isNewSession = true
 
-  // get session() {
-  //   return this.sessionStore[this.currentSession].session
-  // }
+      this.runCode(this.currentSession, sessionStartCode, 'session_start_code').then(() => {
+        this.sessionConnected.resolve(this.currentSession);
+      })
+    })
 
-  // get kernel() {
-  //   return this.sessionStore[this.currentSession].kernel
-  // }
-
-  // get queueId() {
-  //   return this.sessionStore[this.currentSession].queueId
-  // }
-
-  // set queueId(queueId: number) {
-  //   this.sessionStore[this.currentSession].queueId = queueId
-  // }
-
-  // get queueLog() {
-  //   return this.sessionStore[this.currentSession].queueLog
-  // }
-
-  // get queue() {
-  //   return this.sessionStore[this.currentSession].queue
-  // }
-
-  // set queue(queue) {
-  //   this.sessionStore[this.currentSession].queue = queue
-  // }
-
-  // get isNewSession() {
-  //   return this.sessionStore[this.currentSession].isNewSession
-  // }
-
-  // set isNewSession(isNewSession) {
-  //   this.sessionStore[this.currentSession].isNewSession = isNewSession
-  // }
-
-  // loadingForm() {
-  //   this.currentSession = null;
-  //   this.sessionConnected = new PromiseDelegate<string>();
-  //   // this.queue = this.sessionConnected.promise
-  // }
+    return this.sessionConnected.promise
+  }
 
   sessionConnect(path: string): Promise<string> {
     this.sessionConnected = new PromiseDelegate<string>();

@@ -152,12 +152,15 @@ export class VariableBaseComponent implements AfterViewInit {
     }
   }
 
-  formReady() {
-    this.isFormReady = true;
+  formReady(isReady: boolean) {
+    this.isFormReady = isReady;
   }
 
-  initialise(index: number) {
+  setId(index: number) {
     this.variableIdentifier = `(${String(index)})-${this.variableName}`
+  }
+
+  initialise() {
     this.myVariableService.initialiseVariableComponent(this.sessionId, this)
   }
 }

@@ -259,7 +259,6 @@ print('SUPER SUBMIT!!!')
 Code placed within output groups will run after any variable on the form
 changes in value.
 
-[Output sections are no longer running]
 <section-output>
 
 ```python

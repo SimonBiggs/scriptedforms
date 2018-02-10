@@ -59,7 +59,6 @@ import { VariableComponent } from '../types/variable-component';
   template: `<ng-content></ng-content>`
 })
 export class LiveComponent implements AfterViewInit {
-  sessionId: string
   variableComponents: VariableComponent[] = []
 
   liveId: number;
@@ -102,6 +101,10 @@ export class LiveComponent implements AfterViewInit {
     }
   }
 
+  set sessionId(theSessionId: string) {
+    this.initialiseCodeSessionId(theSessionId)
+  }
+
   runCode() {
     // This would be better done with a promise. It should always run, just
     // delayed until read and initialised.
@@ -118,16 +121,21 @@ export class LiveComponent implements AfterViewInit {
     });
   }
 
-  formReady() {
-    this.isFormReady = true;
+  formReady(isReady: boolean) {
+    this.isFormReady = isReady;
   }
 
   setId(id: number) {
     this.liveId = id;
 
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.codeComponentInit(
-        this.sessionId, '"live"_' + String(this.liveId) + '_' + String(index));
+      codeComponent.name = '"live"_' + String(this.liveId) + '_' + String(index)
+    });
+  }
+
+  initialiseCodeSessionId(sessionId: string) {
+    this.codeComponents.toArray().forEach((codeComponent, index) => {
+      codeComponent.sessionId = sessionId
     });
   }
 }

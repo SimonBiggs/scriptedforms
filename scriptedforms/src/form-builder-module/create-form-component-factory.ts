@@ -43,7 +43,7 @@
 import {
   Component, ViewChildren, QueryList,
   Compiler, ComponentFactory, NgModule,
-  ModuleWithComponentFactories, ElementRef
+  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -89,7 +89,8 @@ import { SectionComponent } from '../types/section-component';
 export
 interface IFormComponent {
   formViewInitialised: PromiseDelegate<void>,
-  formReady: PromiseDelegate<void>
+  formReady: PromiseDelegate<void>,
+  restartFormKernel(): Promise<void>
 }
 
 
@@ -122,12 +123,14 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
    * The form component that is built each time the template changes
    */
   @Component(metadata)
-  class FormComponent {
+  class FormComponent implements IFormComponent {
     formViewInitialised = new PromiseDelegate<void>()
     formReady = new PromiseDelegate<void>()
 
     variableComponents: VariableComponent[] = []
     sectionComponents: SectionComponent[] = []
+
+    _sessionId: string;
 
     // Sections
     @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>;
@@ -156,7 +159,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       private myKernelSevice: KernelService,
       private myVariableService: VariableService,
       private myFileService: FileService,
-      private elementRef: ElementRef
+      private elementRef: ElementRef,
+      private myChangeDetectorRef: ChangeDetectorRef
     ) { }
 
     onSubmit() {
@@ -198,18 +202,11 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray())
       this.sectionComponents = this.sectionComponents.concat(this.outputComponents.toArray())
       
-      this.initialiseForm();
-    }
-
-  
-    /**
-     * Initialise the form. Code ordering during initialisation is defined here.
-     */
-    private initialiseForm() {
       // Only begin initialisation once the kernel is connected
-      this.myKernelSevice.sessionConnected.promise.then(() => {
-        console.log('Form initialisation')
+      this.setComponentIds();
 
+      this.myKernelSevice.sessionConnected.promise.then((sessionId) => {
+        this._sessionId = sessionId
         this.sectionComponents.forEach(sectionComponent => {
           sectionComponent.sessionId = sessionId;
         })
@@ -217,17 +214,57 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           variableComponent.sessionId = sessionId;
         })
 
+        this.outputComponents.toArray().forEach(outputComponent => {
+          outputComponent.subscribeToVariableChanges();
+        });
+
+        this.initialiseForm();
+      })
+    }
+
+
+    private setComponentIds() {
+      this.sectionComponents.forEach((sectionComponent, index) => {
+        sectionComponent.setId(index);
+      })
+      this.variableComponents.forEach((variableComponent, index) => {
+        variableComponent.setId(index);
+      })
+
+      this.myChangeDetectorRef.detectChanges();
+    }
+
+    public restartFormKernel() {
+      this.formReady = new PromiseDelegate<void>()
+      this.buttonComponents.toArray().forEach(buttonComponent => {
+        buttonComponent.formReady(false);
+      });
+      this.variableComponents.forEach(variableComponent => {
+        variableComponent.formReady(false);
+      })
+      this.liveComponents.toArray().forEach(liveComponent => {
+        liveComponent.formReady(false);
+      });
+      this.myKernelSevice.restartKernel().then(() => {
+        this.initialiseForm()
+      })
+
+      return this.formReady.promise
+    }
+  
+    /**
+     * Initialise the form. Code ordering during initialisation is defined here.
+     */
+    private initialiseForm() {
+        console.log(this.myKernelSevice.sessionStore)
+        console.log('Form initialisation')
+
         // console.log('session connected');
         // console.log(this.startComponents);
 
         // The start component section is run first
         
-
         this.startComponents.toArray().forEach((startComponent, index) => {
-          startComponent.setId(index);
-          // startComponent.provideSections(
-          //   this.liveComponents, this.buttonComponents);
-
           // Only run the code of a start component if it is a new session.
           // Once the data model for the form results has been built it can
           // be used to facilitate determining whether or not the code within
@@ -235,58 +272,39 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           // be re-run even if it isn't a new session.
           if (startComponent.always === '') {
             startComponent.runCode();
-          } else if (this.myKernelSevice.sessionStore[sessionId].isNewSession) {
+          } else if (this.myKernelSevice.sessionStore[this._sessionId].isNewSession) {
             startComponent.runCode();
           }
         });
         // this.myKernelSevice.isNewSession = false;
 
         // Variable components are initialised second
-        this.myVariableService.resetVariableService(sessionId);
+        this.myVariableService.resetVariableService(this._sessionId);
         
         this.variableComponents.forEach((variableComponent, index) => {
-          variableComponent.initialise(index);
+          variableComponent.initialise();
         })
-        this.myVariableService.allVariablesInitilised(sessionId)
-        // this.myVariableService.fetchAll()
+        this.myVariableService.allVariablesInitilised(this._sessionId)
 
         // Wait until the code queue is complete before declaring form ready to
         // the various components.
-        this.myKernelSevice.sessionStore[sessionId].queue.then(() => {
+        this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
           
-          // Make all variables update whenever a code component finishes
-          // running.
-          // for (const codeComponent of this.codeComponents.toArray()) {
-          //   codeComponent.aCodeRunCompleted.subscribe(() => {
-          //     // this.myVariableService.fetchAll()
-          //   });
-          // }
-
-          // Tell the live components that the form is ready
-          this.liveComponents.toArray().forEach((liveComponent, index) => {
-            liveComponent.setId(index);
-            liveComponent.formReady();
+          this.liveComponents.toArray().forEach(liveComponent => {
+            liveComponent.formReady(true);
           });
 
-          // Tell the variable components that the form is ready
           this.variableComponents.forEach(variableComponent => {
-            variableComponent.formReady();
+            variableComponent.formReady(true);
           })
 
-          // Tell the button components that the form is ready
-          this.buttonComponents.toArray().forEach((buttonComponent, index) => {
-            buttonComponent.setId(index);
-            buttonComponent.formReady();
-          });
-
-          this.outputComponents.toArray().forEach((outputComponent, index) => {
-            outputComponent.setId(index);
-            outputComponent.formReady();
+          this.buttonComponents.toArray().forEach(buttonComponent => {
+            buttonComponent.formReady(true);
           });
 
           this.formReady.resolve(null)
         });
-      });
+
     }
   }
 

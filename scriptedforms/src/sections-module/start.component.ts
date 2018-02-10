@@ -45,17 +45,16 @@ import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-start',
-  template: `<ng-content></ng-content>
-<div align="right" *ngIf="(!hasStartRun)">
-  <button
-  mat-mini-fab
-  (click)="runCode()">
-    <mat-icon>autorenew</mat-icon>
-  </button>
-</div>`
+  template: `<ng-content></ng-content>`
+// <div align="right" *ngIf="(!hasStartRun)">
+//   <button
+//   mat-mini-fab
+//   (click)="runCode()">
+//     <mat-icon>autorenew</mat-icon>
+//   </button>
+// </div>`
 })
 export class StartComponent {
-  sessionId: string
   // liveComponents: QueryList<LiveComponent>;
   // buttonComponents: QueryList<ButtonComponent>;
   @Input() always?: string;
@@ -69,6 +68,10 @@ export class StartComponent {
   //   this.liveComponents = liveComponents;
   //   this.buttonComponents = buttonComponents;
   // }
+
+  set sessionId(theSessionId: string) {
+    this.initialiseCodeSessionId(theSessionId)
+  }
 
   runCode() {
     this.codeComponents.toArray().forEach(codeComponent => {
@@ -90,9 +93,13 @@ export class StartComponent {
   setId(id: number) {
     this.startId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.codeComponentInit(
-        this.sessionId, '"start"_' + String(this.startId) + '_' + String(index));
+      codeComponent.name = '"start"_' + String(this.startId) + '_' + String(index)
     });
+  }
 
+  initialiseCodeSessionId(sessionId: string) {
+    this.codeComponents.toArray().forEach((codeComponent, index) => {
+      codeComponent.sessionId = sessionId
+    });
   }
 }

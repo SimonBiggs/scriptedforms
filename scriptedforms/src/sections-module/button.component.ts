@@ -66,7 +66,7 @@ export class ButtonComponent implements AfterViewInit {
   @Input() name?: string;
   @Input() conditional?: string
 
-  sessionId: string
+  _sessionId: string
 
   conditionalValue: boolean = true;
 
@@ -98,6 +98,11 @@ export class ButtonComponent implements AfterViewInit {
     }
   }
 
+  set sessionId(theSessionId: string) {
+    this._sessionId = theSessionId
+    this.initialiseCodeSessionId(theSessionId)
+  }
+
   /**
    * Run the code of all child CodeComponents
    */
@@ -107,7 +112,7 @@ export class ButtonComponent implements AfterViewInit {
         codeComponent.runCode();
       });
       this.codeRunning = true;
-      this.myKernelSevice.sessionStore[this.sessionId].queue.then(() => {
+      this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
         this.codeRunning = false;
       });
     }
@@ -117,8 +122,8 @@ export class ButtonComponent implements AfterViewInit {
    * Buttons are only active once the form is ready. Call this function
    * to declare that the form is ready for user interaction.
    */
-  formReady() {
-    this.isFormReady = true;
+  formReady(isReady: boolean) {
+    this.isFormReady = isReady;
   }
 
   clearCodeOutput() {
@@ -137,9 +142,13 @@ export class ButtonComponent implements AfterViewInit {
   setId(id: number) {
     this.buttonId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.codeComponentInit(
-        this.sessionId, '"button"_' + String(this.buttonId) + '_' + String(index))
+      codeComponent.name = '"button"_' + String(this.buttonId) + '_' + String(index)
     });
   }
 
+  initialiseCodeSessionId(sessionId: string) {
+    this.codeComponents.toArray().forEach((codeComponent, index) => {
+      codeComponent.sessionId = sessionId
+    });
+  }
 }

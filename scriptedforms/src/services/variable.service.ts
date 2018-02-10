@@ -81,34 +81,6 @@ export interface SessionVariableStore {
 @Injectable()
 export class VariableService {
   sessionVariableStore: SessionVariableStore = {}
-  // variableStore: BehaviorSubject<VariableStore> = new BehaviorSubject({});
-  // oldVariableStore: VariableStore;
-
-  // variableIdentifierMap: {
-  //   [key: string]: string
-  // } = {}
-
-  // variableEvaluateMap: {
-  //   [key: string]: string
-  // } = {}
-
-  // pythonVariables: VariableStore = {}
-
-  // sessionsIopubConnected: string[] = []
-
-  // variableChangedObservable: BehaviorSubject<VariableStore> = new BehaviorSubject({});
-
-  // executionCount: BehaviorSubject<nbformat.ExecutionCount> = new BehaviorSubject(null);
-  // lastCode: BehaviorSubject<string> = new BehaviorSubject(null);
-
-  // timestamps: BehaviorSubject<{
-  //   [key: string]: number
-  // }> = new BehaviorSubject({})
-
-  // componentStore: {
-  //   [key: string]: VariableComponent
-  // } = {}
-
   variableHandlerClass: string = '_VariableHandler'
   handlerName: string = '_scriptedforms_variable_handler'
   fetchVariablesCode: string = `exec(${this.handlerName}.fetch_code)`;
