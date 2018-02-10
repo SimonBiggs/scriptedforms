@@ -45,9 +45,7 @@ After running the above code, if everything worked, you should be able to type
 your name into the form and see the code field live update with each key stroke:
 
 <p align="center">
-
-![Screenshot of the quick start example](./screenshots/quick-start.png)
-
+  <img src="./screenshots/quick-start.png">
 </p>
 
 ## More detailed markdown file
@@ -57,9 +55,7 @@ For a markdown file that presents all of the features of scriptedforms see
 A section of that form is shown below as a screenshot:
 
 <p align="center">
-
-![Screenshot of a more complicated form](./screenshots/complicated.png)
-
+  <img src="./screenshots/complicated.png">
 </p>
 
 ## Example that can be used as a template for deployment
