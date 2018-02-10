@@ -18,16 +18,15 @@ import scriptedforms as sf
 
 def create_file(filename):
     markdown_contents = """
-    # An example
+# An example
 
-    <section-live>
+<section-live>
 
-    <variable-string>your_name</variable-string>
+<variable-string>your_name</variable-string>
 
-    `print('Hello {}!'.format(your_name))`
+`print('Hello {}!'.format(your_name))`
 
-    </section-live>
-    """
+</section-live>"""
     with open(filename, 'w') as f:
         f.write(markdown_contents)
 
