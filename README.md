@@ -2,8 +2,7 @@
 
 # Scripted Forms
 
-Quickly and easily create a powerful reactive form frontend for a python
-package using markdown.
+Quickly create beautiful reactive form frontends for python packages with markdown and scriptedforms
 
 ## Quick start
 
