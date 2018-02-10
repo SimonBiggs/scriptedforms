@@ -32,7 +32,7 @@ def create_file(filename):
     with open(filename, 'w') as f:
         f.write(markdown_contents)
 
-filename = 'example.md'
+filename = 'quick-start.md'
 create_file(filename)
 sf.load(filename)
 ```
