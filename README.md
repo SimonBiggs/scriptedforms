@@ -2,7 +2,7 @@
 
 # Scripted Forms
 
-Quickly create beautiful reactive GUIs for python packages with the power of Jupyter baked in.
+Quickly create beautiful reactive GUIs for python packages using Markdown and Python variables and functions. Built on-top of the Jupyter Notebook server. Built with Angular, Angular Material, and JupyterLab typescript libraries.
 
 ## Quick start
 
