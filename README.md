@@ -28,7 +28,6 @@ def create_file(filename):
 
     </section-live>
     """
-
     with open(filename, 'w') as f:
         f.write(markdown_contents)
 
