@@ -36,6 +36,7 @@ import {
 import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
 import { FormService } from './form.service';
+import { KernelService } from './kernel.service';
 
 import {
   watchdogCode
@@ -48,7 +49,8 @@ export class WatchdogService {
   constructor(
     private myFileService: FileService,
     private myJupyterService: JupyterService,
-    private myFormService: FormService
+    private myFormService: FormService,
+    private myKernelService: KernelService,
   ) { }
 
   runWatchdogAfterFormReady() {
@@ -91,6 +93,7 @@ export class WatchdogService {
           return (item.replace('\\', '/') === path) || (item.includes('goutputstream'))
         })
         if (match) {
+          this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false
           this.myFileService.loadFileContents(path, sessionId)
         }
       }

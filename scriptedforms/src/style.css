@@ -62,7 +62,7 @@ body {
   border: 0;
 }
 
-.floating-submit {
+.floating-restart-kernel {
   position: fixed !important;
   bottom: 23px;
   right: 40px;

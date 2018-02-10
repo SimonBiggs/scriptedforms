@@ -66,7 +66,8 @@ import { FileService } from '../services/file.service';
 @Component({
   // By using the selector 'code' this overwrites the standard <code> html tag.
   selector: 'code',
-  template: `<span class="output-container" #outputcontainer></span><span #codecontainer [hidden]="future != undefined"><ng-content></ng-content></span>`
+  // Changed [hidden]="future != undefined" --> [hidden]="True" for code to be hidden by default
+  template: `<span class="output-container" #outputcontainer></span><span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   sessionId: string;
@@ -141,10 +142,10 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    *  
    * @param name A unique name for the code component
    */
-  codeComponentInit(sessionId: string, name: string) {
-    this.name = name;
-    this.sessionId = sessionId
-  }
+  // codeComponentInit(sessionId: string, name: string) {
+  //   this.name = name;
+  //   this.sessionId = sessionId
+  // }
 
   /**
    * Run the code within the code component. Update the output area with the results of the 

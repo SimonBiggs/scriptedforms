@@ -48,10 +48,18 @@ import { FormService } from "./services/form.service";
 
 @Component({
   selector: "app-root",
-  template: `<div class="margin"><app-form-builder #formBuilderComponent></app-form-builder></div>`,
+  template: `
+<div class="margin">
+  <app-form-builder #formBuilderComponent></app-form-builder>
+  <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
+    <mat-icon>replay</mat-icon>
+  </button>
+</div>`,
   styles: [`.margin { margin: 20px;}`]
 })
 export class AppComponent implements AfterViewInit {
+  restartingKernel = false;
+
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
 
   constructor(
@@ -62,6 +70,13 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.myFormService.formBuilderComponent = this.formBuilderComponent
+  }
+
+  restartKernel() {
+    this.restartingKernel = true
+    this.myFormService.formStore[this.myFormService.currentFormSessionId].component.restartFormKernel().then(() => {
+      this.restartingKernel = false
+    })
   }
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
