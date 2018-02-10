@@ -126,5 +126,5 @@ the Apache-2.0 was included as well.
 
 If you only ever use this code internally within your company to create GUIs
 the only people who need to have access to the source code are those users within
-your company. You do not need to share your code external to your company if you
+your company. You do not need to share your code outside of your company if you
 only use this package internally.
