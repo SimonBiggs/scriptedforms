@@ -50,7 +50,7 @@ your name into the form and see the code field live update with each key stroke:
 
 ## More detailed markdown file
 
-For a markdown file that presents all of the features of scriptedforms see
+For a markdown file that presents the majority of the features of scriptedforms see
 [complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
 A section of that form is shown below as a screenshot:
 
