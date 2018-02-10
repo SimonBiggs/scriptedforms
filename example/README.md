@@ -9,7 +9,7 @@ script that then uses scriptedforms to boot up a GUI.
 To run this example you need to download this repository. One way to do that
 is by downloading the [repository zip file](https://github.com/SimonBiggs/scriptedforms/archive/master.zip).
 
-Once you have download and extracted the repository navigate to 
+Once you have download and extracted the repository navigate to
 this `example` directory and then install this package by running the following within a terminal:
 
 ```bash
@@ -35,9 +35,9 @@ own package name.
 
 Here is a list of all of these instances within files:
 
-* `setup.py` lines [4](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L4), [11](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L11), and two instances on line [15](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L15).
-* [`MANIFEST.in`](https://github.com/SimonBiggs/scriptedforms/blob/master/example/MANIFEST.in#L1)
-* and [your_package_name/__init__.py](https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/__init__.py#L1)
+* [`setup.py`](./setup.py) lines [4](./setup.py#L4), [11](./setup.py#L11), and two instances on line [15](./setup.py#L15).
+* [`MANIFEST.in`](./MANIFEST.in#L1)
+* and [`your_package_name/__init__.py`](./example/__init__.py#L1)
 
 And then the example directory names need to be changed to your own package
 name as well as `example.py`.
@@ -50,7 +50,7 @@ The [`complicated.md`](https://raw.githubusercontent.com/SimonBiggs/scriptedform
 file hopefully will be helpful as a starting place to build what ever you might
 need.
 
-Lastly, within https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/example.py#L10
+Lastly, on [line 10 of `your_package_name/your_package_name.py`](https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/example.py#L10)
 you will need to change the markdown filename to match the filename of your
 markdown file.
 
@@ -58,7 +58,7 @@ markdown file.
 
 Lets say you have a really nifty script that does something great. But you want
 to make a non-technical frontend for others within your company to interface
-with your work. A workflow to get your brilliant tool on a client's machine 
+with your work. A workflow to get your brilliant tool on a client's machine
 might be the following.
 
 First drop your package on a network share.
@@ -70,7 +70,7 @@ following link on the computer of the user who will need to use your software:
 
 On the computer in question within the console navigate to your package on the
 shared drive making sure your console's working directory is at the top level
-of your package, where `setup.py` is located. Then install your package using 
+of your package, where `setup.py` is located. Then install your package using
 the following command within the console:
 
 ```bash

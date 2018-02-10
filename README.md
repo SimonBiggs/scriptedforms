@@ -38,7 +38,7 @@ sf.load(filename)
 ```
 
 Note that because scriptedforms relies on the jupyter notebook server
-the above code cannot be run within a jupyter app itself. For example, that means that you cannot 
+the above code cannot be run within a jupyter app itself. For example, that means that you cannot
 use an `ipython` prompt or a jupyter notebook to run the above code.
 
 For a markdown file that presents all of the features of scriptedforms see
@@ -85,8 +85,8 @@ the AGPL-3.0+.
 
 Copies of these licenses can be found at:
 
-* AGPL-3.0+ -- https://www.gnu.org/licenses/agpl-3.0.txt
-* Apache-2.0 -- https://www.apache.org/licenses/LICENSE-2.0.html
+* AGPL-3.0+ -- <https://www.gnu.org/licenses/agpl-3.0.txt>
+* Apache-2.0 -- <https://www.apache.org/licenses/LICENSE-2.0.html>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the Apache-2.0 and the AGPL-3.0+ is distributed on an **"AS IS" BASIS,
@@ -99,7 +99,7 @@ limitations under the Apache-2.0 and the AGPL-3.0+.
 Within Australian courts if there is any ambiguity in liability exclusion
 clauses they will be interpreted narrowly. If liability for negligence is not
 expressly excluded it may not be read as excluded within an Australian court
-(https://eprints.qut.edu.au/7404/1/open_source_book.pdf page 80).
+(<https://eprints.qut.edu.au/7404/1/open_source_book.pdf> page 80).
 The same is true for clauses which seek to exclude liability for consequential
 loss.
 
