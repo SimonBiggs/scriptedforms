@@ -18,8 +18,13 @@ Then copy the following into a python prompt:
 ```python
 import scriptedforms as sf
 
-def create_file(filename):
-    markdown_contents = """
+# workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
+def create_file(filename, contents):
+    with open(filename, 'w') as f:
+        f.write(contents)
+
+filename = 'quick-start.md'
+markdown_contents = """
 # An example
 
 <section-live>
@@ -29,11 +34,8 @@ def create_file(filename):
 `print('Hello {}!'.format(your_name))`
 
 </section-live>"""
-    with open(filename, 'w') as f:
-        f.write(markdown_contents)
 
-filename = 'quick-start.md'
-create_file(filename)
+create_file(filename, markdown_contents)
 sf.load(filename)
 ```
 
