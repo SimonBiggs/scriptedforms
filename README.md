@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # Scripted Forms
 
 Quickly and easily create a powerful reactive form frontend for a python
@@ -42,7 +44,11 @@ use an `ipython` prompt or a jupyter notebook to run the above code.
 After running the above code, if everything worked, you should be able to type
 your name into the form and see the code field live update with each key stroke:
 
+<div style="text-align:center">
+
 ![Screenshot of the quick start example](./screenshots/quick-start.png)
+
+</div>
 
 ## More detailed markdown file
 
@@ -50,7 +56,11 @@ For a markdown file that presents all of the features of scriptedforms see
 [complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
 A section of that form is shown below as a screenshot:
 
+<div style="text-align:center">
+
 ![Screenshot of a more complicated form](./screenshots/complicated.png)
+
+</div>
 
 ## Example that can be used as a template for deployment
 
