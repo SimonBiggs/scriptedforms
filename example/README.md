@@ -35,11 +35,9 @@ own package name.
 
 Here is a list of all of these instances within files:
 
-* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L4
-* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L11
-* https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L15 (two instances)
-* https://github.com/SimonBiggs/scriptedforms/blob/master/example/MANIFEST.in#L1
-* https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/__init__.py#L1
+* `setup.py` lines [4](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L4), [11](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L11), and two instances on line [15](https://github.com/SimonBiggs/scriptedforms/blob/master/example/setup.py#L15).
+* [`MANIFEST.in`](https://github.com/SimonBiggs/scriptedforms/blob/master/example/MANIFEST.in#L1)
+* and [your_package_name/__init__.py](https://github.com/SimonBiggs/scriptedforms/blob/master/example/example/__init__.py#L1)
 
 And then the example directory names need to be changed to your own package
 name as well as `example.py`.
