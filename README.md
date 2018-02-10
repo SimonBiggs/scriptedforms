@@ -41,6 +41,7 @@ use an `ipython` prompt or a jupyter notebook to run the above code.
 
 After running the above code, if everything worked, you should be able to type
 your name into the form and see the code field live update with each key stroke:
+
 ![Screenshot of the quick start example](./screenshots/quick-start.png)
 
 ## More detailed markdown file
