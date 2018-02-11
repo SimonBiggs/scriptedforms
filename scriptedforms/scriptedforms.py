@@ -80,6 +80,14 @@ def load(filepath):
     directory, filename = os.path.split(absolute_path)
 
     os.chdir(directory)
+
+    # workaround for Notebook app using sys.argv
+    sys.argv = [sys.argv[0]]
+
+    # failed attempt at workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
+    # if '_' in globals():
+    #     del globals()['_']
+
     ScriptedForms.launch_instance(
         default_url='/scriptedforms/{}'.format(filename))
 
@@ -90,8 +98,7 @@ def main():
         'filepath', help='The file path of the form to open.')
 
     args = parser.parse_args()
-    sys.argv = [sys.argv[0]]
-
+    
     load(args.filepath)
 
 
