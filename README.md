@@ -62,6 +62,17 @@ to
 ```
 and then press save. The form in the browser should then update to match what you just wrote. 
 
+If you want to be a bit more adventurous see what happens if you add the following to the end of the file:
+
+```markdown
+<section-live>
+
+<variable-slider>a_number</variable-slider>
+`print('Your number is {}'.format(a_number))`
+
+</section-live>
+```
+
 ## More detailed markdown file
 
 For a markdown file that presents the majority of the features of scriptedforms see
