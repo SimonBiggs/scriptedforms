@@ -68,6 +68,7 @@ If you want to be a bit more adventurous see what happens if you add the followi
 <section-live>
 
 <variable-slider>a_number</variable-slider>
+
 `print('Your number is {}'.format(a_number))`
 
 </section-live>
