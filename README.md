@@ -49,6 +49,10 @@ your name into the form and see the code field live update with each key stroke:
   <img src="./screenshots/quick-start.png">
 </p>
 
+Now open up the file `quick-start.md` in your favorite text editor.
+Edit the markdown file by changing '# An example' to '# My first Scripted Form' and then press save.
+On the save the form in the browser should update to match ehat you just wrote.
+
 ## More detailed markdown file
 
 For a markdown file that presents the majority of the features of scriptedforms see
