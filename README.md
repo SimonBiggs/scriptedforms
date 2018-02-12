@@ -50,8 +50,17 @@ your name into the form and see the code field live update with each key stroke:
 </p>
 
 Now open up the file `quick-start.md` in your favorite text editor.
-Edit the markdown file by changing `# An example` to `# The form updates when I change it` and then press save.
-After the save the form in the browser should update to match what you just wrote.
+Edit the markdown file by changing 
+
+```markdown
+# An example
+```
+to
+
+```markdown
+# The form updates when I change it
+```
+and then press save. After the save the form in the browser should update to match what you just wrote.
 
 ## More detailed markdown file
 
