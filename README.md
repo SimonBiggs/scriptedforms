@@ -60,12 +60,13 @@ to
 ```markdown
 # The form updates when I change it
 ```
-and then press save. After the save the form in the browser should update to match what you just wrote.
+and then press save. The form in the browser should then update to match what you just wrote. 
 
 ## More detailed markdown file
 
 For a markdown file that presents the majority of the features of scriptedforms see
-[complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
+[complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md). Try writing some of the contents of that file into `quick-start.md` to see how the features of scriptedforms work.
+
 A section of that form is shown below as a screenshot:
 
 <p align="center">
