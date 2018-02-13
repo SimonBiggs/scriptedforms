@@ -2,7 +2,7 @@
 
 # Scripted Forms
 
-Quickly create beautiful reactive GUIs for python packages using Markdown and Python variables and functions. Under the hood it uses the Jupyter Notebook server, Angular, Angular Material, Phosphor and JupyterLab.
+Quickly create beautiful reactive GUIs for Python packages using Markdown and a few custom HTML elements. Under the hood it uses the Jupyter Notebook server, Angular, Angular Material, Phosphor and JupyterLab.
 
 ## Quick start
 
@@ -49,14 +49,42 @@ your name into the form and see the code field live update with each key stroke:
   <img src="./screenshots/quick-start.png">
 </p>
 
+Now open up the file `quick-start.md` in your favorite text editor.
+Edit the markdown file by changing
+
+```markdown
+# An example
+```
+
+to
+
+```markdown
+# The form updates when I change it
+```
+
+and then press save. The form in the browser should then update to match what you just wrote.
+
+If you want to be a bit more adventurous see what happens if you add the following to the end of the file:
+
+```markdown
+<section-live>
+
+<variable-slider>a_number</variable-slider>
+
+`print('Your number is {}'.format(a_number))`
+
+</section-live>
+```
+
 ## More detailed markdown file
 
 For a markdown file that presents the majority of the features of scriptedforms see
-[complicated.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md).
+[detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md). Try writing some of the contents of that file into `quick-start.md` to see how the features of scriptedforms work.
+
 A section of that form is shown below as a screenshot:
 
 <p align="center">
-  <img src="./screenshots/complicated.png">
+  <img src="./screenshots/detailed.png">
 </p>
 
 ## Example that can be used as a template for deployment

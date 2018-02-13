@@ -20,6 +20,6 @@ example(your_name)
 
 </section-live>
 
-## A more complicated example
+## A more detailed example
 
-[Link](./complicated.md)
+[Link](./detailed.md)
