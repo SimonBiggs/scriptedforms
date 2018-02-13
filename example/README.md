@@ -24,7 +24,7 @@ example
 
 This will then boot up the scriptedforms GUI in your default browser.
 
-As an extra benefit, if you have either `simple.md` or `complicated.md` open in
+As an extra benefit, if you have either `simple.md` or `detailed.md` open in
 the browser while you edit and save the file scriptedforms will automatically
 reload.
 
@@ -46,7 +46,7 @@ Then you need to create the functions you will be using within your GUI within
 `your_package_name.py`. Then within your markdown form file import your
 package and create your GUI.
 
-The [`complicated.md`](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/complicated.md)
+The [`detailed.md`](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md)
 file hopefully will be helpful as a starting place to build what ever you might
 need.
 
