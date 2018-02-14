@@ -76,7 +76,7 @@ As can be seen from this code there are already a few namespaces included by
 default within the Python session. Some of these are for convenience, some are
 required for the proper running of the form. The code that is run at boot of
 a new form kernel can be found within the
-[source code](https://github.com/SimonBiggs/jupyterlab-form/blob/master/src/angular-app/services/session-start-code.ts).
+[source code](https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/src/services/session-start-code.ts).
 
 ### Live sections and demo of each of the variable types
 
