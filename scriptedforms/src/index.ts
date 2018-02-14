@@ -44,7 +44,6 @@ export namespace IScriptedFormsWidget {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
-    path: string
   }
 }
 
@@ -96,16 +95,10 @@ export class ScriptedFormsWidget extends Widget {
 function main(): void {
   let serviceManager = new ServiceManager();
   let contentsManager = new ContentsManager();
-  let formConfig = JSON.parse(document.getElementById(
-    'scriptedforms-config-data'
-  ).textContent)
-
-  let path: string = formConfig.formFile
 
   let formWidget = new ScriptedFormsWidget({
     serviceManager,
-    contentsManager,
-    path
+    contentsManager
   });
 
   window.onresize = () => { formWidget.update(); };

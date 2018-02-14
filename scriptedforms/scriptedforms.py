@@ -27,28 +27,19 @@ import os
 import argparse
 from glob import glob
 
-from jinja2 import FileSystemLoader
-from traitlets import Unicode
-
 from notebook.notebookapp import NotebookApp
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 
 HERE = os.path.dirname(__file__)
-LOADER = FileSystemLoader(HERE)
+
+
 
 class _ScriptedFormsHandler(IPythonHandler):
-    """Handle requests between the main app page and notebook server."""
+    def get(self):
+        with open(os.path.join(HERE, 'index.html'), 'r') as f:
+            template = f.read()
 
-    def get(self, form_file):
-        """Get the main page for the application's interface."""
-        form_file = os.path.relpath(form_file)
-
-        return self.write(self.render_template("index.html",
-            static=self.static_url, base_url=self.base_url,
-            token=self.settings['token'], form_file=form_file))
-
-    def get_template(self, name):
-        return LOADER.load(self.settings['jinja2_env'], name)
+        return self.write(template)
 
 
 class ScriptedForms(NotebookApp):
@@ -63,9 +54,11 @@ class ScriptedForms(NotebookApp):
 
     def start(self):
         handlers = [
-            (r'/scriptedforms/(.*\.md)', _ScriptedFormsHandler),
-            (r"/scriptedforms/(.*)", FileFindHandler,
-                {'path': os.path.join(HERE, 'build')}),
+            (r'/scriptedforms/.*\.md', _ScriptedFormsHandler),
+            (
+                r"/scriptedforms/(.*)", FileFindHandler,
+                {'path': os.path.join(HERE, 'build')}
+            )
         ]
         self.web_app.add_handlers(".*$", handlers)
         super(ScriptedForms, self).start()
@@ -83,11 +76,6 @@ def load(filepath):
 
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
-
-    # failed attempt at workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
-    # if '_' in globals():
-    #     del globals()['_']
-
     ScriptedForms.launch_instance(
         default_url='/scriptedforms/{}'.format(filename))
 
