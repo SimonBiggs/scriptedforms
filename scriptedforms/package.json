@@ -53,6 +53,7 @@
     "bcryptjs": "^2.4.3",
     "core-js": "^2.5.1",
     "hammerjs": "^2.0.8",
+    "immutable": "^3.8.2",
     "js-sha3": "^0.7.0",
     "js-yaml": "^3.10.0",
     "json-stable-stringify": "^1.0.1",

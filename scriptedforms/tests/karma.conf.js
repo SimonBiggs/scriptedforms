@@ -7,7 +7,7 @@ var webpack = require('./webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '.',
-    frameworks: ['jasmine'],
+    frameworks: ['mocha'],
     reporters: ['mocha'],
     client: {
       mocha: {
@@ -16,17 +16,19 @@ module.exports = function (config) {
       }
     },
     plugins: [
-      require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-mocha'),
       require('karma-mocha-reporter'),
       require('karma-firefox-launcher'),
       require('karma-webpack'),
       require('karma-sourcemap-loader')
     ],
     files: [
+      {pattern: path.resolve('./build/injector.js'), watched: false},
       {pattern: 'src/*.spec.ts', watched: false}
     ],
     preprocessors: {
+      'build/injector.js': ['webpack'],
       'src/*.spec.ts': ['webpack', 'sourcemap']
     },
     mime: {

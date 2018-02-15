@@ -34,7 +34,7 @@ requests if the kernel is busy.
 import { Injectable } from '@angular/core';
 
 import {
-  Kernel, Session, ServerConnection
+  Kernel, Session
 } from '@jupyterlab/services';
 
 import {
@@ -46,6 +46,10 @@ import { JupyterService } from './jupyter.service';
 import {
   sessionStartCode
 } from './session-start-code';
+
+import {
+  jupyterSessionConnect
+} from '../levelled-files/level-1/jupyter-session-connect'
 
 
 export interface SessionStore {
@@ -87,48 +91,41 @@ export class KernelService {
 
   sessionConnect(path: string): Promise<string> {
     this.sessionConnected = new PromiseDelegate<string>();
-    this.sessionConnected.promise.then(() => {
-      console.log(this.sessionStore)
+    const activeSessionIds = Object.keys(this.sessionStore)
+
+    this.currentSession = null
+
+    jupyterSessionConnect(
+      this.myJupyterService.serviceManager, path, activeSessionIds)
+    .then(results => {
+      const id = this.currentSession = results.session.id
+      const session = results.session
+      const isNewSession = results.isNewSession
+
+      if (!(id in this.sessionStore)) {
+        this.sessionStore[id] = {
+          session: session,
+          kernel: session.kernel,
+          queueId: 0,
+          queueLog: {},
+          queue: Promise.resolve(null),
+          isNewSession: isNewSession
+        }
+      } else {
+        this.sessionStore[id].isNewSession = isNewSession
+      }
+      
+      this.currentSession = id
+
+      if (isNewSession) {
+        this.runCode(id, sessionStartCode, 'session_start_code')
+      }
+
+      this.sessionConnected.resolve(id)
+
     })
 
-    const settings = ServerConnection.makeSettings({});
-    const startNewOptions = {
-      kernelName: 'python3',
-      serverSettings: settings,
-      path: path
-    };
-
-    this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
-      if (model.id in this.sessionStore) {
-        this.currentSession = model.id
-        this.sessionStore[model.id].isNewSession = false
-        this.sessionConnected.resolve(model.id);
-      } else {
-        Session.connectTo(model, settings).then(session => {
-          this.storeSession(session, false)
-        });
-      }
-    }).catch(() => {
-      Session.startNew(startNewOptions).then(session => {
-        this.storeSession(session, true)
-        this.runCode(session.id, sessionStartCode, 'session_start_code')
-      });
-    });
-
     return this.sessionConnected.promise
-  }
-
-  storeSession(session: Session.ISession, isNewSession: boolean) {
-    this.sessionStore[session.id] = {
-      session: session,
-      kernel: session.kernel,
-      queueId: 0,
-      queueLog: {},
-      queue: Promise.resolve(null),
-      isNewSession: isNewSession
-    }
-    this.currentSession = session.id
-    this.sessionConnected.resolve(session.id);
   }
 
   addToQueue(sessionId: string, name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {
