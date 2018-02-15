@@ -104,7 +104,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       Mode.run(this.code, spec.mime, el);
       this.codecontainer.nativeElement.innerHTML = el.innerHTML;
       this._eRef.nativeElement.classList.add('cm-s-jupyter');
-      this._eRef.nativeElement.classList.add('language-python');
+      // this._eRef.nativeElement.classList.add('language-python');
     });
 
     // Initialise a JupyterLab output area

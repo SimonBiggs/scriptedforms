@@ -1,0 +1,33 @@
+{
+  "name": "@simonbiggs/test-scriptedforms",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "test": "karma start",
+    "test:chrome": "python run-test.py --browsers=Chrome karma.conf.js",
+    "test:debug": "python run-test.py  --browsers=Chrome --singleRun=false --debug=true --browserNoActivityTimeout=10000000 karma.conf.js",
+    "test:firefox": "python run-test.py --browsers=Firefox karma.conf.js",
+    "test:ie": "python run-test.py  --browsers=IE karma.conf.js",
+    "watch": "python run-test.py --singleRun=false",
+    "watch:src": "tsc -w"
+  },
+  "dependencies": {
+    "chai": "~4.1.2",
+    "expect.js": "~0.3.1",
+    "react": "~16.0.0",
+    "simulate-event": "~1.4.0"
+  },
+  "devDependencies": {
+    "@types/chai": "~4.0.10",
+    "@types/jasmine": "^2.8.6",
+    "awesome-typescript-loader": "^3.4.1",
+    "karma": "~1.7.1",
+    "karma-mocha": "^1.3.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.9",
+    "mocha": "^5.0.1",
+    "rimraf": "~2.6.2",
+    "typescript": "~2.6.2"
+  }
+}
