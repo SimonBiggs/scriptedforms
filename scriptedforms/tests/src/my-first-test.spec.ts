@@ -35,6 +35,13 @@ describe('Jupyter session connect', () => {
   it('should create a new session', () => {
     return jupyterSessionConnect(serviceManager, 'new.md', [])
     .then(results => {
+      expect(results.session.id).to.be.a('string')
+      return expect(results.isNewSession).to.equal(true)
+    })
+    .then(() => {
+      return jupyterSessionConnect(serviceManager, 'another_new.md', [])
+    })
+    .then(results => {
       return expect(results.isNewSession).to.equal(true)
     })
   })
@@ -45,7 +52,7 @@ describe('Jupyter session connect', () => {
       return jupyterSessionConnect(serviceManager, 'duplicate.md', [])
     })
     .then(results => {
-      return expect(results.isNewSession).to.equal(false)
+      expect(results.isNewSession).to.equal(false)
     })
   })
 })

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "test": "karma start --browsers=Chrome",
+    "test": "yarn test:chrome",
     "test:chrome": "python run-test.py --browsers=Chrome karma.conf.js",
     "test:firefox": "python run-test.py --browsers=Firefox karma.conf.js",
     "test:ie": "python run-test.py  --browsers=IE karma.conf.js",
