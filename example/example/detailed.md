@@ -4,8 +4,7 @@
 
 ## Description
 
-This is an example form for use as a template or demonstrating
-form creation.
+This is a detailed example demonstrating the usage of scriptedforms.
 
 This file format is based upon markdown. There are however a few
 extra elements which are explained below.
