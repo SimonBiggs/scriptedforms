@@ -4,43 +4,66 @@
 
 ## Description
 
-This is an example form for use as a template or demonstrating
-form creation.
+This is a detailed example demonstrating the usage of scriptedforms.
 
 This file format is based upon markdown. There are however a few
-extra elements which are explained below.
+extra custom html elements. The custom html elements come in two
+types, either section elements `<section-something>` or 
+variable elements `<variable-something>`.
 
-## Sections and variable inputs
+## Custom elements overview
 
-There are four kinds of sections:
+### Sections overview
 
-* `start`,
-* `live`,
-* `button`,
-* and `output`.
+Whenever markdown code blocks are written within a section that code
+is sent to the Python kernel when certain conditions are fulfilled.
+
+There are four kinds of sections
+
+* `<section-start>`,
+* `<section-live>`,
+* `<section-button>`,
+* and `<section-output>`.
 
 Code which is written inside of these defined sections is run
 as python code according to specific rules.
 
-Within the form variable inputs can be included.
+### Variable overview
+
+Veriable elements are attached to a specific python variable which update on
+user input. All variable elements require at least one item placed between the
+open and close braces. The first item between the open and close braces is
+the Python variable definition. It doesn't strictly have to be a Python variable
+it merely has to be valid Python code to exist on the left hand side of an assignment
+equal sign.
+
 There are six kinds of variable inputs:
 
-* `number`,
-* `slider`,
-* `table`,
-* `tick`,
-* `toggle`,
-* `string`,
-* and `dropdown`.
+* `<variable-number>`,
+* `<variable-slider>`,
+* `<variable-table>`,
+* `<variable-tick>`,
+* `<variable-toggle>`,
+* `<variable-string>`,
+* and `<variable-dropdown>`.
 
-These are attached to a specific python variable which update on
-user input. Number and slider represent floats. String represents a Python
-string. Tick and toggle are both booleans. The table variable is a pandas
-dataframe with all of the values in the dataframe being floats.
+`<variable-number>` and `<variable-slider>` represent floats or integers.
+`<variable-string>` represents a Python string. `<variable-tick>` and `<variable-toggle>`
+are both booleans. The `<variable-table>` is a pandas dataframe with all of the values 
+in the dataframe being floats or integers. `<variable-dropdown>` is a string with provided options.
+
+## Usage of the scriptedforms elements
 
 ### Start sections
 
-A `start` section is defined as following:
+Whenever a jupyterlab services session is started
+code within the start sections is run first.
+
+If you reopen or update the form template without restarting the kernel
+this code will not re-run however a button will appear that will allow you to
+manually re-run the code if need be.
+
+An example `<section-start>` is given following:
 
 <section-start>
 
@@ -65,13 +88,6 @@ output_count = 0
 
 </section-start>
 
-Whenever a jupyterlab services session is started
-code within the start sections is run first.
-
-If you reopen or update the form template without restarting the kernel
-this code will not re-run however a button will appear that will allow you to
-manually re-run the code if need be.
-
 As can be seen from this code there are already a few namespaces included by
 default within the Python session. Some of these are for convenience, some are
 required for the proper running of the form. The code that is run at boot of
@@ -80,15 +96,26 @@ a new form kernel can be found within the
 
 ### Live sections and demo of each of the variable types
 
-Each of the usable variables are demoed below making use of `live` sections.
-A live section is designed to contain both code and variable inputs. Whenever
-the user changes any variable within the live section all code within
-that live section is subsequently run.
+The `<section-live>` element is designed to contain both code and variable inputs. Whenever
+the user changes any variable within the live section all code that is also
+contained within that live section is subsequently run.
+
+Each of the usable variables are demoed below making use of `<section-live>`.
 
 #### Number and slider variables
 
-Here is a `live` section containing both number and slider that produces a
-plot.
+Both the number and the slider require at least one input, the python variable
+name. They both have three remaining optional inputs, minimum, maximum, and
+step size in that order. The inputs need to be separated by commas. White space
+is ignored.
+
+Should optional inputs not be given they are assigned the default values. In
+both the slider and number variables step size defaults to 1. In the number
+variable minimum and maximum defaults to not being set. On the slider the
+minimum defaults to 0, the maximum to 100.
+
+Below is a `live` section containing both number and slider that produces a
+plot:
 
 <section-live>
 <variable-number>data[0]</variable-number>
@@ -110,15 +137,6 @@ plot.
 `plt.plot(data, 'o');`
 </section-live>
 
-Both the number and the slider require at least one input, the python variable
-name. They both have three remaining optional inputs, minimum, maximum, and
-step size in that order. The inputs need to be separated by commas. White space
-is ignored.
-
-Should optional inputs not be given they are assigned the default values. In
-both the slider and number variables step size defaults to 1. In the number
-variable minimum and maximum defaults to not being set. On the slider the
-minimum defaults to 0, the maximum to 100.
 
 #### Table variables
 
