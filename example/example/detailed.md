@@ -31,7 +31,11 @@ as python code according to specific rules.
 ### Variable overview
 
 Veriable elements are attached to a specific python variable which update on
-user input.
+user input. All variable elements require at least one item placed between the
+open and close braces. The first item between the open and close braces is
+the Python variable definition. It doesn't strictly have to be a Python variable
+it merely has to be valid Python code to exist on the left hand side of an assignment
+equal sign.
 
 There are six kinds of variable inputs:
 
@@ -43,11 +47,12 @@ There are six kinds of variable inputs:
 * `<variable-string>`,
 * and `<variable-dropdown>`.
 
-Number and slider represent floats or integers. String represents a Python
-string. Tick and toggle are both booleans. The table variable is a pandas
-dataframe with all of the values in the dataframe being floats or integers.
+`<variable-number>` and `<variable-slider>` represent floats or integers.
+`<variable-string>` represents a Python string. `<variable-tick>` and `<variable-toggle>`
+are both booleans. The `<variable-table>` is a pandas dataframe with all of the values 
+in the dataframe being floats or integers. `<variable-dropdown>` is a string with provided options.
 
-## Usage of the custom elements
+## Usage of the scriptedforms elements
 
 ### Start sections
 
@@ -91,10 +96,11 @@ a new form kernel can be found within the
 
 ### Live sections and demo of each of the variable types
 
-Each of the usable variables are demoed below making use of `live` sections.
-A live section is designed to contain both code and variable inputs. Whenever
-the user changes any variable within the live section all code within
-that live section is subsequently run.
+The `<section-live>` element is designed to contain both code and variable inputs. Whenever
+the user changes any variable within the live section all code that is also
+contained within that live section is subsequently run.
+
+Each of the usable variables are demoed below making use of `<section-live>`.
 
 #### Number and slider variables
 
