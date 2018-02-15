@@ -7,7 +7,7 @@ var webpack = require('./webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '.',
-    frameworks: ['mocha'],
+    frameworks: ['jasmine'],
     reporters: ['mocha'],
     client: {
       mocha: {
@@ -15,6 +15,14 @@ module.exports = function (config) {
         retries: 3 // Allow for slow server on CI.
       }
     },
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-mocha-reporter'),
+      require('karma-firefox-launcher'),
+      require('karma-webpack'),
+      require('karma-sourcemap-loader')
+    ],
     files: [
       {pattern: 'src/*.spec.ts', watched: false}
     ],
