@@ -44,15 +44,26 @@ import { Component, AfterViewInit } from "@angular/core";
   (focus)="onFocus()">
     <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
   </mat-select>
-</mat-form-field>`
-})
+</mat-form-field>
+<div class="jp-RenderedText" *ngIf="usedCommas">
+  <pre>
+    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+  </pre>
+</div>`})
 export class DropdownComponent extends StringBaseComponent
   implements AfterViewInit {
   options: string[] = [];
+  usedCommas: boolean = false;
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement;
     const ngContent = this.htmlDecode(element.innerHTML).trim();
+
+    // Deprecation notice, remove this in version 0.6.0
+    if (ngContent.indexOf(',') != -1) {
+      this.usedCommas = true;
+    }
+
     // Make both , and ; work for now, remove , in version 0.6.0.
     const items = ngContent.split(/[,;]/);
 

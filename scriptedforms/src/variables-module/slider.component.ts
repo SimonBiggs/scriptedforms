@@ -52,7 +52,12 @@ import { NumberBaseComponent } from './number-base.component';
   [step]="step"
   [thumb-label]="true">
   </mat-slider>
-</span>`,
+</span>
+<div class="jp-RenderedText" *ngIf="usedCommas">
+  <pre>
+    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+  </pre>
+</div>`,
 styles: [
   `
 .container {

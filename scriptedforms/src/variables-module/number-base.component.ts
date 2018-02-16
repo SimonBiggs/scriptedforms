@@ -34,12 +34,17 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
   min: number = null
   max: number = null
   step: number = 1
+  usedCommas: boolean = false;
 
   // variableValue: number
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement
     const ngContent = this.htmlDecode(element.innerHTML).trim();
+    // Deprecation notice, remove this in version 0.6.0
+    if (ngContent.indexOf(',') != -1) {
+      this.usedCommas = true;
+    }
     // Make both , and ; work for now, remove , in version 0.6.0.
     const items = ngContent.split(/[,;]/)
 

@@ -50,7 +50,12 @@ import {
   [min]="min"
   [step]="step"
   type="number">
-</mat-input-container>`,
+</mat-input-container>
+<div class="jp-RenderedText" *ngIf="usedCommas">
+  <pre>
+    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+  </pre>
+</div>`,
   styles: [
     `.variableNumber {
     width: 200px;
