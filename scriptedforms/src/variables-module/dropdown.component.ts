@@ -53,7 +53,8 @@ export class DropdownComponent extends StringBaseComponent
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement;
     const ngContent = this.htmlDecode(element.innerHTML).trim();
-    const items = ngContent.split(",");
+    // Make both , and ; work for now, remove , in version 0.6.0.
+    const items = ngContent.split(/[,;]/);
 
     // console.log(items)
 

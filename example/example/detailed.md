@@ -8,7 +8,7 @@ This is a detailed example demonstrating the usage of scriptedforms.
 
 This file format is based upon markdown. There are however a few
 extra custom html elements. The custom html elements come in two
-types, either section elements `<section-something>` or 
+types, either section elements `<section-something>` or
 variable elements `<variable-something>`.
 
 ## Custom elements overview
@@ -106,8 +106,9 @@ Each of the usable variables are demoed below making use of `<section-live>`.
 
 Both the number and the slider require at least one input, the python variable
 name. They both have three remaining optional inputs, minimum, maximum, and
-step size in that order. The inputs need to be separated by commas. White space
-is ignored.
+step size in that order. The inputs need to be separated by semi colons (`;`).
+White space is ignored. The use of commas (`,`) to separate values is deprecated
+and will be removed in version 0.6.0.
 
 Should optional inputs not be given they are assigned the default values. In
 both the slider and number variables step size defaults to 1. In the number
@@ -119,19 +120,19 @@ plot:
 
 <section-live>
 <variable-number>data[0]</variable-number>
-<variable-number>data[1], -100, 100</variable-number>
-<variable-number>data[2], 0, 10, 0.1</variable-number>
+<variable-number>data[1]; -100; 100</variable-number>
+<variable-number>data[2]; 0; 10; 0.1</variable-number>
 
 <variable-slider>data[0]</variable-slider>
 <variable-slider>
-  data[1],
-  -100,
+  data[1];
+  -100;
   100
 </variable-slider>
 <variable-slider>
-  data[2],
-  0,
-  10,
+  data[2];
+  0;
+  10;
   0.1
 </variable-slider>
 `plt.plot(data, 'o');`
@@ -192,12 +193,13 @@ field.
 Dropdown allow predifined options to be available in a dropdown list. When
 defining a dropdown variable the first input is the python variable name. All
 remaining inputs are give the options for the dropdown. All options must be
-separated by commas. Surrounding whitespace is ignored.
+separated by semi colons (`;`). The use of commas (`,`) to separate values is deprecated
+and will be removed in version 0.6.0. Surrounding whitespace is ignored.
 
 <section-live>
-<variable-dropdown>machine,
-  1234,
-  2345,
+<variable-dropdown>machine;
+  1234;
+  2345;
   George
 </variable-dropdown>
 

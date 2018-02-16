@@ -15,6 +15,8 @@ interface PromiseReturn {
   isNewSession: boolean
 }
 
+// Change this to using rxjs it will look simpler in the end.
+// This is a good set to trial rxjs with.
 export function jupyterSessionConnect(
   serviceManager: ServiceManager, path: string, activeSessionIds: string[]
 ): Promise<PromiseReturn> {
