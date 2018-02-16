@@ -143,6 +143,13 @@ export class FileService {
     }
   }
 
+  openUrl(url: string) {
+    let path = this.urlToFilePath(window.location.href)
+    if (path !== null) {
+      this.openFile(path)
+    }    
+  }
+
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
     links.forEach(link => {
       let path = this.urlToFilePath(link.href)

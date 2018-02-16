@@ -40,7 +40,6 @@ export namespace IScriptedForms {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
-    path: string;
     node: HTMLElement;
   }
 }
@@ -59,12 +58,10 @@ export class InitialisationService {
     this.myJupyterService.setContentsManager(options.contentsManager);
     
     this.myFileService.setNode(options.node);
-    this.myFileService.openFile(options.path)
+    this.myFileService.openUrl(window.location.href) 
+
     window.onpopstate = event => {
-      let path = this.myFileService.urlToFilePath(window.location.href)
-      if (path !== null) {
-        this.myFileService.openFile(path)
-      }      
+      this.myFileService.openUrl(window.location.href)  
     }
 
     this.myWatchdogService.runWatchdogAfterFormReady();

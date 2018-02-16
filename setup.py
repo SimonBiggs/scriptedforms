@@ -62,7 +62,6 @@ setup(
         'numpy',
         'pandas',
         'watchdog',
-        'jinja2',
         'matplotlib'
     ],
     classifiers = [],
