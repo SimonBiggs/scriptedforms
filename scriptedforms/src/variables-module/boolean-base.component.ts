@@ -1,5 +1,5 @@
 // scriptedforms
-// Copyright (C) 2017 Simon Biggs
+// Copyright (C) 2017-2018 Simon Biggs
 
 // Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and
 // GNU Affrero General Public License as published by the Free Software
