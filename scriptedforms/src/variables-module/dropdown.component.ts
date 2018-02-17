@@ -52,12 +52,13 @@ import { DropdownItemsComponent } from "./dropdown-items.component";
     <span class="ansi-red-fg">
       The use of commas or semicolons to separate inputs is deprecated. 
       Please instead use the items html parameter like so:
-      &lt;variable-dropdown items="[<span *ngFor="let option of options.slice(0,-1)">'{{option}}', </span>'{{options.slice(-1)}}']"&gt;{{variableName}}&lt;/variable-dropdown&gt;
+      &lt;variable-dropdown items="[<span *ngFor="let option of deprecatedOptions.slice(0,-1)">'{{option}}', </span>'{{deprecatedOptions.slice(-1)}}']"&gt;{{variableName}}&lt;/variable-dropdown&gt;
     </span>
   </pre>
 </div>`})
 export class DropdownComponent extends VariableBaseComponent
   implements AfterViewInit {
+  deprecatedOptions: (string | number)[] = [];
   options: (string | number)[] = [];
   usedSeparator: boolean = false;
 
@@ -68,11 +69,16 @@ export class DropdownComponent extends VariableBaseComponent
 
   
   pythonValueReference() {
-    const escapedString = String(this.variableValue)
-    .replace(/\\/g, '\\\\')
-    .replace(/\"/g, '\\\"')
-    const valueReference = `"""${String(escapedString)}"""`
-
+    let valueReference: string
+    
+    if (typeof this.variableValue === "string") {
+      const escapedString = String(this.variableValue)
+      .replace(/\\/g, '\\\\')
+      .replace(/\"/g, '\\\"')
+      valueReference = `"""${String(escapedString)}"""`
+    } else {
+      valueReference = String(this.variableValue)
+    }
     return valueReference
   }
 
@@ -92,6 +98,8 @@ export class DropdownComponent extends VariableBaseComponent
     deprecatedItems.slice(1).forEach(item => {
       this.options = this.options.concat([item.trim()]);
     });
+
+    this.deprecatedOptions = this.options
 
     if (this.items) {
       console.log(this.items)

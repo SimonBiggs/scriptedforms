@@ -76,10 +76,10 @@ class _VariableHandler(object):
         for key, evaluate in self.variable_evaluate_map.items():
             fetch_code_list.append("""
 try:
-    {0}.value['{1}'] = {2}
-    {0}.defined['{1}'] = True
+    {0}.value["{1}"] = {2}
+    {0}.defined["{1}"] = True
 except:
-    {0}.defined['{1}'] = False
+    {0}.defined["{1}"] = False
 """.format(self.handlername, key, evaluate))
         fetch_code_list.append("print({}.variables_json)".format(self.handlername))
 
@@ -89,7 +89,7 @@ except:
     @property
     def variables_dict(self):
         variables = dict()
-        variables['_scriptedforms.__version__'] = __version__
+        variables["_scriptedforms.__version__"] = __version__
         for key in self.variable_evaluate_map:
             if self.defined[key]:
                 variables[key] = {

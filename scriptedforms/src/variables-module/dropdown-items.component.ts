@@ -35,11 +35,11 @@ export class DropdownItemsComponent extends VariableBaseComponent
   implements AfterViewInit {
     variableValue: string[]
 
-    pythonVariableEvaluate() {
-      const escapedString = this.variableName
-      .replace(/\\/g, '\\\\')
-      .replace(/\"/g, '\\\"')
-      .replace(/\'/g, '\\\'')
-      return `${escapedString}`
-    }
+    // pythonVariableEvaluate() {
+    //   const escapedString = this.variableName
+    //   .replace(/\\/g, '\\\\')
+    //   .replace(/\"/g, '\\\"')
+    //   .replace(/\'/g, '\\\'')
+    //   return `${escapedString}`
+    // }
   }
