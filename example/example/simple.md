@@ -5,7 +5,7 @@
 <section-start>
 
 ```python
-# By using autoreload any changes within the python package will update
+# By using autoreload, any changes within the python package will update
 # automatically. This will slow the form down though, so only use it during
 # development.
 # http://ipython.readthedocs.io/en/stable/config/extensions/autoreload.html
@@ -13,6 +13,7 @@
 %autoreload 1
 %aimport example
 
+# Normally you would just need to use the following:
 # import example
 ```
 
