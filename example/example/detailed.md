@@ -15,8 +15,21 @@ variable elements `<variable-something>`.
 
 ### Sections overview
 
-Whenever markdown code blocks are written within a section that code
-is sent to the Python kernel when certain conditions are fulfilled.
+#### Running Python code
+
+Whenever python fenced code blocks are written within a section that code is
+no longer displayed within the document, instead it is sent to the Python
+kernel when certain conditions are fulfilled and inplace of where the code was
+written the output of that code is displayed. Code output is displayed as it
+would display within a Jupyter Notebook.
+
+Python fenced code is written as follows:
+
+```python
+print('Hello World!')
+```
+
+#### Section types
 
 There are four kinds of sections
 
