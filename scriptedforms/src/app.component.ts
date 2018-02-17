@@ -54,6 +54,7 @@ import { FormService } from "./services/form.service";
   <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
     <mat-icon>replay</mat-icon>
   </button>
+  <div class="footer-space"></div>
 </div>`,
   styles: [`.margin { margin: 20px;}`]
 })
