@@ -2,7 +2,7 @@ import os
 import scriptedforms as sf
 
 
-def example(name):
+def hello(name):
     print('Hello {}!'.format(name))
 
 def main():
