@@ -102,8 +102,8 @@ export class DropdownComponent extends VariableBaseComponent
     this.deprecatedOptions = this.options
 
     if (this.items) {
-      console.log(this.items)
-      console.log(this.dropdownItemsComponent.variableValue)
+      // console.log(this.items)
+      // console.log(this.dropdownItemsComponent.variableValue)
       this.options = this.dropdownItemsComponent.variableValue
       this.dropdownItemsComponent.variableChange.asObservable().subscribe((value: string[]) => {
         console.log(value)

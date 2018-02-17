@@ -98,7 +98,7 @@ export class VariableService {
         variableIdentifierMap: {},
         variableEvaluateMap: {},
         pythonVariables: {},
-        variableChangedObservable: new BehaviorSubject({}),
+        variableChangedObservable: new BehaviorSubject(null),
         timestamps: new BehaviorSubject({}),
         variableComponentStore: {},
         executionCount: new BehaviorSubject(null),

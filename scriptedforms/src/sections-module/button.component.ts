@@ -44,22 +44,25 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 
 @Component({
   selector: 'section-button',
-  template: `<ng-content></ng-content>
-<div align="right">
-  <variable-conditional #conditionalComponent *ngIf="conditional">{{conditional}}</variable-conditional>
-  <button *ngIf="name"
-  mat-raised-button color="accent"
-  (click)="runCode()"
-  [disabled]="!isFormReady || codeRunning || !conditionalValue">
-    {{name}}
-  </button>
-  <button *ngIf="!name"
-  mat-mini-fab
-  (click)="runCode()"
-  [disabled]="!isFormReady || codeRunning || !conditionalValue">
-    <mat-icon>keyboard_return</mat-icon>
-  </button>
-</div>`
+  template: `<div style="min-height: 36px;">
+  <div style="float:right">
+    <variable-conditional #conditionalComponent *ngIf="conditional">{{conditional}}</variable-conditional>
+    <button *ngIf="name"
+    mat-raised-button color="accent"
+    (click)="runCode()"
+    [disabled]="!isFormReady || codeRunning || !conditionalValue">
+      {{name}}
+    </button>
+    <button *ngIf="!name"
+    mat-mini-fab
+    (click)="runCode()"
+    [disabled]="!isFormReady || codeRunning || !conditionalValue">
+      <mat-icon>keyboard_return</mat-icon>
+    </button>
+  </div>
+  <ng-content></ng-content>
+</div>
+`
 })
 export class ButtonComponent implements AfterViewInit {
 

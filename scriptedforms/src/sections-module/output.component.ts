@@ -60,8 +60,10 @@ export class OutputComponent {
   }
 
   subscribeToVariableChanges() {
-    this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(() => {
-      this.runCode();
+    this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
+      if (value !== null) {
+        this.runCode();
+      }
     })
   }
 
