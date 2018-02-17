@@ -31,10 +31,12 @@ at a time and in a well defined order. This queue also handles dropping repeat
 requests if the kernel is busy.
 */
 
+import { BehaviorSubject } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 
 import {
-  Kernel, Session
+  Kernel, Session, KernelMessage
 } from '@jupyterlab/services';
 
 import {
@@ -65,6 +67,7 @@ export interface SessionStore {
 
 @Injectable()
 export class KernelService {
+  jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
   sessionConnected: PromiseDelegate<string>
   sessionStore: SessionStore = {}
   currentSession: string = null;
@@ -111,6 +114,15 @@ export class KernelService {
           queue: Promise.resolve(null),
           isNewSession: isNewSession
         }
+
+        session.iopubMessage.connect((session, msg) => {
+          if (KernelMessage.isErrorMsg(msg)) {
+            let errorMsg: KernelMessage.IErrorMsg = msg;
+            console.error(errorMsg.content)
+            this.jupyterError.next(msg)
+          }
+        })
+
       } else {
         this.sessionStore[id].isNewSession = isNewSession
       }
@@ -122,6 +134,10 @@ export class KernelService {
       }
 
       this.sessionConnected.resolve(id)
+
+    })
+
+    this.sessionConnected.promise.then(id => {
 
     })
 

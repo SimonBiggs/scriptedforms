@@ -66,6 +66,15 @@ export class DropdownComponent extends VariableBaseComponent
 
   @ViewChild('dropdownItemsComponent') dropdownItemsComponent: DropdownItemsComponent
 
+  
+  pythonValueReference() {
+    const escapedString = String(this.variableValue)
+    .replace(/\\/g, '\\\\')
+    .replace(/\"/g, '\\\"')
+    const valueReference = `"""${String(escapedString)}"""`
+
+    return valueReference
+  }
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement;

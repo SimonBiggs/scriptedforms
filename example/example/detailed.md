@@ -213,7 +213,7 @@ parameter. See below for how this works in practice.
 
 <section-live>
 
-<variable-dropdown items="[1234, 456]">machine</variable-dropdown>
+<variable-dropdown items="[1234, 456, 'test', custom_machine]">machine</variable-dropdown>
 
 ```python
 print(machine)

@@ -31,10 +31,16 @@ through the `setFormContents` function.
 */
 
 import {
-  Component, ViewChild, AfterViewInit
+  Component, ViewChild, AfterViewInit, ElementRef
 } from "@angular/core";
 
-
+import {
+  nbformat
+} from '@jupyterlab/coreutils';
+import {
+  RenderMimeRegistry, standardRendererFactories as initialFactories
+} from '@jupyterlab/rendermime';
+import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 
 // import {
 //   Kernel
@@ -45,11 +51,13 @@ import { FormBuilderComponent } from './form-builder-module/form-builder.compone
 import { IScriptedForms, InitialisationService } from './services/initialisation.service'
 import { FileService } from "./services/file.service";
 import { FormService } from "./services/form.service";
+import { KernelService } from './services/kernel.service';
 
 @Component({
   selector: "app-root",
   template: `
 <div class="margin">
+  <div #jupyterErrorMsg></div>
   <app-form-builder #formBuilderComponent></app-form-builder>
   <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
     <mat-icon>replay</mat-icon>
@@ -62,15 +70,38 @@ export class AppComponent implements AfterViewInit {
   restartingKernel = false;
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
+  @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
 
   constructor(
     private myFileService: FileService,
     private myFormService: FormService,
-    private myInitialisationService: InitialisationService
+    private myInitialisationService: InitialisationService,
+    private myKernelSevice: KernelService
   ) {}
 
   ngAfterViewInit() {
     this.myFormService.formBuilderComponent = this.formBuilderComponent
+
+    const rendermime = new RenderMimeRegistry({ initialFactories });
+
+    this.myKernelSevice.jupyterError.subscribe(msg => {
+      if (msg !== null) {
+        let msgType = msg.header.msg_type;
+        let model = new OutputAreaModel();
+        let output = msg.content as nbformat.IOutput;
+        output.output_type = msgType as nbformat.OutputType;
+        model.add(output);
+  
+        let outputArea = new OutputArea({ model, rendermime });
+  
+        let errorDiv: HTMLDivElement = this.jupyterErrorMsg.nativeElement
+        
+        let errorNotice = document.createElement("h2")
+        errorNotice.innerText = "An error occured within Python:"
+        errorDiv.appendChild(errorNotice)
+        errorDiv.appendChild(outputArea.node)
+      }
+    })
   }
 
   restartKernel() {
