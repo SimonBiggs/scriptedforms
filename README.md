@@ -68,15 +68,17 @@ and then press save. The form in the browser should then update to match what yo
 
 If you want to be a bit more adventurous see what happens if you add the following to the end of the file:
 
-    <section-live>
+~~~markdown
+<section-live>
 
-    <variable-slider>a_number</variable-slider>
+<variable-slider>a_number</variable-slider>
 
-    ```python
-    print('Your number is {}'.format(a_number))
-    ```
+```python
+print('Your number is {}'.format(a_number))
+```
 
-    </section-live>
+</section-live>
+~~~
 
 ## More detailed markdown file
 
