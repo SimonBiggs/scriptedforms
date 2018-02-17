@@ -14,29 +14,29 @@ pip install scriptedforms
 
 Then copy the following into a python prompt:
 
-```python
-import scriptedforms as sf
+    import scriptedforms as sf
 
-# workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
-def create_file(filename, contents):
-    with open(filename, 'w') as f:
-        f.write(contents)
+    # workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
+    def create_file(filename, contents):
+        with open(filename, 'w') as f:
+            f.write(contents)
 
-filename = 'quick-start.md'
-markdown_contents = """
-# An example
+    filename = 'quick-start.md'
+    markdown_contents = """
+    # An example
 
-<section-live>
+    <section-live>
 
-<variable-string>your_name</variable-string>
+    <variable-string>your_name</variable-string>
 
-`print('Hello {}!'.format(your_name))`
+    ```python
+    print('Hello {}!'.format(your_name))
+    ```
 
-</section-live>"""
+    </section-live>"""
 
-create_file(filename, markdown_contents)
-sf.load(filename)
-```
+    create_file(filename, markdown_contents)
+    sf.load(filename)
 
 Note that because scriptedforms relies on the jupyter notebook server
 the above code cannot be run within a jupyter app itself. For example, that means that you cannot
