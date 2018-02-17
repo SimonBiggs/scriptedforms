@@ -43,9 +43,9 @@ as python code according to specific rules.
 
 ### Variable overview
 
-Veriable elements are attached to a specific python variable which update on
-user input. All variable elements require at least one item placed between the
-open and close braces. The first item between the open and close braces is
+Variable elements are attached to a specific python variable which update on
+user input. All variable elements take just one item placed between the
+open and close braces. That item is
 the Python variable definition. It doesn't strictly have to be a Python variable
 it merely has to be valid Python code to exist on the left hand side of an assignment
 equal sign.
@@ -62,7 +62,7 @@ There are six kinds of variable inputs:
 
 `<variable-number>` and `<variable-slider>` represent floats or integers.
 `<variable-string>` represents a Python string. `<variable-tick>` and `<variable-toggle>`
-are both booleans. The `<variable-table>` is a pandas dataframe with all of the values 
+are both booleans. The `<variable-table>` is a pandas dataframe with all of the values
 in the dataframe being floats or integers. `<variable-dropdown>` is a string with provided options.
 
 ## Usage of the scriptedforms elements
@@ -97,6 +97,8 @@ machine = None
 
 submit_count = 0
 output_count = 0
+
+custom_machine = ''
 ```
 
 </section-start>
@@ -117,41 +119,34 @@ Each of the usable variables are demoed below making use of `<section-live>`.
 
 #### Number and slider variables
 
-Both the number and the slider require at least one input, the python variable
-name. They both have three remaining optional inputs, minimum, maximum, and
-step size in that order. The inputs need to be separated by semi colons (`;`).
-White space is ignored. The use of commas (`,`) to separate values is deprecated
-and will be removed in version 0.6.0.
-
-Should optional inputs not be given they are assigned the default values. In
-both the slider and number variables step size defaults to 1. In the number
-variable minimum and maximum defaults to not being set. On the slider the
-minimum defaults to 0, the maximum to 100.
-
-Below is a `live` section containing both number and slider that produces a
-plot:
+Below is a `<section-live>` containing both `<variable-number>` and
+`<variable-slider>` elements. They are using a numpy array that has previously
+been defined within the `<section-start>`.
 
 <section-live>
 <variable-number>data[0]</variable-number>
-<variable-number>data[1]; -100; 100</variable-number>
-<variable-number>data[2]; 0; 10; 0.1</variable-number>
+<variable-number>data[1]</variable-number>
 
 <variable-slider>data[0]</variable-slider>
-<variable-slider>
-  data[1];
-  -100;
-  100
-</variable-slider>
-<variable-slider>
-  data[2];
-  0;
-  10;
-  0.1
-</variable-slider>
+<variable-slider>data[1]</variable-slider>
 
 ```python
 plt.plot(data, 'o');
 ```
+
+`<variable-number>` and `<variable-slider>` both have four optional parameters:
+
+* `name`, for changing the visible name of the input
+* `min` and `max`, changing the range of the input
+* `step` for changing the step size of the input
+
+Min and max defaults to `null` for `<variable-number>` and defaults to 0 and 100
+respectively for `<variable-slider>`. Step defaults to 1 for both elements.
+
+The use of these optional parameters is demoed below:
+
+<variable-number name="A custom name" min="0" max="10" step="0.1">data[2]</variable-number>
+<variable-slider name="A custom name" min="0" max="10" step="0.1">data[2]</variable-slider>
 
 </section-live>
 
@@ -210,18 +205,15 @@ print(notes)
 
 #### Dropdown variables
 
-Dropdown allow predifined options to be available in a dropdown list. When
-defining a dropdown variable the first input is the python variable name. All
-remaining inputs are give the options for the dropdown. All options must be
-separated by semi colons (`;`). The use of commas (`,`) to separate values is deprecated
-and will be removed in version 0.6.0. Surrounding whitespace is ignored.
+Dropdown allows options to be available in a dropdown list. To define the items
+used within the dropdown a Python list needs to be provided to the `items` html
+parameter. See below for how this works in practice.
+
+<variable-string name="Your own machine name">custom_machine</variable-string>
 
 <section-live>
-<variable-dropdown>machine;
-  1234;
-  2345;
-  George
-</variable-dropdown>
+
+<variable-dropdown items="[1234, 2345, 'George', custom_machine]">machine</variable-dropdown>
 
 ```python
 print(machine)
@@ -289,5 +281,3 @@ print(_scriptedforms_variable_handler.variables_json)
 ```
 
 </section-output>
-
-[Not yet implemented] Any variable placed within an output group will format as a non-editable card.

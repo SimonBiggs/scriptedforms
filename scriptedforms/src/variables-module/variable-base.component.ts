@@ -59,7 +59,7 @@ export class VariableBaseComponent implements AfterViewInit {
   oldVariableValue: VariableValue = null;
   variableValue: VariableValue = null;
 
-  @Input() placeholder?: string
+  @Input() name?: string
   placeholderValue: string
   variableName: string;
 
@@ -86,8 +86,8 @@ export class VariableBaseComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.loadVariableName()
 
-    if (this.placeholder) {
-      this.placeholderValue = this.placeholder
+    if (this.name) {
+      this.placeholderValue = this.name
     } else {
       this.placeholderValue = this.variableName
     }

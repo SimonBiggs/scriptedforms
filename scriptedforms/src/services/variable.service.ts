@@ -200,7 +200,7 @@ export class VariableService {
               this.convertToVariableStore(sessionId, textContent)
               this.checkForChanges(sessionId)
             } else {
-              console.log(textContent)
+              // console.log(textContent)
             }
           }
         });
@@ -247,7 +247,7 @@ export class VariableService {
     }
     let aVariableHasChanged = (stringify(this.sessionVariableStore[sessionId].variableStore.getValue()) != stringify(this.sessionVariableStore[sessionId].oldVariableStore));
     if (aVariableHasChanged) {
-      console.log(this.sessionVariableStore[sessionId].variableStore.getValue())
+      // console.log(this.sessionVariableStore[sessionId].variableStore.getValue())
       this.sessionVariableStore[sessionId].variableChangedObservable.next(this.sessionVariableStore[sessionId].variableStore.getValue())
     }
     this.sessionVariableStore[sessionId].oldVariableStore = JSON.parse(JSON.stringify(this.sessionVariableStore[sessionId].variableStore.getValue()));

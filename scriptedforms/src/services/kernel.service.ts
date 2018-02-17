@@ -31,10 +31,12 @@ at a time and in a well defined order. This queue also handles dropping repeat
 requests if the kernel is busy.
 */
 
+import { BehaviorSubject } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 
 import {
-  Kernel, Session
+  Kernel, Session, KernelMessage
 } from '@jupyterlab/services';
 
 import {
@@ -65,6 +67,7 @@ export interface SessionStore {
 
 @Injectable()
 export class KernelService {
+  jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
   sessionConnected: PromiseDelegate<string>
   sessionStore: SessionStore = {}
   currentSession: string = null;
@@ -111,6 +114,15 @@ export class KernelService {
           queue: Promise.resolve(null),
           isNewSession: isNewSession
         }
+
+        session.iopubMessage.connect((session, msg) => {
+          if (KernelMessage.isErrorMsg(msg)) {
+            let errorMsg: KernelMessage.IErrorMsg = msg;
+            console.error(errorMsg.content)
+            this.jupyterError.next(msg)
+          }
+        })
+
       } else {
         this.sessionStore[id].isNewSession = isNewSession
       }
@@ -125,6 +137,10 @@ export class KernelService {
 
     })
 
+    this.sessionConnected.promise.then(id => {
+
+    })
+
     return this.sessionConnected.promise
   }
 
@@ -136,7 +152,7 @@ export class KernelService {
     const currentQueueId = this.sessionStore[sessionId].queueId;
 
     this.sessionStore[sessionId].queueLog[currentQueueId] = name;
-    console.log(this.sessionStore[sessionId].queueLog)
+    // console.log(this.sessionStore[sessionId].queueLog)
     this.sessionStore[sessionId].queueId += 1;
     const previous = this.sessionStore[sessionId].queue;
     return this.sessionStore[sessionId].queue = (async () => {
@@ -160,7 +176,7 @@ export class KernelService {
           }
         }
         if (runCode) {
-          console.log(`Executing ${name}`);
+          // console.log(`Executing ${name}`);
           future = this.sessionStore[sessionId].kernel.requestExecute({ code: code });
           return future;
         } else {

@@ -1,5 +1,5 @@
 // scriptedforms
-// Copyright (C) 2017-2018 Simon Biggs
+// Copyright (C) 2017 Simon Biggs
 
 // Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and
 // GNU Affrero General Public License as published by the Free Software
@@ -23,23 +23,23 @@
 // the Combined Licenses for the specific language governing permissions and
 // limitations under the Combined Licenses.
 
-// import { BehaviorSubject } from 'rxjs';
-
 import { VariableBaseComponent } from "./variable-base.component";
 
 import { Component, AfterViewInit } from "@angular/core";
 
-@Component({})
-export class BooleanBaseComponent extends VariableBaseComponent
+@Component({
+  selector: "variable-dropdown-items",
+  template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
+})
+export class DropdownItemsComponent extends VariableBaseComponent
   implements AfterViewInit {
-  pythonValueReference() {
-    let valueReference: string;
-    if (this.variableValue) {
-      valueReference = "True";
-    } else {
-      valueReference = "False";
-    }
+    variableValue: string[]
 
-    return valueReference;
+    // pythonVariableEvaluate() {
+    //   const escapedString = this.variableName
+    //   .replace(/\\/g, '\\\\')
+    //   .replace(/\"/g, '\\\"')
+    //   .replace(/\'/g, '\\\'')
+    //   return `${escapedString}`
+    // }
   }
-}
