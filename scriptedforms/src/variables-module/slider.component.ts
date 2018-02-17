@@ -24,7 +24,7 @@
 // limitations under the Combined Licenses.
 
 import {
-  Component, AfterViewInit
+  Component, AfterViewInit, Input
 } from '@angular/core';
 
 import { NumberBaseComponent } from './number-base.component';
@@ -53,9 +53,13 @@ import { NumberBaseComponent } from './number-base.component';
   [thumb-label]="true">
   </mat-slider>
 </span>
-<div class="jp-RenderedText" *ngIf="usedCommas">
+<div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
-    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+  <span class="ansi-red-fg">
+  The use of commas or semicolons to separate inputs is deprecated. 
+  Please instead use html parameters like so:
+  &lt;variable-slider min="{{min}}" max="{{max}}" step="{{step}}"&gt;{{variableName}}&lt;/variable-slider&gt;
+</span>
   </pre>
 </div>`,
 styles: [
@@ -70,6 +74,6 @@ styles: [
 `]
 })
 export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
-  min: number = 0
-  max: number = 100
+  @Input() min?: number = 0;
+  @Input() max?: number = 100;
 }

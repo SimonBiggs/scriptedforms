@@ -51,9 +51,13 @@ import {
   [step]="step"
   type="number">
 </mat-input-container>
-<div class="jp-RenderedText" *ngIf="usedCommas">
+<div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
-    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+    <span class="ansi-red-fg">
+      The use of commas or semicolons to separate inputs is deprecated. 
+      Please instead use html parameters like so:
+      &lt;variable-number min="{{min}}" max="{{max}}" step="{{step}}"&gt;{{variableName}}&lt;/variable-number&gt;
+    </span>
   </pre>
 </div>`,
   styles: [
@@ -62,4 +66,6 @@ import {
   }
   `]
 })
-export class NumberComponent extends NumberBaseComponent implements AfterViewInit {}
+export class NumberComponent extends NumberBaseComponent implements AfterViewInit {
+
+}

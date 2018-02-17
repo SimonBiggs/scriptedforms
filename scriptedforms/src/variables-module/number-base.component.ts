@@ -23,44 +23,45 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { VariableBaseComponent } from './variable-base.component';
-
 import {
-  Component, AfterViewInit
+  Component, AfterViewInit, Input
 } from '@angular/core';
+
+import { VariableBaseComponent } from './variable-base.component';
 
 @Component({})
 export class NumberBaseComponent extends VariableBaseComponent implements AfterViewInit { 
-  min: number = null
-  max: number = null
-  step: number = 1
-  usedCommas: boolean = false;
+  @Input() min?: number = null;
+  @Input() max?: number = null;
+  @Input() step?: number = 1;
+
+  usedSeparator: boolean = false;
 
   // variableValue: number
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement
     const ngContent = this.htmlDecode(element.innerHTML).trim();
-    // Deprecation notice, remove this in version 0.6.0
-    if (ngContent.indexOf(',') != -1) {
-      this.usedCommas = true;
-    }
-    // Make both , and ; work for now, remove , in version 0.6.0.
+
+    // Make both , and ; work for now, remove this in version 0.8.0.
     const items = ngContent.split(/[,;]/)
+    if (items.length > 1) {
+      this.usedSeparator = true;
+    }
 
     // console.log(items)
 
     this.variableName = items[0].trim()
 
-    if (items.length >= 1) {
+    if (items.length > 1) {
       this.min = Number(items[1])
     }
 
-    if (items.length >= 2) {
+    if (items.length > 2) {
       this.max = Number(items[2])
     }
 
-    if (items.length >= 3) {
+    if (items.length > 3) {
       this.step = Number(items[3])
     }
   }
