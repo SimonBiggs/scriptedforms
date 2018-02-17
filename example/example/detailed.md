@@ -97,6 +97,8 @@ machine = None
 
 submit_count = 0
 output_count = 0
+
+custom_machine = ''
 ```
 
 </section-start>
@@ -207,10 +209,11 @@ Dropdown allows options to be available in a dropdown list. To define the items
 used within the dropdown a Python list needs to be provided to the `items` html
 parameter. See below for how this works in practice.
 
+<variable-string name="Your own machine name">custom_machine</variable-string>
+
 <section-live>
 
-<variable-string name="Your own machine name">custom_machine</variable-string>
-<variable-dropdown items="[1234, 2345, 'George', custom_machine]">machine</variable-dropdown>
+<variable-dropdown items="[1234, 456]">machine</variable-dropdown>
 
 ```python
 print(machine)

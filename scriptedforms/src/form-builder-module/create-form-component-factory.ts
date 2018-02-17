@@ -197,6 +197,12 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.passwordComponents.toArray())
 
+      this.dropdownComponents.toArray().forEach(dropdownComponent => {
+        if (dropdownComponent.items) {
+          this.variableComponents = this.variableComponents.concat([dropdownComponent.dropdownItemsComponent])
+        }
+      })
+
       this.sectionComponents = this.sectionComponents.concat(this.startComponents.toArray())
       this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray())
       this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray())
@@ -256,7 +262,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
-        console.log(this.myKernelSevice.sessionStore)
         console.log('Form initialisation')
 
         // console.log('session connected');

@@ -23,9 +23,10 @@
 // the Combined Licenses for the specific language governing permissions and
 // limitations under the Combined Licenses.
 
-import { StringBaseComponent } from "./string-base.component";
+import { Component, AfterViewInit, Input, ViewChild } from "@angular/core";
 
-import { Component, AfterViewInit } from "@angular/core";
+import { VariableBaseComponent } from "./variable-base.component";
+import { DropdownItemsComponent } from "./dropdown-items.component";
 
 @Component({
   selector: "variable-dropdown",
@@ -33,6 +34,7 @@ import { Component, AfterViewInit } from "@angular/core";
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
 </span>
+<variable-dropdown-items #dropdownItemsComponent *ngIf="items">{{items}}</variable-dropdown-items>
 <mat-form-field>
   <mat-select 
   [required]="required"
@@ -54,27 +56,42 @@ import { Component, AfterViewInit } from "@angular/core";
     </span>
   </pre>
 </div>`})
-export class DropdownComponent extends StringBaseComponent
+export class DropdownComponent extends VariableBaseComponent
   implements AfterViewInit {
-  options: string[] = [];
+  options: (string | number)[] = [];
   usedSeparator: boolean = false;
+
+  // Make this required once internal separators are removed
+  @Input() items?: string
+
+  @ViewChild('dropdownItemsComponent') dropdownItemsComponent: DropdownItemsComponent
+
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement;
     const ngContent = this.htmlDecode(element.innerHTML).trim();
 
-
-    // Make both , and ; work for now, remove , in version 0.6.0.
-    const items = ngContent.split(/[,;]/);
-    if (items.length > 1) {
+    // Remove separators in version 0.8.0
+    const deprecatedItems = ngContent.split(/[,;]/);
+    if (deprecatedItems.length > 1) {
       this.usedSeparator = true;
     }
 
     // console.log(items)
 
-    this.variableName = items[0].trim();
-    items.slice(1).forEach(item => {
+    this.variableName = deprecatedItems[0].trim();
+    deprecatedItems.slice(1).forEach(item => {
       this.options = this.options.concat([item.trim()]);
     });
+
+    if (this.items) {
+      console.log(this.items)
+      console.log(this.dropdownItemsComponent.variableValue)
+      this.options = this.dropdownItemsComponent.variableValue
+      this.dropdownItemsComponent.variableChange.asObservable().subscribe((value: string[]) => {
+        console.log(value)
+        this.options = value
+      })
+    }
   }
 }

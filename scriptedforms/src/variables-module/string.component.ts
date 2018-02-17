@@ -23,7 +23,7 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
-import { StringBaseComponent } from './string-base.component';
+import { VariableBaseComponent } from './variable-base.component';
 
 import {
   Component, AfterViewInit
@@ -53,4 +53,19 @@ styles: [
 }
 `]
 })
-export class StringComponent extends StringBaseComponent implements AfterViewInit { }
+export class StringComponent extends VariableBaseComponent implements AfterViewInit {
+  variableValue: string
+  
+  pythonValueReference() {
+    const escapedString = this.variableValue
+    .replace(/\\/g, '\\\\')
+    .replace(/\"/g, '\\\"')
+    const valueReference = `"""${String(escapedString)}"""`
+
+    return valueReference
+  }
+
+  // pythonValueReference() {
+  //   return `json.loads('${JSON.stringify(this.variableValue)}')`
+  // }
+ }

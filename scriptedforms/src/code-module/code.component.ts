@@ -171,8 +171,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   hideOutput() {
     this.future = undefined
     this.outputArea.hide()
-
-    console.log(this.future)
   }
 
 

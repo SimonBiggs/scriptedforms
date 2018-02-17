@@ -45,6 +45,7 @@ import { TableComponent } from './table.component';
 
 import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
+import { DropdownItemsComponent } from './dropdown-items.component'
 
 import { PasswordComponent } from './password.component';
 
@@ -64,7 +65,8 @@ import { PasswordComponent } from './password.component';
     TableComponent,
     StringComponent,
     DropdownComponent,
-    PasswordComponent
+    PasswordComponent,
+    DropdownItemsComponent
   ],
   exports: [
     ToggleComponent,
@@ -75,7 +77,8 @@ import { PasswordComponent } from './password.component';
     TableComponent,
     StringComponent,
     DropdownComponent,
-    PasswordComponent
+    PasswordComponent,
+    DropdownItemsComponent
   ]
 })
 export class VariablesModule { }
