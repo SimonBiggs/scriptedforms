@@ -67,7 +67,7 @@ import { FileService } from '../services/file.service';
   // By using the selector 'code' this overwrites the standard <code> html tag.
   selector: 'code.language-python',
   // Changed [hidden]="future != undefined" --> [hidden]="True" for code to be hidden by default
-  template: `<span class="output-container" #outputcontainer></span><span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
+  template: `<div class="output-container" #outputContainer [hidden]="this.name === undefined"></div><span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   sessionId: string;
@@ -85,7 +85,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
-  @ViewChild('outputcontainer') outputcontainer: ElementRef;
+  @ViewChild('outputContainer') outputContainer: ElementRef;
 
   constructor(
     private myKernelSevice: KernelService,
@@ -104,7 +104,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       Mode.run(this.code, spec.mime, el);
       this.codecontainer.nativeElement.innerHTML = el.innerHTML;
       this._eRef.nativeElement.classList.add('cm-s-jupyter');
-      // this._eRef.nativeElement.classList.add('language-python');
     });
 
     // Initialise a JupyterLab output area
@@ -125,7 +124,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       // JSON.stringify(this.outputArea.model.toJSON());
       // this.myOutputService.setOutput(this.name, this.outputArea.model);
       this.outputArea.future.done.then(() => {
-        let links: HTMLAnchorElement[] = Array.from(this.outputcontainer.nativeElement.getElementsByTagName("a"))
+        let links: HTMLAnchorElement[] = Array.from(this.outputContainer.nativeElement.getElementsByTagName("a"))
         this.myFileService.morphLinksToUpdateFile(links);
       })
     });
@@ -158,8 +157,13 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
         this.future = future;
         this.outputArea.show()
         this.outputArea.future = this.future;
-        this.outputcontainer.nativeElement.appendChild(this.outputArea.node);
+        this.outputContainer.nativeElement.appendChild(this.outputArea.node);
         this.aCodeRunCompleted.emit();
+
+        this.future.done.then(() => {
+          let element: HTMLDivElement = this.outputContainer.nativeElement
+          element.style.height = String(this.outputArea.node.clientHeight) + 'px'
+        })
       }
     });
   }
