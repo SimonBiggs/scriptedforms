@@ -45,27 +45,30 @@ import { Component, AfterViewInit } from "@angular/core";
     <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
   </mat-select>
 </mat-form-field>
-<div class="jp-RenderedText" *ngIf="usedCommas">
+<div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
-    <span class="ansi-red-fg">The use of commas to separate inputs is deprecated. Please use semicolons instead.</span>
+    <span class="ansi-red-fg">
+      The use of commas or semicolons to separate inputs is deprecated. 
+      Please instead use the items html parameter like so:
+      &lt;variable-dropdown items="[<span *ngFor="let option of options.slice(0,-1)">'{{option}}', </span>'{{options.slice(-1)}}']"&gt;{{variableName}}&lt;/variable-dropdown&gt;
+    </span>
   </pre>
 </div>`})
 export class DropdownComponent extends StringBaseComponent
   implements AfterViewInit {
   options: string[] = [];
-  usedCommas: boolean = false;
+  usedSeparator: boolean = false;
 
   loadVariableName() {
     let element: HTMLSpanElement = this.variablecontainer.nativeElement;
     const ngContent = this.htmlDecode(element.innerHTML).trim();
 
-    // Deprecation notice, remove this in version 0.6.0
-    if (ngContent.indexOf(',') != -1) {
-      this.usedCommas = true;
-    }
 
     // Make both , and ; work for now, remove , in version 0.6.0.
     const items = ngContent.split(/[,;]/);
+    if (items.length > 1) {
+      this.usedSeparator = true;
+    }
 
     // console.log(items)
 

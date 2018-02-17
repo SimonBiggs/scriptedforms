@@ -209,7 +209,7 @@ parameter. See below for how this works in practice.
 
 <section-live>
 
-<variable-string>custom_machine</variable-string>
+<variable-string name="Your own machine name">custom_machine</variable-string>
 <variable-dropdown items="[1234, 2345, 'George', custom_machine]">machine</variable-dropdown>
 
 ```python
