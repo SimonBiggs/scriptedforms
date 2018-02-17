@@ -20,7 +20,7 @@ Then copy the following into a python prompt:
     def create_file(filename, contents):
         with open(filename, 'w') as f:
             f.write(contents)
-    
+
     filename = 'quick-start.md'
     markdown_contents = """
     # An example
@@ -37,7 +37,6 @@ Then copy the following into a python prompt:
 
     create_file(filename, markdown_contents)
     sf.load(filename)
-
 
 Note that because scriptedforms relies on the jupyter notebook server
 the above code cannot be run within a jupyter app itself. For example, that means that you cannot

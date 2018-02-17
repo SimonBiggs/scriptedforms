@@ -135,9 +135,12 @@ plot:
   10;
   0.1
 </variable-slider>
-`plt.plot(data, 'o');`
-</section-live>
 
+```python
+plt.plot(data, 'o');
+```
+
+</section-live>
 
 #### Table variables
 
@@ -185,7 +188,11 @@ field.
 
 <section-live>
 <variable-string>notes</variable-string>
-`print(notes)`
+
+```python
+print(notes)
+```
+
 </section-live>
 
 #### Dropdown variables
@@ -219,7 +226,11 @@ They are defined as following:
 <variable-string>notes</variable-string>
 
 <section-button>
-`print(notes)`
+
+```python
+print(notes)
+```
+
 </section-button>
 
 They will not run until their respective button is pressed.
