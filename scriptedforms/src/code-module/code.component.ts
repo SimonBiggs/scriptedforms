@@ -162,7 +162,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
         this.future.done.then(() => {
           let element: HTMLDivElement = this.outputContainer.nativeElement
-          element.style.height = String(this.outputArea.node.clientHeight) + 'px'
+          element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px'
         })
       }
     });
