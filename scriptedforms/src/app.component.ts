@@ -42,9 +42,11 @@ import {
 } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 
-// import {
-//   Kernel
-// } from '@jupyterlab/services';
+import { kernelBusyThrottle } from './levelled-files/level-1/kernel-busy-throttle';
+
+import {
+  Kernel
+} from '@jupyterlab/services';
 
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 
@@ -57,6 +59,7 @@ import { KernelService } from './services/kernel.service';
   selector: "app-root",
   template: `
 <div class="margin">
+  <mat-progress-spinner *ngIf="kernelStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
   <div #jupyterErrorMsg></div>
   <app-form-builder #formBuilderComponent></app-form-builder>
   <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
@@ -68,6 +71,7 @@ import { KernelService } from './services/kernel.service';
 })
 export class AppComponent implements AfterViewInit {
   restartingKernel = false;
+  kernelStatus: Kernel.Status = 'unknown'
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
   @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
@@ -101,6 +105,10 @@ export class AppComponent implements AfterViewInit {
         errorDiv.appendChild(errorNotice)
         errorDiv.appendChild(outputArea.node)
       }
+    })
+
+    kernelBusyThrottle(this.myKernelSevice.jupyterStatus).subscribe(status => {
+      this.kernelStatus = status
     })
   }
 

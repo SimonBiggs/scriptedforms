@@ -68,6 +68,12 @@ body {
   right: 40px;
 }
 
+.floating-spinner {
+  position: fixed !important;
+  top: 23px;
+  right: 40px;
+}
+
 .footer-space {
   height: 300px;
 }
