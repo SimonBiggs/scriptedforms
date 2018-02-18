@@ -12,9 +12,9 @@ describe('landing-page.md', () => {
   });
 
   it('should have a heading', () => {
-    let elem = element(by.tagName('h1'))
-    browser.wait(ExpectedConditions.presenceOf(elem))
-    let text = elem.getText()
+    let header = element(by.tagName('h1'))
+    browser.wait(ExpectedConditions.presenceOf(header))
+    let text = header.getText()
     expect(text).toEqual('A landing page')
   })
 });

@@ -25,4 +25,3 @@ print('{}'.format(foo))
 ```
 
 </section-live>
-
