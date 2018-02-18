@@ -2,7 +2,8 @@
 
 # Scripted Forms
 
-Quickly create beautiful reactive GUIs for Python packages using Markdown and a few custom HTML elements. Under the hood it uses the Jupyter Notebook server, Angular, Angular Material, Phosphor and JupyterLab.
+Quickly create live-update GUIs for Python packages using Markdown and a few custom HTML elements.
+Under the hood it uses the Jupyter Notebook server, Angular, Angular Material, Phosphor and JupyterLab.
 
 ## Quick start
 
