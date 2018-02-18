@@ -5,7 +5,7 @@
   "scripts": {
     "install": "webdriver-manager update",
     "selenium": "webdriver-manager start",
-    "forms": "scriptedforms ./src/test-templates/landing-page.md --port 8989 --password '' --token '' --disable_check_xsrf",
+    "forms": "scriptedforms ./src/landing-page.md --port 8989 --password '' --token '' --disable_check_xsrf",
     "e2e": "tsc && protractor build/conf.js"
   },
   "dependencies": {
