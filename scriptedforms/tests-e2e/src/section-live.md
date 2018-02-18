@@ -11,7 +11,7 @@ from IPython.display import display, Markdown
 <section-start always>
 
 ```python
-foo = ''
+foo = 'bar'
 ```
 
 </section-start>
