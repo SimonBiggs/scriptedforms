@@ -116,6 +116,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     };
 
     this.outputArea = new OutputArea(this.outputAreaOptions);
+    let element: HTMLElement = this._eRef.nativeElement
+    element.parentNode.insertBefore(this.outputArea.node, element)
 
     // Make any output area changes send a message to the Output Service
     // for the purpose of saving the output to the model
@@ -157,7 +159,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
         this.future = future;
         this.outputArea.show()
         this.outputArea.future = this.future;
-        this.outputContainer.nativeElement.appendChild(this.outputArea.node);
+        // this.outputContainer.nativeElement.appendChild(this.outputArea.node);
         this.aCodeRunCompleted.emit();
 
         this.future.done.then(() => {
