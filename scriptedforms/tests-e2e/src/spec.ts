@@ -13,6 +13,9 @@ describe('landing-page.md', () => {
   beforeEach(() => {
     browser.waitForAngularEnabled(false)
     browser.get('http://localhost:8989');
+    browser.wait(ExpectedConditions.presenceOf(
+      element(by.tagName('app-form'))
+    ))
   });
 
   it('should be have a heading', () => {
@@ -27,6 +30,9 @@ describe('section-start.md', () => {
   beforeEach(() => {
     browser.waitForAngularEnabled(false)
     browser.get('http://localhost:8989/scriptedforms/section-start.md');
+    browser.wait(ExpectedConditions.presenceOf(
+      element(by.tagName('app-form'))
+    ))
   });
 
   it('should successfully run section-start', () => {
@@ -42,6 +48,9 @@ describe('section-button.md', () => {
   beforeEach(() => {
     browser.waitForAngularEnabled(false)
     browser.get('http://localhost:8989/scriptedforms/section-button.md');
+    browser.wait(ExpectedConditions.presenceOf(
+      element(by.tagName('app-form'))
+    ))
   });
 
   it('should run on click', () => {
@@ -74,9 +83,14 @@ describe('section-button.md', () => {
     let conditionalButton = element(by.css('.check-my-conditional button'))
     expect(conditionalButton.isEnabled()).toBe(false)
 
+    let spinner = element(by.css('.floating-spinner'))
+
     enableButton.click()
+    browser.wait(ExpectedConditions.stalenessOf(spinner))
     expect(conditionalButton.isEnabled()).toBe(true)
+
     disableButton.click()
+    browser.wait(ExpectedConditions.stalenessOf(spinner))
     expect(conditionalButton.isEnabled()).toBe(false)
   })
 });

@@ -109,6 +109,7 @@ export class AppComponent implements AfterViewInit {
 
     kernelBusyThrottle(this.myKernelSevice.jupyterStatus).subscribe(status => {
       this.kernelStatus = status
+      console.log(status)
     })
   }
 
