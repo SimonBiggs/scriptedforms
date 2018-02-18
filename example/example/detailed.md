@@ -223,7 +223,7 @@ parameter. See below for how this works in practice.
 <variable-dropdown items="[1234, 2345, 'George', custom_machine]">machine</variable-dropdown>
 
 ```python
-display(Markdown(machine))
+print(machine)
 ```
 
 </section-live>
