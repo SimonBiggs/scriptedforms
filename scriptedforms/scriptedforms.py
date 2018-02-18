@@ -76,14 +76,16 @@ def load(filepath, args=None):
 
     kwargs = {}
     if args:
-        if args.no_browser:
+        if args.no_browser is not None:
             kwargs['open_browser'] = False
-        if args.token:
+        if args.token is not None:
             kwargs['token'] = args.token
-        if args.password:
+        if args.password is not None:
             kwargs['password'] = args.password
-        if args.port:
+        if args.port is not None:
             kwargs['port'] = args.port
+        if args.disable_check_xsrf is not None:
+            kwargs['disable_check_xsrf'] = True
 
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
@@ -107,8 +109,14 @@ def main():
     parser.add_argument(
         '--port', dest='port', type=int,
         help='Jupyter port.')
+    parser.add_argument(
+        '--disable_check_xsrf', dest='disable_check_xsrf', action='store_true',
+        help='Disable Jupyter xsrf check')
 
+    
+       
     args = parser.parse_args()
+    print(args)
     
     load(args.filepath, args)
 
