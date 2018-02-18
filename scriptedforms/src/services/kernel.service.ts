@@ -1,5 +1,5 @@
 // scriptedforms
-// Copyright (C) 2017 Simon Biggs
+// Copyright (C) 2017-2018 Simon Biggs
 
 // Licensed under both the Apache License, Version 2.0 (the "Apache-2.0") and 
 // GNU Affrero General Public License as published by the Free Software 
@@ -68,6 +68,7 @@ export interface SessionStore {
 @Injectable()
 export class KernelService {
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
+  jupyterStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
   sessionConnected: PromiseDelegate<string>
   sessionStore: SessionStore = {}
   currentSession: string = null;
@@ -120,6 +121,9 @@ export class KernelService {
             let errorMsg: KernelMessage.IErrorMsg = msg;
             console.error(errorMsg.content)
             this.jupyterError.next(msg)
+          }
+          if (KernelMessage.isStatusMsg(msg)) {
+            this.jupyterStatus.next(msg.content.execution_state)
           }
         })
 

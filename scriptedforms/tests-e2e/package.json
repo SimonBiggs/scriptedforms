@@ -1,0 +1,20 @@
+{
+  "name": "@simonbiggs/tests-e2e-scriptedforms",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "install": "webdriver-manager update",
+    "selenium": "webdriver-manager start",
+    "forms": "scriptedforms ./src/test-templates/landing-page.md --port 8989 --password '' --token '' --disable_check_xsrf",
+    "e2e": "tsc && protractor build/conf.js"
+  },
+  "dependencies": {
+    "protractor": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.6",
+    "@types/jasminewd2": "^2.0.3",
+    "rimraf": "~2.6.2",
+    "typescript": "~2.6.2"
+  }
+}
