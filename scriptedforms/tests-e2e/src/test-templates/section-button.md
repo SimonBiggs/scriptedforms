@@ -4,6 +4,13 @@
 
 ```python
 from IPython.display import display, Markdown
+```
+
+</section-start>
+
+<section-start always>
+
+```python
 button_enabled = False
 ```
 
