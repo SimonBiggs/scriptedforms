@@ -81,6 +81,8 @@ An example `<section-start>` is given following:
 <section-start>
 
 ```python
+from IPython.display import display, Markdown
+
 data = np.ones(3) * np.nan
 data[0] = 5
 
@@ -99,6 +101,8 @@ submit_count = 0
 output_count = 0
 
 custom_machine = ''
+
+display(Markdown('This is the output of a start section'))
 ```
 
 </section-start>
@@ -182,7 +186,7 @@ if bye:
     world = False
 
 if hello and world:
-    print('Hello World!')
+    display(Markdown('Hello World!'))
 ```
 
 <variable-toggle>bye</variable-toggle>
@@ -194,11 +198,14 @@ String variables fill the entire width of the container they are in. They also
 expand when new lines are provied. An example use case is an optional notes
 field.
 
+The Python code for this notes field takes what is written and renders it as
+markdown. Try writing `## Hello World!` and see what happens.
+
 <section-live>
 <variable-string>notes</variable-string>
 
 ```python
-print(notes)
+display(Markdown(notes))
 ```
 
 </section-live>
@@ -233,7 +240,7 @@ They are defined as following:
 <section-button>
 
 ```python
-print(notes)
+display(Markdown(notes))
 ```
 
 </section-button>
@@ -249,7 +256,7 @@ changing the name property.
 
 ```python
 submit_count += 1
-print('Submitted {} times!'.format(submit_count))
+display(Markdown('Submitted {} times!'.format(submit_count)))
 ```
 
 </section-button>
@@ -261,7 +268,7 @@ following button which is only enabled once the submit count becomes at least
 <section-button name="Super Submit" conditional="submit_count >= 10">
 
 ```python
-print('SUPER SUBMIT!!!')
+display(Markdown('## Super Submit!!'))
 ```
 
 </section-button>
