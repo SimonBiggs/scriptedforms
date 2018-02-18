@@ -9,7 +9,8 @@
     "test:firefox": "python run-test.py --browsers=Firefox karma.conf.js",
     "test:ie": "python run-test.py  --browsers=IE karma.conf.js",
     "watch": "python run-test.py --singleRun=false --browsers=Chrome",
-    "watch:src": "tsc -w"
+    "watch:src": "tsc -w",
+    "e2e": "protractor protractor/conf.js"
   },
   "dependencies": {
     "chai": "~4.1.2",
