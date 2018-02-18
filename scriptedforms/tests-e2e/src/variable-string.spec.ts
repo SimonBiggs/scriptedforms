@@ -1,6 +1,34 @@
 import {
-  browser, element, by, ExpectedConditions
+  browser, element, by, ExpectedConditions, ElementFinder, Key
 } from 'protractor';
+
+
+function writeInBothAndTest(text: string, sendKeysInto?: (elementFinder: ElementFinder) => void) {
+  let firstString = element(by.css('.write-in-me-first textarea'))
+  let secondString = element(by.css('.write-in-me-second textarea'))
+
+  let resultContents = element(by.css('.see-my-result .jp-OutputArea-output pre'))
+  browser.wait(ExpectedConditions.presenceOf(resultContents))
+  expect(resultContents.getText()).toEqual('')
+
+  if (!sendKeysInto) {
+    sendKeysInto = (elementFinder: ElementFinder) => {
+      elementFinder.sendKeys(text)
+    }
+  }
+
+  sendKeysInto(firstString)
+  let spinner = element(by.css('.floating-spinner'))
+  browser.wait(ExpectedConditions.stalenessOf(spinner))
+  expect(secondString.getAttribute('ng-reflect-model')).toEqual(text)
+  expect(resultContents.getText()).toEqual(text)
+
+  sendKeysInto(secondString)
+  browser.wait(ExpectedConditions.stalenessOf(spinner))
+  expect(firstString.getAttribute('ng-reflect-model')).toEqual(text + text)
+  expect(resultContents.getText()).toEqual(text + text)
+}
+
 
 describe('variable-string.md', () => {
   beforeEach(() => {
@@ -11,25 +39,31 @@ describe('variable-string.md', () => {
     ))
   });
 
-  it('should sensibly handle backslash', () => {
-    let firstString = element(by.css('.write-in-me-first textarea'))
-    let secondString = element(by.css('.write-in-me-second textarea'))
+  it('should handle backslash', () => {
+    writeInBothAndTest('\\\\\\')
+  })
 
-    let resultContents = element(by.css('.see-my-result .jp-OutputArea-output pre'))
-    browser.wait(ExpectedConditions.presenceOf(resultContents))
-    expect(resultContents.getText()).toEqual('')
+  it('should handle double quotes', () => {
+    writeInBothAndTest('""""""')
+  })
 
-    let backslashString = '\\\\\\'
-    firstString.sendKeys(backslashString)
+  it('should handle single quotes', () => {
+    writeInBothAndTest("''''''")
+  })
 
-    let spinner = element(by.css('.floating-spinner'))
-    browser.wait(ExpectedConditions.stalenessOf(spinner))
-    expect(secondString.getAttribute('ng-reflect-model')).toEqual(backslashString)
-    expect(resultContents.getText()).toEqual(backslashString)
+  it('should handle new lines', () => {
+    let sendKeysInto = (elementFinder: ElementFinder) => {
+      elementFinder.sendKeys(
+        'foo', Key.ENTER, 'bar', Key.ENTER, 'boo', Key.ENTER, 'hoo')
+    }
+    writeInBothAndTest('foo\nbar\nboo\nhoo', sendKeysInto)
+  })
 
-    secondString.sendKeys(backslashString)
-    browser.wait(ExpectedConditions.stalenessOf(spinner))
-    expect(firstString.getAttribute('ng-reflect-model')).toEqual(backslashString + backslashString)
-    expect(resultContents.getText()).toEqual(backslashString + backslashString)
+  it('should handle quotes and backslashes together', () => {
+    writeInBothAndTest("\\'\\\"\\\\")
+  })
+
+  it('should handle fences', () => {
+    writeInBothAndTest("``` ~~~ ``` ~~~")
   })
 });
