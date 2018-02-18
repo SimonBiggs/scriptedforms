@@ -73,7 +73,7 @@ describe('section-button.md', () => {
     expect(namedButtonLabel.getText()).toEqual('foo')
   })
 
-  it('should honor set conditional', () => {
+  it('should honour conditional', () => {
     let disableButton = element(by.css('.make-false button'))
     let enableButton = element(by.css('.make-true button'))
 
