@@ -24,10 +24,10 @@
 // limitations under the Combined Licenses.
 
 
-
+import { Subscription } from 'rxjs';
 
 import {
-  Component, ContentChildren, QueryList
+  Component, ContentChildren, QueryList, OnDestroy
 } from '@angular/core';
 
 import { VariableService } from '../services/variable.service';
@@ -38,8 +38,9 @@ import { CodeComponent } from '../code-module/code.component';
   selector: 'section-output',
   template: `<ng-content></ng-content>`
 })
-export class OutputComponent {
+export class OutputComponent implements OnDestroy {
   outputId: number;
+  variableSubscription: Subscription
   _sessionId: string
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
@@ -60,11 +61,15 @@ export class OutputComponent {
   }
 
   subscribeToVariableChanges() {
-    this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
+    this.variableSubscription = this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
       if (value !== null) {
         this.runCode();
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.variableSubscription.unsubscribe()
   }
 
   setId(id: number) {
