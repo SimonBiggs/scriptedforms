@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "install": "webdriver-manager update",
-    "server": "webdriver-manager start &",
+    "selenium": "webdriver-manager start",
+    "forms": "scriptedforms ./src/test-templates/landing-page.md --no-browser --token tests --port 8989",
     "e2e": "tsc && protractor build/conf.js"
   },
   "dependencies": {

@@ -5,31 +5,19 @@
 //   from 'protractor/globals';
 //
 // The jasmine typings are brought in via DefinitelyTyped ambient typings.
-import {browser, element, by, 
-  // By, $, $$, ExpectedConditions
+import {browser, element, by
+  // By, $, $$, 
 } from 'protractor';
 
-describe('protractor with typescript typings', () => {
+describe('landing-page.md', () => {
   beforeEach(() => {
-    browser.get('http://www.angularjs.org');
+    browser.waitForAngularEnabled(false)
+    browser.get('http://localhost:8989/scriptedforms/landing-page.md?token=tests');
   });
 
-  it('should greet the named user', () => {
-    element(by.model('yourName')).sendKeys('Julie');
-    let greeting = element(by.binding('yourName'));
-    greeting.getText().then(value => {
-      return expect(value).toEqual('Hello Julie!');
+  it('should be have a heading', () => {
+    element(by.tagName('h1')).getText().then(value => {
+      return expect(value).toEqual('A landing page')
     })
-  });
-
-  it('should list todos', function() {
-    let todoList = element.all(by.repeater('todo in todoList.todos'));
-    todoList.count().then(value => {
-      return expect(value).toEqual(2);
-    })
-    todoList.get(1).getText().then(value => {
-      return expect(value).toEqual('build an angular app');
-    })
-    
-  });
+  })
 });

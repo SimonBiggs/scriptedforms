@@ -64,7 +64,7 @@ class ScriptedForms(NotebookApp):
         super(ScriptedForms, self).start()
 
 
-def load(filepath):
+def load(filepath, args=None):
 
     absolute_path = os.path.abspath(filepath)
     if not os.path.exists(absolute_path):
@@ -74,20 +74,43 @@ def load(filepath):
 
     os.chdir(directory)
 
+    kwargs = {}
+    if args:
+        if args.no_browser:
+            kwargs['open_browser'] = False
+        if args.token:
+            kwargs['token'] = args.token
+        if args.password:
+            kwargs['password'] = args.password
+        if args.port:
+            kwargs['port'] = args.port
+
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
-        default_url='/scriptedforms/{}'.format(filename))
+        default_url='/scriptedforms/{}'.format(filename), **kwargs)
 
 
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
         'filepath', help='The file path of the form to open.')
+    parser.add_argument(
+        '--no-browser', dest='no_browser', action='store_true',
+        help='Make browser not open.')
+    parser.add_argument(
+        '--token', dest='token',
+        help='Jupyter token.')
+    parser.add_argument(
+        '--password', dest='password',
+        help='Jupyter password.')
+    parser.add_argument(
+        '--port', dest='port', type=int,
+        help='Jupyter port.')
 
     args = parser.parse_args()
     
-    load(args.filepath)
+    load(args.filepath, args)
 
 
 if __name__ == '__main__':
