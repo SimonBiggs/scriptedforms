@@ -64,10 +64,8 @@ import { KernelService } from '../services/kernel.service';
 import { FileService } from '../services/file.service';
 
 @Component({
-  // By using the selector 'code' this overwrites the standard <code> html tag.
   selector: 'code.language-python',
-  // Changed [hidden]="future != undefined" --> [hidden]="True" for code to be hidden by default
-  template: `<div class="output-container" #outputContainer [hidden]="this.name === undefined"></div><span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
+  template: `<span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   sessionId: string;
@@ -80,22 +78,20 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   promise: Promise<Kernel.IFuture>;
   future: Kernel.IFuture;
+  outputContainer: HTMLDivElement
 
   @Output() aCodeRunCompleted = new EventEmitter();
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
-  @ViewChild('outputContainer') outputContainer: ElementRef;
 
   constructor(
     private myKernelSevice: KernelService,
-    // private myOutputService: OutputService,
     private myFileService: FileService,
     private _eRef: ElementRef
   ) { }
 
   ngAfterViewInit() {
-    // Assign the text within <code> to the this.code variable
     this.code = this.codecontainer.nativeElement.innerText;
 
     // Apply python syntax highlighting to every code block
@@ -117,7 +113,9 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     this.outputArea = new OutputArea(this.outputAreaOptions);
     let element: HTMLElement = this._eRef.nativeElement
-    element.parentNode.insertBefore(this.outputArea.node, element)
+    this.outputContainer = document.createElement("div")
+    this.outputContainer.appendChild(this.outputArea.node)
+    element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode)
 
     // Make any output area changes send a message to the Output Service
     // for the purpose of saving the output to the model
@@ -126,7 +124,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       // JSON.stringify(this.outputArea.model.toJSON());
       // this.myOutputService.setOutput(this.name, this.outputArea.model);
       this.outputArea.future.done.then(() => {
-        let links: HTMLAnchorElement[] = Array.from(this.outputContainer.nativeElement.getElementsByTagName("a"))
+        let links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName("a"))
         this.myFileService.morphLinksToUpdateFile(links);
       })
     });
@@ -159,11 +157,10 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
         this.future = future;
         this.outputArea.show()
         this.outputArea.future = this.future;
-        // this.outputContainer.nativeElement.appendChild(this.outputArea.node);
         this.aCodeRunCompleted.emit();
 
         this.future.done.then(() => {
-          let element: HTMLDivElement = this.outputContainer.nativeElement
+          let element: HTMLDivElement = this.outputContainer
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px'
         })
       }
