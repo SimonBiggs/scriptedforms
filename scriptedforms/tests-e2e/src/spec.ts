@@ -63,4 +63,20 @@ describe('section-button.md', () => {
     let namedButtonLabel = element(by.css('.check-my-name button span'))
     expect(namedButtonLabel.getText()).toEqual('foo')
   })
+
+  it('should honor set conditional', () => {
+    let disableButton = element(by.css('.make-false button'))
+    let enableButton = element(by.css('.make-true button'))
+
+    browser.wait(ExpectedConditions.elementToBeClickable(disableButton))
+    browser.wait(ExpectedConditions.elementToBeClickable(enableButton))
+
+    let conditionalButton = element(by.css('.check-my-conditional button'))
+    expect(conditionalButton.isEnabled()).toBe(false)
+
+    enableButton.click()
+    expect(conditionalButton.isEnabled()).toBe(true)
+    disableButton.click()
+    expect(conditionalButton.isEnabled()).toBe(false)
+  })
 });
