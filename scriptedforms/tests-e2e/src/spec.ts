@@ -12,13 +12,14 @@ import {browser, element, by, ExpectedConditions
 describe('landing-page.md', () => {
   beforeEach(() => {
     browser.waitForAngularEnabled(false)
-    browser.get('http://localhost:8989/scriptedforms/landing-page.md');
+    browser.get('http://localhost:8989');
   });
 
   it('should be have a heading', () => {
-    element(by.tagName('h1')).getText().then(value => {
-      return expect(value).toEqual('A landing page')
-    })
+    let elem = element(by.tagName('h1'))
+    browser.wait(ExpectedConditions.presenceOf(elem))
+    let text = elem.getText()
+    expect(text).toEqual('A landing page')
   })
 });
 
@@ -29,11 +30,37 @@ describe('section-start.md', () => {
   });
 
   it('should successfully run section-start', () => {
-    let section = element(by.css('.check-me .jp-OutputArea-output'))
-    browser.wait(ExpectedConditions.presenceOf(section))
+    let elem = element(by.css('.check-me .jp-OutputArea-output'))
+    browser.wait(ExpectedConditions.presenceOf(elem))
 
-    element(by.tagName('h1')).getText().then(value => {
-      return expect(value).toEqual('Hello')
-    })
+    let text = element(by.tagName('h1')).getText()
+    expect(text).toEqual('Hello')
+  })
+});
+
+describe('section-button.md', () => {
+  beforeEach(() => {
+    browser.waitForAngularEnabled(false)
+    browser.get('http://localhost:8989/scriptedforms/section-button.md');
+  });
+
+  it('should run on click', () => {
+    let runningButton = element(by.css('.check-my-running button'))
+    browser.wait(ExpectedConditions.elementToBeClickable(runningButton))
+
+    let initialOutput = element.all(by.css('.check-my-running .jp-OutputArea-output'))
+    expect(initialOutput.count()).toEqual(0)
+
+    runningButton.click()
+    let outputArea = element(by.css('.check-my-running .jp-OutputArea-output'))
+    browser.wait(ExpectedConditions.presenceOf(outputArea))
+
+    let text = element(by.tagName('h1')).getText()
+    expect(text).toEqual('Hello')
+  })
+
+  it('should be able to be named', () => {
+    let namedButtonLabel = element(by.css('.check-my-name button span'))
+    expect(namedButtonLabel.getText()).toEqual('foo')
   })
 });
