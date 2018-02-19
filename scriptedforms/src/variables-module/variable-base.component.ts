@@ -144,7 +144,6 @@ export class VariableBaseComponent implements AfterViewInit {
   updateVariableView(value: VariableValue) {
     if (!this.isFocus) {
       if (this.variableValue != value) {
-        // console.log(this.variableName)
         this.variableValue = value
         this.updateOldVariable()
         this.variableChange.emit(this.variableValue)

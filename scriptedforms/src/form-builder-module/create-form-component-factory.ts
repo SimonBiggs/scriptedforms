@@ -159,10 +159,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       private elementRef: ElementRef,
       private myChangeDetectorRef: ChangeDetectorRef
     ) { }
-
-    onSubmit() {
-      console.log('submitted')
-    }
   
     ngAfterViewInit() {
       // Replace links
@@ -180,11 +176,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           this.variableComponents = this.variableComponents.concat([buttonComponent.conditionalComponent])
         }
       })
-
-      // this.conditionalComponents.changes.subscribe(() => {
-      //   console.log(this.conditionalComponents.toArray())
-      // })
-      // console.log(this.conditionalComponents.toArray())
 
       this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())
@@ -258,11 +249,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
-        console.log('Form initialisation')
-
-        // console.log('session connected');
-        // console.log(this.startComponents);
-
         // The start component section is run first
         
         this.startComponents.toArray().forEach((startComponent, index) => {

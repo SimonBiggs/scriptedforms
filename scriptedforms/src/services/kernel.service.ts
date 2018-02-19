@@ -149,14 +149,9 @@ export class KernelService {
   }
 
   addToQueue(sessionId: string, name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {
-    // if (name === null) {
-    //   console.log(asyncFunction)
-    //   throw new RangeError('Invalid queue item')
-    // }
     const currentQueueId = this.sessionStore[sessionId].queueId;
 
     this.sessionStore[sessionId].queueLog[currentQueueId] = name;
-    // console.log(this.sessionStore[sessionId].queueLog)
     this.sessionStore[sessionId].queueId += 1;
     const previous = this.sessionStore[sessionId].queue;
     return this.sessionStore[sessionId].queue = (async () => {
@@ -180,7 +175,6 @@ export class KernelService {
           }
         }
         if (runCode) {
-          // console.log(`Executing ${name}`);
           future = this.sessionStore[sessionId].kernel.requestExecute({ code: code });
           return future;
         } else {

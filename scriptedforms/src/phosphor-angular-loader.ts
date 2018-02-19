@@ -23,10 +23,7 @@
 // the Combined Licenses for the specific language governing permissions and
 // limitations under the Combined Licenses.
 
-// Polyfills
-import 'core-js/es6/reflect';
-import 'core-js/es7/reflect';
-import 'zone.js/dist/zone';
+import './polyfills';
 
 import {
   Widget

@@ -92,8 +92,6 @@ export class DropdownComponent extends VariableBaseComponent
       this.usedSeparator = true;
     }
 
-    // console.log(items)
-
     this.variableName = deprecatedItems[0].trim();
     deprecatedItems.slice(1).forEach(item => {
       this.options = this.options.concat([item.trim()]);
@@ -102,11 +100,8 @@ export class DropdownComponent extends VariableBaseComponent
     this.deprecatedOptions = this.options
 
     if (this.items) {
-      // console.log(this.items)
-      // console.log(this.dropdownItemsComponent.variableValue)
       this.options = this.dropdownItemsComponent.variableValue
       this.dropdownItemsComponent.variableChange.asObservable().subscribe((value: string[]) => {
-        console.log(value)
         this.options = value
       })
     }

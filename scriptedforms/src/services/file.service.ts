@@ -30,7 +30,7 @@ import {
   PromiseDelegate
 } from '@phosphor/coreutils';
 
-import * as yaml from 'js-yaml';
+// import * as yaml from 'js-yaml';
 
 import { JupyterService } from './jupyter.service';
 import { FormService } from './form.service';
@@ -71,9 +71,8 @@ export class FileService {
     this.renderType = renderType
   }
 
-  loadResultsFile(fileContents: string, sessionId: string) {
-    console.log(yaml.safeLoad(fileContents))
-  }
+  // loadResultsFile(fileContents: string, sessionId: string) {
+  // }
 
   handleFileContents(fileContents: string, sessionId: string) {
     let priorOverflow = this.node.scrollTop
@@ -86,9 +85,9 @@ export class FileService {
     if (this.renderType === 'template') {
       this.myFormService.setTemplate(fileContents, sessionId)
     }
-    if (this.renderType === 'results') {
-      this.loadResultsFile(fileContents, sessionId)
-    }
+    // if (this.renderType === 'results') {
+    //   this.loadResultsFile(fileContents, sessionId)
+    // }
 
     return this.renderComplete.promise
   }

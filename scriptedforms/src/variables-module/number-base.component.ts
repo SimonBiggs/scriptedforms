@@ -49,8 +49,6 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
       this.usedSeparator = true;
     }
 
-    // console.log(items)
-
     this.variableName = items[0].trim()
 
     if (items.length > 1) {

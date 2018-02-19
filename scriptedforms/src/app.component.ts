@@ -128,11 +128,6 @@ export class AppComponent implements AfterViewInit {
       console.log('kernel: ' + status)
       this.kernelStatus = status
     })
-
-    // kernelIdleDebounce(this.myKernelSevice.jupyterStatus).subscribe(status => {
-    //   this.kernelStatus = status
-    //   console.log(status)
-    // })
   }
 
   restartKernel() {

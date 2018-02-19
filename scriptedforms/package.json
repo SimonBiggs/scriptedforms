@@ -9,7 +9,7 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "build": "rimraf build && tsc && copyfiles -u 1 src/*.css build && node-sass ./src/theme.scss ./build/theme.css && webpack"
+    "build": "rimraf build && rimraf lib && node-sass ./src/theme.scss ./src/theme.css && webpack"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
@@ -43,10 +43,10 @@
   "devDependencies": {
     "@types/codemirror": "^0.0.55",
     "@types/hammerjs": "^2.0.35",
-    "@types/js-yaml": "^3.10.1",
     "@types/json-stable-stringify": "^1.0.32",
     "@types/markdown-it": "^0.0.4",
     "@types/uuid": "^3.4.3",
+    "awesome-typescript-loader": "^3.4.1",
     "copyfiles": "^1.2.0",
     "css-loader": "^0.28.7",
     "karma": "^2.0.0",

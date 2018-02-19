@@ -57,14 +57,14 @@ class ScriptedForms(NotebookApp):
             (r'/scriptedforms/.*\.md', _ScriptedFormsHandler),
             (
                 r"/scriptedforms/(.*)", FileFindHandler,
-                {'path': os.path.join(HERE, 'build')}
+                {'path': os.path.join(HERE, 'lib')}
             )
         ]
         self.web_app.add_handlers(".*$", handlers)
         super(ScriptedForms, self).start()
 
 
-def load(filepath, args=None):
+def load(filepath):
 
     absolute_path = os.path.abspath(filepath)
     if not os.path.exists(absolute_path):
@@ -72,53 +72,20 @@ def load(filepath, args=None):
 
     directory, filename = os.path.split(absolute_path)
 
-    os.chdir(directory)
-
-    kwargs = {}
-    if args:
-        if args.no_browser is not None:
-            kwargs['open_browser'] = False
-        if args.token is not None:
-            kwargs['token'] = args.token
-        if args.password is not None:
-            kwargs['password'] = args.password
-        if args.port is not None:
-            kwargs['port'] = args.port
-        if args.disable_check_xsrf is not None:
-            kwargs['disable_check_xsrf'] = True
-
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
-        default_url='/scriptedforms/{}'.format(filename), **kwargs)
+        notebook_dir=directory,
+        default_url='/scriptedforms/{}'.format(filename))
 
 
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
         'filepath', help='The file path of the form to open.')
-    parser.add_argument(
-        '--no-browser', dest='no_browser', action='store_true',
-        help='Make browser not open.')
-    parser.add_argument(
-        '--token', dest='token',
-        help='Jupyter token.')
-    parser.add_argument(
-        '--password', dest='password',
-        help='Jupyter password.')
-    parser.add_argument(
-        '--port', dest='port', type=int,
-        help='Jupyter port.')
-    parser.add_argument(
-        '--disable_check_xsrf', dest='disable_check_xsrf', action='store_true',
-        help='Disable Jupyter xsrf check')
-
-    
        
-    args = parser.parse_args()
-    print(args)
-    
-    load(args.filepath, args)
+    args = parser.parse_args()    
+    load(args.filepath)
 
 
 if __name__ == '__main__':
