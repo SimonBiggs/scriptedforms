@@ -34,7 +34,7 @@ import { BoxLayout, Widget } from "@phosphor/widgets";
 
 import { ServiceManager, ContentsManager } from "@jupyterlab/services";
 
-import { AngularWidget } from "@simonbiggs/phosphor-angular-loader";
+import { AngularWidget } from "./phosphor-angular-loader";
 
 import { AppComponent } from "./app.component";
 

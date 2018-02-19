@@ -78,7 +78,6 @@ import { TableComponent } from '../variables-module/table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
-import { PasswordComponent } from '../variables-module/password.component';
 
 import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
@@ -149,8 +148,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     @ViewChildren(StringComponent) stringComponents: QueryList<StringComponent>;
     @ViewChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
-    @ViewChildren(PasswordComponent) passwordComponents: QueryList<PasswordComponent>;
-
 
     // Code
     @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
@@ -195,7 +192,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.passwordComponents.toArray())
 
       this.dropdownComponents.toArray().forEach(dropdownComponent => {
         if (dropdownComponent.items) {
