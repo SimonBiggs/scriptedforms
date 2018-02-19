@@ -6,3 +6,7 @@ import "@jupyterlab/services"
 import "@jupyterlab/theme-light-extension"
 import "@phosphor/signaling"
 import "@phosphor/widgets"
+
+import '@jupyterlab/theme-light-extension/style/variables.css'
+import '@jupyterlab/codemirror/style/index.css';
+import '@jupyterlab/rendermime/style/index.css';
