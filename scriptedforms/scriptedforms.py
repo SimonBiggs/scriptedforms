@@ -43,7 +43,7 @@ class _ScriptedFormsHandler(IPythonHandler):
 
 
 class ScriptedForms(NotebookApp):
-    """A notebook app that runs the example."""
+    """ScriptedForms."""
 
     name = 'ScriptedForms'
     description = """

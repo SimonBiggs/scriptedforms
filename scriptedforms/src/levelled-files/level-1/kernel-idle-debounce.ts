@@ -33,11 +33,11 @@ import {
 } from '@jupyterlab/services';
 
 
-export function kernelBusyThrottle(kernelStatus: BehaviorSubject<Kernel.Status>) {
+export function kernelIdleDebounce(kernelStatus: BehaviorSubject<Kernel.Status>) {
   let kernelBusy = kernelStatus.filter(status => status !== 'idle')
   let kernelIdle = kernelStatus.filter(status => status === 'idle')
   let kernelBusyIdle = merge(kernelIdle, kernelBusy)
-  let debouncedBusyIdle = kernelBusyIdle.debounce(() => timer(250));
+  let debouncedBusyIdle = kernelBusyIdle.debounce(() => timer(50));
   let merged = merge(kernelBusy, debouncedBusyIdle)
   let distinct = merged.distinctUntilChanged()
 
