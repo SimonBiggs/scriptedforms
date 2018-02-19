@@ -2,14 +2,13 @@ import {
   browser, element, by, ExpectedConditions
 } from 'protractor';
 
-describe('section-button.md', () => {
-  beforeEach(() => {
-    browser.waitForAngularEnabled(false)
-    browser.get('http://localhost:8989/scriptedforms/section-button.md');
-    browser.wait(ExpectedConditions.presenceOf(
-      element(by.tagName('app-form'))
-    ))
-  });
+import { beforeFromFile, after, waitForSpinner } from './utilities/before-and-after'
+
+const TEMPLATE_FILE = 'section-button.md'
+
+describe(TEMPLATE_FILE, () => {
+  beforeEach(beforeFromFile(TEMPLATE_FILE));
+  afterEach(after())
 
   it('should run on click', () => {
     let runningButton = element(by.css('.check-my-running button'))
@@ -41,14 +40,12 @@ describe('section-button.md', () => {
     let conditionalButton = element(by.css('.check-my-conditional button'))
     expect(conditionalButton.isEnabled()).toBe(false)
 
-    let spinner = element(by.css('.floating-spinner'))
-
     enableButton.click()
-    browser.wait(ExpectedConditions.stalenessOf(spinner))
+    waitForSpinner()
     expect(conditionalButton.isEnabled()).toBe(true)
 
     disableButton.click()
-    browser.wait(ExpectedConditions.stalenessOf(spinner))
+    waitForSpinner()
     expect(conditionalButton.isEnabled()).toBe(false)
   })
 });

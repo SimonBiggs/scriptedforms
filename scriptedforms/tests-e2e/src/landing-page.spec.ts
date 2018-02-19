@@ -2,14 +2,13 @@ import {
   browser, element, by, ExpectedConditions
 } from 'protractor';
 
-describe('landing-page.md', () => {
-  beforeEach(() => {
-    browser.waitForAngularEnabled(false)
-    browser.get('http://localhost:8989');
-    browser.wait(ExpectedConditions.presenceOf(
-      element(by.tagName('app-form'))
-    ))
-  });
+import { before, after } from './utilities/before-and-after'
+
+const TEMPLATE_FILE = 'landing-page.md'
+
+describe(TEMPLATE_FILE, () => {
+  beforeEach(before('http://localhost:8989/'));
+  afterEach(after())
 
   it('should have a heading', () => {
     let header = element(by.tagName('h1'))

@@ -2,14 +2,13 @@ import {
   browser, element, by, ExpectedConditions
 } from 'protractor';
 
-describe('section-start.md', () => {
-  beforeEach(() => {
-    browser.waitForAngularEnabled(false)
-    browser.get('http://localhost:8989/scriptedforms/section-start.md');
-    browser.wait(ExpectedConditions.presenceOf(
-      element(by.tagName('app-form'))
-    ))
-  });
+import { beforeFromFile, after } from './utilities/before-and-after'
+
+const TEMPLATE_FILE = 'section-start.md'
+
+describe(TEMPLATE_FILE, () => {
+  beforeEach(beforeFromFile(TEMPLATE_FILE));
+  afterEach(after())
 
   it('should successfully run section-start', () => {
     let elem = element(by.css('.check-me .jp-OutputArea-output'))

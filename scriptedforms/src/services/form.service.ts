@@ -43,9 +43,12 @@ export interface FormStore {
 export class FormService {
   currentFormSessionId: string;
   formStore: FormStore = {}
-  formBuilderComponent: FormBuilderComponent
+  formBuilderComponent: FormBuilderComponent;
+  initialising: 'initialising' | 'ready' = 'initialising'
+  formStatus: BehaviorSubject<'initialising' | 'ready'> = new BehaviorSubject(this.initialising)
 
   formInitialisation(sessionId: string) {
+    this.formStatus.next('initialising')
     this.currentFormSessionId = sessionId
     if (!(sessionId in this.formStore)) {
       this.formStore[sessionId] = {
@@ -57,6 +60,9 @@ export class FormService {
         if (template !== null) {
           this.formBuilderComponent.buildForm(sessionId, template).then(component => {
             this.formStore[sessionId].component = component
+            component.formReady.promise.then(() => {
+              this.formStatus.next('ready')
+            })
           });
         }
       })

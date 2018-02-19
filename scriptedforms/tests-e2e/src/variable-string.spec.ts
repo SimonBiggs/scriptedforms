@@ -2,6 +2,9 @@ import {
   browser, element, by, ExpectedConditions, ElementFinder, Key
 } from 'protractor';
 
+import { beforeFromFile, after, waitForSpinner } from './utilities/before-and-after'
+
+const TEMPLATE_FILE = 'variable-string.md'
 
 function writeInBothAndTest(text: string, sendKeysInto?: (elementFinder: ElementFinder) => void) {
   let firstString = element(by.css('.write-in-me-first textarea'))
@@ -18,26 +21,23 @@ function writeInBothAndTest(text: string, sendKeysInto?: (elementFinder: Element
   }
 
   sendKeysInto(firstString)
-  let spinner = element(by.css('.floating-spinner'))
-  browser.wait(ExpectedConditions.stalenessOf(spinner))
+  waitForSpinner()
   expect(secondString.getAttribute('ng-reflect-model')).toEqual(text)
+
+  browser.wait(ExpectedConditions.presenceOf(resultContents))
   expect(resultContents.getText()).toEqual(text)
 
   sendKeysInto(secondString)
-  browser.wait(ExpectedConditions.stalenessOf(spinner))
+  waitForSpinner()
   expect(firstString.getAttribute('ng-reflect-model')).toEqual(text + text)
+
+  browser.wait(ExpectedConditions.presenceOf(resultContents))
   expect(resultContents.getText()).toEqual(text + text)
 }
 
-
-describe('variable-string.md', () => {
-  beforeEach(() => {
-    browser.waitForAngularEnabled(false)
-    browser.get('http://localhost:8989/scriptedforms/variable-string.md');
-    browser.wait(ExpectedConditions.presenceOf(
-      element(by.tagName('app-form'))
-    ))
-  });
+describe(TEMPLATE_FILE, () => {
+  beforeEach(beforeFromFile(TEMPLATE_FILE));
+  afterEach(after())
 
   it('should handle backslash', () => {
     writeInBothAndTest('\\\\\\')
