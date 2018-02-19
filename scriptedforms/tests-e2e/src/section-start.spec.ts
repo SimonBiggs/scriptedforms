@@ -10,7 +10,7 @@ describe(TEMPLATE_FILE, () => {
   beforeEach(beforeFromFile(TEMPLATE_FILE));
   afterEach(after())
 
-  it('should successfully run section-start', () => {
+  it('should successfully run on start', () => {
     let elem = element(by.css('.check-me .jp-OutputArea-output'))
     browser.wait(ExpectedConditions.presenceOf(elem))
 
