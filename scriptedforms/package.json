@@ -9,7 +9,7 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "build": "rimraf build && rimraf lib && node-sass ./src/theme.scss ./src/theme.css && webpack"
+    "build": "rimraf lib && webpack"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
@@ -52,6 +52,7 @@
     "karma": "^2.0.0",
     "node-sass": "^4.5.3",
     "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "tslint": "^5.7.0",
     "typescript": "^2.6.2",

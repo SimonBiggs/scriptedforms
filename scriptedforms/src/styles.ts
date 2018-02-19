@@ -27,7 +27,7 @@
 Import the required styles.
 */
 
-import "./theme.css";
+import "./theme.scss";
 import "./style.css";
 
 /*
