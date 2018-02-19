@@ -6,7 +6,7 @@ Quickly create live-update GUIs for Python packages using Markdown and a few cus
 
 ## Quick start
 
-If you would like to quickly take scriptedforms for a spin first install it:
+If you would like to take scriptedforms for a spin first install it:
 
 ```bash
 pip install scriptedforms
