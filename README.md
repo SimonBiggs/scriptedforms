@@ -2,7 +2,7 @@
 
 # Scripted Forms
 
-Quickly create live-update GUIs for Python packages using Markdown and a few custom HTML elements.
+Quickly create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
 
 ## Quick start
 
