@@ -32,9 +32,9 @@ Not yet implemented.
 import { BehaviorSubject } from 'rxjs';
 
 // import { Slot } from '@phosphor/signaling';
-// import {
-//   PromiseDelegate
-// } from '@phosphor/coreutils';
+import {
+  PromiseDelegate
+} from '@phosphor/coreutils';
 
 import {
   Kernel, KernelMessage
@@ -43,6 +43,7 @@ import {
 import { nbformat } from '@jupyterlab/coreutils';
 
 import * as  stringify from 'json-stable-stringify';
+import * as uuid from 'uuid';
 
 import { Injectable } from '@angular/core';
 import { KernelService } from './kernel.service';
@@ -84,6 +85,7 @@ export class VariableService {
   variableHandlerClass: string = '_VariableHandler'
   handlerName: string = '_scriptedforms_variable_handler'
   fetchVariablesCode: string = `exec(${this.handlerName}.fetch_code)`;
+  variableStatus: BehaviorSubject<string> = new BehaviorSubject(null)
 
   constructor(
     private myKernelSevice: KernelService,
@@ -124,6 +126,7 @@ export class VariableService {
   }
 
   resetVariableService(sessionId: string) {
+    this.variableStatus.next('reset')
     this.sessionVariableStore[sessionId].timestamps.next({})
     this.sessionVariableStore[sessionId].variableStore.next({});
     this.sessionVariableStore[sessionId].oldVariableStore = {};
@@ -133,6 +136,7 @@ export class VariableService {
   }
 
   allVariablesInitilised(sessionId: string) {
+    this.variableStatus.next('initialising')
     let initialiseHandlerCode = `${this.handlerName} = ${this.variableHandlerClass}("""${JSON.stringify(this.sessionVariableStore[sessionId].variableEvaluateMap)}""", "${this.handlerName}")`
     this.myKernelSevice.runCode(sessionId, initialiseHandlerCode, '"initialiseVariableHandler"')
     .then((future: Kernel.IFuture) => {
@@ -187,7 +191,9 @@ export class VariableService {
   }
 
   fetchAll(sessionId: string) {
-    // let fetchComplete = new PromiseDelegate<void> ();
+    this.variableStatus.next('fetching')
+    
+    let fetchComplete = new PromiseDelegate<void> ();
     this.myKernelSevice.runCode(
       sessionId, this.fetchVariablesCode, '"fetchAllVariables"')
     .then((future: Kernel.IFuture) => {
@@ -205,13 +211,12 @@ export class VariableService {
           }
         });
         future.done.then(() => {
-
-          // fetchComplete.resolve(null);
+          fetchComplete.resolve(null);
         })
       }
     })
 
-    // return fetchComplete.promise
+    return fetchComplete.promise
   }
 
   updateComponentView(component: any, value: VariableValue) {
@@ -232,6 +237,7 @@ export class VariableService {
   }
 
   checkForChanges(sessionId: string) {
+    this.variableStatus.next('checking-for-changes')
     const variableIdentifiers = Object.keys(this.sessionVariableStore[sessionId].variableComponentStore);
 
     for (let identifier of variableIdentifiers) {
@@ -249,7 +255,19 @@ export class VariableService {
     if (aVariableHasChanged) {
       // console.log(this.sessionVariableStore[sessionId].variableStore.getValue())
       this.sessionVariableStore[sessionId].variableChangedObservable.next(this.sessionVariableStore[sessionId].variableStore.getValue())
+      this.variableStatus.next('a-change-was-made')
+    } else {
+      this.variableStatus.next('no-change-was-made')
     }
+    
+    let id = uuid.v4();
+    let staticStatus = 'prepping-for-idle: ' + id
+    this.variableStatus.next(staticStatus)
+    this.myKernelSevice.sessionStore[this.myKernelSevice.currentSession].queue.then(() => {
+      if (this.variableStatus.getValue() === staticStatus) {
+        this.variableStatus.next('idle')
+      }
+    })
     this.sessionVariableStore[sessionId].oldVariableStore = JSON.parse(JSON.stringify(this.sessionVariableStore[sessionId].variableStore.getValue()));
   }
 

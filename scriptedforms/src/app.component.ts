@@ -42,7 +42,7 @@ import {
 } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 
-import { kernelIdleDebounce } from './levelled-files/level-1/kernel-idle-debounce';
+// import { kernelIdleDebounce } from './levelled-files/level-1/kernel-idle-debounce';
 
 import {
   Kernel
@@ -54,6 +54,7 @@ import { IScriptedForms, InitialisationService } from './services/initialisation
 import { FileService } from "./services/file.service";
 import { FormService } from "./services/form.service";
 import { KernelService } from './services/kernel.service';
+import { VariableService } from './services/variable.service';
 
 import { FormStatus } from './types/form-status';
 
@@ -61,7 +62,7 @@ import { FormStatus } from './types/form-status';
   selector: "app-root",
   template: `
 <div class="margin">
-  <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
+  <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
   <div #jupyterErrorMsg></div>
   <app-form-builder #formBuilderComponent></app-form-builder>
   <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
@@ -75,6 +76,7 @@ export class AppComponent implements AfterViewInit {
   restartingKernel = false;
   kernelStatus: Kernel.Status = 'unknown'
   formStatus: FormStatus = null
+  variableStatus: string = null
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
   @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
@@ -83,7 +85,9 @@ export class AppComponent implements AfterViewInit {
     private myFileService: FileService,
     private myFormService: FormService,
     private myInitialisationService: InitialisationService,
-    private myKernelSevice: KernelService
+    private myKernelSevice: KernelService,
+    private myVariableService: VariableService
+
   ) {}
 
   ngAfterViewInit() {
@@ -111,14 +115,24 @@ export class AppComponent implements AfterViewInit {
     })
 
     this.myFormService.formStatus.subscribe(status => {
-      console.log(status)
+      console.log('form: ' + status)
       this.formStatus = status
     })
 
-    kernelIdleDebounce(this.myKernelSevice.jupyterStatus).subscribe(status => {
-      this.kernelStatus = status
-      console.log(status)
+    this.myVariableService.variableStatus.subscribe(status => {
+      console.log('variable: ' + status)
+      this.variableStatus = status
     })
+
+    this.myKernelSevice.kernelStatus.subscribe(status => {
+      console.log('kernel: ' + status)
+      this.kernelStatus = status
+    })
+
+    // kernelIdleDebounce(this.myKernelSevice.jupyterStatus).subscribe(status => {
+    //   this.kernelStatus = status
+    //   console.log(status)
+    // })
   }
 
   restartKernel() {

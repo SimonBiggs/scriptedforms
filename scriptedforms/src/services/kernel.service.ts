@@ -68,7 +68,7 @@ export interface SessionStore {
 @Injectable()
 export class KernelService {
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
-  jupyterStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
+  kernelStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
   sessionConnected: PromiseDelegate<string>
   sessionStore: SessionStore = {}
   currentSession: string = null;
@@ -123,7 +123,7 @@ export class KernelService {
             this.jupyterError.next(msg)
           }
           if (KernelMessage.isStatusMsg(msg)) {
-            this.jupyterStatus.next(msg.content.execution_state)
+            this.kernelStatus.next(msg.content.execution_state)
           }
         })
 
