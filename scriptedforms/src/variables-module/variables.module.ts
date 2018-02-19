@@ -47,8 +47,6 @@ import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
 import { DropdownItemsComponent } from './dropdown-items.component'
 
-import { PasswordComponent } from './password.component';
-
 
 @NgModule({
   imports: [
@@ -65,7 +63,6 @@ import { PasswordComponent } from './password.component';
     TableComponent,
     StringComponent,
     DropdownComponent,
-    PasswordComponent,
     DropdownItemsComponent
   ],
   exports: [
@@ -77,7 +74,6 @@ import { PasswordComponent } from './password.component';
     TableComponent,
     StringComponent,
     DropdownComponent,
-    PasswordComponent,
     DropdownItemsComponent
   ]
 })

@@ -2,70 +2,76 @@
 # yarn lockfile v1
 
 
-"@angular/animations@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.4.tgz#c5ec749d84a0434733a28a82c6cb6a4e15246201"
+"@angular/animations@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.5.tgz#3e72184321c4979305619c74902b8be92d76db70"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cdk@^5.0.2":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.0.tgz#4368f6749e915cdcc75d325ae33fdb3f85a88108"
+"@angular/cdk@5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.1.tgz#11500502deeaf42f88f92ca7d78d9a7642b07761"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/common@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.2.4.tgz#a0ee6ef65f731196d3037bce515f7bbec90740d2"
+"@angular/common@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.2.5.tgz#08dd636fa46077d047066b13a1aae494066f6c55"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler@^5.0.0", "@angular/compiler@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-5.2.4.tgz#f653176bf6c4e253b2c445a1e50941ffba009fb2"
+"@angular/compiler@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-5.2.5.tgz#5e3b511906048a579fcd007aba72911472e5aa28"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.2.4.tgz#44a59bcea87b3aac9ce8ff2ff674fe9cb60e2041"
+"@angular/core@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.2.5.tgz#24f9cd75c5b2728f2ddd1869777590ea7177bca9"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-5.2.4.tgz#a731087e147ca61f5051cbe22597a24d937c4852"
+"@angular/forms@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-5.2.5.tgz#2ad7a420c6ef6cd87a34071c5319ec83f7ed56aa"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^5.0.2":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.0.tgz#8599e3149d48487e3e92e941fa9dc55176e3a0cf"
+"@angular/http@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-5.2.5.tgz#1208256e36f0e486d96d10a733fdc8424ffa16bf"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@^5.0.0":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.4.tgz#708457c9aafb1b812187c95d10365685521314d4"
+"@angular/material@5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.1.tgz#c0433edf98904dc35ae15dfa93ede755418843dd"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^5.0.0", "@angular/platform-browser@^5.1.2":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-5.2.4.tgz#dcb2dc6083774dcf2e17c9e9d0653d87057bf732"
+"@angular/platform-browser-dynamic@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.5.tgz#b89df410bd953e2a6843325f9ac3c09a10eadaf0"
   dependencies:
     tslib "^1.7.1"
 
-"@jupyterlab/application@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/application/-/application-0.14.1.tgz#c702b0c3c1823b6fa7ac51d0115781cf34005484"
+"@angular/platform-browser@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-5.2.5.tgz#eae4af2b742fb901d84d6367cd99f9e88102151f"
   dependencies:
-    "@jupyterlab/apputils" "^0.14.1"
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/docregistry" "^0.14.1"
-    "@jupyterlab/rendermime" "^0.14.1"
-    "@jupyterlab/rendermime-interfaces" "^1.0.1"
-    "@jupyterlab/services" "^1.0.1"
+    tslib "^1.7.1"
+
+"@jupyterlab/application@^0.15.4":
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/application/-/application-0.15.4.tgz#c42487ad41a6a1658eb2dfabb94fcdd4dda44ef6"
+  dependencies:
+    "@jupyterlab/apputils" "^0.15.4"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/docregistry" "^0.15.4"
+    "@jupyterlab/rendermime" "^0.15.4"
+    "@jupyterlab/rendermime-interfaces" "^1.0.6"
+    "@jupyterlab/services" "^1.1.4"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/application" "^1.5.0"
     "@phosphor/commands" "^1.4.0"
@@ -76,12 +82,12 @@
     "@phosphor/signaling" "^1.2.2"
     "@phosphor/widgets" "^1.5.0"
 
-"@jupyterlab/apputils@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.14.1.tgz#9f62c7c876bf77f43f9a933e3ec0a1a976dff101"
+"@jupyterlab/apputils@^0.15.4", "@jupyterlab/apputils@^0.15.5":
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.15.5.tgz#90db7beb4ed6f4bedbb1f0ab99105c35d7371fa8"
   dependencies:
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/services" "^1.0.1"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/services" "^1.1.4"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/commands" "^1.4.0"
     "@phosphor/coreutils" "^1.3.0"
@@ -97,12 +103,12 @@
     react-dom "~16.0.0"
     sanitize-html "~1.14.3"
 
-"@jupyterlab/codeeditor@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/codeeditor/-/codeeditor-0.14.1.tgz#737470042faa4989b084ea62ef73c2bc424092db"
+"@jupyterlab/codeeditor@^0.15.4":
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codeeditor/-/codeeditor-0.15.4.tgz#04c9045f8728e751832ca5fd65011d5671792eb8"
   dependencies:
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/observables" "^1.0.6"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/disposable" "^1.1.2"
     "@phosphor/messaging" "^1.2.2"
@@ -110,23 +116,23 @@
     "@phosphor/virtualdom" "^1.1.2"
     "@phosphor/widgets" "^1.5.0"
 
-"@jupyterlab/codemirror@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/codemirror/-/codemirror-0.14.1.tgz#28c3b9428d909993e61d9d412b9ebfbb9ec61d8f"
+"@jupyterlab/codemirror@^0.15.4":
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/codemirror/-/codemirror-0.15.4.tgz#a694887771b9fe782c0b07fb6affdb560b3bb530"
   dependencies:
-    "@jupyterlab/apputils" "^0.14.1"
-    "@jupyterlab/codeeditor" "^0.14.1"
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
+    "@jupyterlab/apputils" "^0.15.4"
+    "@jupyterlab/codeeditor" "^0.15.4"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/observables" "^1.0.6"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/disposable" "^1.1.2"
     "@phosphor/signaling" "^1.2.2"
     codemirror "~5.24.2"
 
-"@jupyterlab/coreutils@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-1.0.1.tgz#82d48406db94d6fd1935518dbc00e0fd4f4a5bc1"
+"@jupyterlab/coreutils@^1.0.6", "@jupyterlab/coreutils@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/coreutils/-/coreutils-1.0.9.tgz#6cb98efabf44a0471107832d5b95c50442ee7930"
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
@@ -139,18 +145,18 @@
     path-posix "~1.0.0"
     url-parse "~1.1.9"
 
-"@jupyterlab/docregistry@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/docregistry/-/docregistry-0.14.1.tgz#0ef07bcd056726448bf0c2d12714f8c5a82bb86d"
+"@jupyterlab/docregistry@^0.15.4", "@jupyterlab/docregistry@^0.15.5":
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/docregistry/-/docregistry-0.15.5.tgz#582109d7cb582bfacf6e537ca20f6fc6a5d49e12"
   dependencies:
-    "@jupyterlab/apputils" "^0.14.1"
-    "@jupyterlab/codeeditor" "^0.14.1"
-    "@jupyterlab/codemirror" "^0.14.1"
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
-    "@jupyterlab/rendermime" "^0.14.1"
-    "@jupyterlab/rendermime-interfaces" "^1.0.1"
-    "@jupyterlab/services" "^1.0.1"
+    "@jupyterlab/apputils" "^0.15.5"
+    "@jupyterlab/codeeditor" "^0.15.4"
+    "@jupyterlab/codemirror" "^0.15.4"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/observables" "^1.0.6"
+    "@jupyterlab/rendermime" "^0.15.4"
+    "@jupyterlab/rendermime-interfaces" "^1.0.6"
+    "@jupyterlab/services" "^1.1.4"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/disposable" "^1.1.2"
@@ -158,9 +164,9 @@
     "@phosphor/signaling" "^1.2.2"
     "@phosphor/widgets" "^1.5.0"
 
-"@jupyterlab/observables@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/observables/-/observables-1.0.1.tgz#4a2d9c47900fcf56748e0d2d4a38333e2ac8d893"
+"@jupyterlab/observables@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/observables/-/observables-1.0.6.tgz#84961fab2833e3519578d4911c761bb3798ac919"
   dependencies:
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
@@ -168,16 +174,16 @@
     "@phosphor/messaging" "^1.2.2"
     "@phosphor/signaling" "^1.2.2"
 
-"@jupyterlab/outputarea@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.14.1.tgz#6141ff449d2e5bf98dd1a72044ec0be609802c8d"
+"@jupyterlab/outputarea@^0.15.5":
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/outputarea/-/outputarea-0.15.5.tgz#a2ce9b7150906edcbe998fab200869b46b71b414"
   dependencies:
-    "@jupyterlab/apputils" "^0.14.1"
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
-    "@jupyterlab/rendermime" "^0.14.1"
-    "@jupyterlab/rendermime-interfaces" "^1.0.1"
-    "@jupyterlab/services" "^1.0.1"
+    "@jupyterlab/apputils" "^0.15.5"
+    "@jupyterlab/coreutils" "^1.0.9"
+    "@jupyterlab/observables" "^1.0.6"
+    "@jupyterlab/rendermime" "^0.15.4"
+    "@jupyterlab/rendermime-interfaces" "^1.0.6"
+    "@jupyterlab/services" "^1.1.4"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/disposable" "^1.1.2"
@@ -185,36 +191,36 @@
     "@phosphor/signaling" "^1.2.2"
     "@phosphor/widgets" "^1.5.0"
 
-"@jupyterlab/rendermime-interfaces@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime-interfaces/-/rendermime-interfaces-1.0.1.tgz#d295a97772cd10197f9077634f12297c0eaa9fb6"
+"@jupyterlab/rendermime-interfaces@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime-interfaces/-/rendermime-interfaces-1.0.6.tgz#e3477d194581019930672d4d7bf37d75eb5fb9fb"
   dependencies:
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/widgets" "^1.5.0"
 
-"@jupyterlab/rendermime@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.14.1.tgz#8d6ef134e0bff005a331ae3cc1cd5d0afb4b3f06"
+"@jupyterlab/rendermime@^0.15.4":
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/rendermime/-/rendermime-0.15.4.tgz#b715e2349eca3517bdb5169261c17f899d6ddd3b"
   dependencies:
-    "@jupyterlab/apputils" "^0.14.1"
-    "@jupyterlab/codemirror" "^0.14.1"
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
-    "@jupyterlab/rendermime-interfaces" "^1.0.1"
-    "@jupyterlab/services" "^1.0.1"
+    "@jupyterlab/apputils" "^0.15.4"
+    "@jupyterlab/codemirror" "^0.15.4"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/observables" "^1.0.6"
+    "@jupyterlab/rendermime-interfaces" "^1.0.6"
+    "@jupyterlab/services" "^1.1.4"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/messaging" "^1.2.2"
     "@phosphor/signaling" "^1.2.2"
     "@phosphor/widgets" "^1.5.0"
     ansi_up "~1.3.0"
-    marked "~0.3.6"
+    marked "~0.3.9"
 
-"@jupyterlab/services@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-1.0.1.tgz#f64e3069b04b2fe227d01af973ead93d516aeb68"
+"@jupyterlab/services@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/services/-/services-1.1.4.tgz#7c0b8712b38e19f993ae6ddd1c2ced79da2c1a5d"
   dependencies:
-    "@jupyterlab/coreutils" "^1.0.1"
-    "@jupyterlab/observables" "^1.0.1"
+    "@jupyterlab/coreutils" "^1.0.6"
+    "@jupyterlab/observables" "^1.0.6"
     "@phosphor/algorithm" "^1.1.2"
     "@phosphor/coreutils" "^1.3.0"
     "@phosphor/disposable" "^1.1.2"
@@ -222,12 +228,12 @@
     node-fetch "~1.7.3"
     ws "~1.1.4"
 
-"@jupyterlab/theme-light-extension@^0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/theme-light-extension/-/theme-light-extension-0.14.1.tgz#c5c648522e218754566d0012e88bac87ca07310f"
+"@jupyterlab/theme-light-extension@^0.15.4":
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/theme-light-extension/-/theme-light-extension-0.15.4.tgz#5a10cdd217de7f8a6f11a3094ef5eba43a9cf2c6"
   dependencies:
-    "@jupyterlab/application" "^0.14.1"
-    "@jupyterlab/apputils" "^0.14.1"
+    "@jupyterlab/application" "^0.15.4"
+    "@jupyterlab/apputils" "^0.15.4"
     font-awesome "~4.7.0"
 
 "@phosphor/algorithm@^1.1.2":
@@ -323,26 +329,9 @@
     "@phosphor/signaling" "^1.2.2"
     "@phosphor/virtualdom" "^1.1.2"
 
-"@simonbiggs/phosphor-angular-loader@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@simonbiggs/phosphor-angular-loader/-/phosphor-angular-loader-0.6.0.tgz#fc7213a00625c5052ca2f0189e6dde80034d00e0"
-  dependencies:
-    "@angular/compiler" "^5.0.0"
-    "@angular/platform-browser" "^5.0.0"
-    "@angular/platform-browser-dynamic" "^5.0.0"
-    "@phosphor/coreutils" "^1.3.0"
-    "@phosphor/widgets" "^1.5.0"
-    core-js "^2.5.1"
-    rxjs "^5.5.2"
-    zone.js "^0.8.18"
-
-"@types/bcryptjs@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.1.tgz#7fb63922b5b106edacdcfe084cd38850f78aacfc"
-
-"@types/codemirror@0.0.47":
-  version "0.0.47"
-  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.47.tgz#7fba9190c52bc0cdc6f7cad522581ac4a274fe98"
+"@types/codemirror@^0.0.55":
+  version "0.0.55"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.55.tgz#f4292b7a5f33b2aab509501c3db7e45d19a7c057"
 
 "@types/hammerjs@^2.0.35":
   version "2.0.35"
@@ -356,13 +345,9 @@
   version "1.0.32"
   resolved "https://registry.yarnpkg.com/@types/json-stable-stringify/-/json-stable-stringify-1.0.32.tgz#121f6917c4389db3923640b2e68de5fa64dda88e"
 
-"@types/markdown-it@0.0.4":
+"@types/markdown-it@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-0.0.4.tgz#c5f67365916044b342dae8d702724788ba0b5b74"
-
-"@types/node-forge@^0.7.1":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@types/node-forge/-/node-forge-0.7.2.tgz#bafb8123643a69186ca963dbe1a165ebdc78e3c7"
 
 "@types/node@*":
   version "9.4.6"
@@ -708,10 +693,6 @@ bcrypt-pbkdf@^1.0.0:
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz#63bc5dcb61331b92bc05fd528953c33462a06f8d"
   dependencies:
     tweetnacl "^0.14.3"
-
-bcryptjs@^2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
 
 better-assert@~1.0.0:
   version "1.0.2"
@@ -1291,7 +1272,7 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.0, core-js@^2.5.1:
+core-js@^2.2.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
@@ -1835,10 +1816,6 @@ esprima@3.x.x, esprima@^3.1.3:
 esprima@^2.6.0, esprima@^2.7.0:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
-
-esprima@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
 
 esrecurse@^4.1.0:
   version "4.2.0"
@@ -2438,10 +2415,6 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
-immutable@^3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
-
 in-publish@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/in-publish/-/in-publish-2.0.0.tgz#e20ff5e3a2afc2690320b6dc552682a9c7fadf51"
@@ -2690,20 +2663,9 @@ js-base64@^2.1.9:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.0.tgz#9e566fee624751a1d720c966cd6226d29d4025aa"
 
-js-sha3@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.7.0.tgz#0a5c57b36f79882573b2d84051f8bb85dd1bd63a"
-
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
-
-js-yaml@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^4.0.0"
 
 js-yaml@~3.7.0:
   version "3.7.0"
@@ -3053,9 +3015,9 @@ markdown-it@^8.4.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.3"
 
-marked@~0.3.6:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.9.tgz#54ce6a57e720c3ac6098374ec625fcbcc97ff290"
+marked@~0.3.9:
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.15.tgz#de96982e54c880962f5093a2fa93d0866bf73668"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -3229,10 +3191,6 @@ node-fetch@^1.0.1, node-fetch@~1.7.3:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
-
-node-forge@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.1.tgz#9da611ea08982f4b94206b3beb4cc9665f20c300"
 
 node-gyp@^3.3.1:
   version "3.6.2"
@@ -4481,7 +4439,7 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-rxjs@^5.5.0, rxjs@^5.5.2:
+rxjs@^5.5.0:
   version "5.5.6"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
   dependencies:
@@ -5434,6 +5392,6 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
-zone.js@^0.8.18, zone.js@^0.8.4:
+zone.js@^0.8.4:
   version "0.8.20"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.20.tgz#a218c48db09464b19ff6fc8f0d4bb5b1046e185d"
