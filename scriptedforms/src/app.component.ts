@@ -55,6 +55,8 @@ import { FileService } from "./services/file.service";
 import { FormService } from "./services/form.service";
 import { KernelService } from './services/kernel.service';
 
+import { FormStatus } from './types/form-status';
+
 @Component({
   selector: "app-root",
   template: `
@@ -72,7 +74,7 @@ import { KernelService } from './services/kernel.service';
 export class AppComponent implements AfterViewInit {
   restartingKernel = false;
   kernelStatus: Kernel.Status = 'unknown'
-  formStatus: 'initialising' | 'ready' = 'initialising'
+  formStatus: FormStatus = null
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
   @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
@@ -109,6 +111,7 @@ export class AppComponent implements AfterViewInit {
     })
 
     this.myFormService.formStatus.subscribe(status => {
+      console.log(status)
       this.formStatus = status
     })
 
@@ -120,7 +123,7 @@ export class AppComponent implements AfterViewInit {
 
   restartKernel() {
     this.restartingKernel = true
-    this.myFormService.formStore[this.myFormService.currentFormSessionId].component.restartFormKernel().then(() => {
+    this.myFormService.restartFormKernel().then(() => {
       this.restartingKernel = false
     })
   }

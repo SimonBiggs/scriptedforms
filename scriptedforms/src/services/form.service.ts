@@ -31,6 +31,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IFormComponent } from '../form-builder-module/create-form-component-factory';
 import { FormBuilderComponent } from '../form-builder-module/form-builder.component'
 
+import { FormStatus } from '../types/form-status';
 
 export interface FormStore {
   [sessionId: string]: { 
@@ -44,8 +45,8 @@ export class FormService {
   currentFormSessionId: string;
   formStore: FormStore = {}
   formBuilderComponent: FormBuilderComponent;
-  initialising: 'initialising' | 'ready' = 'initialising'
-  formStatus: BehaviorSubject<'initialising' | 'ready'> = new BehaviorSubject(this.initialising)
+  initialising: FormStatus = 'initialising'
+  formStatus: BehaviorSubject<FormStatus> = new BehaviorSubject(this.initialising)
 
   formInitialisation(sessionId: string) {
     this.formStatus.next('initialising')
@@ -67,6 +68,15 @@ export class FormService {
         }
       })
     }
+  }
+
+  restartFormKernel() {
+    this.formStatus.next('restarting')
+    let formReadyPromise = this.formStore[this.currentFormSessionId].component.restartFormKernel()
+    formReadyPromise.then(() => {
+      this.formStatus.next('ready')
+    })
+    return formReadyPromise
   }
 
   setTemplate(template: string, sessionId: string) {
