@@ -23,6 +23,8 @@
 // the Combined Licenses for the specific language governing permissions and 
 // limitations under the Combined Licenses.
 
+// import { combineLatest } from 'rxjs/observable/combineLatest';
+
 import { Injectable } from '@angular/core';
 
 import {
@@ -37,6 +39,7 @@ import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
 import { FormService } from './form.service';
 import { KernelService } from './kernel.service';
+// import { VariableService } from './variable.service';
 
 import {
   watchdogCode
@@ -44,20 +47,34 @@ import {
 
 @Injectable()
 export class WatchdogService {
-  formFirstPassComplete = new PromiseDelegate<void>();
+  // formFirstPassComplete = new PromiseDelegate<void>();
+  everythingIdle = new PromiseDelegate<void>();
 
   constructor(
     private myFileService: FileService,
     private myJupyterService: JupyterService,
     private myFormService: FormService,
-    private myKernelService: KernelService,
+    // private myVariableService: VariableService,
+    private myKernelService: KernelService
   ) { }
 
-  runWatchdogAfterFormReady() {
-    this.formFirstPassComplete.promise.then(() => {
-      this.runWatchdog()
-    })
-  }
+  // "kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'"
+
+  // runWatchdogAfterFormReady() {
+  //   let subscription = combineLatest(
+  //     this.myFormService.formStatus,
+  //     this.myVariableService.variableStatus,
+  //     this.myKernelService.kernelStatus).subscribe(([formStatus, variableStatus, kernelStatus]) => {
+  //       if ((formStatus === 'ready') && (variableStatus === 'idle') && (kernelStatus === 'idle')) {
+  //         subscription.unsubscribe()
+  //         this.runWatchdog()
+  //       }
+  //     })
+
+  //   // this.formFirstPassComplete.promise.then(() => {
+  //   //   this.runWatchdog()
+  //   // })
+  // }
 
   runWatchdog() {
     const path = 'scriptedforms_watchdog_kernel'

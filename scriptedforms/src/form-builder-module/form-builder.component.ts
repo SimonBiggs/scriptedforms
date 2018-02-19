@@ -44,7 +44,7 @@ import { createFormComponentFactory, IFormComponent } from './create-form-compon
 
 // import { FormService } from '../services/form.service';
 import { FileService } from '../services/file.service';
-import { WatchdogService } from '../services/watchdog.service';
+// import { WatchdogService } from '../services/watchdog.service';
 
 import {
   PromiseDelegate
@@ -69,7 +69,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
   constructor(
     private compiler: Compiler,
     // private myFormService: FormService,
-    private myWatchdogService: WatchdogService,
+    // private myWatchdogService: WatchdogService,
     private myFileService: FileService
   ) { }
 
@@ -180,9 +180,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
-    this.formComponentRef.instance.formReady.promise.then(() => {
-      this.myWatchdogService.formFirstPassComplete.resolve(null)
-    })
+    // this.formComponentRef.instance.formReady.promise.then(() => {
+    //   this.myWatchdogService.formFirstPassComplete.resolve(null)
+    // })
     return this.formComponentRef.instance
   }
 }
