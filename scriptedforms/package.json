@@ -14,23 +14,6 @@
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
-  "devDependencies": {
-    "@types/codemirror": "^0.0.55",
-    "@types/hammerjs": "^2.0.35",
-    "@types/js-yaml": "^3.10.1",
-    "@types/json-stable-stringify": "^1.0.32",
-    "@types/markdown-it": "^0.0.4",
-    "@types/uuid": "^3.4.3",
-    "copyfiles": "^1.2.0",
-    "css-loader": "^0.28.7",
-    "karma": "^2.0.0",
-    "node-sass": "^4.5.3",
-    "rimraf": "^2.6.1",
-    "style-loader": "^0.19.1",
-    "tslint": "^5.7.0",
-    "typescript": "^2.6.2",
-    "webpack": "^3.10.0"
-  },
   "dependencies": {
     "@angular/animations": "5.2.5",
     "@angular/cdk": "5.2.1",
@@ -56,5 +39,22 @@
     "rxjs": "^5.5.0",
     "uuid": "^3.2.1",
     "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@types/codemirror": "^0.0.55",
+    "@types/hammerjs": "^2.0.35",
+    "@types/js-yaml": "^3.10.1",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/markdown-it": "^0.0.4",
+    "@types/uuid": "^3.4.3",
+    "copyfiles": "^1.2.0",
+    "css-loader": "^0.28.7",
+    "karma": "^2.0.0",
+    "node-sass": "^4.5.3",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.19.1",
+    "tslint": "^5.7.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
   }
 }
