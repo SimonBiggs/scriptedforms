@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/lib/',
-    publicPath: './lib',
+    publicPath: '/scriptedforms/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js'
   },
@@ -21,28 +21,19 @@ module.exports = {
   module: {
     rules: [      
       {
-        test: /\.ts$/,
-        loaders: [
-          {
-            loader: 'awesome-typescript-loader',
-            options: { configFileName: 'tsconfig.json' }
-          }
-        ]
+        test: /\.ts$/, loaders: {
+          loader: 'awesome-typescript-loader',
+          options: { configFileName: 'tsconfig.json' }
+        }
       },
       { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.png$/, use: 'file-loader' }
+      { test: /\.(woff|woff2|ttf|eot)$/, use: 'file-loader' }
     ]
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['scriptedforms', 'misc-vendors', 'jupyterlab', 'angular', 'polyfills']
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      exclude: 'scriptedforms',
-      mangle: {
-        keep_fnames: true
-      }
     })
   ]
 };

@@ -21,6 +21,7 @@ class ProtractorTestApp(ScriptedForms):
     open_browser = False
     default_url = '/scriptedforms/landing-page.md'
     port = 8989
+    log_level = 30
 
     def get_command(self):
         """Get the command to run."""

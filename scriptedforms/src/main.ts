@@ -24,12 +24,18 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import "./styles";
+import "./theme.scss";
+import "./style.css";
+
 import "hammerjs";
+
+import "material-design-icons/iconfont/material-icons.css";
 
 import '@jupyterlab/theme-light-extension/style/variables.css'
 import '@jupyterlab/codemirror/style/index.css';
 import '@jupyterlab/rendermime/style/index.css';
+
+import { enableProdMode } from '@angular/core';
 
 import { BoxLayout, Widget } from "@phosphor/widgets";
 
@@ -40,6 +46,11 @@ import { AngularWidget } from "./phosphor-angular-loader";
 import { AppComponent } from "./app.component";
 
 import { AppModule } from "./app.module";
+
+if (process.env.production) {
+  console.log('angular in production mode')
+  enableProdMode();
+}
 
 export namespace IScriptedFormsWidget {
   export interface IOptions {

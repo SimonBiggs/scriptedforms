@@ -49,14 +49,14 @@ function writeInBothAndTest(text: string, sendKeysInto?: (elementFinder: Element
 
   sendKeysInto(firstString)
   waitForSpinner()
-  expect(secondString.getAttribute('ng-reflect-model')).toEqual(text)
+  expect(secondString.getAttribute('value')).toEqual(text)
 
   browser.wait(ExpectedConditions.presenceOf(resultContents))
   expect(resultContents.getText()).toEqual(text)
 
   sendKeysInto(secondString)
   waitForSpinner()
-  expect(firstString.getAttribute('ng-reflect-model')).toEqual(text + text)
+  expect(firstString.getAttribute('value')).toEqual(text + text)
 
   browser.wait(ExpectedConditions.presenceOf(resultContents))
   expect(resultContents.getText()).toEqual(text + text)
