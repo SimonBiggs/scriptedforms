@@ -1,0 +1,67 @@
+.button a, input[type=submit] {
+	color: $brand-color;
+	text-decoration: none;
+	border: 2px solid $brand-color;
+	transition: .2s ease-in-out;
+	display: inline-block;
+	padding: 16px 50px;
+	background: #fff;
+}
+
+.button a:hover, input[type=submit]:hover {
+	background: $brand-color;
+	color: #fff;
+	cursor: pointer;
+}
+
+.button.alt a {
+	background: rgba(255,255,255,0);
+	border: 2px solid rgba(255, 255, 255, 1);
+	color: #fff;
+}
+
+.button.alt a:hover {
+	background: #fff;
+	color: $brand-color;
+	text-shadow: none;
+}
+
+textarea, input, button, select { font-family: inherit; font-size: inherit; }
+
+input[type=submit] {
+	margin: 20px 0 0 0;
+}
+
+label, input, textarea {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+textarea {
+	resize: vertical;
+	height: 150px;
+}
+
+label {
+	margin: 20px 0 5px 0;
+}
+
+input, textarea {
+	padding: 10px;
+	font-size: 1em;
+}
+
+input, textarea {
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	border: 1px solid #DDDDDD;
+}
+
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, textarea:focus {
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	border: 1px solid rgba(81, 203, 238, 1);
+}

@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<section class="hero" style="background-image: url(https://source.unsplash.com/MqJX_8EaStM/2000x1322)">
+	<div class="inner-hero text-container">
+		<div class="hero-text-container">
+			<h1>The latest news</h1>
+			<p class="subtext">Hear the latest progress on Frisco and tips on making life long friends.</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="text-container">
+		<p class="change-category">You're currently looking at advice categorised under <strong>{{ page.title }}</strong>. <a href="{{ site.baseurl }}/blog/">View all posts</a> instead.</p>
+
+		<ul class="blog-posts">
+			{% include list-posts.html posts=page.posts %}
+		</ul>
+	</div>
+</section>

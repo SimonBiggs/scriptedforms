@@ -1,0 +1,28 @@
+.map {
+	width: 100%;
+	height: 440px;
+}
+
+.contact-box {
+	margin: 0 auto;
+
+	form {
+		width: 100%
+	}
+
+	p {
+		margin: 0;
+	}
+
+	.contact-form, .contact-details  {
+		@media #{$desktop} {
+			-webkit-flex: 1;
+			flex: 1;
+		}
+	}
+
+	.contact-details {
+		font-size: .9em;
+		margin-top: 60px;
+	}
+}

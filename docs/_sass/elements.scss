@@ -1,0 +1,62 @@
+html {
+	background: #2b2b40;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Rubik', sans-serif;
+}
+
+a {
+	color: #00a4ca;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+}
+
+h1 strong, h2 strong {
+	font-weight: 700;
+}
+
+h1 {
+	font-weight: 300;
+	font-size: 3.8em;
+	margin: 0;
+}
+
+h2 {
+	font-weight: 300;
+	font-size: 3em;
+	margin: 0 0 30px 0;
+	line-height: 1.2em;
+}
+
+h3 {
+	margin: 20px 0 10px 0;
+}
+
+h2 a {
+	color: #000;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+p, address, ul {
+	font-size: 1.38em;
+	margin-bottom: 20px;
+	font-weight: 300;
+	line-height: 1.6em;
+	font-family: 'Lato', sans-serif;
+}

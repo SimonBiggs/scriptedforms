@@ -1,0 +1,31 @@
+.staff {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	@extend %flexbox;
+	@include flex-flow(wrap);
+	text-align: center;
+	li {
+		padding: 30px 20px;
+		box-sizing: border-box;
+		width: 100%;
+
+		@media #{$tablet} {
+			@include flex(1, 1, 50%);
+		}
+
+		@media #{$desktop} {
+			@include flex(1, 1, 33%);
+		}
+
+	}
+
+	.name {
+		margin-top: 20px;
+	}
+
+	.position {
+		color: #666;
+		font-size: .8em;
+	}
+}

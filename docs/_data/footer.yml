@@ -1,0 +1,27 @@
+left_links:
+  - name: Blog
+    link: /blog/
+  - name: About
+    link: /about/
+  - name: Contact
+    link: /contact/
+right_links:
+  - name:
+    link: https://facebook.com/
+    new_window: true
+    social_icon: Facebook
+  - name:
+    link: https://twitter.com/
+    social_icon: Twitter
+    new_window: true
+  - name:
+    link: https://youtube.com/
+    social_icon: YouTube
+    new_window: true
+  - name:
+    link: https://plus.google.com/
+    social_icon: Google Plus
+    new_window: true
+  - name:
+    link: /feed.xml
+    social_icon: RSS
