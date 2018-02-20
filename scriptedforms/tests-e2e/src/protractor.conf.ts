@@ -8,7 +8,7 @@ export let config: Config = {
   params: {
     token: process.env.JUPYTER_TOKEN
   },
-  specs: [ 'utilities/send-token.js', '*.spec.js' ],
+  specs: [ 'utilities/send-token.js', process.env.PROTRACTOR_PATTERN ],
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
   noGlobals: false

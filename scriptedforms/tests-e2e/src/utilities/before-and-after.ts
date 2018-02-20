@@ -45,8 +45,12 @@ export function before(url: string) {
   }
 }
 
+export function makeUrlFromFile(templateFile: string) {
+  return `http://localhost:8989/scriptedforms/${templateFile}`
+}
+
 export function beforeFromFile(templateFile: string) {
-  return before('http://localhost:8989/scriptedforms/' + templateFile)
+  return before(makeUrlFromFile(templateFile))
 }
 
 export function after() {
