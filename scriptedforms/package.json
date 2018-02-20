@@ -10,7 +10,13 @@
   "author": "Simon Biggs",
   "scripts": {
     "build": "rimraf lib && webpack",
-    "prod": "rimraf lib && webpack --config webpack.prod.js"
+    "prod": "rimraf lib && webpack --config webpack.prod.js",
+    "test": "yarn --cwd ./tests-e2e e2e",
+    "install:dev": "../dev-install.sh",
+    "uninstall": "../uninstall.sh",
+    "install": "../install.sh",
+    "pypi:prep": "yarn prod && yarn uninstall && yarn install && yarn test && yarn install:dev",
+    "pypi:upload": "../pypi.sh"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"

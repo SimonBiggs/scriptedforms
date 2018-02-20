@@ -1,5 +1,11 @@
 include scriptedforms/lib/*.js
 include scriptedforms/index.html
+
+include scriptedforms/lib/*.woff
+include scriptedforms/lib/*.woff2
+include scriptedforms/lib/*.ttf
+include scriptedforms/lib/*.eot
+
 include LICENSE Apache-2.0
 
 include scriptedforms/LICENSE
@@ -9,4 +15,4 @@ include scriptedforms/tsconfig.json
 include scriptedforms/webpack.config.js
 include scriptedforms/yarn.lock
 
-recursive-include scriptedforms/src *.ts *.css *.scss *.svg
+recursive-include scriptedforms/src *.ts *.css *.scss
