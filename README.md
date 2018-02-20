@@ -4,6 +4,8 @@
 
 Quickly create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
 
+The primary benefit is that front ends for Python code become easily accessible to everyone on your team. Easy to use, easy to update, easy to extend, and easy to understand.
+
 ## Quick start
 
 If you would like to take scriptedforms for a spin first install it:
