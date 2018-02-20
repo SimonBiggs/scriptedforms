@@ -2,9 +2,11 @@
 
 # Scripted Forms
 
-Quickly create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
+Making GUIs easy for everyone on your team.
 
-The primary benefit is that front ends for Python code become easily accessible to everyone on your team. Easy to use, easy to update, easy to extend, and easy to understand.
+The primary benefit is that front ends for Python code become easily accessible
+to everyone on your team. Easy to use, easy to update, easy to extend, and easy
+to understand.
 
 ## Quick start
 
@@ -43,11 +45,13 @@ sf.load(filename)
 ~~~
 
 Note that because scriptedforms relies on the jupyter notebook server
-the above code cannot be run within a jupyter app itself. For example, that means that you cannot
-use an `ipython` prompt or a jupyter notebook to run the above code.
+the above code cannot be run within a jupyter app itself. For example, that
+means that you cannot use an `ipython` prompt or a jupyter notebook to run the
+above code.
 
 After running the above code, if everything worked, you should be able to type
-your name into the form and see the code field live update with each key stroke:
+your name into the form and see the code field live update with each key
+stroke:
 
 <p align="center">
   <img src="./screenshots/quick-start.png">
@@ -66,9 +70,11 @@ to
 # The form updates when I change it
 ```
 
-and then press save. The form in the browser should then update to match what you just wrote.
+and then press save. The form in the browser should then update to match what
+you just wrote.
 
-If you want to be a bit more adventurous see what happens if you add the following to the end of the file:
+If you want to be a bit more adventurous see what happens if you add the
+following to the end of the file:
 
 ~~~markdown
 <section-live>
@@ -84,8 +90,11 @@ print('Your number is {}'.format(a_number))
 
 ## More detailed markdown file
 
-For a markdown file that presents the majority of the features of scriptedforms see
-[detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md). Try writing some of the contents of that file into `quick-start.md` to see how the features of scriptedforms work.
+For a markdown file that presents the majority of the features of scriptedforms
+see
+[detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md).
+Try writing some of the contents of that file into `quick-start.md` to see how
+the features of scriptedforms work.
 
 A section of that form is shown below as a screenshot:
 
@@ -106,15 +115,20 @@ explanation of how you might go about deploying your utility with its new GUI.
 
 The majority of users will not need to pay attention to this section.
 
-For those who wish to build scriptedforms from the source provided within this repository, instead of using pypi, the javascript bundle will need to be built.
-To do this you will need to [install `yarn`](https://yarnpkg.com/lang/en/docs/install/) and then run the following in the [directory containing the `package.json` file](./scriptedforms):
+For those who wish to build scriptedforms from the source provided within this
+repository, instead of using pypi, the javascript bundle will need to be built.
+To do this you will need to
+[install `yarn`](https://yarnpkg.com/lang/en/docs/install/) and then run the
+following in the
+[directory containing the `package.json` file](./scriptedforms):
 
 ```bash
 yarn
 yarn build
 ```
 
-After that you will be able to install the scriptedforms package from the GitHub source.
+After that you will be able to install the scriptedforms package from the
+GitHub source.
 
 ## Software license agreement
 
@@ -157,7 +171,15 @@ As such, to be able to seed a Medical Physics open source community within
 Australia I need to create something that helps Medical Physicists write their
 code and have it licensed under a copyleft license.
 
+I hope this is that package.
+
 ### Justification for the inclusion of additional terms
+
+A significant and justifiable fear within the Medical Physics community is that
+should code be shared the author of the code may be liable for negligence. As
+such specifically addressing negligence within the adittional terms is a must
+if this code base will become a seed to create a Medical Physics open source
+community in Australia.
 
 Within Australian courts if there is any ambiguity in liability exclusion
 clauses they will be interpreted narrowly. If liability for negligence is not
@@ -166,20 +188,17 @@ expressly excluded it may not be read as excluded within an Australian court
 The same is true for clauses which seek to exclude liability for consequential
 loss.
 
-A significant justifiable fear within the Medical Physics community is that
-should code be shared the author of the code may be liable for negligence. As
-such specifically addressing negligence within the aditional terms is a must
-if this code base will become a seed to create a Medical Physics open source
-community in Australia.
-
 The AGPL-3.0+ does not explicitly mention negligence anywhere within its
 license text. The Apache-2.0 does. The AGPL-3.0+ in Section 7 does define
 allowable additional terms. The negligence clauses within the Apache-2.0 do
 however fall under allowable additional terms so they therefore are included.
 
-### A note about license requirements
+There are also other desirable features of the Apache-2.0 license such as
+contribution, trademark, and warranty requirements. These were also included.
+
+### A note about the code sharing license requirement
 
 If you only ever use this code internally within your company to create GUIs
 the only people who need to have access to the source code are those users
-whome you distribute the program to. Therefore you do not need to share your
-code outside of your company if you only use this package internally.
+whom you distribute the program to. Therefore you do not need to share your
+code outside of your company if your only users are within your company.
