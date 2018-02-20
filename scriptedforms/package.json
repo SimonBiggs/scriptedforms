@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rimraf lib && webpack",
     "prod": "rimraf lib && webpack --config webpack.prod.js",
-    "selenium": "yarn --cwd ./tests-e2e selenium",
+    "selenium": "./tests-e2e/selenium.sh",
     "test": "yarn --cwd ./tests-e2e e2e",
     "install:dev": "../dev-install.sh",
     "uninstall": "../uninstall.sh",
