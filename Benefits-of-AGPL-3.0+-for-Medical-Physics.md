@@ -59,8 +59,8 @@ There is also the opportunity for advertising revenue.
 
 By releasing the code under the AGPL-3.0+ license any future work that makes use of the open
 source code must also be released under the same license. This means that should another actor
-create a competing product to the original author’s they must release all changes to the community.
-They must also release all code that is linked to the creator’s software under the same license. In
+create a competing product to the original author’s should they ever distribute the code
+they must also release all changes under the AGPL-3.0+ license along with that distribution. In
 effect unless that company is willing to release all of their own code that is bundled with the
 author’s code to the community they cannot use the original source code to compete.
 
