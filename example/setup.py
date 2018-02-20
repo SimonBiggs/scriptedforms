@@ -15,7 +15,7 @@ setup(
             'example=example:main',
         ],
     },
-    license='AGPL-3.0+ AND Apache-2.0',
+    license='AGPL-3.0+',
     install_requires=[
         'scriptedforms'
     ],
