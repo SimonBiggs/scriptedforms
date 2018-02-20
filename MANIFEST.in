@@ -1,3 +1,10 @@
 include scriptedforms/lib/*.js
 include scriptedforms/index.html
-include AGPL-3.0+ Apache-2.0
+include LICENSE Apache-2.0
+
+include scriptedforms/package.json
+include scriptedforms/tsconfig.json
+include scriptedforms/webpack.config.js
+include scriptedforms/yarn.lock
+
+recursive-include scriptedforms/src
