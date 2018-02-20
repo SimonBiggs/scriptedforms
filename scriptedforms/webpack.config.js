@@ -18,7 +18,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [      
       {
@@ -38,6 +37,12 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['scriptedforms', 'misc-vendors', 'jupyterlab', 'angular', 'polyfills']
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      exclude: 'scriptedforms',
+      mangle: {
+        keep_fnames: true
+      }
     })
   ]
 };
