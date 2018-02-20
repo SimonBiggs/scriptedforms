@@ -190,8 +190,8 @@ loss.
 
 The AGPL-3.0+ does not explicitly mention negligence anywhere within its
 license text. The Apache-2.0 does. The AGPL-3.0+ in Section 7 does define
-allowable additional terms. The negligence clauses within the Apache-2.0 do
-however fall under allowable additional terms so they therefore are included.
+allowable additional terms. The negligence clauses within the Apache-2.0 fall
+under these allowable additional terms so, as such, they have been included.
 
 There are also other desirable features of the Apache-2.0 license such as
 contribution, trademark, and warranty requirements. These were also included.
