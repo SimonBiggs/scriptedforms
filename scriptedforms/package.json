@@ -16,7 +16,8 @@
     "uninstall": "../uninstall.sh",
     "install": "../install.sh",
     "pypi:prep": "yarn prod && yarn uninstall && yarn install && yarn test && yarn install:dev",
-    "pypi:upload": "../pypi.sh"
+    "pypi:upload": "../pypi.sh",
+    "pypi:post": "yarn uninstall && pip install scriptedforms && yarn test && yarn install:dev"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
