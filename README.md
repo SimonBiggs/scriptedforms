@@ -175,7 +175,7 @@ code and have it licensed under a copyleft license.
 I hope this is that package.
 
 For more information on why you as a Medical Physicist might want to use the
-AGPL-3.0+ license see [Benefits-of-AGPL-3.0+-for-Medical-Physics.md](./Benefits-of-AGPL-3.0+-for-Medical-Physics.md).
+AGPL-3.0+ license read the [benefits of AGPL-3.0+ for Medical Physics](./Benefits-of-AGPL-3.0+-for-Medical-Physics.md).
 
 ### Justification for the inclusion of additional terms
 
@@ -208,4 +208,4 @@ whom you distribute the program to. Therefore you do not need to share your
 code outside of your company if your only users are within your company.
 
 However there are significant benefits from sharing your code with the
-community. Please see [Benefits-of-AGPL-3.0+-for-Medical-Physics.md](./Benefits-of-AGPL-3.0+-for-Medical-Physics.md).
+community. Please read the [benefits of AGPL-3.0+ for Medical Physics](./Benefits-of-AGPL-3.0+-for-Medical-Physics.md).
