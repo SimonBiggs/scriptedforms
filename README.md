@@ -133,6 +133,7 @@ GitHub source.
 ## Software license agreement
 
 Scripted Forms -- Making GUIs easy for everyone on your team.
+
 Copyright (C) 2017 Simon Biggs
 
 This program is free software: you can redistribute it and/or modify
