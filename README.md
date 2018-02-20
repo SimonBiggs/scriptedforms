@@ -8,7 +8,7 @@ The primary benefit is that front ends for Python code become easily accessible
 to everyone on your team. Easy to use, easy to update, easy to extend, and easy
 to understand.
 
-Thus package lets you create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
+This package lets you create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
 
 ## Quick start
 
