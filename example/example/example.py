@@ -1,5 +1,5 @@
-# Scripted Forms Example Usage -- Making GUIs easy for everyone on your team.
-# Copyright (C) 2017 Simon Biggs
+# Your Package Name -- Short description of your package.
+# Copyright (C) YEAR Your Name
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
