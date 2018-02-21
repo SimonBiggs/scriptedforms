@@ -1,12 +1,9 @@
-include scriptedforms/lib/*.js
+include scriptedforms/lib/*
 include scriptedforms/index.html
 
-include scriptedforms/lib/*.woff
-include scriptedforms/lib/*.woff2
-include scriptedforms/lib/*.ttf
-include scriptedforms/lib/*.eot
-
 include LICENSE Apache-2.0
+
+include scriptedforms/forms/*
 
 include scriptedforms/LICENSE
 include scriptedforms/Apache-2.0

@@ -32,6 +32,8 @@ import pandas as pd
 
 from ._version import __version__
 
+from .scriptedforms import HERE
+
 
 def _json_table_to_df(json_table):
     table = json.loads(json_table)
@@ -113,3 +115,18 @@ except:
         json_string = json.dumps(self.variables_dict, indent=2, sort_keys=True)
         json_string = json_string.replace('NaN', 'null').replace('-Infinity', 'null').replace('Infinity', 'null')
         return json_string
+
+
+def _print_file(filename):
+    with open(filename, 'r') as f:
+        contents = f.read()
+
+    print(contents)
+
+
+def _print_apache():
+    _print_file(os.path.join(HERE, 'Apache-2.0'))
+
+
+def _print_agpl():
+    _print_file(os.path.join(HERE, 'LICENSE'))
