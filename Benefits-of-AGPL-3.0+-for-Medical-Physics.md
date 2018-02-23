@@ -2,7 +2,7 @@
 
 The aim of this document is to outline some of the benefits of Medical Physics code being released under an open source license. In particular the benefits of the AGPL-3.0+ licence. An example of a well known code base that uses this open source licence is EGSnrc (<https://www.nrc-cnrc.gc.ca/eng/solutions/advisory/egsnrc_index.html>).
 
-A summary of this license and what it entails is available at: <https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>.
+A summary of this license and what it entails is available at: <https://choosealicense.com/licenses/agpl-3.0/>.
 
 ## Software is less dependent on a single software developer
 
