@@ -18,18 +18,12 @@ If you would like to take scriptedforms for a spin first install it:
 pip install scriptedforms
 ```
 
-Then copy the following into a python prompt:
+Then create a markdown file in your current directory. Call it
+`quick-start.md`.
 
-~~~python
-import scriptedforms as sf
+Make the contents of `quick-start.md` be the following:
 
-# workaround for https://github.com/SimonBiggs/scriptedforms/issues/24
-def create_file(filename, contents):
-    with open(filename, 'w') as f:
-        f.write(contents)
-
-filename = 'quick-start.md'
-markdown_contents = """
+~~~markdown
 # An example
 
 <section-live>
@@ -40,27 +34,24 @@ markdown_contents = """
 print('Hello {}!'.format(your_name))
 ```
 
-</section-live>"""
-
-create_file(filename, markdown_contents)
-sf.load(filename)
+</section-live>
 ~~~
 
-Note that because scriptedforms relies on the jupyter notebook server
-the above code cannot be run within a jupyter app itself. For example, that
-means that you cannot use an `ipython` prompt or a jupyter notebook to run the
-above code.
+Then run the following in a terminal
 
-After running the above code, if everything worked, you should be able to type
-your name into the form and see the code field live update with each key
-stroke:
+```bash
+scriptedforms quick-start.md
+```
+
+If everything worked, a Scripted Form should open within your default browser.
+You should be able to type your name into the form and see the code field live
+update with each key stroke:
 
 <p align="center">
   <img src="./screenshots/quick-start.png">
 </p>
 
-Now open up the file `quick-start.md` in your favorite text editor.
-Edit the markdown file by changing
+Now within `quick-start.md` edit the markdown file by changing
 
 ```markdown
 # An example
@@ -89,8 +80,6 @@ print('Your number is {}'.format(a_number))
 
 </section-live>
 ~~~
-
-## More detailed markdown file
 
 For a markdown file that presents the majority of the features of scriptedforms
 see
