@@ -35,7 +35,6 @@ python-dateutil==2.6.1
 pytz==2018.3
 PyYAML==3.12
 pyzmq==17.0.0
--e git+git@github.com:SimonBiggs/scriptedforms.git@fe6d52b913be990c7dd1a96776c71c46db6d024e#egg=scriptedforms
 Send2Trash==1.5.0
 simplegeneric==0.8.1
 six==1.11.0
