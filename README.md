@@ -97,7 +97,7 @@ This is designed to be used as a quick and easy GUI for python packages. An
 example package that creates a console script that then uses scriptedforms to
 boot up a GUI can be found within the [example](./example) directory.
 
-Within the [`README.md`](./example) file of that directory there is an
+Within the [`README.md`](./example/README.md) file of that directory there is an
 explanation of how you might go about deploying your utility with its new GUI.
 
 ## Installing scriptedforms from the GitHub source
