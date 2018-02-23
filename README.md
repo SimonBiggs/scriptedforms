@@ -126,11 +126,10 @@ following in the
 
 ```bash
 yarn
-yarn build
 ```
 
-After that you will be able to install the scriptedforms package from the
-GitHub source.
+This will install the node packages, build the javascript files and then run
+`pip install -e .` to install the python package.
 
 ## Software license agreement
 
