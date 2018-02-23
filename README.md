@@ -86,7 +86,7 @@ Try writing some of the contents of that file into `quick-start.md` to see how
 the features of scriptedforms work.
 
 A section of that form is shown below as a screenshot:
-own file in your current directory. Call it quick-start.md.
+
 <p align="center">
   <img src="./screenshots/detailed.png">
 </p>
