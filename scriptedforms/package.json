@@ -14,7 +14,6 @@
     "prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./tests-e2e/selenium.sh",
     "test": "yarn --cwd ./tests-e2e e2e",
-    "pyenv:init": "export PATH='~/.pyenv/bin:$PATH' && eval '$(pyenv init -)' && eval '$(pyenv virtualenv-init -)'",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "pip uninstall scriptedforms",
     "pip:sys": "pip install ../",
