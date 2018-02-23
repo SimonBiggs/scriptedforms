@@ -9,16 +9,18 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
+    "install": "yarn build && yarn pip:dev",
     "build": "rimraf lib && webpack",
     "prod": "rimraf lib && webpack --config webpack.prod.js",
-    "selenium": "./tests-e2e/selenium.sh",
+    "selenium": "yarn --cwd ./tests-e2e selenium",
     "test": "yarn --cwd ./tests-e2e e2e",
-    "install:dev": "../dev-install.sh",
-    "uninstall": "../uninstall.sh",
-    "install": "../install.sh",
-    "pypi:prep": "yarn prod && yarn uninstall && yarn install && yarn test && yarn install:dev",
-    "pypi:upload": "../pypi.sh",
-    "pypi:post": "yarn uninstall && pip install scriptedforms && yarn test && yarn install:dev"
+    "pip:dev": "pip install -e ../",
+    "pip:uninstall": "pip uninstall scriptedforms",
+    "pip:sys": "pip install ../",
+    "pypi:prep": "yarn prod && yarn pip:uninstall && pip:sys && yarn test && yarn pip:dev",
+    "pypi:upload": "yarn --cwd ../ pypi:upload:nodirchange",
+    "pypi:upload:nodirchange": "python setup.py sdist upload -r pypi",
+    "pypi:post": "yarn pip:uninstall && pip install scriptedforms && yarn test && yarn pip:dev"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
