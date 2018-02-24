@@ -29,12 +29,74 @@ import sys
 import os
 import argparse
 from glob import glob
+import requests
+from websocket import create_connection
+import json
+import datetime
+import uuid
+from threading import Thread
+
+import tornado
+
+import numpy as np
 
 from notebook.notebookapp import NotebookApp
-from notebook.base.handlers import IPythonHandler, FileFindHandler
+from notebook.base.handlers import IPythonHandler, FileFindHandler, APIHandler
 
 HERE = os.path.dirname(__file__)
 
+def send_code(base_api_url, token, filename, code):
+    get_sessions = 'http://{}/sessions?token={}'.format(base_api_url, token)
+    sessions = requests.get(get_sessions)
+
+    ids = np.array([item['id'] for item in sessions.json()])
+    paths = np.array([item['path'] for item in sessions.json()])
+
+    session_ids = ids[paths == filename]
+    assert len(session_ids) == 1
+
+    session_id = session_ids[0]
+
+    get_session_model = 'http://{}/sessions/{}?token={}'.format(
+        base_api_url, session_id, token)
+    session_model = requests.get(get_session_model)
+    kernel_id = session_model.json()['kernel']['id']
+
+    websocket_url = 'ws://{}/kernels/{}/channels?token={}'.format(
+        base_api_url, kernel_id, token)
+
+    header = {
+        'msg_id' : str(uuid.uuid1()),
+        'username': '',
+        'session' : session_id,
+        'date': datetime.datetime.now().replace(microsecond=0).isoformat(),
+        'msg_type' : 'execute_request',
+        'version' : '5.2'
+    }
+
+    content = {
+        'code' : code,
+        'silent' : False,
+        'store_history' : True,
+        'user_expressions' : {},
+        'allow_stdin' : True,
+        'stop_on_error' : False,
+    }
+
+    payload = {
+        'header' : header,
+        'parent_header' : {},
+        'metadata': {},
+        'channel': 'shell',
+        'content' : content,
+        'buffers': []
+    }
+
+    print(json.dumps(payload))
+
+    ws = create_connection(websocket_url)
+    ws.send(json.dumps(payload))
+    ws.close()
 
 
 class _ScriptedFormsHandler(IPythonHandler):
@@ -43,6 +105,21 @@ class _ScriptedFormsHandler(IPythonHandler):
             template = f.read()
 
         return self.write(template)
+
+
+class ScriptedFormsApiHandler(APIHandler):
+    def initialize(self, port):
+        self.base_api_url = 'localhost:{}/api'.format(port)
+        
+    @tornado.gen.engine
+    def post(self, filename):
+        code = self.request.body.decode("utf-8") 
+        thread = Thread(
+            target = send_code, 
+            args = (self.base_api_url, self.token, filename, code))
+        thread.start()
+        self.set_status(201)
+        self.finish('foo')
 
 
 class ScriptedForms(NotebookApp):
@@ -59,6 +136,10 @@ class ScriptedForms(NotebookApp):
         handlers = [
             (r'/scriptedforms/.*\.md', _ScriptedFormsHandler),
             (
+                r'/scriptedforms-api/v1/code/(.*\.md)', ScriptedFormsApiHandler,
+                {'port': self.port}
+            ),
+            (
                 r"/scriptedforms/(.*)", FileFindHandler,
                 {'path': os.path.join(HERE, 'lib')}
             )
@@ -66,8 +147,10 @@ class ScriptedForms(NotebookApp):
         self.web_app.add_handlers(".*$", handlers)
         super(ScriptedForms, self).start()
 
+    
 
-def load(filepath):
+
+def load(filepath, args=None):
 
     absolute_path = os.path.abspath(filepath)
     if not os.path.exists(absolute_path):
@@ -75,20 +158,28 @@ def load(filepath):
 
     directory, filename = os.path.split(absolute_path)
 
+    kwargs = {}
+    if args:
+        if args.token is not None:
+            kwargs['token'] = args.token
+
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
         notebook_dir=directory,
-        default_url='/scriptedforms/{}'.format(filename))
+        default_url='/scriptedforms/{}'.format(filename), **kwargs)
 
 
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
         'filepath', help='The file path of the form to open.')
+    parser.add_argument(
+        '--token', dest='token',
+        help='Jupyter token.')
        
     args = parser.parse_args()    
-    load(args.filepath)
+    load(args.filepath, args)
 
 
 if __name__ == '__main__':
