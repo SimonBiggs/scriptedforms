@@ -169,7 +169,7 @@ AGPL-3.0+ license read the [benefits of AGPL-3.0+ for Medical Physics](./Benefit
 
 A significant and justifiable fear within the Medical Physics community is that
 should code be shared the author of the code may be liable for negligence. As
-such specifically addressing negligence within the adittional terms is a must
+such specifically addressing negligence within the additional terms is a must
 if this code base will become a seed to create a Medical Physics open source
 community in Australia.
 
