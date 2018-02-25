@@ -36,8 +36,6 @@ import datetime
 import uuid
 from threading import Thread
 
-import tornado
-
 import numpy as np
 
 from notebook.notebookapp import NotebookApp
@@ -111,7 +109,6 @@ class ScriptedFormsApiHandler(APIHandler):
     def initialize(self, port):
         self.base_api_url = 'localhost:{}/api'.format(port)
         
-    @tornado.gen.engine
     def post(self, filename):
         code = self.request.body.decode("utf-8") 
         thread = Thread(
