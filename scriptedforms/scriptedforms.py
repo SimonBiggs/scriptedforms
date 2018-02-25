@@ -29,12 +29,19 @@ import sys
 import os
 import argparse
 from glob import glob
-import requests
-from websocket import create_connection
 import json
 import datetime
 import uuid
 from threading import Thread
+import re
+
+import requests
+from websocket import create_connection
+from tornado.queues import Queue
+from tornado import gen
+
+import markdown
+import lxml.html
 
 import numpy as np
 
@@ -43,7 +50,8 @@ from notebook.base.handlers import IPythonHandler, FileFindHandler, APIHandler
 
 HERE = os.path.dirname(__file__)
 
-def send_code(base_api_url, token, filename, code):
+def send_code(port, token, filename, code, queue=None):
+    base_api_url = 'localhost:{}/api'.format(port)
     get_sessions = 'http://{}/sessions?token={}'.format(base_api_url, token)
     sessions = requests.get(get_sessions)
 
@@ -90,11 +98,86 @@ def send_code(base_api_url, token, filename, code):
         'buffers': []
     }
 
-    print(json.dumps(payload))
-
     ws = create_connection(websocket_url)
     ws.send(json.dumps(payload))
-    ws.close()
+
+    responses = []
+    results = []
+
+    try:
+        while True:
+            recieved = json.loads(ws.recv())
+            responses.append(recieved)
+            if recieved['channel'] == 'iopub':
+                if recieved['msg_type'] == 'status':
+                    if recieved['content']['execution_state'] == 'idle':
+                        break
+                elif 'data' in recieved['content'].keys():
+                    results.append(recieved['content']['data'])
+    finally:
+        ws.close()
+
+    if queue is not None:
+        queue.put(results)
+        
+    return results
+
+
+def run_section_api(port, token, directory, filename, api_name, queue=None):
+    filepath = os.path.join(directory, filename)
+    with open(filepath, 'r') as markdown_file:
+        markdown_contents = markdown_file.read()
+
+    html = markdown.markdown(
+        markdown_contents, extensions=['markdown.extensions.fenced_code'])
+    html = html.replace('<p>', '').replace('</p>', '')
+    tree = lxml.html.fromstring(html)
+
+    sections = tree.cssselect('section-start,section-live,section-button,section-output')
+
+    matching_section = list(filter(lambda section: ('api', api_name) in section.items(), sections))
+    assert len(matching_section) == 1
+
+    section = matching_section[0]
+    item_labels = [item[0] for item in section.items()]
+
+    try:
+        index = item_labels.index('conditional')
+        conditional = section.items()[index][1]
+    except ValueError:
+        conditional = None
+
+    if conditional is not None:
+        conditional_code_results = send_code(
+            port, token, filename, conditional)
+        assert len(conditional_code_results) == 1
+        conditional_code_result = conditional_code_results[0]
+        if conditional_code_result['text/plain'] == 'True':
+            condition_result = True
+        elif conditional_code_result['text/plain'] == 'False':
+            condition_result = False
+        else:
+            raise AssertionError('Contional result should be True or False')
+    else:
+        condition_result = True
+
+    if condition_result:
+        python_code = section.cssselect('code.python')
+        python_code_content = [block.text for block in python_code]        
+        
+        results = []
+        for code in python_code_content:
+            results.append(send_code(port, token, filename, code))
+
+        return_results = (201, results)
+    else:
+        return_results = (400, '')
+
+    if queue is not None:
+        queue.put(return_results)
+    
+    return return_results
+    
 
 
 class _ScriptedFormsHandler(IPythonHandler):
@@ -105,18 +188,43 @@ class _ScriptedFormsHandler(IPythonHandler):
         return self.write(template)
 
 
-class ScriptedFormsApiHandler(APIHandler):
+class ScriptedFormsCodeApiHandler(APIHandler):
     def initialize(self, port):
-        self.base_api_url = 'localhost:{}/api'.format(port)
-        
+        self.port = port
+        self.queue = Queue(maxsize=1)
+    
+    @gen.coroutine
     def post(self, filename):
         code = self.request.body.decode("utf-8") 
         thread = Thread(
             target = send_code, 
-            args = (self.base_api_url, self.token, filename, code))
+            args = (self.port, self.token, filename, code),
+            kwargs= {'queue': self.queue})
         thread.start()
+
+        result = yield self.queue.get()
         self.set_status(201)
-        self.finish('foo')
+        self.finish(json.dumps(result))
+
+
+class ScriptedFormsSectionApiHandler(APIHandler):
+    def initialize(self, port, directory):
+        self.port = port
+        self.queue = Queue(maxsize=1)
+        self.directory = directory
+    
+    @gen.coroutine
+    def post(self, filename):
+        api_name = self.request.body.decode("utf-8")
+        thread = Thread(
+            target = run_section_api, 
+            args = (self.port, self.token, self.directory, filename, api_name),
+            kwargs= {'queue': self.queue})
+        thread.start()
+
+        result = yield self.queue.get()
+        self.set_status(result[0])
+        self.finish(json.dumps(result[1]))
 
 
 class ScriptedForms(NotebookApp):
@@ -133,8 +241,12 @@ class ScriptedForms(NotebookApp):
         handlers = [
             (r'/scriptedforms/.*\.md', _ScriptedFormsHandler),
             (
-                r'/scriptedforms-api/v1/code/(.*\.md)', ScriptedFormsApiHandler,
+                r'/scriptedforms-api/v1/code/(.*\.md)', ScriptedFormsCodeApiHandler,
                 {'port': self.port}
+            ),
+            (
+                r'/scriptedforms-api/v1/section/(.*\.md)', ScriptedFormsSectionApiHandler,
+                {'port': self.port, 'directory': self.notebook_dir}
             ),
             (
                 r"/scriptedforms/(.*)", FileFindHandler,
