@@ -37,7 +37,9 @@ setup(
         'numpy',
         'pandas',
         'watchdog',
-        'matplotlib'
+        'matplotlib',
+        'requests',
+        'websocket-client'
     ],
     classifiers = [],
     url = "http://scriptedforms.com.au",
