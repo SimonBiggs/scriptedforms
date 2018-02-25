@@ -78,7 +78,7 @@ manually re-run the code if need be.
 
 An example `<section-start>` is given following:
 
-<section-start>
+<section-start api="start">
 
 ```python
 from IPython.display import display, Markdown
@@ -252,7 +252,7 @@ They will not run until their respective button is pressed.
 Button sections are customisable, their content can be changed to words by
 changing the name property.
 
-<section-button name="Submit">
+<section-button name="Submit" api='submit'>
 
 ```python
 submit_count += 1
@@ -265,7 +265,7 @@ Buttons can also be disabled using the conditional property. An example is the
 following button which is only enabled once the submit count becomes at least
 10.
 
-<section-button name="Super Submit" conditional="submit_count >= 10">
+<section-button name="Super Submit" conditional="submit_count >= 10" api="conditional-submit">
 
 ```python
 display(Markdown('## Super Submit!!'))

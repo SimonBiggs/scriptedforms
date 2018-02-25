@@ -34,6 +34,7 @@ import datetime
 import uuid
 from threading import Thread
 import re
+import ast
 
 import requests
 from websocket import create_connection
@@ -179,6 +180,19 @@ def run_section_api(port, token, directory, filename, api_name, queue=None):
     return return_results
     
 
+def run_variable_api(port, token, filename, queue=None):
+    code = '_scriptedforms_variable_handler.variables_json'
+    send_code_results = send_code(port, token, filename, code)
+    variables_dict = json.loads(
+        ast.literal_eval(send_code_results[0]['text/plain']))
+
+    return_results = (200, variables_dict)
+
+    if queue is not None:
+        queue.put(return_results)
+    
+    return return_results
+
 
 class _ScriptedFormsHandler(IPythonHandler):
     def get(self):
@@ -227,6 +241,24 @@ class ScriptedFormsSectionApiHandler(APIHandler):
         self.finish(json.dumps(result[1]))
 
 
+class ScriptedFormsVariablesApiHandler(APIHandler):
+    def initialize(self, port):
+        self.port = port
+        self.queue = Queue(maxsize=1)
+    
+    @gen.coroutine
+    def get(self, filename):
+        thread = Thread(
+            target = run_variable_api, 
+            args = (self.port, self.token, filename),
+            kwargs= {'queue': self.queue})
+        thread.start()
+
+        result = yield self.queue.get()
+        self.set_status(result[0])
+        self.finish(json.dumps(result[1]))
+
+
 class ScriptedForms(NotebookApp):
     """ScriptedForms."""
 
@@ -242,6 +274,10 @@ class ScriptedForms(NotebookApp):
             (r'/scriptedforms/.*\.md', _ScriptedFormsHandler),
             (
                 r'/scriptedforms-api/v1/code/(.*\.md)', ScriptedFormsCodeApiHandler,
+                {'port': self.port}
+            ),
+            (
+                r'/scriptedforms-api/v1/variables/(.*\.md)', ScriptedFormsVariablesApiHandler,
                 {'port': self.port}
             ),
             (

@@ -39,7 +39,10 @@ setup(
         'watchdog',
         'matplotlib',
         'requests',
-        'websocket-client'
+        'websocket-client',
+        'Markdown',
+        'lxml',
+        'cssselect'
     ],
     classifiers = [],
     url = "http://scriptedforms.com.au",
