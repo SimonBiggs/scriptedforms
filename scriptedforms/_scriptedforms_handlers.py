@@ -24,5 +24,29 @@
 # You should have received a copy of the Apache-2.0 along with this
 # program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-from .scriptedforms import load, main, load_jupyter_server_extension
-from ._version import version_info, __version__
+
+import os
+
+from notebook.base.handlers import IPythonHandler, FileFindHandler
+
+from ._utilities import HERE
+
+
+def get_scriptedforms_handlers():
+    scriptedforms_handlers = [
+        (r'/scriptedforms/.*\.md', ScriptedFormsHandler),
+        (
+            r"/scriptedforms/(.*)", FileFindHandler,
+            {'path': os.path.join(HERE, 'lib')}
+        )
+    ]
+
+    return scriptedforms_handlers
+
+
+class ScriptedFormsHandler(IPythonHandler):
+    def get(self):
+        with open(os.path.join(HERE, 'index.html'), 'r') as f:
+            template = f.read()
+
+        return self.write(template)

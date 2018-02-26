@@ -25,14 +25,13 @@
 # program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import sys
 import os
 import json
 import pandas as pd
 
 from ._version import __version__
 
-from .scriptedforms import HERE
+HERE = os.path.dirname(__file__)
 
 
 def _json_table_to_df(json_table):
@@ -73,7 +72,6 @@ class _VariableHandler(object):
         self.value = dict()
         self.defined = dict()
 
-
     @property
     def fetch_code(self):
         fetch_code_list = ["{}.value = dict()\n".format(self.handlername)]
@@ -85,10 +83,10 @@ try:
 except:
     {0}.defined["{1}"] = False
 """.format(self.handlername, key, evaluate))
-        fetch_code_list.append("print({}.variables_json)".format(self.handlername))
+        fetch_code_list.append(
+            "print({}.variables_json)".format(self.handlername))
 
         return ''.join(fetch_code_list)
-
 
     @property
     def variables_dict(self):
@@ -109,11 +107,12 @@ except:
                 }
         return variables
 
-
     @property
     def variables_json(self):
         json_string = json.dumps(self.variables_dict, indent=2, sort_keys=True)
-        json_string = json_string.replace('NaN', 'null').replace('-Infinity', 'null').replace('Infinity', 'null')
+        json_string = (
+            json_string.replace('NaN', 'null')
+            .replace('-Infinity', 'null').replace('Infinity', 'null'))
         return json_string
 
 
