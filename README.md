@@ -97,6 +97,8 @@ Be aware that ScriptedForms uses the [Jupyter Notebook Server security model](ht
 
 By default only users on the local machine will be able to access the Jupyter Notebook Server which means if you trust a user to run code on their own machine then allowing them to use ScriptedForms will not cause issue. Only override these default settings if you understand and accept the security implications.
 
+Furthermore do not run a scripted form unless you trust its origin. Give the reactive nature of ScriptedForms code within the markdown template can run on form opening, as well as during usage.
+
 ## Example that can be used as a template for deployment
 
 This is designed to be used as a quick and easy GUI for python packages. An
