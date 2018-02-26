@@ -47,6 +47,27 @@ def load_jupyter_server_extension(notebook_app):
     web_app.add_handlers('.*$', handlers)
 
 
+class ScriptedForms(NotebookApp):
+    """ScriptedForms."""
+
+    name = 'ScriptedForms'
+    description = """
+        Scripted Forms
+
+        Open a scriptedform based on a template file.
+    """
+
+    def start(self):
+        api_handlers = get_api_handlers(
+            self.port, self.notebook_dir)
+        scriptedforms_handlers = get_scriptedforms_handlers()
+
+        handlers = api_handlers + scriptedforms_handlers
+
+        self.web_app.add_handlers(".*$", handlers)
+        super(ScriptedForms, self).start()
+
+
 def load(filepath):
     install_jupyter_server_extension()
 
@@ -58,7 +79,7 @@ def load(filepath):
 
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
-    NotebookApp.launch_instance(
+    ScriptedForms.launch_instance(
         notebook_dir=directory,
         default_url='/scriptedforms/{}'.format(filename))
 
@@ -69,7 +90,7 @@ def main():
         'filepath', help='The file path of the form to open.')
 
     args = parser.parse_args()
-    load(args.filepath, args)
+    load(args.filepath)
 
 
 if __name__ == '__main__':

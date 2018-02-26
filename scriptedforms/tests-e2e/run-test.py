@@ -10,12 +10,12 @@ import argparse
 from tornado.ioloop import IOLoop
 from jupyterlab.process import Process
 
-from notebook.notebookapp import NotebookApp
+from scriptedforms.scriptedforms import ScriptedForms
 
 HERE = os.path.realpath(os.path.dirname(__file__))
 
 
-class ProtractorTestApp(NotebookApp):
+class ProtractorTestApp(ScriptedForms):
     notebook_dir = pjoin(HERE, 'src')
     open_browser = False
     default_url = '/scriptedforms/landing-page.md'
@@ -44,7 +44,7 @@ class ProtractorTestApp(NotebookApp):
         """Start the application.
         """
         IOLoop.current().add_callback(self._run_command)
-        NotebookApp.start(self)
+        ScriptedForms.start(self)
 
     def _run_command(self):
         command, kwargs = self.get_command()
