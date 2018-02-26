@@ -15,10 +15,10 @@
     "selenium": "./tests-e2e/selenium.sh",
     "test": "yarn --cwd ./tests-e2e e2e",
     "pip:dev": "pip install -e ../",
-    "pip:uninstall": "pip uninstall scriptedforms",
+    "pip:uninstall": "yes | pip uninstall scriptedforms",
     "pip:sys": "pip install ../",
     "pip:freeze": "./pip-freeze.sh",
-    "pypi:prep": "yarn prod && yarn pip:uninstall && pip:sys && yarn test && yarn pip:dev",
+    "pypi:prep": "yarn prod && yarn pip:uninstall && yarn pip:sys && yarn test && yarn pip:dev",
     "pypi:upload": "yarn --cwd ../ pypi:upload:nodirchange",
     "pypi:upload:nodirchange": "python setup.py sdist upload -r pypi",
     "pypi:post": "yarn pip:uninstall && pip install scriptedforms && yarn test && yarn pip:dev"
