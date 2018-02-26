@@ -7,16 +7,15 @@ from os.path import join as pjoin
 import sys
 import argparse
 
-import json
-
 from tornado.ioloop import IOLoop
 from jupyterlab.process import Process
 
-from scriptedforms.scriptedforms import ScriptedForms
+from notebook.notebookapp import NotebookApp
 
 HERE = os.path.realpath(os.path.dirname(__file__))
 
-class ProtractorTestApp(ScriptedForms):
+
+class ProtractorTestApp(NotebookApp):
     notebook_dir = pjoin(HERE, 'src')
     open_browser = False
     default_url = '/scriptedforms/landing-page.md'
@@ -36,7 +35,8 @@ class ProtractorTestApp(ScriptedForms):
         env = os.environ.copy()
         env['JUPYTER_TOKEN'] = token
         env['PROTRACTOR_PATTERN'] = pattern
-        protractor = os.path.abspath(pjoin(cwd, './node_modules/protractor/bin/protractor'))
+        protractor = os.path.abspath(
+            pjoin(cwd, './node_modules/protractor/bin/protractor'))
         cmd = [protractor, 'build/protractor.conf.js'] + sys.argv[1:]
         return cmd, dict(env=env, cwd=cwd)
 
@@ -44,7 +44,7 @@ class ProtractorTestApp(ScriptedForms):
         """Start the application.
         """
         IOLoop.current().add_callback(self._run_command)
-        ScriptedForms.start(self)
+        NotebookApp.start(self)
 
     def _run_command(self):
         command, kwargs = self.get_command()
