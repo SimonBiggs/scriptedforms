@@ -5,19 +5,19 @@ repo_root = os.path.dirname(os.path.abspath(__file__))
 name = 'scriptedforms'
 pjoin = os.path.join
 
-version_ns: dict = {}
+version_ns = {}
 with open(pjoin(repo_root, name, '_version.py')) as file:
     code = file.read()
     exec(code, version_ns)
 
 version = version_ns['__version__']
 
-install_function: dict = {}
-with open(pjoin(repo_root, name, '_install_jupyter_server_extension.py')) as file:  # noqa: E501
-    code = file.read()
-    exec(code, install_function)
+# install_function = {}
+# with open(pjoin(repo_root, name, '_install_jupyter_server_extension.py')) as file:  # noqa: E501
+#     code = file.read()
+#     exec(code, install_function)
 
-install_function['install_jupyter_server_extension']()
+# install_function['install_jupyter_server_extension']()
 
 setup(
     name="scriptedforms",
