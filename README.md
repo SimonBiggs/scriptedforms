@@ -12,7 +12,7 @@ ScriptedForms lets you create reactive GUIs for Python packages using Markdown a
 
 ## Security notice
 
-Be aware that ScriptedForms uses the Jupyter Notebook interface. When a user has access to the forms, should they have sufficient know how, they also have the ability to run arbitrary Python code without limitations.
+Be aware that ScriptedForms uses the Jupyter Notebook Server the security model of which is available [here](http://jupyter-notebook.readthedocs.io/en/stable/security.html#security-in-the-jupyter-notebook-server). When a user has access to the forms, should they have sufficient know how, they also have the ability to run arbitrary Python code without limitations.
 
 ## Quick start
 
