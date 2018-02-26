@@ -47,7 +47,7 @@ def load_jupyter_server_extension(notebook_app):
     web_app.add_handlers('.*$', handlers)
 
 
-def load(filepath, args=None):
+def load(filepath):
     install_jupyter_server_extension()
 
     absolute_path = os.path.abspath(filepath)
@@ -56,25 +56,17 @@ def load(filepath, args=None):
 
     directory, filename = os.path.split(absolute_path)
 
-    kwargs = {}
-    if args:
-        if args.token is not None:
-            kwargs['token'] = args.token
-
     # workaround for Notebook app using sys.argv
     sys.argv = [sys.argv[0]]
     NotebookApp.launch_instance(
         notebook_dir=directory,
-        default_url='/scriptedforms/{}'.format(filename), **kwargs)
+        default_url='/scriptedforms/{}'.format(filename))
 
 
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
         'filepath', help='The file path of the form to open.')
-    parser.add_argument(
-        '--token', dest='token',
-        help='Jupyter token.')
 
     args = parser.parse_args()
     load(args.filepath, args)
