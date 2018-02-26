@@ -56,7 +56,7 @@ class _VariableHandler(object):
     def __init__(self, variable_evaluate_map, handlername):
         self.variable_evaluate_map = json.loads(variable_evaluate_map)
         self.handlername = handlername
-        
+
         self.timestamp = dict()
         for key in self.variable_evaluate_map:
             self.timestamp[key] = None
