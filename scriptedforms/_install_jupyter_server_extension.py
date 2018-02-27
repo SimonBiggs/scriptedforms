@@ -10,8 +10,15 @@ def install_jupyter_server_extension():
     config_path = os.path.join(
         jupyter_config_dir(), 'jupyter_notebook_config.json')
 
-    with open(config_path, 'r') as file:
-        cfg = json.load(file)
+    try:
+        with open(config_path, 'r') as file:
+            cfg = json.load(file)
+    except FileNotFoundError:
+        cfg = {
+            'NotebookApp': {
+                'nbserver_extensions': {}
+            }
+        }
 
     cfg['NotebookApp']['nbserver_extensions']['scriptedforms'] = True
 
