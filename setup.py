@@ -1,5 +1,6 @@
 import os
 from setuptools import setup
+from setuptools.command.install import install
 
 repo_root = os.path.dirname(os.path.abspath(__file__))
 name = 'scriptedforms'
@@ -18,6 +19,19 @@ version = version_ns['__version__']
 #     exec(code, install_function)
 
 # install_function['install_jupyter_server_extension']()
+
+
+class PostInstallCommand(install):
+    """Post-installation for installation mode."""
+    def run(self):
+        install_function = {}
+        with open(pjoin(repo_root, name, '_install_jupyter_server_extension.py')) as file:  # noqa: E501
+            code = file.read()
+            exec(code, install_function)
+
+        install_function['install_jupyter_server_extension']()
+        install.run(self)
+
 
 setup(
     name="scriptedforms",
@@ -52,6 +66,7 @@ setup(
         'cssselect'
     ],
     classifiers=[],
+    cmdclass={'install': PostInstallCommand},
     url="http://scriptedforms.com.au",
     include_package_data=True
 )

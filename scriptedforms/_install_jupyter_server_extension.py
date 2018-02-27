@@ -13,11 +13,7 @@ def install_jupyter_server_extension():
     with open(config_path, 'r') as file:
         cfg = json.load(file)
 
-    server_extensions = (
-        cfg.setdefault('NotebookApp', {}).setdefault('nbserver_extensions', {})
-    )
-    if 'scriptedforms' not in server_extensions.keys():
-        cfg['NotebookApp']['nbserver_extensions']['scriptedforms'] = True
+    cfg['NotebookApp']['nbserver_extensions']['scriptedforms'] = True
 
     with open(config_path, 'w') as file:
         json.dump(cfg, file, indent=2)

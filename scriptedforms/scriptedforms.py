@@ -33,7 +33,6 @@ from notebook.notebookapp import NotebookApp
 
 from ._api_handlers import get_api_handlers
 from ._scriptedforms_handlers import get_scriptedforms_handlers
-from ._install_jupyter_server_extension import install_jupyter_server_extension
 
 
 def load_jupyter_server_extension(notebook_app):
@@ -69,8 +68,6 @@ class ScriptedForms(NotebookApp):
 
 
 def load(filepath):
-    install_jupyter_server_extension()
-
     absolute_path = os.path.abspath(filepath)
     if not os.path.exists(absolute_path):
         raise ValueError('file does not exist')
