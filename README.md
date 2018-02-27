@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms)
 
 Making GUIs easy for everyone on your team.
 
