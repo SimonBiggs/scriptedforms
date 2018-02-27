@@ -11,40 +11,10 @@ export PATH="$MINICONDA_DIR/bin:$PATH"
 source activate test
 
 
-if [[ $GROUP == py2 || $GROUP == py3 ]]; then
+if [[ $GROUP == e2e ]]; then
     # Run the python tests
-    py.test -v
-fi
-
-
-if [[ $GROUP == js ]]; then
-
-    jlpm build:packages
-    jlpm build:test
-    jlpm test
-    jlpm run clean
-fi
-
-
-if [[ $GROUP == js_cov ]]; then
-
-    jlpm run build:packages
-    jlpm run build:test
-    jlpm run coverage
-
-    # Run the services node example.
-    pushd packages/services/examples/node
-    python main.py
-    popd
-
-    jlpm run clean
-fi
-
-
-if [[ $GROUP == js_services ]]; then
-
-    jlpm build:packages
-    jlpm build:test
-    jlpm run test:services
-
+    cd "$(dirname "$0")"/../scriptedforms/tests-e2e
+    yarn selnium &
+    yarn e2e
+    cd - 
 fi
