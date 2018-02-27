@@ -35,6 +35,12 @@ from ._api_handlers import get_api_handlers
 from ._scriptedforms_handlers import get_scriptedforms_handlers
 
 
+def _jupyter_server_extension_paths():
+    return [{
+        "module": "scriptedforms"
+    }]
+
+
 def load_jupyter_server_extension(notebook_app):
     api_handlers = get_api_handlers(
         notebook_app.port, notebook_app.notebook_dir)

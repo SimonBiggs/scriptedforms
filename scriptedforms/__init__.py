@@ -24,5 +24,8 @@
 # You should have received a copy of the Apache-2.0 along with this
 # program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-from .scriptedforms import load, main, load_jupyter_server_extension
+from .scriptedforms import (
+  load, main, 
+  load_jupyter_server_extension, _jupyter_server_extension_paths)
+
 from ._version import version_info, __version__
