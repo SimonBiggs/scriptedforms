@@ -13,19 +13,16 @@ with open(pjoin(repo_root, name, '_version.py')) as file:
 
 version = version_ns['__version__']
 
-# install_function = {}
-# with open(pjoin(repo_root, name, '_install_jupyter_server_extension.py')) as file:  # noqa: E501
-#     code = file.read()
-#     exec(code, install_function)
-
-# install_function['install_jupyter_server_extension']()
-
 
 class PostInstallCommand(install):
     """Post-installation for installation mode."""
+
     def run(self):
         install_function = {}
-        with open(pjoin(repo_root, name, '_install_jupyter_server_extension.py')) as file:  # noqa: E501
+        extension_installation_filepath = pjoin(
+            repo_root, name, '_install_jupyter_server_extension.py')
+
+        with open(extension_installation_filepath) as file:  # noqa: E501
             code = file.read()
             exec(code, install_function)
 
