@@ -34,7 +34,7 @@ setup(
     name="scriptedforms",
     version=version,
     author="Simon Biggs",
-    author_email="mail@simonbiggs.net",
+    author_email="sbiggs@scriptedforms.com.au",
     description="ScriptedForms.",
     long_description=(
         ""
