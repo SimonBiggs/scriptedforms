@@ -110,7 +110,7 @@ boot up a GUI can be found within the [example](./example) directory.
 Within the [`README.md`](./example/README.md) file of that directory there is an
 explanation of how you might go about deploying your utility with its new GUI.
 
-## Installing the Jupyter Server extension
+## [Optional] Installing the Jupyter Server extension
 
 ScriptedForms can also be installed as a [Jupyter Server extension](http://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Distributing%20Jupyter%20Extensions%20as%20Python%20Packages.html#Enable-a-Server-Extension). Eventually this should allow the use of ScriptedForms with tools such as [JupyterHub](http://jupyterhub.readthedocs.io/en/latest/). This part of ScriptedForms is still a work in progress but if you want to give it a try then make sure you have at least version `0.5.15` of ScriptedForms and then run:
 
@@ -125,7 +125,7 @@ jupyter notebook --NotebookApp.default_url=/scriptedforms/quick-start.md
 ```
 
 
-## Installing scriptedforms from the GitHub source
+## [Advanced users only] Installing scriptedforms from the GitHub source
 
 The majority of users will not need to pay attention to this section.
 
