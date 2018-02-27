@@ -14,22 +14,6 @@ with open(pjoin(repo_root, name, '_version.py')) as file:
 version = version_ns['__version__']
 
 
-class PostInstallCommand(install):
-    """Post-installation for installation mode."""
-
-    def run(self):
-        install_function = {}
-        extension_installation_filepath = pjoin(
-            repo_root, name, '_install_jupyter_server_extension.py')
-
-        with open(extension_installation_filepath) as file:  # noqa: E501
-            code = file.read()
-            exec(code, install_function)
-
-        install_function['install_jupyter_server_extension']()
-        install.run(self)
-
-
 setup(
     name="scriptedforms",
     version=version,
@@ -62,8 +46,10 @@ setup(
         'lxml',
         'cssselect'
     ],
+    extras_require={
+        'test': ['jupyterlab'],
+    },
     classifiers=[],
-    cmdclass={'install': PostInstallCommand},
     url="http://scriptedforms.com.au",
     include_package_data=True
 )
