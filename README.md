@@ -8,13 +8,16 @@ The primary benefit is that front ends for Python code become easily accessible
 to everyone on your team. Easy to use, easy to update, easy to extend, and easy
 to understand.
 
-ScriptedForms lets you create reactive GUIs for Python packages using Markdown and a few custom HTML elements.
+* Quickly create live-update GUIs for Python packages using Markdown and a few custom HTML elements.
+* Just write in markdown + variables / UI types
+* Based on Jupyter
 
 ## Quick start
 
 If you would like to take scriptedforms for a spin first install it:
 
 ```bash
+pip install jupyterlab
 pip install scriptedforms
 ```
 
