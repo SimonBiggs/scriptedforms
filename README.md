@@ -17,6 +17,7 @@ to understand.
 If you would like to take scriptedforms for a spin first install it:
 
 ```bash
+pip install jupyterlab
 pip install scriptedforms
 ```
 
