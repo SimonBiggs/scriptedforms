@@ -14,6 +14,7 @@ source activate test
 if [[ $GROUP == e2e ]]; then
     # Run the python tests
     cd "$(dirname "$0")"/../scriptedforms/tests-e2e
+    yarn
     yarn selenium &
     yarn e2e
     cd - 

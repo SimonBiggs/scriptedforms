@@ -32,8 +32,4 @@ cd "$(dirname "$0")"/../scriptedforms
 yarn
 cd -
 
-cd "$(dirname "$0")"/../scriptedforms/tests-e2e
-yarn
-cd - 
-
 jupyter serverextension enable --py scriptedforms
