@@ -32,4 +32,7 @@ cd "$(dirname "$0")"/../scriptedforms
 yarn
 cd -
 
+pip uninstall scriptedforms
+pip install .[test]
+
 jupyter serverextension enable --py scriptedforms
