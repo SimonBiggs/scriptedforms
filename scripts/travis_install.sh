@@ -33,6 +33,6 @@ yarn
 cd -
 
 yes | pip uninstall scriptedforms
-pip install .[test]
+pip install .
 
 jupyter serverextension enable --py scriptedforms

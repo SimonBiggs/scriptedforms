@@ -8,7 +8,7 @@ import sys
 import argparse
 
 from tornado.ioloop import IOLoop
-from jupyterlab.process import Process
+from ..dev_utilities.jupyterlab_extracts.process import Process
 
 from scriptedforms.scriptedforms import ScriptedForms
 
