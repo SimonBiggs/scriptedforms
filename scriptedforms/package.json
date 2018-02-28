@@ -10,18 +10,18 @@
   "author": "Simon Biggs",
   "scripts": {
     "install": "yarn build && yarn pip:dev",
-    "build": "rimraf lib && webpack",
-    "prod": "rimraf lib && webpack --config webpack.prod.js",
+    "build": "rimraf lib && webpack --config webpack.dev.js",
+    "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./tests_e2e e2e",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "yes | pip uninstall scriptedforms",
     "pip:sys": "pip install ../",
     "pip:freeze": "./scripts/pip-freeze.sh",
-    "pypi:prep": "yarn prod && yarn pip:uninstall && yarn pip:sys && yarn test && yarn pip:dev",
+    "pypi:prep": "yarn build:prod && yarn pip:uninstall && yarn pip:sys && yarn test && yarn pip:dev",
     "pypi:upload": "./scripts/pypi.sh",
     "pypi:post": "yarn pip:uninstall && pip install scriptedforms && yarn test && yarn pip:dev",
-    "watch": "python ./scripts/watch.py"
+    "watch": "webpack --config webpack.dev.js --watch"
   },
   "files": [
     "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"

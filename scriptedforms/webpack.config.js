@@ -1,5 +1,21 @@
 var webpack = require('webpack');
 var path = require('path');
+var exec = require('child_process').exec;
+
+// function puts(error, stdout, stderr) {
+//   console.log(stdout);
+// }
+
+// function EchoOnFinishPlugin() { }
+
+// EchoOnFinishPlugin.prototype.apply = function(compiler) {
+
+//   compiler.plugin('after-emit', function(compilation, callback) {
+//     exec('echo "\nWebpack build complete"', puts)
+//     callback();
+//   }.bind(this));
+// };
+
 
 module.exports = {
   entry: {
@@ -35,5 +51,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['scriptedforms', 'misc-vendors', 'jupyterlab', 'angular', 'polyfills']
     })
+    // new EchoOnFinishPlugin()
   ]
 };

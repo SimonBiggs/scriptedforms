@@ -3,12 +3,10 @@
 
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from __future__ import print_function
 
 import atexit
 import logging
 import os
-import re
 import signal
 import sys
 import threading
@@ -174,111 +172,6 @@ class Process(object):
         """
         for proc in list(cls._procs):
             proc.terminate()
-
-
-class WatchHelper(Process):
-    """A process helper for a watch process.
-    """
-
-    def __init__(self, cmd, startup_regex, logger=None, cwd=None,
-                 kill_event=None, env=None):
-        """Initialize the process helper.
-        Parameters
-        ----------
-        cmd: list
-            The command to run.
-        startup_regex: string
-            The regex to wait for at startup.
-        logger: :class:`~logger.Logger`, optional
-            The logger instance.
-        cwd: string, optional
-            The cwd of the process.
-        env: dict, optional
-            The environment for the process.
-        kill_event: callable, optional
-            A function to call to check if we should abort.
-        """
-        super(WatchHelper, self).__init__(cmd, logger=logger,
-                                          cwd=cwd, kill_event=kill_event,
-                                          env=env)
-
-        if not pty:
-            self._stdout = self.proc.stdout
-
-        while 1:
-            line = self._stdout.readline().decode('utf-8')
-            if not line:
-                raise RuntimeError('Process ended improperly')
-            print(line.rstrip())
-            if re.match(startup_regex, line):
-                break
-
-        self._read_thread = threading.Thread(target=self._read_incoming)
-        self._read_thread.setDaemon(True)
-        self._read_thread.start()
-
-    def terminate(self):
-        """Terminate the process.
-        """
-        proc = self.proc
-
-        if proc.poll() is None:
-            if os.name != 'nt':
-                # Kill the process group if we started a new session.
-                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-            else:
-                os.kill(proc.pid, signal.SIGTERM)
-
-        # Close stdout.
-        try:
-            self._stdout.close()
-        except Exception as e:
-            pass
-
-        # Wait for the process to close.
-        try:
-            proc.wait()
-        finally:
-            Process._procs.remove(self)
-
-        return proc.returncode
-
-    def _read_incoming(self):
-        """Run in a thread to read stdout and print"""
-        fileno = self._stdout.fileno()
-        while 1:
-            try:
-                buf = os.read(fileno, 1024)
-            except OSError as e:
-                self.logger.debug('Read incoming error %s', e)
-                return
-
-            if not buf:
-                return
-
-            print(buf.decode('utf-8'), end='')
-
-    def _create_process(self, **kwargs):
-        """Create the watcher helper process.
-        """
-        kwargs['bufsize'] = 0
-
-        if pty:
-            master, slave = pty.openpty()
-            kwargs['stderr'] = kwargs['stdout'] = slave
-            kwargs['start_new_session'] = True
-            self._stdout = os.fdopen(master, 'rb')
-        else:
-            kwargs['stdout'] = subprocess.PIPE
-
-            if os.name == 'nt':
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                kwargs['startupinfo'] = startupinfo
-                kwargs['creationflags'] = subprocess.CREATE_NEW_PROCESS_GROUP
-                kwargs['shell'] = True
-
-        return super(WatchHelper, self)._create_process(**kwargs)
 
 
 # Register the cleanup handler.

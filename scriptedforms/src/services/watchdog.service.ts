@@ -43,7 +43,7 @@ import { KernelService } from './kernel.service';
 // import { VariableService } from './variable.service';
 
 import {
-  watchdogCode
+  watchdogCode, watchdogWatchModeCode
 } from './watchdog-code'
 
 @Injectable()
@@ -77,7 +77,48 @@ export class WatchdogService {
   //   // })
   // }
 
+
+  runDevModeWatchdog() {
+    let sessionReady = new PromiseDelegate<Session.ISession>();
+
+    const path = 'scriptedforms_watchdog_development_mode_kernel'
+    const settings = ServerConnection.makeSettings({});
+    const startNewOptions = {
+      kernelName: 'python3',
+      serverSettings: settings,
+      path: path
+    };
+  
+    this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
+      Session.connectTo(model, settings).then(session => {
+        sessionReady.resolve(session)
+      });
+    }).catch(() => {
+      Session.startNew(startNewOptions).then(session => {
+        session.kernel.requestExecute({code: watchdogWatchModeCode})
+        sessionReady.resolve(session)
+      });
+    });
+
+    sessionReady.promise.then(session => {
+      session.iopubMessage.connect((sender, msg) => {
+        if (msg.content.text) {
+          let content = String(msg.content.text).trim()
+          let files = content.split("\n")
+          console.log(files)
+          location.reload(true)
+        }
+      })
+    })
+  }
+
+
+
   runWatchdog() {
+    if (process.env.development) {
+      this.runDevModeWatchdog()
+    }
+
     const path = 'scriptedforms_watchdog_kernel'
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {

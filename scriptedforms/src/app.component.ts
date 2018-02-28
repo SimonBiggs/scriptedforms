@@ -67,7 +67,7 @@ import { FormStatus } from './types/form-status';
   <div #jupyterErrorMsg></div>
   <app-form-builder #formBuilderComponent></app-form-builder>
   <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
-    <mat-icon>replay</mat-icon>
+    <mat-icon>refresh</mat-icon>
   </button>
   <div class="footer-space"></div>
 </div>`,
