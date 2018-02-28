@@ -8,9 +8,11 @@ import sys
 import argparse
 
 from tornado.ioloop import IOLoop
-from ..dev_utilities.jupyterlab_extracts.process import Process
 
 from scriptedforms.scriptedforms import ScriptedForms
+
+sys.path.append("..")
+from dev_utilities.jupyterlab_extracts.process import Process  # noqa: E402
 
 HERE = os.path.realpath(os.path.dirname(__file__))
 
