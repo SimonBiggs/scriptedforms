@@ -17,6 +17,6 @@ env:
   - MINICONDA_DIR="$HOME/miniconda"
   - GH_REF: github.com/SimonBiggs/scriptedforms.git
 install:
-- bash ./scripts/travis_install.sh
+- bash ./scriptedforms/scripts/travis_install.sh
 script:
-- bash ./scripts/travis_script.sh
+- bash ./scriptedforms/scripts/travis_script.sh
