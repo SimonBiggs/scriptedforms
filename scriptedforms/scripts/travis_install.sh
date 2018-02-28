@@ -28,7 +28,7 @@ source activate test
 mkdir ~/.jupyter
 
 # Install and enable the server extension
-cd "$(dirname "$0")"/../scriptedforms
+cd "$(dirname "$0")"/../
 yarn
 cd -
 
