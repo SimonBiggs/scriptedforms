@@ -10,9 +10,9 @@ import os
 import os.path as osp
 import re
 
-from .jlpmapp import HERE
 from .process import Process, WatchHelper
 
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 # The regex for expecting the webpack output.
 WEBPACK_EXPECT = re.compile(r'.*/index.out.js')
