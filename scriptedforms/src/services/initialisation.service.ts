@@ -30,11 +30,20 @@ import { Injectable } from '@angular/core';
 //   PromiseDelegate
 // } from '@phosphor/coreutils';
 
+import {  
+  Widget 
+} from "@phosphor/widgets";
+
 import { ServiceManager, ContentsManager } from "@jupyterlab/services";
+
+import {
+  Toolbar
+} from '@jupyterlab/apputils';
 
 import { JupyterService } from "./jupyter.service";
 import { WatchdogService } from "./watchdog.service";
 import { FileService } from "./file.service";
+import { ToolbarService } from "./toolbar.service";
 // import { KernelService } from './kernel.service'
 
 export namespace IScriptedForms {
@@ -42,6 +51,7 @@ export namespace IScriptedForms {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
     node: HTMLElement;
+    toolbar: Toolbar<Widget>
   }
 }
 
@@ -51,7 +61,8 @@ export class InitialisationService {
   constructor(
     private myJupyterService: JupyterService,
     private myFileService: FileService,
-    private myWatchdogService: WatchdogService
+    private myWatchdogService: WatchdogService,
+    private myToolbarService: ToolbarService
   ) {}
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
@@ -61,6 +72,7 @@ export class InitialisationService {
     this.myWatchdogService.runWatchdog();
     
     this.myFileService.setNode(options.node);
+    this.myToolbarService.setToolbar(options.toolbar)
     this.myFileService.openUrl(window.location.href) 
 
     window.onpopstate = event => {

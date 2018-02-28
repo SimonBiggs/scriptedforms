@@ -44,8 +44,12 @@ import { WatchdogService } from "./services/watchdog.service";
 import { FormService } from "./services/form.service";
 import { JupyterService } from "./services/jupyter.service";
 import { InitialisationService } from "./services/initialisation.service";
+import { ToolbarService } from "./services/toolbar.service";
 
 import { FormBuilderModule } from "./form-builder-module/form-builder.module";
+import { ToolbarModule } from "./toolbar-module/toolbar.module";
+
+import { ToolbarButtonComponent } from "./toolbar-module/toolbar-button.component";
 
 import { AppComponent } from "./app.component";
 
@@ -56,9 +60,10 @@ import { AppComponent } from "./app.component";
     BrowserModule,
     FormsModule,
     MaterialModule,
-    FormBuilderModule
+    FormBuilderModule,
+    ToolbarModule
   ],
-  entryComponents: [AppComponent],
+  entryComponents: [AppComponent, ToolbarButtonComponent],
   providers: [
     KernelService,
     VariableService,
@@ -67,6 +72,7 @@ import { AppComponent } from "./app.component";
     FormService,
     JupyterService,
     InitialisationService,
+    ToolbarService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]
 })

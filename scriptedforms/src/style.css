@@ -71,11 +71,14 @@ body {
 
 .floating-spinner {
   position: fixed !important;
-  top: 23px;
+  top: 50px;
   right: 40px;
 }
 
 .footer-space {
   height: 300px;
 }
-  
+
+.custom-toolbar {
+  min-height: 40px !important;
+}

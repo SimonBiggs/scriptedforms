@@ -34,12 +34,19 @@ import "material-design-icons/iconfont/material-icons.css";
 import '@jupyterlab/theme-light-extension/style/variables.css'
 import '@jupyterlab/codemirror/style/index.css';
 import '@jupyterlab/rendermime/style/index.css';
+import '@jupyterlab/notebook/style/toolbar.css';
 
 import { enableProdMode } from '@angular/core';
 
 import { BoxLayout, Widget } from "@phosphor/widgets";
 
 import { ServiceManager, ContentsManager } from "@jupyterlab/services";
+
+import {
+  // showDialog, Dialog, Styling, 
+  Toolbar, 
+  // ToolbarButton
+} from '@jupyterlab/apputils';
 
 import { AngularWidget } from "./phosphor-angular-loader";
 
@@ -59,11 +66,20 @@ export namespace IScriptedFormsWidget {
   }
 }
 
+export namespace IAngularWrapperWidget {
+  export interface IOptions {
+    toolbar: Toolbar<Widget>;
+    serviceManager: ServiceManager;
+    contentsManager: ContentsManager;
+  }
+}
+
+
 export class AngularWrapperWidget extends AngularWidget<
   AppComponent,
   AppModule
 > {
-  constructor(options: IScriptedFormsWidget.IOptions) {
+  constructor(options: IAngularWrapperWidget.IOptions) {
     super(AppComponent, AppModule);
 
     let scriptedFormsOptions = Object.assign(
@@ -93,11 +109,20 @@ export class ScriptedFormsWidget extends Widget {
     this.addClass("container");
 
     let layout = (this.layout = new BoxLayout());
-    this.form = new AngularWrapperWidget(options);
+    let toolbar = new Toolbar();
+    toolbar.addClass('jp-NotebookPanel-toolbar');
+    toolbar.addClass('custom-toolbar');
+    layout.addWidget(toolbar);
+    BoxLayout.setStretch(toolbar, 0);
+
+    let angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
+
+    this.form = new AngularWrapperWidget(angularWrapperWidgetOptions);
     this.form.addClass("form");
 
+
     layout.addWidget(this.form);
-    BoxLayout.setStretch(this.form, 0);
+    BoxLayout.setStretch(this.form, 1);
   }
 }
 
