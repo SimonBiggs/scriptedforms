@@ -12,6 +12,7 @@ from jupyterlab.tests.test_app import ProcessTestApp
 
 HERE = os.path.realpath(os.path.dirname(__file__))
 
+
 class KarmaTestApp(ProcessTestApp):
     def get_command(self):
         """Get the command to run."""
@@ -40,10 +41,10 @@ class KarmaTestApp(ProcessTestApp):
             document.body.appendChild(node);
             """ % json.dumps(config))
 
-
         env = os.environ.copy()
         env['KARMA_INJECT_FILE'] = karma_inject_file.encode('utf-8')
-        karma = os.path.abspath(os.path.join(cwd, './node_modules/karma/bin/karma'))
+        karma = os.path.abspath(os.path.join(
+            cwd, './node_modules/karma/bin/karma'))
         cmd = [karma, 'start'] + sys.argv[1:]
         return cmd, dict(env=env, cwd=cwd)
 

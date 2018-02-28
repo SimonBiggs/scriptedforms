@@ -13,7 +13,7 @@
     "build": "rimraf lib && webpack",
     "prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "../scripts/selenium.sh",
-    "test": "yarn --cwd ./tests-e2e e2e",
+    "test": "yarn --cwd ./tests_e2e e2e",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "yes | pip uninstall scriptedforms",
     "pip:sys": "pip install ../",
