@@ -67,4 +67,4 @@ code editor by Microsoft. It is very useful for both Typescript and Python.
 
 Flake8 is a linter for Python. Think of it as a spell check except for code.
 Combined with Visual Studio Code it helps run sanity checks on your code as
-your write it.
+you write it.
