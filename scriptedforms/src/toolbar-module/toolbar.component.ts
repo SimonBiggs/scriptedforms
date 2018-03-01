@@ -35,6 +35,8 @@ this section will be iteratively run. The button is set to call the runCode
 function on click.
 */
 
+import { BehaviorSubject } from 'rxjs';
+
 import { 
   ComponentFactoryResolver, AfterViewInit, ComponentFactory, ViewChild,
   ViewContainerRef, ChangeDetectorRef
@@ -57,12 +59,16 @@ import {
 import {
   ToolbarService
 } from '../services/toolbar.service';
+
+import { FormService } from "../services/form.service";
   
 @Component({
   selector: 'toolbar',
   template: `<span #container></span><toolbar-button hidden></toolbar-button>`
 })
 export class ToolbarComponent implements AfterViewInit {
+  restartingKernel: BehaviorSubject<boolean> = new BehaviorSubject(false)
+
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -71,27 +77,39 @@ export class ToolbarComponent implements AfterViewInit {
   constructor(
     private myComponentFactoryResolver: ComponentFactoryResolver,
     private myToolbarService: ToolbarService,
+    private myFormService: FormService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {
     // this.addButton('save')
     this.addButton('print', () => {window.print()})
-    // this.addButton('refresh')
+    this.addButton(
+      'refresh', () => {this.restartKernel()}, this.restartingKernel)
 
     this.myToolbarService.addSpacer()
     
     this.changeDetectorRef.detectChanges()
   }
 
-  addButton(icon: string, click: () => any) {
+  addButton(icon: string, click: () => any, disable?: BehaviorSubject<boolean>) {
     this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent)
     let button = this.container.createComponent(this.buttonFactory)
     button.instance.icon = icon
     button.instance.click = click
+    if (disable) {
+      button.instance.disable = disable
+    }
     let widget = new Widget({node: button.instance.myElementRef.nativeElement})
 
     this.myToolbarService.addItem(icon, widget)
+  }
+
+  restartKernel() {
+    this.restartingKernel.next(true)
+    this.myFormService.restartFormKernel().then(() => {
+      this.restartingKernel.next(false)
+    })
   }
 }
     

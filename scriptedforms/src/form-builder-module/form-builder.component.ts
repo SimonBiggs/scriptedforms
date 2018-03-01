@@ -53,7 +53,7 @@ import {
 
 @Component({
   selector: 'app-form-builder',
-  template: `<div class="form-contents"><div #errorbox class="errorbox"></div><div #container></div></div>`
+  template: `<div class="form-contents"><ng-content></ng-content><div #errorbox class="errorbox"></div><div #container></div></div>`
 })
 export class FormBuilderComponent implements OnInit, AfterViewInit {
   myMarkdownIt: MarkdownIt.MarkdownIt;

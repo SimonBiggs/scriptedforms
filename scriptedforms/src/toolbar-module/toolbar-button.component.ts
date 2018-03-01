@@ -35,6 +35,8 @@ this section will be iteratively run. The button is set to call the runCode
 function on click.
 */
 
+import { BehaviorSubject, Subscription } from 'rxjs';
+
 import {
   Component, Input, ElementRef
 } from '@angular/core';
@@ -43,6 +45,7 @@ import {
   selector: 'toolbar-button',
   template: `<button
   (click)="click()"
+  [disabled]="isDisabled"
   mat-icon-button>
     <mat-icon>{{icon}}</mat-icon>
 </button>
@@ -51,6 +54,17 @@ import {
 export class ToolbarButtonComponent {
   @Input() icon: string;
   @Input() click: () => any
+  @Input() set disable(observable: BehaviorSubject<boolean>) {
+    if (this.previousSubscription) {
+      this.previousSubscription.unsubscribe()
+    }
+    this.previousSubscription = observable.subscribe(value => {
+      this.isDisabled = value
+    })
+  }
+
+  previousSubscription: Subscription = null
+  isDisabled = false
 
   constructor(
     public myElementRef: ElementRef

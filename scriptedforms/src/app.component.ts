@@ -65,17 +65,12 @@ import { FormStatus } from './types/form-status';
 <div class="margin">
   <toolbar></toolbar>
   <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
-  <div #jupyterErrorMsg></div>
-  <app-form-builder #formBuilderComponent></app-form-builder>
-  <button class="floating-restart-kernel" mat-fab (click)="restartKernel()" [disabled]="restartingKernel">
-    <mat-icon>refresh</mat-icon>
-  </button>
+  <app-form-builder #formBuilderComponent><div #jupyterErrorMsg></div></app-form-builder>
   <div class="footer-space"></div>
 </div>`,
   styles: [`.margin { margin: 20px;}`]
 })
 export class AppComponent implements AfterViewInit {
-  restartingKernel = false;
   kernelStatus: Kernel.Status = 'unknown'
   formStatus: FormStatus = null
   variableStatus: string = null
@@ -109,10 +104,22 @@ export class AppComponent implements AfterViewInit {
   
         let errorDiv: HTMLDivElement = this.jupyterErrorMsg.nativeElement
         
-        let errorNotice = document.createElement("h2")
-        errorNotice.innerText = "An error occured within Python:"
-        errorDiv.appendChild(errorNotice)
+        let errorHeading = document.createElement("h2")
+        errorHeading.innerText = "Python Error:"
+        let errorParagraph = document.createElement("p")
+        errorParagraph.innerText = (
+          "A Python error has occured. This could be due to an error within " +
+          "your ScriptedForms template or an issue with ScriptedForms itself."
+        )
+        let errorParagraphAfter = document.createElement("p")
+        errorParagraphAfter.innerText = (
+          "This error message will not go away until after a page refresh."
+        )
+
+        errorDiv.appendChild(errorHeading)
+        errorDiv.appendChild(errorParagraph)
         errorDiv.appendChild(outputArea.node)
+        errorDiv.appendChild(errorParagraphAfter)
       }
     })
 
@@ -129,13 +136,6 @@ export class AppComponent implements AfterViewInit {
     this.myKernelSevice.kernelStatus.subscribe(status => {
       console.log('kernel: ' + status)
       this.kernelStatus = status
-    })
-  }
-
-  restartKernel() {
-    this.restartingKernel = true
-    this.myFormService.restartFormKernel().then(() => {
-      this.restartingKernel = false
     })
   }
 
