@@ -75,19 +75,20 @@ export class ToolbarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.addButton('save')
-    this.addButton('print')
-    this.addButton('refresh')
+    // this.addButton('save')
+    this.addButton('print', () => {window.print()})
+    // this.addButton('refresh')
 
     this.myToolbarService.addSpacer()
     
     this.changeDetectorRef.detectChanges()
   }
 
-  addButton(icon: string) {
+  addButton(icon: string, click: () => any) {
     this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent)
     let button = this.container.createComponent(this.buttonFactory)
     button.instance.icon = icon
+    button.instance.click = click
     let widget = new Widget({node: button.instance.myElementRef.nativeElement})
 
     this.myToolbarService.addItem(icon, widget)

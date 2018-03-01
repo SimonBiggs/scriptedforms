@@ -42,13 +42,17 @@ import {
 @Component({
   selector: 'toolbar-button',
   template: `<button
+  (click)="click()"
   mat-icon-button>
     <mat-icon>{{icon}}</mat-icon>
 </button>
 `
 })
-export class ToolbarButtonComponent  {
-  @Input() icon?: string;
+export class ToolbarButtonComponent {
+  @Input() icon: string;
+  @Input() click: () => any
 
-  constructor(public myElementRef: ElementRef) {}
+  constructor(
+    public myElementRef: ElementRef
+  ) { }
 }

@@ -1,6 +1,5 @@
 import os
 from setuptools import setup
-from setuptools.command.install import install
 
 repo_root = os.path.dirname(os.path.abspath(__file__))
 name = 'scriptedforms'

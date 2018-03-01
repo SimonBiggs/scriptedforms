@@ -24,61 +24,74 @@ mean the AGPL-3.0+.
 You should have received a copy of the Apache-2.0 along with this
 program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
-body {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+@media print {
+  .form-contents {
+    margin: 0px 300px 0px 100px
+  }
+
+  .custom-toolbar {
+    visibility: hidden;
+  }
 }
 
-.container {
-  flex: 1 1 auto;
-  margin: 0;
-  padding: 0;
-}
 
-.form {
-  overflow: auto;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
+@media only screen {
+  body {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 
-.form-contents {
-  max-width: 940px;
-  margin: 0 auto;
-}
+  .form-contents {
+    max-width: 940px;
+    margin: 0 auto;
+  }
+  
+  .container {
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0;
+  }
 
-.output-container div .jp-RenderedText {
-  padding-left: 0;
-}
+  .form {
+    overflow: auto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
 
-.output-container div div .jp-OutputPrompt {
-  padding: 0;
-  flex: 0;
-  border: 0;
-}
+  .output-container div .jp-RenderedText {
+    padding-left: 0;
+  }
 
-.floating-restart-kernel {
-  position: fixed !important;
-  bottom: 23px;
-  right: 40px;
-}
+  .output-container div div .jp-OutputPrompt {
+    padding: 0;
+    flex: 0;
+    border: 0;
+  }
 
-.floating-spinner {
-  position: fixed !important;
-  top: 50px;
-  right: 40px;
-}
+  .floating-restart-kernel {
+    position: fixed !important;
+    bottom: 23px;
+    right: 40px;
+  }
 
-.footer-space {
-  height: 300px;
-}
+  .floating-spinner {
+    position: fixed !important;
+    top: 50px;
+    right: 40px;
+  }
 
-.custom-toolbar {
-  min-height: 40px !important;
+  .footer-space {
+    height: 300px;
+  }
+
+  .custom-toolbar {
+    min-height: 40px !important;
+  }
 }
