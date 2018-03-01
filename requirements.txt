@@ -2,6 +2,7 @@ argh==0.26.2
 bleach==2.1.2
 certifi==2018.1.18
 chardet==3.0.4
+cssselect==1.0.3
 cycler==0.10.0
 decorator==4.2.1
 entrypoints==0.2.3
@@ -15,8 +16,8 @@ Jinja2==2.10
 jsonschema==2.6.0
 jupyter-client==5.2.2
 jupyter-core==4.4.0
-jupyterlab==0.31.8
-jupyterlab-launcher==0.10.5
+lxml==4.1.1
+Markdown==2.6.11
 MarkupSafe==1.0
 matplotlib==2.1.2
 mistune==0.8.3

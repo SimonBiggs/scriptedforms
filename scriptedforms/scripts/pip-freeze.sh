@@ -3,9 +3,9 @@ export PATH="~/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv uninstall scriptedforms
+yes | pyenv uninstall scriptedforms
 pyenv virtualenv 3.5.5 scriptedforms
 pyenv activate scriptedforms
-pip install --upgrade -e ../../
+pip install --upgrade -e "$(dirname "$0")"/../../
 yes | pip uninstall scriptedforms
-pip freeze > ../../requirements.txt
+pip freeze > "$(dirname "$0")"/../../requirements.txt
