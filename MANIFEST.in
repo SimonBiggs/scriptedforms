@@ -1,8 +1,6 @@
 graft scriptedforms
-prune scriptedforms/__pycache__
+global-exclude *.py[co] yarn-error.log
 prune scriptedforms/node_modules
 prune scriptedforms/tests_e2e/node_modules
 prune scriptedforms/tests_e2e/build
 prune scriptedforms/tests_unit/node_modules
-
-global-exclude yarn-error.log
