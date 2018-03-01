@@ -26,7 +26,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
 @media print {
   .form-contents {
-    margin: 0px 300px 0px 100px
+    margin: 0px 70mm 0px 30mm
   }
 
   .custom-toolbar {
