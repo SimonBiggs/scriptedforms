@@ -63,8 +63,10 @@ import { FormStatus } from './types/form-status';
   selector: "app-root",
   template: `
 <div class="margin">
-  <toolbar></toolbar>
-  <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
+  <div class="hide-on-print">
+    <toolbar></toolbar>
+    <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
+  </div>
   <app-form-builder #formBuilderComponent><div #jupyterErrorMsg></div></app-form-builder>
   <div class="footer-space"></div>
 </div>`,

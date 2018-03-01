@@ -38,21 +38,24 @@ function on click.
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import {
-  Component, Input, ElementRef
+  Component, Input, ElementRef, ViewChild
 } from '@angular/core';
 
 @Component({
   selector: 'toolbar-button',
-  template: `<button
+  template: `<button #button
   (click)="click()"
   [disabled]="isDisabled"
+  [title]="tooltip"
   mat-icon-button>
-    <mat-icon>{{icon}}</mat-icon>
+    <mat-icon *ngIf="!iconClass">{{icon}}</mat-icon>
+    <div *ngIf="iconClass" style="width:24px; height:24px; margin: 0 0; display:inline-block"><div [class]="iconClass"></div></div>
 </button>
 `
 })
 export class ToolbarButtonComponent {
   @Input() icon: string;
+  @Input() tooltip: string;
   @Input() click: () => any
   @Input() set disable(observable: BehaviorSubject<boolean>) {
     if (this.previousSubscription) {
@@ -62,6 +65,9 @@ export class ToolbarButtonComponent {
       this.isDisabled = value
     })
   }
+  @Input() iconClass: string;
+
+  @ViewChild('button') button: ElementRef;
 
   previousSubscription: Subscription = null
   isDisabled = false

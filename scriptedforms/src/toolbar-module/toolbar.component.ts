@@ -62,6 +62,14 @@ import {
 
 import { FormService } from "../services/form.service";
   
+interface IOptions {
+  click: () => void;
+  icon?: string;
+  disable?: BehaviorSubject<boolean>;
+  iconClass?: string;
+  tooltip?: string;
+}
+
 @Component({
   selector: 'toolbar',
   template: `<span #container></span><toolbar-button hidden></toolbar-button>`
@@ -82,27 +90,51 @@ export class ToolbarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    // this.addButton('save')
-    this.addButton('print', () => {window.print()})
-    this.addButton(
-      'refresh', () => {this.restartKernel()}, this.restartingKernel)
+    this.addButton({
+      iconClass: 'pypi-icon',
+      click: () => { window.location.href = "https://pypi.org/project/scriptedforms/";},
+      tooltip: 'Download the ScriptedForms Python package from <pypi.org>.'
+    })
+    this.addButton({
+      click: () => {window.print()}, 
+      icon: 'print',
+      tooltip: 'Print your ScriptedForm.'
+    })
+    this.addButton({
+      click: () => {this.restartKernel()},
+      icon: 'refresh',
+      disable: this.restartingKernel,
+      tooltip: 'Restart the Jupyter Python Kernel. This will reset your inputs.'
+    })
 
     this.myToolbarService.addSpacer()
     
     this.changeDetectorRef.detectChanges()
   }
 
-  addButton(icon: string, click: () => any, disable?: BehaviorSubject<boolean>) {
+  addButton(options: IOptions) {
+    let name: string
     this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent)
     let button = this.container.createComponent(this.buttonFactory)
-    button.instance.icon = icon
-    button.instance.click = click
-    if (disable) {
-      button.instance.disable = disable
+    button.instance.click = options.click
+    
+    if (options.icon) {
+      button.instance.icon = options.icon
+      name = options.icon
     }
-    let widget = new Widget({node: button.instance.myElementRef.nativeElement})
+    if (options.disable) {
+      button.instance.disable = options.disable
+    }
+    if (options.tooltip) {
+      button.instance.tooltip = options.tooltip
+    }
+    if (options.iconClass) {
+      button.instance.iconClass = options.iconClass
+      name = options.iconClass
+    }
 
-    this.myToolbarService.addItem(icon, widget)
+    let widget = new Widget({node: button.instance.myElementRef.nativeElement})
+    this.myToolbarService.addItem(name, widget)
   }
 
   restartKernel() {
