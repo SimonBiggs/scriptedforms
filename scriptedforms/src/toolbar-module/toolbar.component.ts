@@ -91,14 +91,14 @@ export class ToolbarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.addButton({
-      iconClass: 'pypi-icon',
-      click: () => { window.location.href = "https://pypi.org/project/scriptedforms/";},
-      tooltip: 'Download the ScriptedForms Python package from <pypi.org>.'
+      icon: 'chrome_reader_mode',
+      click: () => { window.open("http://scriptedforms.com.au", '_blank')},
+      tooltip: 'ScriptedForms documentation, installation instructions, and source code.'
     })
     this.addButton({
       click: () => {window.print()}, 
       icon: 'print',
-      tooltip: 'Print your ScriptedForm.'
+      tooltip: 'Print your ScriptedForm'
     })
     this.addButton({
       click: () => {this.restartKernel()},

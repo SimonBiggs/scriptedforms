@@ -137,7 +137,7 @@ been defined within the `<section-start>`.
 <variable-slider>data[1]</variable-slider>
 
 ```python
-plt.figure(figsize=(13,6))
+plt.figure(figsize=(6*1.618,6))
 plt.plot(data, 'o');
 ```
 
@@ -179,7 +179,7 @@ Angular frequencies ($\omega$):
 <variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
 
 ```python
-plt.figure(figsize=(13,6))
+plt.figure(figsize=(6*1.618,6))
 
 oscillation = np.sin(t[:, np.newaxis] * omega[np.newaxis, :])
 combination = np.sum(oscillation, axis=1)
@@ -188,11 +188,11 @@ plt.plot(t, oscillation)
 plt.plot(t, combination)
 plt.xlim([-2*np.pi, 2*np.pi])
 plt.ylim([-2.4, 2.4])
-plt.title('Two sin curves and their combination')
+plt.title('Two sin curves and their summation')
 plt.legend([
-    r'$\omega [0]$ = {0:0.1f}'.format(omega[0]),
-    r'$\omega [1]$ = {0:0.1f}'.format(omega[1]),
-    'Combination'], loc='upper right')
+    r'$\omega [0] = {0:0.1f}$'.format(omega[0]),
+    r'$\omega [1] = {0:0.1f}$'.format(omega[1]),
+    'Summation'], loc='upper right')
 plt.xlabel('time (seconds)')
 plt.ylabel(r'$sin(\omega \times t)$');
 ```
