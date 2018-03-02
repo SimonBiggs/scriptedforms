@@ -70,28 +70,60 @@ If you want to be a bit more adventurous see what happens if you add the
 following to the end of the file:
 
 ~~~markdown
-<section-live>
+#### Example slider use case
 
-<variable-slider>a_number</variable-slider>
+Using the slider and live sections combined with matplotlib plots you can
+produce utilities like the following:
+
+<section-start>
 
 ```python
-print('Your number is {}'.format(a_number))
+t = np.linspace(-2*np.pi, 2*np.pi, 500)
+omega = np.ones(2)
+```
+
+</section-start>
+
+<section-live>
+
+Angular frequencies ($\omega$):
+
+<variable-slider name="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
+<variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
+
+```python
+plt.figure(figsize=(5*1.618,5))
+
+oscillation = np.sin(t[:, np.newaxis] * omega[np.newaxis, :])
+combination = np.sum(oscillation, axis=1)
+
+plt.plot(t, oscillation)
+plt.plot(t, combination)
+plt.xlim([-2*np.pi, 2*np.pi])
+plt.ylim([-2.4, 2.4])
+plt.title('Two sin curves and their summation')
+plt.legend([
+    r'$\omega [0] = {0:0.1f}$'.format(omega[0]),
+    r'$\omega [1] = {0:0.1f}$'.format(omega[1]),
+    'Summation'], loc='upper right')
+plt.xlabel('time (seconds)')
+plt.ylabel(r'$sin(\omega \times t)$');
 ```
 
 </section-live>
 ~~~
+
+This should produce what is seen in the following screenshot:
+
+<p align="center">
+  <img src="./images/detailed.png">
+</p>
 
 For a markdown file that presents the majority of the features of scriptedforms
 see
 [detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md).
 Try writing some of the contents of that file into `quick-start.md` to see how
 the features of scriptedforms work.
-
-A section of that form is shown below as a screenshot:
-
-<p align="center">
-  <img src="./images/detailed.png">
-</p>
 
 ## Security notice
 
