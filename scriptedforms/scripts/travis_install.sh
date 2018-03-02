@@ -30,9 +30,9 @@ mkdir ~/.jupyter
 # Install and enable the server extension
 cd "$(dirname "$0")"/../
 yarn
+yarn build
 cd -
 
-yes | pip uninstall scriptedforms
 pip install .[test]
 
 jupyter serverextension enable --py scriptedforms
