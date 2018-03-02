@@ -38,8 +38,20 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
 
 @media print {
+  body, html {
+    size: 21cm 29.7cm !important;
+    width: 21cm !important;
+    position: static !important;
+    margin: 0 0 !important;
+  }
+
   .form-contents {
-    margin: 0px 120mm 0px 30mm
+    width: 20cm !important;
+    margin: 0 5mm !important;
+  }
+  
+  .margin {
+    margin: 0 0 !important;
   }
 
   .hide-on-print {
@@ -52,6 +64,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
   .floating-spinner {
     display: none !important;
+  }
+
+  .p-Widget {
+    position: static !important;
   }
 }
 
