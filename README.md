@@ -66,8 +66,11 @@ to
 and then press save. The form in the browser should then update to match what
 you just wrote.
 
+## Plotting and slider example
+
 If you want to be a bit more adventurous see what happens if you add the
-following to the end of the file:
+following to the end of the your `quick-start.md` file (or any other
+ScriptedForm you are creating):
 
 ~~~markdown
 #### Example slider use case
@@ -120,11 +123,13 @@ This should produce what is seen in the following screenshot:
   <img src="./images/detailed.png">
 </p>
 
+## More features
+
 For a markdown file that presents the majority of the features of scriptedforms
 see
 [detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md).
-Try writing some of the contents of that file into `quick-start.md` to see how
-the features of scriptedforms work.
+Try writing some of the contents of that file into a ScriptedForm to see how
+it works.
 
 ## Security notice
 
