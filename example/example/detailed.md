@@ -175,8 +175,8 @@ omega = np.ones(2)
 
 Angular frequencies ($\omega$):
 
-<variable-slider name="$\omega$[0]" min="0" max="6" step="0.1">omega[0]</variable-slider>
-<variable-slider name="$\omega$[1]" min="0" max="6" step="0.1">omega[1]</variable-slider>
+<variable-slider name="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
+<variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
 
 ```python
 plt.figure(figsize=(13,6))
@@ -190,8 +190,8 @@ plt.xlim([-2*np.pi, 2*np.pi])
 plt.ylim([-2.4, 2.4])
 plt.title('Two sin curves and their combination')
 plt.legend([
-    r'$\omega$[0] = {0:0.1f}'.format(omega[0]),
-    r'$\omega$[1] = {0:0.1f}'.format(omega[1]),
+    r'$\omega [0]$ = {0:0.1f}'.format(omega[0]),
+    r'$\omega [1]$ = {0:0.1f}'.format(omega[1]),
     'Combination'], loc='upper right')
 plt.xlabel('time (seconds)')
 plt.ylabel(r'$sin(\omega \times t)$');

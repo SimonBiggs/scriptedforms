@@ -9,11 +9,11 @@
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
-    "install": "yarn build && yarn pip:dev",
     "build": "rimraf lib && webpack --config webpack.dev.js",
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./tests_e2e e2e",
+    "pip:install": "yarn pip:dev",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "yes | pip uninstall scriptedforms",
     "pip:sys": "pip install ../",

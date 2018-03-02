@@ -32,7 +32,6 @@ import { NgModule, ApplicationRef, ErrorHandler } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 import { MaterialModule } from "./material.module";
 
 import { AppErrorHandler } from "./app-error-handler";

@@ -138,6 +138,8 @@ following in the
 
 ```bash
 yarn
+yarn build
+yarn pip:install
 ```
 
 This will install the node packages, build the javascript files and then run
