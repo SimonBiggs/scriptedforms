@@ -29,7 +29,7 @@ example.hello(your_name)
 
 </section-live>
 
-## List of example files
+## Links to all of the example files provided
 
 <section-start always>
 
@@ -39,7 +39,7 @@ from IPython.display import display, Markdown
 
 filepaths = glob('*.md')
 for filepath in filepaths:
-  display(Markdown('[{0}]({0})'.format(filepath)))
+  display(Markdown('[./{0}]({0})'.format(filepath)))
 ```
 
 </section-start>
