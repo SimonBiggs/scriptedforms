@@ -192,7 +192,7 @@ plt.title('Two sin curves and their combination')
 plt.legend([
     r'$\omega$[0] = {0:0.1f}'.format(omega[0]),
     r'$\omega$[1] = {0:0.1f}'.format(omega[1]),
-    'Combination'], loc='best')
+    'Combination'], loc='upper right')
 plt.xlabel('time (seconds)')
 plt.ylabel(r'$sin(\omega \times t)$');
 ```
