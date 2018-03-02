@@ -137,7 +137,7 @@ been defined within the `<section-start>`.
 <variable-slider>data[1]</variable-slider>
 
 ```python
-plt.figure(figsize=(6*1.618,6))
+plt.figure(figsize=(5*1.618,5))
 plt.plot(data, 'o');
 ```
 
@@ -179,7 +179,7 @@ Angular frequencies ($\omega$):
 <variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
 
 ```python
-plt.figure(figsize=(6*1.618,6))
+plt.figure(figsize=(5*1.618,5))
 
 oscillation = np.sin(t[:, np.newaxis] * omega[np.newaxis, :])
 combination = np.sum(oscillation, axis=1)

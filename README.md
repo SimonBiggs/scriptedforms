@@ -48,7 +48,7 @@ You should be able to type your name into the form and see the code field live
 update with each key stroke:
 
 <p align="center">
-  <img src="./screenshots/quick-start.png">
+  <img src="./images/quick-start.png">
 </p>
 
 Now within `quick-start.md` edit the markdown file by changing
@@ -90,7 +90,7 @@ the features of scriptedforms work.
 A section of that form is shown below as a screenshot:
 
 <p align="center">
-  <img src="./screenshots/detailed.png">
+  <img src="./images/detailed.png">
 </p>
 
 ## Security notice
