@@ -66,7 +66,7 @@ to
 and then press save. The form in the browser should then update to match what
 you just wrote.
 
-## Plotting and slider example
+### Plotting and slider example
 
 If you want to be a bit more adventurous see what happens if you add the
 following to the end of the your `quick-start.md` file (or any other
@@ -123,7 +123,7 @@ This should produce what is seen in the following screenshot:
   <img src="./images/detailed.png">
 </p>
 
-## More features
+### More features
 
 For a markdown file that presents the majority of the features of scriptedforms
 see
