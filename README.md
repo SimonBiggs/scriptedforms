@@ -129,7 +129,7 @@ For a markdown file that presents the majority of the features of scriptedforms
 see
 [detailed.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/example/example/detailed.md).
 Try writing some of the contents of that file into a ScriptedForm to see how
-it works.
+they works.
 
 ## Security notice
 
