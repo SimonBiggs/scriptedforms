@@ -186,6 +186,7 @@ summation = np.sum(oscillation, axis=1)
 
 plt.plot(t, oscillation)
 plt.plot(t, summation)
+
 plt.xlim([-2*np.pi, 2*np.pi])
 plt.ylim([-2.4, 2.4])
 plt.title('Two sin curves and their summation')
