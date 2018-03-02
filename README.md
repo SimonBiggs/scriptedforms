@@ -70,7 +70,7 @@ you just wrote.
 
 If you want to be a bit more adventurous see what happens if you add the
 following to the end of the your `quick-start.md` file (or any other
-ScriptedForm you are creating):
+ScriptedForm):
 
 ~~~markdown
 #### Example slider use case
