@@ -29,6 +29,17 @@ example.hello(your_name)
 
 </section-live>
 
-## A more detailed example
+## List of example files
 
-[Link](./detailed.md)
+<section-start always>
+
+```python
+from glob import glob
+from IPython.display import display, Markdown
+
+filepaths = glob('*.md')
+for filepath in filepaths:
+  display(Markdown('[{0}]({0})'.format(filepath)))
+```
+
+</section-start>

@@ -18,8 +18,7 @@ to the Python kernel.
 */
 
 import {
-  Component, AfterViewInit, ViewChild, ElementRef, OnDestroy, EventEmitter,
-  Output
+  Component, AfterViewInit, ViewChild, ElementRef, OnDestroy
 } from '@angular/core';
 
 // import {
@@ -65,9 +64,9 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   outputArea: OutputArea = new OutputArea(this.outputAreaOptions);
 
   promise: Promise<Kernel.IFuture>;
-  outputContainer: HTMLDivElement
+  outputContainer: HTMLDivElement;
 
-  @Output() aCodeRunFutureCompleted = new EventEmitter();
+  mutationObserver: MutationObserver;
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
@@ -102,15 +101,19 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.outputContainer.appendChild(this.outputArea.node)
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode)
 
-    // Make any output area changes send a message to the Output Service
-    // for the purpose of saving the output to the model
-    this.aCodeRunFutureCompleted.subscribe(() => {
-      // when model is implemented shouldn't actually change to json, no need.
-      // JSON.stringify(this.outputArea.model.toJSON());
-      // this.myOutputService.setOutput(this.name, this.outputArea.model);
+    // Mutation observer is awesome! Use more of this.
+    this.mutationObserver = new MutationObserver(() => {
       let links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName("a"))
       this.myFileService.morphLinksToUpdateFile(links);
-    });
+    })
+
+    this.mutationObserver.observe(
+      this.outputContainer, 
+      {
+        childList: true,
+        subtree: true
+      }
+    )
   }
 
   ngOnDestroy() {
@@ -138,13 +141,14 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.promise.then(future => {
       if (future) {
         this.model = new OutputAreaModel()
+
         future.onIOPub = this._onIOPub
 
         future.done.then(() => {
           this.updateOutputAreaModel()
+
           this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild)
 
-          this.aCodeRunFutureCompleted.emit();
           let element: HTMLDivElement = this.outputContainer
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px'
           console.log(element.style.minHeight)
