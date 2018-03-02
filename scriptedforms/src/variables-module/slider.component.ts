@@ -41,11 +41,10 @@ import { NumberBaseComponent } from './number-base.component';
 </span>
 
 <span class="container">{{placeholderValue}}
-  <mat-slider class="variableSlider" *ngIf="variableName" 
-  [required]="required"
+  <mat-slider class="variableSlider" *ngIf="variableName"
   [disabled]="!isFormReady"
-  [(ngModel)]="variableValue"
-  (ngModelChange)="variableChanged()"
+  [value]="variableValue"
+  (input)="updateValue($event.value)"
   (blur)="onBlur()" 
   (focus)="onFocus()"
   [max]="max"
@@ -77,4 +76,9 @@ styles: [
 export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
   @Input() min?: number = 0;
   @Input() max?: number = 100;
+
+  updateValue(value: number) {
+    this.variableValue = value
+    this.variableChanged()
+  }
 }

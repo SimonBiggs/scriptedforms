@@ -113,12 +113,6 @@ export class LiveComponent implements AfterViewInit {
     }
   }
 
-  clearCodeOutput() {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.hideOutput();
-    });
-  }
-
   formReady(isReady: boolean) {
     this.isFormReady = isReady;
   }

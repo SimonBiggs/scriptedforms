@@ -83,6 +83,8 @@ An example `<section-start>` is given following:
 ```python
 from IPython.display import display, Markdown
 
+plt.rc('font', size=15)
+
 data = np.ones(3) * np.nan
 data[0] = 5
 
@@ -135,6 +137,7 @@ been defined within the `<section-start>`.
 <variable-slider>data[1]</variable-slider>
 
 ```python
+plt.figure(figsize=(13,6))
 plt.plot(data, 'o');
 ```
 
@@ -177,7 +180,6 @@ Angular frequencies ($\omega$):
 
 ```python
 plt.figure(figsize=(13,6))
-plt.rc('font', size=15)
 
 oscillation = np.sin(t[:, np.newaxis] * omega[np.newaxis, :])
 combination = np.sum(oscillation, axis=1)

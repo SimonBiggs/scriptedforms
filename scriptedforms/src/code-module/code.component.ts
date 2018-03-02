@@ -1,30 +1,5 @@
-// Scripted Forms -- Making GUIs easy for everyone on your team.
-// Copyright (C) 2017 Simon Biggs
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version (the "AGPL-3.0+").
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Affero General Public License and the additional terms for more
-// details.
-
-// You should have received a copy of the GNU Affero General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-// Affrero General Public License. These aditional terms are Sections 1, 5,
-// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-// where all references to the definition "License" are instead defined to
-// mean the AGPL-3.0+.
-
-// You should have received a copy of the Apache-2.0 along with this
-// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
-
-
+// Copyright (c) Jupyter Development Team.
+// Distributed under the terms of the Modified BSD License.
 
 
 /*
@@ -52,10 +27,18 @@ import {
 // } from 'rxjs/Observable';
 
 import {
+  JSONObject
+} from '@phosphor/coreutils';
+
+import {
+  nbformat
+} from '@jupyterlab/coreutils';
+
+import {
   RenderMimeRegistry, standardRendererFactories as initialFactories
 } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
-import { Kernel } from '@jupyterlab/services';
+import { Kernel, KernelMessage } from '@jupyterlab/services';
 
 import {
   Mode
@@ -69,19 +52,22 @@ import { FileService } from '../services/file.service';
   template: `<span #codecontainer [hidden]="this.name !== undefined"><ng-content></ng-content></span>`
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
+  private _displayIdMap = new Map<string, number[]>();
   sessionId: string;
   name: string;
   renderMimeOptions: RenderMimeRegistry.IOptions;
-  renderMime: RenderMimeRegistry;
-  model: OutputAreaModel;
-  outputAreaOptions: OutputArea.IOptions;
-  outputArea: OutputArea;
+  renderMime: RenderMimeRegistry = new RenderMimeRegistry({ initialFactories });
+  model: OutputAreaModel = new OutputAreaModel();
+  outputAreaOptions: OutputArea.IOptions = {
+    model: this.model,
+    rendermime: this.renderMime
+  };
+  outputArea: OutputArea = new OutputArea(this.outputAreaOptions);
 
   promise: Promise<Kernel.IFuture>;
-  future: Kernel.IFuture;
   outputContainer: HTMLDivElement
 
-  @Output() aCodeRunCompleted = new EventEmitter();
+  @Output() aCodeRunFutureCompleted = new EventEmitter();
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
@@ -91,6 +77,14 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     private myFileService: FileService,
     private _eRef: ElementRef
   ) { }
+
+  updateOutputAreaModel() {
+    this.outputAreaOptions = {
+      model: this.model,
+      rendermime: this.renderMime
+    };
+    this.outputArea = new OutputArea(this.outputAreaOptions);
+  }
 
   ngAfterViewInit() {
     this.code = this.codecontainer.nativeElement.innerText;
@@ -103,16 +97,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       this._eRef.nativeElement.classList.add('cm-s-jupyter');
     });
 
-    // Initialise a JupyterLab output area
-    this.model = new OutputAreaModel();
-    this.renderMime = new RenderMimeRegistry({ initialFactories });
-
-    this.outputAreaOptions = {
-      model: this.model,
-      rendermime: this.renderMime
-    };
-
-    this.outputArea = new OutputArea(this.outputAreaOptions);
     let element: HTMLElement = this._eRef.nativeElement
     this.outputContainer = document.createElement("div")
     this.outputContainer.appendChild(this.outputArea.node)
@@ -120,14 +104,12 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     // Make any output area changes send a message to the Output Service
     // for the purpose of saving the output to the model
-    this.aCodeRunCompleted.subscribe(() => {
+    this.aCodeRunFutureCompleted.subscribe(() => {
       // when model is implemented shouldn't actually change to json, no need.
       // JSON.stringify(this.outputArea.model.toJSON());
       // this.myOutputService.setOutput(this.name, this.outputArea.model);
-      this.outputArea.future.done.then(() => {
-        let links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName("a"))
-        this.myFileService.morphLinksToUpdateFile(links);
-      })
+      let links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName("a"))
+      this.myFileService.morphLinksToUpdateFile(links);
     });
   }
 
@@ -155,23 +137,61 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
       if (future) {
-        this.future = future;
-        this.outputArea.show()
-        this.outputArea.future = this.future;
-        this.aCodeRunCompleted.emit();
+        this.model = new OutputAreaModel()
+        future.onIOPub = this._onIOPub
 
-        this.future.done.then(() => {
+        future.done.then(() => {
+          this.updateOutputAreaModel()
+          this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild)
+
+          this.aCodeRunFutureCompleted.emit();
           let element: HTMLDivElement = this.outputContainer
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px'
+          console.log(element.style.minHeight)
         })
       }
     });
   }
 
-  hideOutput() {
-    this.future = undefined
-    this.outputArea.hide()
+  // Extract from @jupyterlab/outputarea/src/widget.ts
+  private _onIOPub = (msg: KernelMessage.IIOPubMessage) => {
+    let model = this.model;
+    let msgType = msg.header.msg_type;
+    let output: nbformat.IOutput;
+    let transient = (msg.content.transient || {}) as JSONObject;
+    let displayId = transient['display_id'] as string;
+    let targets: number[];
+
+    switch (msgType) {
+    case 'execute_result':
+    case 'display_data':
+    case 'stream':
+    case 'error':
+      output = msg.content as nbformat.IOutput;
+      output.output_type = msgType as nbformat.OutputType;
+      model.add(output);
+      break;
+    case 'clear_output':
+      let wait = (msg as KernelMessage.IClearOutputMsg).content.wait;
+      model.clear(wait);
+      break;
+    case 'update_display_data':
+      output = msg.content as nbformat.IOutput;
+      output.output_type = 'display_data';
+      targets = this._displayIdMap.get(displayId);
+      if (targets) {
+        for (let index of targets) {
+          model.set(index, output);
+        }
+      }
+      break;
+    default:
+      break;
+    }
+    if (displayId && msgType === 'display_data') {
+       targets = this._displayIdMap.get(displayId) || [];
+       targets.push(model.length - 1);
+       this._displayIdMap.set(displayId, targets);
+    }
   }
-
-
 }

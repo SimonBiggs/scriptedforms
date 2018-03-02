@@ -128,12 +128,6 @@ export class ButtonComponent implements AfterViewInit {
     this.isFormReady = isReady;
   }
 
-  clearCodeOutput() {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.hideOutput();
-    });
-  }
-
   /**
    * Provide a unique id for the purpose of detecting repeat submissions.
    * In practice this isn't an issue for button sections as the button itself
