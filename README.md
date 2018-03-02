@@ -157,7 +157,6 @@ Then to start ScriptedForms using its Jupyter Server extension run the following
 jupyter notebook --NotebookApp.default_url=/scriptedforms/quick-start.md
 ```
 
-
 ## [Advanced users only] Installing scriptedforms from the GitHub source
 
 The majority of users will not need to pay attention to this section.
