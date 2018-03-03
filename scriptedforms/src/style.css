@@ -45,9 +45,14 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     margin: 0 0 !important;
   }
 
+  div, span {
+    margin: 0 0 !important;
+    max-width: 21cm !important;
+  }
+
   .form-contents {
     width: 20cm !important;
-    margin: 0 5mm !important;
+    padding: 0 5mm !important;
   }
   
   .margin {
