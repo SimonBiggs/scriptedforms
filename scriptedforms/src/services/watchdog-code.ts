@@ -32,12 +32,11 @@ from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
-        if type(event) == FileModifiedEvent:
-            print(os.path.abspath(event.src_path))
-            try:
-                print(os.path.relpath(event.src_path))
-            finally:
-                pass
+        print('absolute: {}'.format(os.path.abspath(event.src_path)))
+        try:
+            print('relative: {}'.format(os.path.relpath(event.src_path)))
+        finally:
+            pass
 
 event_handler = MyHandler()
 observer = Observer()

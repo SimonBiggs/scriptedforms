@@ -38,7 +38,8 @@ import {
 import { StartComponent } from './start.component';
 import { LiveComponent } from './live.component';
 import { ButtonComponent } from './button.component';
-import { OutputComponent } from './output.component'
+import { OutputComponent } from './output.component';
+import { SectionFileChangeComponent } from './section-file-change.component';
 
 import { VariablesModule } from '../variables-module/variables.module'
 
@@ -53,13 +54,15 @@ import { VariablesModule } from '../variables-module/variables.module'
     StartComponent,
     LiveComponent,
     ButtonComponent,
-    OutputComponent
+    OutputComponent,
+    SectionFileChangeComponent
   ],
   exports: [
     StartComponent,
     LiveComponent,
     ButtonComponent,
-    OutputComponent
+    OutputComponent,
+    SectionFileChangeComponent
   ]
 })
 export class SectionsModule { }

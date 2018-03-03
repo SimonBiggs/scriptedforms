@@ -54,6 +54,7 @@ export class WatchdogService {
   everythingIdle = new PromiseDelegate<void>();
   session: Session.ISession
   watchdogError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
+  fileChanged: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private myFileService: FileService,
@@ -144,12 +145,19 @@ export class WatchdogService {
         let path = this.myFileService.path.getValue()
         let sessionId = this.myFormService.currentFormSessionId
         let match = files.some(item => {
-          return (item.replace('\\', '/') === path) || (item.includes('goutputstream'))
+          return (
+            (item.startsWith('relative: ')) && 
+            ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))))
         })
         if (match) {
           this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false
           this.myFileService.loadFileContents(path, sessionId)
         }
+
+        files.forEach(item => {
+          let pathOnly = item.replace('absolute: ', '').replace('relative: ', '')
+          this.fileChanged.next(pathOnly)
+        })
       }
     })
   

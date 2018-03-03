@@ -28,7 +28,7 @@
 import { Component, AfterViewInit, Input, ViewChild } from "@angular/core";
 
 import { VariableBaseComponent } from "./variable-base.component";
-import { DropdownItemsComponent } from "./dropdown-items.component";
+import { StringListParameterComponent } from "./string-list-parameter.component";
 
 @Component({
   selector: "variable-dropdown",
@@ -36,7 +36,7 @@ import { DropdownItemsComponent } from "./dropdown-items.component";
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
 </span>
-<variable-dropdown-items #dropdownItemsComponent *ngIf="items">{{items}}</variable-dropdown-items>
+<variable-string-list-parameter #stringListParameterComponent *ngIf="items">{{items}}</variable-string-list-parameter>
 <mat-form-field>
   <mat-select 
   [required]="required"
@@ -67,7 +67,7 @@ export class DropdownComponent extends VariableBaseComponent
   // Make this required once internal separators are removed
   @Input() items?: string
 
-  @ViewChild('dropdownItemsComponent') dropdownItemsComponent: DropdownItemsComponent
+  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent
 
   
   pythonValueReference() {
@@ -102,8 +102,8 @@ export class DropdownComponent extends VariableBaseComponent
     this.deprecatedOptions = this.options
 
     if (this.items) {
-      this.options = this.dropdownItemsComponent.variableValue
-      this.dropdownItemsComponent.variableChange.asObservable().subscribe((value: string[]) => {
+      this.options = this.stringListParameterComponent.variableValue
+      this.stringListParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
         this.options = value
       })
     }

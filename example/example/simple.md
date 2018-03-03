@@ -5,6 +5,9 @@
 <section-start>
 
 ```python
+from glob import glob
+from IPython.display import display, Markdown
+
 # By using autoreload, any changes within the python package will update
 # automatically. This will slow the form down though, so only use it during
 # development.
@@ -31,15 +34,12 @@ example.hello(your_name)
 
 ## Links to all of the example files provided
 
-<section-start always>
+<section-filechange paths="['.']">
 
 ```python
-from glob import glob
-from IPython.display import display, Markdown
-
 filepaths = glob('*.md')
 for filepath in filepaths:
   display(Markdown('[./{0}]({0})'.format(filepath)))
 ```
 
-</section-start>
+</section-filechange>

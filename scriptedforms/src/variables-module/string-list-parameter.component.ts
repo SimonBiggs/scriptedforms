@@ -30,18 +30,10 @@ import { VariableBaseComponent } from "./variable-base.component";
 import { Component, AfterViewInit } from "@angular/core";
 
 @Component({
-  selector: "variable-dropdown-items",
+  selector: "variable-string-list-parameter",
   template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
 })
-export class DropdownItemsComponent extends VariableBaseComponent
+export class StringListParameterComponent extends VariableBaseComponent
   implements AfterViewInit {
     variableValue: string[]
-
-    // pythonVariableEvaluate() {
-    //   const escapedString = this.variableName
-    //   .replace(/\\/g, '\\\\')
-    //   .replace(/\"/g, '\\\"')
-    //   .replace(/\'/g, '\\\'')
-    //   return `${escapedString}`
-    // }
   }

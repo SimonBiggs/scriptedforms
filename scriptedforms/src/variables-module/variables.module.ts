@@ -45,7 +45,7 @@ import { TableComponent } from './table.component';
 
 import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
-import { DropdownItemsComponent } from './dropdown-items.component'
+import { StringListParameterComponent } from './string-list-parameter.component'
 
 
 @NgModule({
@@ -63,7 +63,7 @@ import { DropdownItemsComponent } from './dropdown-items.component'
     TableComponent,
     StringComponent,
     DropdownComponent,
-    DropdownItemsComponent
+    StringListParameterComponent
   ],
   exports: [
     ToggleComponent,
@@ -74,7 +74,7 @@ import { DropdownItemsComponent } from './dropdown-items.component'
     TableComponent,
     StringComponent,
     DropdownComponent,
-    DropdownItemsComponent
+    StringListParameterComponent
   ]
 })
 export class VariablesModule { }

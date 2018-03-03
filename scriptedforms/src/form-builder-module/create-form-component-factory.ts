@@ -67,6 +67,7 @@ import { StartComponent } from '../sections-module/start.component';
 import { LiveComponent } from '../sections-module/live.component';
 import { ButtonComponent } from '../sections-module/button.component';
 import { OutputComponent } from '../sections-module/output.component';
+import { SectionFileChangeComponent } from '../sections-module/section-file-change.component';
 
 import { VariablesModule } from '../variables-module/variables.module';
 import { ToggleComponent } from '../variables-module/toggle.component';
@@ -137,6 +138,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
     @ViewChildren(LiveComponent) liveComponents: QueryList<LiveComponent>;
     @ViewChildren(ButtonComponent) buttonComponents: QueryList<ButtonComponent>;
     @ViewChildren(OutputComponent) outputComponents: QueryList<OutputComponent>;
+    @ViewChildren(SectionFileChangeComponent) sectionFileChangeComponents: QueryList<SectionFileChangeComponent>;
 
     // Variables
     @ViewChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
@@ -187,7 +189,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
       this.dropdownComponents.toArray().forEach(dropdownComponent => {
         if (dropdownComponent.items) {
-          this.variableComponents = this.variableComponents.concat([dropdownComponent.dropdownItemsComponent])
+          this.variableComponents = this.variableComponents.concat([dropdownComponent.stringListParameterComponent])
         }
       })
 
@@ -195,6 +197,11 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray())
       this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray())
       this.sectionComponents = this.sectionComponents.concat(this.outputComponents.toArray())
+      this.sectionComponents = this.sectionComponents.concat(this.sectionFileChangeComponents.toArray())
+
+      this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
+        this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.stringListParameterComponent])
+      })
       
       // Only begin initialisation once the kernel is connected
       this.setComponentIds();
@@ -273,6 +280,10 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           variableComponent.initialise();
         })
         this.myVariableService.allVariablesInitilised(this._sessionId)
+
+        this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
+          sectionFileChangeComponent.runCode()
+        })
 
         // Wait until the code queue is complete before declaring form ready to
         // the various components.
