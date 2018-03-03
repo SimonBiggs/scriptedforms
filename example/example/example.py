@@ -32,6 +32,7 @@ import scriptedforms as sf
 def hello(name):
     print('Hello {}!'.format(name))
 
+
 def main():
     here = os.path.dirname(__file__)
     filepath = os.path.join(here, 'simple.md')

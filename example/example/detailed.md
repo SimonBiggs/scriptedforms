@@ -188,7 +188,7 @@ plt.plot(t, oscillation)
 plt.plot(t, summation)
 
 plt.xlim([-2*np.pi, 2*np.pi])
-plt.ylim([-2.4, 2.4])
+plt.ylim([-2.8, 2.8])
 plt.title('Two sin curves and their summation')
 plt.legend([
     r'$\omega [0] = {0:0.1f}$'.format(omega[0]),

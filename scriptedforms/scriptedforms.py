@@ -31,7 +31,7 @@ import argparse
 
 from notebook.notebookapp import NotebookApp
 
-from ._api_handlers import get_api_handlers
+from .api.handlers import get_api_handlers
 from ._scriptedforms_handlers import get_scriptedforms_handlers
 
 

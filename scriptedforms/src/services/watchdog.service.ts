@@ -26,6 +26,8 @@
 
 // import { combineLatest } from 'rxjs/observable/combineLatest';
 
+import { BehaviorSubject } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 
 import {
@@ -33,7 +35,7 @@ import {
 } from '@phosphor/coreutils';
 
 import {
-  ServerConnection, Session
+  ServerConnection, Session, KernelMessage
 } from '@jupyterlab/services';
 
 import { JupyterService } from './jupyter.service';
@@ -43,13 +45,15 @@ import { KernelService } from './kernel.service';
 // import { VariableService } from './variable.service';
 
 import {
-  watchdogCode, watchdogWatchModeCode
+  startWatchdogSessionCode, watchdogWatchModeCode, addObserverPathCode
 } from './watchdog-code'
 
 @Injectable()
 export class WatchdogService {
   // formFirstPassComplete = new PromiseDelegate<void>();
   everythingIdle = new PromiseDelegate<void>();
+  session: Session.ISession
+  watchdogError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
 
   constructor(
     private myFileService: FileService,
@@ -58,24 +62,6 @@ export class WatchdogService {
     // private myVariableService: VariableService,
     private myKernelService: KernelService
   ) { }
-
-  // "kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'"
-
-  // runWatchdogAfterFormReady() {
-  //   let subscription = combineLatest(
-  //     this.myFormService.formStatus,
-  //     this.myVariableService.variableStatus,
-  //     this.myKernelService.kernelStatus).subscribe(([formStatus, variableStatus, kernelStatus]) => {
-  //       if ((formStatus === 'ready') && (variableStatus === 'idle') && (kernelStatus === 'idle')) {
-  //         subscription.unsubscribe()
-  //         this.runWatchdog()
-  //       }
-  //     })
-
-  //   // this.formFirstPassComplete.promise.then(() => {
-  //   //   this.runWatchdog()
-  //   // })
-  // }
 
 
   runDevModeWatchdog() {
@@ -102,6 +88,10 @@ export class WatchdogService {
 
     sessionReady.promise.then(session => {
       session.iopubMessage.connect((sender, msg) => {
+        if (KernelMessage.isErrorMsg(msg)) {
+          let errorMsg: KernelMessage.IErrorMsg = msg;
+          console.error(errorMsg.content)
+        }
         if (msg.content.text) {
           let content = String(msg.content.text).trim()
           let files = content.split("\n")
@@ -113,8 +103,7 @@ export class WatchdogService {
   }
 
 
-
-  runWatchdog() {
+  startWatchdog() {
     if (process.env.development) {
       this.runDevModeWatchdog()
     }
@@ -133,14 +122,21 @@ export class WatchdogService {
       });
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
-        session.kernel.requestExecute({code: watchdogCode})
+        session.kernel.requestExecute({code: startWatchdogSessionCode})
         this.watchdogFormUpdate(session)
       });
     });
   }
 
   watchdogFormUpdate(session: Session.ISession) {
+    this.session = session
+
     session.iopubMessage.connect((sender, msg) => {
+      if (KernelMessage.isErrorMsg(msg)) {
+        let errorMsg: KernelMessage.IErrorMsg = msg;
+        console.error(errorMsg.content)
+        this.watchdogError.next(msg)
+      }
       if (msg.content.text) {
         let content = String(msg.content.text).trim()
         let files = content.split("\n")
@@ -156,5 +152,14 @@ export class WatchdogService {
         }
       }
     })
+  
+    this.myFileService.path.subscribe(value => {
+      console.log(`File service path changed to: ${value}`)
+      this.addFilepathObserver(value)
+    })
+  }
+
+  addFilepathObserver(filepath: string) {
+    this.session.kernel.requestExecute({code: addObserverPathCode(filepath)})
   }
 }

@@ -68,18 +68,16 @@ export class InitialisationService {
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
     this.myJupyterService.setServiceManager(options.serviceManager);
     this.myJupyterService.setContentsManager(options.contentsManager);
-
-    this.myWatchdogService.runWatchdog();
-    
+ 
     this.myFileService.setNode(options.node);
     this.myToolbarService.setToolbar(options.toolbar)
-    this.myFileService.openUrl(window.location.href) 
+    this.myFileService.openUrl(window.location.href)
+
+    this.myWatchdogService.startWatchdog();
+   
 
     window.onpopstate = event => {
       this.myFileService.openUrl(window.location.href)  
     }
-
-    // this.myWatchdogService.runWatchdogAfterFormReady();
-    // this.myWatchdogService.runWatchdog();
   }
 }

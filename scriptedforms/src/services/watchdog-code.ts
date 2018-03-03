@@ -25,27 +25,34 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 export 
-const watchdogCode = `
+const startWatchdogSessionCode = `
 import os
-import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         if type(event) == FileModifiedEvent:
-            print(os.path.relpath(event.src_path))
+            print(os.path.abspath(event.src_path))
+            try:
+                print(os.path.relpath(event.src_path))
+            finally:
+                pass
 
 event_handler = MyHandler()
 observer = Observer()
-observer.schedule(event_handler, path='.', recursive=True)
 observer.start()
 `
+
+export
+function addObserverPathCode(observerPath: string) {
+    return `
+observer.schedule(event_handler, path=os.path.dirname(os.path.abspath('${observerPath}')))`
+}
 
 export 
 const watchdogWatchModeCode = `
 import os
-import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
@@ -54,7 +61,7 @@ import scriptedforms
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         if type(event) == FileModifiedEvent:
-            print(os.path.relpath(event.src_path))
+            print(os.path.abspath(event.src_path))
 
 event_handler = MyHandler()
 observer = Observer()
