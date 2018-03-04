@@ -31,7 +31,6 @@ import argparse
 
 from notebook.notebookapp import NotebookApp
 
-from .api.handlers import get_api_handlers
 from ._scriptedforms_handlers import get_scriptedforms_handlers
 
 
@@ -42,11 +41,7 @@ def _jupyter_server_extension_paths():
 
 
 def load_jupyter_server_extension(notebook_app):
-    api_handlers = get_api_handlers(
-        notebook_app.port, notebook_app.notebook_dir)
-    scriptedforms_handlers = get_scriptedforms_handlers()
-
-    handlers = api_handlers + scriptedforms_handlers
+    handlers = get_scriptedforms_handlers()
 
     web_app = notebook_app.web_app
     web_app.add_handlers('.*$', handlers)
@@ -63,13 +58,7 @@ class ScriptedForms(NotebookApp):
     """
 
     def start(self):
-        api_handlers = get_api_handlers(
-            self.port, self.notebook_dir)
-        scriptedforms_handlers = get_scriptedforms_handlers()
-
-        handlers = api_handlers + scriptedforms_handlers
-
-        self.web_app.add_handlers(".*$", handlers)
+        load_jupyter_server_extension(self)
         super(ScriptedForms, self).start()
 
 
