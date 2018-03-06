@@ -26,6 +26,8 @@
 
 
 import os
+import re
+from glob import glob
 
 from notebook.base.handlers import IPythonHandler, FileFindHandler
 
@@ -33,11 +35,20 @@ from ._utilities import HERE
 
 
 def get_scriptedforms_handlers():
+    lib_dir = os.path.join(HERE, 'lib')
+    lib_files = glob(os.path.join(lib_dir, '*'))
+    rel_paths = [os.path.relpath(item, lib_dir) for item in lib_files]
+
+    lib_escaped = [re.escape(item) for item in rel_paths]
+    lib_strings = '|'.join(lib_escaped)
+
+    static_handler_regex = "/scriptedforms/({})".format(lib_strings)
+
     scriptedforms_handlers = [
         (r'/scriptedforms/.*\.md', ScriptedFormsHandler),
         (
-            r"/scriptedforms/(.*\.(js|woff|woff2|ttf|eot))", FileFindHandler,
-            {'path': os.path.join(HERE, 'lib')}
+            static_handler_regex, FileFindHandler,
+            {'path': lib_dir}
         ),
         (
             r"/scriptedforms/(.*)", FileFindHandler,
