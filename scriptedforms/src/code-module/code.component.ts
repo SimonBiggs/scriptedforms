@@ -54,8 +54,12 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   private _displayIdMap = new Map<string, number[]>();
   sessionId: string;
   name: string;
-  renderMimeOptions: RenderMimeRegistry.IOptions;
-  renderMime: RenderMimeRegistry = new RenderMimeRegistry({ initialFactories });
+  renderMime: RenderMimeRegistry = new RenderMimeRegistry({
+    initialFactories,
+    sanitizer: {
+      sanitize: (input: string) => {return input}
+    }
+  });
   model: OutputAreaModel = new OutputAreaModel();
   outputAreaOptions: OutputArea.IOptions = {
     model: this.model,

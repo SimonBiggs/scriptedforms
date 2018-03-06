@@ -36,9 +36,13 @@ def get_scriptedforms_handlers():
     scriptedforms_handlers = [
         (r'/scriptedforms/.*\.md', ScriptedFormsHandler),
         (
-            r"/scriptedforms/(.*)", FileFindHandler,
+            r"/scriptedforms/(.*\.(js|woff|woff2|ttf|eot))", FileFindHandler,
             {'path': os.path.join(HERE, 'lib')}
-        )
+        ),
+        (
+            r"/scriptedforms/(.*)", FileFindHandler,
+            {'path': '.'}
+        ),
     ]
 
     return scriptedforms_handlers
