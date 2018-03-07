@@ -5,6 +5,7 @@
 <section-start>
 
 ```python
+from IPython.display import display
 filepath = 'file-change.csv'
 ```
 
@@ -24,7 +25,7 @@ from_csv.to_csv(filepath)
 
 ```python
 from_csv = pd.read_csv(filepath, index_col=0)
-from_csv
+display(from_csv)
 ```
 
 </section-filechange>

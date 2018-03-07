@@ -26,21 +26,25 @@
 
 export 
 const startWatchdogSessionCode = `
-import os
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler, FileModifiedEvent
+try:
+    observer
+    raise AssertionError("observer shouldn't exist yet")
+except NameError:
+    import os
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
-class MyHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-        print('absolute: {}'.format(os.path.abspath(event.src_path)))
-        try:
-            print('relative: {}'.format(os.path.relpath(event.src_path)))
-        finally:
-            pass
+    class MyHandler(FileSystemEventHandler):
+        def on_modified(self, event):
+            print('absolute: {}'.format(os.path.abspath(event.src_path)))
+            try:
+                print('relative: {}'.format(os.path.relpath(event.src_path)))
+            finally:
+                pass
 
-event_handler = MyHandler()
-observer = Observer()
-observer.start()
+    event_handler = MyHandler()
+    observer = Observer()
+    observer.start()
 `
 
 export
