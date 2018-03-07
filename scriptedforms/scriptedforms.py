@@ -30,7 +30,6 @@ import os
 import argparse
 
 from notebook.notebookapp import NotebookApp
-from notebook.utils import url_path_join as ujoin
 
 from ._scriptedforms_handlers import get_scriptedforms_handlers
 
@@ -42,15 +41,11 @@ def _jupyter_server_extension_paths():
 
 
 def load_jupyter_server_extension(notebook_app):
-    handlers = get_scriptedforms_handlers()
-
     web_app = notebook_app.web_app
     base_url = web_app.settings['base_url']
+    handlers = get_scriptedforms_handlers(base_url)
 
-    web_app.add_handlers(".*$", [
-        (ujoin(base_url, pat), handler)
-        for pat, handler in handlers
-    ])
+    web_app.add_handlers(".*$", handlers)
 
 
 class ScriptedForms(NotebookApp):

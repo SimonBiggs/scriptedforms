@@ -30,11 +30,12 @@ import re
 from glob import glob
 
 from notebook.base.handlers import IPythonHandler, FileFindHandler
+from notebook.utils import url_path_join as ujoin
 
 from ._utilities import HERE
 
 
-def get_scriptedforms_handlers():
+def get_scriptedforms_handlers(base_url):
     lib_dir = os.path.join(HERE, 'lib')
     lib_files = glob(os.path.join(lib_dir, '*'))
     rel_paths = [os.path.relpath(item, lib_dir) for item in lib_files]
@@ -45,13 +46,18 @@ def get_scriptedforms_handlers():
     static_handler_regex = "/scriptedforms/({})".format(lib_strings)
 
     scriptedforms_handlers = [
-        (r'/scriptedforms/.*\.md', ScriptedFormsHandler),
         (
-            static_handler_regex, FileFindHandler,
+            ujoin(base_url, r'/scriptedforms/.*\.md'), 
+            ScriptedFormsHandler
+        ),
+        (
+            ujoin(base_url, static_handler_regex), 
+            FileFindHandler,
             {'path': lib_dir}
         ),
         (
-            r"/scriptedforms/(.*)", FileFindHandler,
+            ujoin(base_url, r"/scriptedforms/(.*)"), 
+            FileFindHandler,
             {'path': '.'}
         ),
     ]
