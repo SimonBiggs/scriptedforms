@@ -24,17 +24,11 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import "./theme.scss";
+import "./jupyterlab-styles"
+import "./angular-styles"
 import "./style.css";
 
 import "hammerjs";
-
-import "material-design-icons/iconfont/material-icons.css";
-
-import '@jupyterlab/theme-light-extension/style/variables.css'
-import '@jupyterlab/codemirror/style/index.css';
-import '@jupyterlab/rendermime/style/index.css';
-import '@jupyterlab/notebook/style/toolbar.css';
 
 import { enableProdMode } from '@angular/core';
 

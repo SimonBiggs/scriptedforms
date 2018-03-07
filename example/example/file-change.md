@@ -2,12 +2,28 @@
 
 # An example of the file change section
 
-<variable-table>from_csv</variable-table>
-
-<section-filechange paths="['test.csv']">
+<section-start>
 
 ```python
-from_csv = pd.read_csv('test.csv', index_col=0)
+filepath = 'file-change.csv'
+```
+
+</section-start>
+
+<section-live>
+
+<variable-table>from_csv</variable-table>
+
+```python
+from_csv.to_csv(filepath)
+```
+
+</section-live>
+
+<section-filechange paths="[filepath]">
+
+```python
+from_csv = pd.read_csv(filepath, index_col=0)
 from_csv
 ```
 
