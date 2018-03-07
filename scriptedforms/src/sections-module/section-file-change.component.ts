@@ -40,7 +40,9 @@ import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-filechange',
-  template: `<variable-string-list-parameter #stringListParameterComponent *ngIf="paths">{{paths}}</variable-string-list-parameter><ng-content></ng-content>`
+  template: `<variable-string-list-parameter #stringListParameterComponent *ngIf="paths">
+[os.path.abspath(os.path.expanduser(os.path.expandvars(item))) for item in {{paths}}]
+</variable-string-list-parameter><ng-content></ng-content>`
 })
 export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   id: number;
@@ -62,9 +64,18 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
     this.initialiseCodeSessionId(theSessionId)
   }
 
+  updateFilepathObserver() {
+    this.pathsConverted.forEach(value => {
+      this.myWatchdogService.addFilepathObserver(value)
+    })
+  }
+
   ngAfterViewInit() {
+    // this.updateFilepathObserver()
+
     this.stringListParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
       this.pathsConverted = value
+      this.updateFilepathObserver()
     })
 
     this.watchdogSubscription = this.myWatchdogService.fileChanged.subscribe((value: string) => {

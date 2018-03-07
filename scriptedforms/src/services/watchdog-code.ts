@@ -50,7 +50,9 @@ except NameError:
 export
 function addObserverPathCode(observerPath: string) {
     return `
-observer.schedule(event_handler, path=os.path.dirname(os.path.abspath('${observerPath}')))`
+next_path = os.path.dirname(os.path.abspath(
+    os.path.expanduser(os.path.expandvars('${observerPath}'))))
+observer.schedule(event_handler, path=next_path)`
 }
 
 export 

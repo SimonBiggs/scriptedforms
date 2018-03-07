@@ -168,6 +168,7 @@ export class WatchdogService {
   }
 
   addFilepathObserver(filepath: string) {
+    console.log(`Watchdog service: Adding ${filepath} to watch list`)
     this.session.kernel.requestExecute({code: addObserverPathCode(filepath)})
   }
 }

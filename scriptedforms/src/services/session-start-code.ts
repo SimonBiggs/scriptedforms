@@ -25,6 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 export const sessionStartCode = `
+import os
 import json
 
 import numpy as np

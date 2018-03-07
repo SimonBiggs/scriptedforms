@@ -37,7 +37,7 @@ example.hello(your_name)
 <section-filechange paths="['.']">
 
 ```python
-filepaths = glob('*.md')
+filepaths = glob('*.md') + glob('**/*.md')
 for filepath in filepaths:
   display(Markdown('[./{0}]({0})'.format(filepath)))
 ```
