@@ -12,7 +12,7 @@ echo "c.NotebookApp.default_url = '/scriptedforms/detailed.md'" >> ~/.jupyter/ju
 echo "c.NotebookApp.notebook_dir = '~/scriptedforms/example/example'" >> ~/.jupyter/jupyter_notebook_config.py
 
 echo "import os" >> ~/.jupyter/jupyter_notebook_config.py
-echo "os.environ['JUPYTER_CONFIG_DIR'] = '~/.jupyter'" >> ~/.jupyter/jupyter_notebook_config.py
+echo "os.environ['JUPYTER_CONFIG_DIR'] = '/home/jovyan/.jupyter'" >> ~/.jupyter/jupyter_notebook_config.py
 echo "c.Spawner.env_keep.append('JUPYTER_CONFIG_DIR')" >> ~/.jupyter/jupyter_notebook_config.py
 
 cd - 
