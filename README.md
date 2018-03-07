@@ -153,7 +153,7 @@ explanation of how you might go about deploying your utility with its new GUI.
 ScriptedForms can also be installed as a [Jupyter Server extension](http://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Distributing%20Jupyter%20Extensions%20as%20Python%20Packages.html#Enable-a-Server-Extension). Eventually this should allow the use of ScriptedForms with tools such as [JupyterHub](http://jupyterhub.readthedocs.io/en/latest/). This part of ScriptedForms is still a work in progress but if you want to give it a try then make sure you have at least version `0.5.15` of ScriptedForms and then run:
 
 ```bash
-jupyter nbextension install --py scriptedforms
+jupyter serverextension enable --py scriptedforms
 ```
 
 Then to start ScriptedForms using its Jupyter Server extension run the following
