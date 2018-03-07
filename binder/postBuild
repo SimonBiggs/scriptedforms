@@ -1,0 +1,9 @@
+#!/bin/bash
+cd "$(dirname "$0")"/../scriptedforms
+jlpm
+jlpm build
+jupyter serverextension enable --py scriptedforms
+jupyter notebook --generate-config
+echo "c.NotebookApp.default_url = '/scriptedforms/detailed.md'" >> ~/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.notebook_dir = './example/example'" >> ~/.jupyter/jupyter_notebook_config.py
+cd - 
