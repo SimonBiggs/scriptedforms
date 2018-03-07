@@ -38,12 +38,7 @@ setup(
         'numpy',
         'pandas',
         'watchdog',
-        'matplotlib',
-        'requests',
-        'websocket-client',
-        'Markdown',
-        'lxml',
-        'cssselect'
+        'matplotlib'
     ],
     extras_require={
         'test': ['jupyterlab'],
