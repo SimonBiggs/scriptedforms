@@ -1,14 +1,18 @@
 #!/bin/bash
 cd "$(dirname "$0")"/../scriptedforms
+
 jlpm
 jlpm build
 jlpm pip:install
+
 jupyter serverextension enable --py scriptedforms
 jupyter notebook --generate-config
+
 echo "c.NotebookApp.default_url = '/scriptedforms/detailed.md'" >> ~/.jupyter/jupyter_notebook_config.py
 echo "c.NotebookApp.notebook_dir = '~/scriptedforms/example/example'" >> ~/.jupyter/jupyter_notebook_config.py
 
 echo "import os" >> ~/.jupyter/jupyter_notebook_config.py
-echo "os.environ['JUPYTER_CONFIG_DIR'] = '~/.jupyter/jupyter_notebook_config.py'" >> ~/.jupyter/jupyter_notebook_config.py
+echo "os.environ['JUPYTER_CONFIG_DIR'] = '~/.jupyter'" >> ~/.jupyter/jupyter_notebook_config.py
 echo "c.Spawner.env_keep.append('JUPYTER_CONFIG_DIR')" >> ~/.jupyter/jupyter_notebook_config.py
+
 cd - 
