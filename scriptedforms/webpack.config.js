@@ -35,12 +35,20 @@ module.exports = {
     extensions: ['.ts', '.js']
   },
   module: {
-    rules: [      
+    rules: [   
       {
-        test: /\.ts$/, loaders: {
-          loader: 'awesome-typescript-loader',
-          options: { configFileName: 'tsconfig.json' }
-        }
+        test: /\.ts$/, 
+        loaders: [
+          {
+            loader: 'awesome-typescript-loader',
+            options: { configFileName: 'tsconfig.json' }
+          },
+          'angular2-template-loader'
+        ]
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
       },
       { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
