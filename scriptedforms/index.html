@@ -25,5 +25,8 @@
     <script src="{{base_url}}scriptedforms/static/jupyterlab.js"></script>
     <script src="{{base_url}}scriptedforms/static/misc-vendors.js"></script>
     <script src="{{base_url}}scriptedforms/static/scriptedforms.js"></script>
+    {% if application_to_run == 'docs' %}
+    <app-root></app-root>
+    {% endif %}
   </body>
 </html>

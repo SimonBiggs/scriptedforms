@@ -38,6 +38,7 @@ def get_scriptedforms_handlers(base_url):
         ),
         (
             ujoin(base_url, r'/scriptedforms/docs'),
+            ScriptedFormsHandler,
             {'application_to_run': 'docs'}
         ),
         (
