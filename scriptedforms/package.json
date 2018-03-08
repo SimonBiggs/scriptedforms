@@ -37,6 +37,7 @@
     "@angular/material": "5.2.1",
     "@angular/platform-browser": "5.2.5",
     "@angular/platform-browser-dynamic": "5.2.5",
+    "@angular/router": "5.2.5",
     "@jupyterlab/application": "^0.15.4",
     "@jupyterlab/apputils": "^0.15.5",
     "@jupyterlab/codemirror": "^0.15.4",

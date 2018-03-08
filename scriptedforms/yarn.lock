@@ -62,6 +62,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/router@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.2.5.tgz#f8f220d5fb85fc10d60fe606b0f2a64732265142"
+  dependencies:
+    tslib "^1.7.1"
+
 "@jupyterlab/application@^0.15.4":
   version "0.15.4"
   resolved "https://registry.yarnpkg.com/@jupyterlab/application/-/application-0.15.4.tgz#c42487ad41a6a1658eb2dfabb94fcdd4dda44ef6"
