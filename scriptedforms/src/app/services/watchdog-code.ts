@@ -54,25 +54,3 @@ next_path = os.path.dirname(os.path.abspath(
     os.path.expanduser(os.path.expandvars('${observerPath}'))))
 observer.schedule(event_handler, path=next_path)`
 }
-
-export 
-const watchdogWatchModeCode = `
-import os
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler, FileModifiedEvent
-
-import scriptedforms
-
-class MyHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-        if type(event) == FileModifiedEvent:
-            print(os.path.abspath(event.src_path))
-
-event_handler = MyHandler()
-observer = Observer()
-observer.schedule(
-    event_handler, 
-    path=os.path.join(os.path.dirname(scriptedforms.__file__), 'lib'),
-    recursive=True)
-observer.start()
-`

@@ -35,10 +35,16 @@ import { enableProdMode } from '@angular/core';
 
 import { loadApp } from './app'
 import { loadDocs } from './docs'
+import { loadDev } from './dev'
 
 if (process.env.production) {
-  console.log('angular in production mode')
+  console.log('Angular is in production mode.')
   enableProdMode();
+}
+
+if (process.env.development) {
+  console.log('ScriptedForms is live watching js output in dev mode.')
+  loadDev()
 }
 
 function main() {
