@@ -13,4 +13,4 @@ import "hammerjs"
 import "rxjs"
 import "zone.js"
 
-import '../angular-styles'
+import './angular-styles'

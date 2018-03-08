@@ -27,7 +27,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/lib/',
-    publicPath: '/scriptedforms/',
+    publicPath: '/scriptedforms/static/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js'
   },

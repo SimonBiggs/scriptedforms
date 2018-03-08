@@ -24,14 +24,6 @@ mean the AGPL-3.0+.
 You should have received a copy of the Apache-2.0 along with this
 program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
-.pypi-icon {
-  background: url('./pypi.svg');
-  background-size: cover;
-  width: 24px;
-  height: 24px;
-  margin: 0 0;
-}
-
 .form {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }

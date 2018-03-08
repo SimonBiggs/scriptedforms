@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base href="{{base_url}}scriptedforms/use/">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+  </head>
+  <body>
+    <script id='jupyter-config-data' type="application/json">
+      { 
+        "baseUrl": "{{base_url}}", "token": "{{token}}"
+      }
+    </script>
+    <script src="{{base_url}}scriptedforms/static/polyfills.js"></script>
+    <script src="{{base_url}}scriptedforms/static/angular.js"></script>
+    <script src="{{base_url}}scriptedforms/static/jupyterlab.js"></script>
+    <script src="{{base_url}}scriptedforms/static/misc-vendors.js"></script>
+    <script src="{{base_url}}scriptedforms/static/scriptedforms.js"></script>
+  </body>
+</html>

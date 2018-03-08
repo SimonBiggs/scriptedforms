@@ -7,4 +7,4 @@ import "@jupyterlab/theme-light-extension"
 import "@phosphor/signaling"
 import "@phosphor/widgets"
 
-import '../jupyterlab-styles'
+import './jupyterlab-styles'

@@ -74,7 +74,7 @@ def load(filepath):
     sys.argv = [sys.argv[0]]
     ScriptedForms.launch_instance(
         notebook_dir=directory,
-        default_url='/scriptedforms/{}'.format(filename))
+        default_url='/scriptedforms/use/{}'.format(filename))
 
 
 def main():

@@ -24,9 +24,11 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import "./jupyterlab-styles"
-import "./angular-styles"
-import "./style.css";
+import './polyfills';
+
+import "./vendors/jupyterlab-styles"
+import "./vendors/angular-styles"
+import "./main/style.css";
 
 import "hammerjs";
 
@@ -42,11 +44,11 @@ import {
   // ToolbarButton
 } from '@jupyterlab/apputils';
 
-import { AngularWidget } from "./phosphor-angular-loader";
+import { AngularWidget } from "./main/phosphor-angular-loader";
 
-import { AppComponent } from "./app.component";
+import { AppComponent } from "./main/app.component";
 
-import { AppModule } from "./app.module";
+import { AppModule } from "./main/app.module";
 
 if (process.env.production) {
   console.log('angular in production mode')
