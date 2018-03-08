@@ -33,7 +33,7 @@ import { FormsModule } from '@angular/forms';
 
 import {
   MaterialModule
-} from '../material.module';
+} from '../../vendors/material.module';
 
 import { ToggleComponent } from './toggle.component';
 import { TickComponent } from './tick.component';

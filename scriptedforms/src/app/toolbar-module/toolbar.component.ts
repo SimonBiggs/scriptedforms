@@ -90,9 +90,10 @@ export class ToolbarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
+    const baseUrl = document.getElementsByTagName("base")[0].href
     this.addButton({
       icon: 'chrome_reader_mode',
-      click: () => { window.open("http://scriptedforms.com.au", '_blank')},
+      click: () => { window.location.href = `${baseUrl}../docs`},
       tooltip: 'ScriptedForms documentation, installation instructions, and source code.'
     })
     this.addButton({

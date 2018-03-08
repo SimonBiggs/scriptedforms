@@ -56,7 +56,7 @@ import {
 
 import {
   MaterialModule
-} from '../material.module';
+} from '../../vendors/material.module';
 
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';

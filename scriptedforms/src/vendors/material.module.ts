@@ -41,7 +41,10 @@ import {
   MatButtonModule,
   MatIconModule,
   MatCardModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatDividerModule
 } from "@angular/material";
 
 @NgModule({
@@ -56,7 +59,10 @@ import {
     MatSliderModule,
     MatSelectModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -69,7 +75,10 @@ import {
     MatSliderModule,
     MatSelectModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule {}

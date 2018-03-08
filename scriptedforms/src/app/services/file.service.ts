@@ -133,6 +133,15 @@ export class FileService {
     })
   }
 
+  setTemplateToString(dummyPath: string, template: string) {
+    this.setPath(dummyPath);
+    this.setRenderType('template');
+    this.myKernelService.sessionConnect(dummyPath).then((sessionId: string) => {
+      this.serviceSessionInitialisation(sessionId);
+      return this.handleFileContents(template, sessionId)
+    })
+  }
+
   urlToFilePath(url: string) {
     let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`)
     let match = pattern.exec(url)
@@ -151,16 +160,36 @@ export class FileService {
   }
 
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
-    links.forEach(link => {
-      let path = this.urlToFilePath(link.href)
-      if (path !== null) {
-        link.addEventListener('click', event => {
-          event.preventDefault();
-          window.history.pushState(null, null, link.href)
-          this.openFile(path)
-        })
-      }
-    })
+    let config = JSON.parse(document.getElementById(
+      'scriptedforms-config-data'
+    ).textContent)
+    
+    if (config.applicationToRun == 'use') {
+      links.forEach(link => {
+        let path = this.urlToFilePath(link.href)
+        if (path !== null) {
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            window.history.pushState(null, null, link.href)
+            this.openFile(path)
+          })
+        }
+      })
+    }
+    else if (config.applicationToRun == 'docs') {
+      links.forEach(link => {
+        let path = this.urlToFilePath(link.href)
+        if (path !== null) {
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            window.location.href = `${this.baseUrl}../use/${path}`
+          })
+        }
+      })
+    } else {
+      throw RangeError("Expected docs or use")
+    }
+
   }
 
 }
