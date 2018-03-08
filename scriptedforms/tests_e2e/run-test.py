@@ -20,7 +20,7 @@ HERE = os.path.realpath(os.path.dirname(__file__))
 class ProtractorTestApp(ScriptedForms):
     notebook_dir = pjoin(HERE, 'src')
     open_browser = False
-    default_url = '/scriptedforms/landing-page.md'
+    default_url = '/scriptedforms/use/landing-page.md'
     port = 8989
     log_level = 30
 
