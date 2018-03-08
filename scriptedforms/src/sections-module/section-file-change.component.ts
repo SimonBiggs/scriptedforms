@@ -41,7 +41,7 @@ import { CodeComponent } from '../code-module/code.component';
 @Component({
   selector: 'section-filechange',
   template: `<variable-string-list-parameter #stringListParameterComponent *ngIf="paths">
-[os.path.abspath(os.path.expanduser(os.path.expandvars(item))) for item in {{paths}}]
+_watchdog_path_conversion({{paths}})
 </variable-string-list-parameter><ng-content></ng-content>`
 })
 export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {

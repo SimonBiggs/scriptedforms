@@ -25,7 +25,6 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 export const sessionStartCode = `
-import os
 import json
 
 import numpy as np
@@ -33,5 +32,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 %matplotlib inline
 
-from scriptedforms._utilities import _VariableHandler, _json_table_to_df
+from scriptedforms._utilities import (
+  _VariableHandler, _json_table_to_df, _watchdog_path_conversion)
 `

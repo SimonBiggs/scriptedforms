@@ -129,3 +129,16 @@ def _print_apache():
 
 def _print_agpl():
     _print_file(os.path.join(HERE, 'LICENSE'))
+
+
+def _watchdog_path_conversion(paths):
+    converted_paths = [
+        os.path.abspath(os.path.expanduser(os.path.expandvars(item)))
+        for item in paths
+    ]
+
+    for path in converted_paths:
+        if not os.path.exists(path):
+            raise AssertionError("The path provided does not exist.")
+
+    return converted_paths
