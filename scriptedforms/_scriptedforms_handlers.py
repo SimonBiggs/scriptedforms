@@ -28,12 +28,22 @@ def get_scriptedforms_handlers(base_url):
     scriptedforms_handlers = [
         (
             ujoin(base_url, r'/scriptedforms/use/.*\.md'),
-            ScriptedFormsHandler
+            ScriptedFormsHandler,
+            {'application_to_run': 'use'}
         ),
         (
             ujoin(base_url, static_handler_regex),
             FileFindHandler,
             {'path': lib_dir}
+        ),
+        (
+            ujoin(base_url, r'/scriptedforms/docs'),
+            {'application_to_run': 'docs'}
+        ),
+        (
+            ujoin(base_url, r'/scriptedforms/docs/.*'),
+            ScriptedFormsHandler,
+            {'application_to_run': 'docs'}
         )
     ]
 
@@ -41,22 +51,14 @@ def get_scriptedforms_handlers(base_url):
 
 
 class ScriptedFormsHandler(IPythonHandler):
+    def initialize(self, application_to_run):
+        self.application_to_run = application_to_run
+
     def get(self):
         return self.write(self.render_template(
-            "main.html",
-            base_url=self.base_url, token=self.settings['token'])
-        )
-
-    def get_template(self, name):
-        return LOADER.load(self.settings['jinja2_env'], name)
-
-
-class LiveDocsHandler(IPythonHandler):
-    def get(self):
-        return self.write(self.render_template(
-            "docs.html",
-            base_url=self.base_url, token=self.settings['token'])
-        )
+            "index.html",
+            base_url=self.base_url, token=self.settings['token'],
+            application_to_run=self.application_to_run))
 
     def get_template(self, name):
         return LOADER.load(self.settings['jinja2_env'], name)

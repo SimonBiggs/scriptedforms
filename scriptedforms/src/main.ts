@@ -28,114 +28,32 @@ import './polyfills';
 
 import "./vendors/jupyterlab-styles"
 import "./vendors/angular-styles"
-import "./main/style.css";
 
 import "hammerjs";
 
 import { enableProdMode } from '@angular/core';
 
-import { BoxLayout, Widget } from "@phosphor/widgets";
-
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
-
-import {
-  // showDialog, Dialog, Styling, 
-  Toolbar, 
-  // ToolbarButton
-} from '@jupyterlab/apputils';
-
-import { AngularWidget } from "./main/phosphor-angular-loader";
-
-import { AppComponent } from "./main/app.component";
-
-import { AppModule } from "./main/app.module";
+import { loadApp } from './app'
+import { loadDocs } from './docs'
 
 if (process.env.production) {
   console.log('angular in production mode')
   enableProdMode();
 }
 
-export namespace IScriptedFormsWidget {
-  export interface IOptions {
-    serviceManager: ServiceManager;
-    contentsManager: ContentsManager;
+function main() {
+  let config = JSON.parse(document.getElementById(
+    'scriptedforms-config-data'
+  ).textContent)
+  
+  if (config.applicationToRun == 'use') {
+    loadApp()
   }
-}
-
-export namespace IAngularWrapperWidget {
-  export interface IOptions {
-    toolbar: Toolbar<Widget>;
-    serviceManager: ServiceManager;
-    contentsManager: ContentsManager;
+  else if (config.applicationToRun == 'docs') {
+    loadDocs()
+  } else {
+    throw RangeError("Expected docs or use")
   }
-}
-
-
-export class AngularWrapperWidget extends AngularWidget<
-  AppComponent,
-  AppModule
-> {
-  constructor(options: IAngularWrapperWidget.IOptions) {
-    super(AppComponent, AppModule);
-
-    let scriptedFormsOptions = Object.assign(
-      {
-        node: this.node
-      },
-      options
-    );
-
-    this.run(() => {
-      this.componentInstance.initiliseScriptedForms(scriptedFormsOptions);
-    });
-  }
-
-  // updateFileContents(template: string) {
-  //   this.run(() => {
-  //     this.componentInstance.updateFileContents(template);
-  //   });
-  // }
-}
-
-export class ScriptedFormsWidget extends Widget {
-  form: AngularWrapperWidget;
-
-  constructor(options: IScriptedFormsWidget.IOptions) {
-    super();
-    this.addClass("container");
-
-    let layout = (this.layout = new BoxLayout());
-    let toolbar = new Toolbar();
-    toolbar.addClass('jp-NotebookPanel-toolbar');
-    toolbar.addClass('custom-toolbar');
-    layout.addWidget(toolbar);
-    BoxLayout.setStretch(toolbar, 0);
-
-    let angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
-
-    this.form = new AngularWrapperWidget(angularWrapperWidgetOptions);
-    this.form.addClass("form");
-
-
-    layout.addWidget(this.form);
-    BoxLayout.setStretch(this.form, 1);
-  }
-}
-
-
-
-
-function main(): void {
-  let serviceManager = new ServiceManager();
-  let contentsManager = new ContentsManager();
-
-  let formWidget = new ScriptedFormsWidget({
-    serviceManager,
-    contentsManager
-  });
-
-  window.onresize = () => { formWidget.update(); };
-  Widget.attach(formWidget, document.body);
 }
 
 window.onload = main;

@@ -77,13 +77,23 @@ def load(filepath):
         default_url='/scriptedforms/use/{}'.format(filename))
 
 
+def open_docs():
+    sys.argv = [sys.argv[0]]
+    ScriptedForms.launch_instance(
+        default_url='/scriptedforms/docs')
+
+
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        'filepath', help='The file path of the form to open.')
+        'filepath', help='The file path of the form to open.', nargs='?', 
+        default=None)
 
     args = parser.parse_args()
-    load(args.filepath)
+    if args.filepath:
+        load(args.filepath)
+    else:
+        open_docs()
 
 
 if __name__ == '__main__':
