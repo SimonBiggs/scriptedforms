@@ -37,7 +37,6 @@ from IPython.display import display, Markdown
 filepaths = glob('*.md') + glob('**/*.md')
 for filepath in filepaths:
     escaped_filepath = urllib.parse.quote(filepath)
-    print(escaped_filepath)
     display(Markdown('[{}]({})'.format(filepath, escaped_filepath)))
 ~~~
 
