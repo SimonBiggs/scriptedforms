@@ -41,31 +41,48 @@ import {
   Component, Input, ElementRef, ViewChild
 } from '@angular/core';
 
+export interface IOptions {
+  click?: () => void;
+  href?: string;
+  icon?: string;
+  disable?: BehaviorSubject<boolean>;
+  tooltip?: string;
+}
+
 @Component({
   selector: 'toolbar-button',
-  template: `<button #button
-  (click)="click()"
+  template: `<span *ngIf="_options">
+<a *ngIf="_options.href" #button
+  [href]="_options.href"
   [disabled]="isDisabled"
-  [title]="tooltip"
+  [title]="_options.tooltip"
   mat-icon-button>
-    <mat-icon *ngIf="!iconClass">{{icon}}</mat-icon>
-    <div *ngIf="iconClass" style="width:24px; height:24px; margin: 0 0; display:inline-block"><div [class]="iconClass"></div></div>
+    <mat-icon>{{_options.icon}}</mat-icon>
+</a>
+<button *ngIf="_options.click" #button
+  (click)="_options.click()"
+  [disabled]="isDisabled"
+  [title]="_options.tooltip"
+  mat-icon-button>
+    <mat-icon>{{_options.icon}}</mat-icon>
 </button>
+</span>
+
 `
 })
 export class ToolbarButtonComponent {
-  @Input() icon: string;
-  @Input() tooltip: string;
-  @Input() click: () => any
-  @Input() set disable(observable: BehaviorSubject<boolean>) {
-    if (this.previousSubscription) {
-      this.previousSubscription.unsubscribe()
+  _options: IOptions
+  @Input() set options(optionsInput: IOptions) {
+    this._options = optionsInput
+    if (optionsInput.disable) {
+      if (this.previousSubscription) {
+        this.previousSubscription.unsubscribe()
+      }
+      this.previousSubscription = optionsInput.disable.subscribe(disableInput => {
+        this.isDisabled = disableInput
+      })
     }
-    this.previousSubscription = observable.subscribe(value => {
-      this.isDisabled = value
-    })
   }
-  @Input() iconClass: string;
 
   @ViewChild('button') button: ElementRef;
 

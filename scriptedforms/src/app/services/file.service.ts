@@ -182,7 +182,7 @@ export class FileService {
         if (path !== null) {
           link.addEventListener('click', event => {
             event.preventDefault();
-            window.location.href = `${this.baseUrl}../use/${path}`
+            window.location.href = `../use/${path}`
           })
         }
       })

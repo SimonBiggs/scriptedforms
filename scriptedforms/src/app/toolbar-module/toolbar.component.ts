@@ -53,7 +53,7 @@ import {
 } from "@phosphor/widgets";
 
 import {
-  ToolbarButtonComponent
+  ToolbarButtonComponent, IOptions
 } from './toolbar-button.component';
 
 import {
@@ -62,14 +62,6 @@ import {
 
 import { FormService } from "../services/form.service";
   
-interface IOptions {
-  click: () => void;
-  icon?: string;
-  disable?: BehaviorSubject<boolean>;
-  iconClass?: string;
-  tooltip?: string;
-}
-
 @Component({
   selector: 'toolbar',
   template: `<span #container></span><toolbar-button hidden></toolbar-button>`
@@ -90,10 +82,9 @@ export class ToolbarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    const baseUrl = document.getElementsByTagName("base")[0].href
     this.addButton({
       icon: 'chrome_reader_mode',
-      click: () => { window.location.href = `${baseUrl}../docs`},
+      href: '../docs',
       tooltip: 'ScriptedForms documentation, installation instructions, and source code.'
     })
     this.addButton({
@@ -114,28 +105,13 @@ export class ToolbarComponent implements AfterViewInit {
   }
 
   addButton(options: IOptions) {
-    let name: string
     this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent)
     let button = this.container.createComponent(this.buttonFactory)
-    button.instance.click = options.click
-    
-    if (options.icon) {
-      button.instance.icon = options.icon
-      name = options.icon
-    }
-    if (options.disable) {
-      button.instance.disable = options.disable
-    }
-    if (options.tooltip) {
-      button.instance.tooltip = options.tooltip
-    }
-    if (options.iconClass) {
-      button.instance.iconClass = options.iconClass
-      name = options.iconClass
-    }
+
+    button.instance.options = options
 
     let widget = new Widget({node: button.instance.myElementRef.nativeElement})
-    this.myToolbarService.addItem(name, widget)
+    this.myToolbarService.addItem(options.icon, widget)
   }
 
   restartKernel() {
