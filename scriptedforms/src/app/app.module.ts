@@ -53,7 +53,9 @@ import { ToolbarButtonComponent } from "./toolbar-module/toolbar-button.componen
 import { AppComponent } from "./app.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -73,6 +75,9 @@ import { AppComponent } from "./app.component";
     InitialisationService,
     ToolbarService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
+  ],
+  exports: [
+    AppComponent,
   ]
 })
 export class AppModule {

@@ -176,17 +176,6 @@ export class FileService {
         }
       })
     }
-    else if (config.applicationToRun == 'docs') {
-      links.forEach(link => {
-        let path = this.urlToFilePath(link.href)
-        if (path !== null) {
-          link.href = `../use/${path}`
-        }
-      })
-    } else {
-      throw RangeError("Expected docs or use")
-    }
-
   }
 
 }

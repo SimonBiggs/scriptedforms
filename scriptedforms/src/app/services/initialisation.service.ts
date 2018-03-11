@@ -65,16 +65,19 @@ export class InitialisationService {
     private myToolbarService: ToolbarService
   ) {}
 
-  public initiliseScriptedForms(options: IScriptedForms.IOptions) {
+  public initiliseBaseScriptedForms(options: IScriptedForms.IOptions) {
     this.myJupyterService.setServiceManager(options.serviceManager);
     this.myJupyterService.setContentsManager(options.contentsManager);
- 
+
     this.myFileService.setNode(options.node);
     this.myToolbarService.setToolbar(options.toolbar)
-    this.myFileService.openUrl(window.location.href)
-
     this.myWatchdogService.startWatchdog();
-   
+  }
+
+  public initiliseScriptedForms(options: IScriptedForms.IOptions) {
+    this.initiliseBaseScriptedForms(options)
+
+    this.myFileService.openUrl(window.location.href)
 
     window.onpopstate = event => {
       this.myFileService.openUrl(window.location.href)  

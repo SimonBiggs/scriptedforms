@@ -83,6 +83,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     overflow: hidden;
   }
 
+  .margin { 
+    margin: 20px;
+  }
+
   .form-contents {
     max-width: 940px;
     margin: 0 auto;

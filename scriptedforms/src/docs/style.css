@@ -46,3 +46,16 @@ a {
   margin: 0;
   font-size: 35px;
 }
+
+.form {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mini-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-form .p-Widget {
+  position: static !important;
+}

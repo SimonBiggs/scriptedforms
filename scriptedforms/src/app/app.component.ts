@@ -52,12 +52,13 @@ import {
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 
 import { IScriptedForms, InitialisationService } from './services/initialisation.service'
-import { FileService } from "./services/file.service";
 import { FormService } from "./services/form.service";
 import { KernelService } from './services/kernel.service';
 import { VariableService } from './services/variable.service';
+import { FileService } from "./services/file.service";
 
 import { FormStatus } from './types/form-status';
+
 
 @Component({
   selector: "app-root",
@@ -69,8 +70,7 @@ import { FormStatus } from './types/form-status';
   </div>
   <app-form-builder #formBuilderComponent><div #jupyterErrorMsg></div></app-form-builder>
   <div class="footer-space"></div>
-</div>`,
-  styles: [`.margin { margin: 20px;}`]
+</div>`
 })
 export class AppComponent implements AfterViewInit {
   kernelStatus: Kernel.Status = 'unknown'
@@ -86,7 +86,6 @@ export class AppComponent implements AfterViewInit {
     private myInitialisationService: InitialisationService,
     private myKernelSevice: KernelService,
     private myVariableService: VariableService
-
   ) {}
 
   ngAfterViewInit() {
@@ -145,38 +144,11 @@ export class AppComponent implements AfterViewInit {
     this.myInitialisationService.initiliseScriptedForms(options)
   }
 
-  // public updateFileContents(fileContents: string) {
-  //   return this.myFileService.handleFileContents(fileContents);
-  // }
+  public initiliseBaseScriptedForms(options: IScriptedForms.IOptions) {
+    this.myInitialisationService.initiliseBaseScriptedForms(options)
+  }
 
-  /**
-   * Set or update the template of the form.
-   *
-   * @param template: The template to set the form with
-   */
-  // public setTemplateAndBuildForm(template: string): Promise<void> {
-  //   this.myModelService.setTemplate(template);
-  //   return this.formBuilderComponent.buildForm();
-  // }
-
-  // public modelReady(): Promise<void> {
-  //   return this.myModelService.modelReady.promise;
-  // }
-
-  /**
-   * Given a Jupyterlab session manager either reconnect to existing kernel
-   * or start a new kernel at the provided path.
-   */
-  // public sessionConnect(options: SessionConnectOptions) {
-  //   this.myKernelService.sessionConnect(options);
-  // }
-
-  /**
-   * Inform the kernel service that its path has changed.
-   *
-   * @param path: The kernel session filepath.
-   */
-  public pathChanged(path: string) {
-    this.myFileService.path.next(path);
+  public setTemplateToString(dummyPath: string, template: string) { 
+    this.myFileService.setTemplateToString(dummyPath, template)
   }
 }

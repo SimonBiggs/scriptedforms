@@ -27,8 +27,8 @@
 import "./docs/style.css";
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './docs/app.module';
+import { DocModule } from './docs/doc.module';
 
 export function loadDocs() {
-  platformBrowserDynamic().bootstrapModule(AppModule);
+  platformBrowserDynamic().bootstrapModule(DocModule);
 }

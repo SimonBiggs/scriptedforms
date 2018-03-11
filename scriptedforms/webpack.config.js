@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var exec = require('child_process').exec;
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // function puts(error, stdout, stderr) {
 //   console.log(stdout);
@@ -59,7 +60,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['scriptedforms', 'misc-vendors', 'jupyterlab', 'angular', 'polyfills']
-    })
+    }),
+    new ExtractTextPlugin('[name].css')
     // new EchoOnFinishPlugin()
   ]
 };

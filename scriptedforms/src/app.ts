@@ -26,14 +26,9 @@
 
 import "./app/style.css";
 
-import { BoxLayout, Widget } from "@phosphor/widgets";
+import { Widget } from "@phosphor/widgets";
 import { ServiceManager, ContentsManager } from "@jupyterlab/services";
-import { Toolbar } from '@jupyterlab/apputils';
-
-import { AngularWidget } from "./app/phosphor-angular-loader";
-import { AppComponent } from "./app/app.component";
-import { AppModule } from "./app/app.module";
-
+import { ScriptedFormsWidget } from "./app/widget";
 
 export function loadApp(): void {
   let serviceManager = new ServiceManager();
@@ -44,66 +39,8 @@ export function loadApp(): void {
     contentsManager
   });
 
+  formWidget.form.initiliseScriptedForms()
+
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);
-}
-
-export namespace IScriptedFormsWidget {
-  export interface IOptions {
-    serviceManager: ServiceManager;
-    contentsManager: ContentsManager;
-  }
-}
-
-export namespace IAngularWrapperWidget {
-  export interface IOptions {
-    toolbar: Toolbar<Widget>;
-    serviceManager: ServiceManager;
-    contentsManager: ContentsManager;
-  }
-}
-
-export class AngularWrapperWidget extends AngularWidget<
-  AppComponent,
-  AppModule
-> {
-  constructor(options: IAngularWrapperWidget.IOptions) {
-    super(AppComponent, AppModule);
-
-    let scriptedFormsOptions = Object.assign(
-      {
-        node: this.node
-      },
-      options
-    );
-
-    this.run(() => {
-      this.componentInstance.initiliseScriptedForms(scriptedFormsOptions);
-    });
-  }
-}
-
-export class ScriptedFormsWidget extends Widget {
-  form: AngularWrapperWidget;
-
-  constructor(options: IScriptedFormsWidget.IOptions) {
-    super();
-    this.addClass("container");
-
-    let layout = (this.layout = new BoxLayout());
-    let toolbar = new Toolbar();
-    toolbar.addClass('jp-NotebookPanel-toolbar');
-    toolbar.addClass('custom-toolbar');
-    layout.addWidget(toolbar);
-    BoxLayout.setStretch(toolbar, 0);
-
-    let angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
-
-    this.form = new AngularWrapperWidget(angularWrapperWidgetOptions);
-    this.form.addClass("form");
-
-
-    layout.addWidget(this.form);
-    BoxLayout.setStretch(this.form, 1);
-  }
 }
