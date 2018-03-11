@@ -146,7 +146,7 @@ export class FileService {
     let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`)
     let match = pattern.exec(url)
     if (match !== null) {
-      return match[1]
+      return decodeURIComponent(match[1])
     } else {
       return null
     }
@@ -156,7 +156,7 @@ export class FileService {
     let path = this.urlToFilePath(window.location.href)
     if (path !== null) {
       this.openFile(path)
-    }    
+    }
   }
 
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
@@ -180,10 +180,7 @@ export class FileService {
       links.forEach(link => {
         let path = this.urlToFilePath(link.href)
         if (path !== null) {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.location.href = `../use/${path}`
-          })
+          link.href = `../use/${path}`
         }
       })
     } else {

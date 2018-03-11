@@ -21,9 +21,10 @@ Watch this space.
 
 ## Available example forms
 
-<section-start>
+<section-start always>
 
 ~~~python
+import urllib.parse
 from glob import glob
 from IPython.display import display, Markdown
 ~~~
@@ -35,7 +36,9 @@ from IPython.display import display, Markdown
 ~~~python
 filepaths = glob('*.md') + glob('**/*.md')
 for filepath in filepaths:
-  display(Markdown('[./{0}]({0})'.format(filepath)))
+    escaped_filepath = urllib.parse.quote(filepath)
+    print(escaped_filepath)
+    display(Markdown('[{}]({})'.format(filepath, escaped_filepath)))
 ~~~
 
 </section-filechange>
