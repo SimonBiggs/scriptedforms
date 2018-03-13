@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "install": "webdriver-manager update",
-    "selenium": "webdriver-manager start",
+    "update": "webdriver-manager update",
+    "selenium": "yarn update && webdriver-manager start",
     "forms": "scriptedforms ./src/landing-page.md --port 8989 --password '' --token '' --disable_check_xsrf",
     "e2e": "tsc && python run-test.py"
   },
