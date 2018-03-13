@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms)
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master)
 
 Making GUIs easy for everyone on your team.
 
@@ -119,9 +119,13 @@ plt.ylabel(r'$sin(\omega \times t)$');
 
 This should produce what is seen in the following screenshot:
 
-<p align="center">
-  <img src="./images/detailed.png">
-</p>
+<a href="https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master">
+  <p align="center">
+    <img src="./images/detailed.png">
+  </p>
+</a>
+
+[Click here](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master) to see a live version of this example on mybinder.org. This will run slower online on that server than when you are using it locally.
 
 ### More features
 
