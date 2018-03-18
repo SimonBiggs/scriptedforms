@@ -30,11 +30,14 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
 
 @media print {
-  body, html {
-    size: 21cm 29.7cm !important;
-    width: 21cm !important;
+  body, article {
+    width: 100% !important;
     position: static !important;
-    margin: 0 0 !important;
+    margin: 0 !important;
+    padding: 0;
+    max-width: 21cm !important;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
   }
 
   div, span {
@@ -65,6 +68,14 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
   .p-Widget {
     position: static !important;
+  }
+
+  ul, img, .avoid-page-break {
+    page-break-inside: avoid;
+  }
+  
+  @page {
+    margin: 2cm;
   }
 }
 

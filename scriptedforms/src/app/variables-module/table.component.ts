@@ -46,7 +46,7 @@ import { PandasTable } from '../interfaces/pandas-table'
   <ng-content></ng-content>
 </span>
 
-<div class="container mat-elevation-z8" >
+<div class="container mat-elevation-z8 avoid-page-break" >
   <mat-table #table [dataSource]="dataSource" *ngIf="variableValue">
     <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
       <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>

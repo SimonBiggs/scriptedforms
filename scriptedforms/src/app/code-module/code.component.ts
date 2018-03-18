@@ -102,6 +102,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     let element: HTMLElement = this._eRef.nativeElement
     this.outputContainer = document.createElement("div")
+    // this.outputContainer.classList.add('avoid-page-break')
     this.outputContainer.appendChild(this.outputArea.node)
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode)
 
