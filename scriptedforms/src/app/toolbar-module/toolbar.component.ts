@@ -97,7 +97,7 @@ export class ToolbarComponent implements AfterViewInit {
       click: () => {this.restartKernel()},
       icon: 'refresh',
       disable: this.restartingKernel,
-      tooltip: 'Restart the Jupyter Python Kernel. This will reset your inputs.'
+      tooltip: 'Restart the Jupyter Python Kernel. This will reset your variables.'
     })
 
     this.myToolbarService.addSpacer()
