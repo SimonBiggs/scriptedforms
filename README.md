@@ -218,11 +218,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 ### Justification for using a copyleft license
 
 I desire to seed a Medical Physics open source community within Australia.
-Medical Physicists within the public NSW health system have been repeatedly
-blocked from giving code to the community. There is however an opportunity
-for them to be able to give code if, and only if, there is an existing IP
-agreement that distributed contributions or modifications will be provided
-under the same license.
+Medical Physicists have been repeatedly blocked from giving code to the
+community. There may be an opportunity for sharing however if there is an
+existing IP agreement that distributed code or modifications will be
+provided under the same license.
 
 As such, to be able to seed a Medical Physics open source community within
 Australia I need to create something that helps Medical Physicists write their
