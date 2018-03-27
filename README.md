@@ -22,10 +22,9 @@ After you have python you can then install ScriptedForms by typing the following
 pip install scriptedforms
 ```
 
-Then create a markdown file in terminal's current directory. Call it
-`quick-start.md`. Then using any plaintext editor such as [Visual Studio Code](https://code.visualstudio.com/)
-make the contents of
-`quick-start.md` be the following:
+Then create a markdown file called `quick-start.md` using any plaintext editor such as 
+[Visual Studio Code](https://code.visualstudio.com/) within your terminal's current directory. 
+Make the contents be the following:
 
 ~~~markdown
 # An example
