@@ -14,13 +14,15 @@ to understand.
 
 ## Quick start
 
-If you would like to take scriptedforms for a spin first install it:
+If you would like to take scriptedforms for a spin you will need Python. If you don't have Python on your computer I recommend using Anaconda Python (https://www.anaconda.com/download/).
+
+After you have python you can then install ScriptedForms by typing the following into a terminal (or command prompt):
 
 ```bash
 pip install scriptedforms
 ```
 
-Then create a markdown file in your current directory. Call it
+Then create a markdown file in terminal's current directory. Call it
 `quick-start.md`. Make the contents of `quick-start.md` be the following:
 
 ~~~markdown
@@ -37,7 +39,7 @@ print('Hello {}!'.format(your_name))
 </section-live>
 ~~~
 
-Then run the following in a terminal
+Then run the following in your terminal
 
 ```bash
 scriptedforms quick-start.md
