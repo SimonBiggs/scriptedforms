@@ -19,7 +19,7 @@ pip install -e .
 To then use the package, in any directory on your machine within a terminal run:
 
 ```bash
-example
+python -m example
 ```
 
 This will then boot up the scriptedforms GUI in your default browser.
@@ -37,7 +37,7 @@ Here is a list of all of these instances within files:
 
 * [`setup.py`](./setup.py) lines [4](./setup.py#L4), [11](./setup.py#L11), and two instances on line [15](./setup.py#L15).
 * [`MANIFEST.in`](./MANIFEST.in#L1)
-* and [`your_package_name/__init__.py`](./example/__init__.py#L1)
+* and [`your_package_name/__main__.py`](./example/__main__.py#L1)
 
 And then the `example` directory needs to be changed to your own package
 name as well as `example.py`.
@@ -87,7 +87,7 @@ pip install -e .
 Once it is installed create a `.bat` file which simply has within it:
 
 ```batch
-start your_package_name
+start python -m your_package_name
 ```
 
 And then place that on the desktop, or where ever you expect the user will be

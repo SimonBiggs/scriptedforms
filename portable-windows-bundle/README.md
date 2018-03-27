@@ -51,3 +51,7 @@ This currently doesn't work on Linux, need to test on Windows
 
     wine cmd
     scriptedforms ./simple-form/simple.md
+
+## Create the bundle
+
+    zip -r scriptedforms.zip python/* simple-form/* scriptedforms.bat

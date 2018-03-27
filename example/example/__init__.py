@@ -1,1 +1,1 @@
-from .example import main
+from .__main__ import main
