@@ -5,11 +5,11 @@
 To creat an exe bundle of ScriptedForms and have it be able to run a wide range
 of forms all of Python needs to be included as well as any potential packages
 that might be imported by the forms themselves. Here is a set of instructions
-that creates an exe bundle of ScriptedForms that includes pandas, numpy and
+that creates a portable bundle of ScriptedForms that includes pandas, numpy and
 matplotlib. You will need to adjust these instructions if you need more
 packages.
 
-## Tested exe creation environment
+## Tested bundle creation environment
 
 Counter-intuitively these instructions have been tested using a Linux Ubuntu
 distribution. You will need to make appropriate adjustments if you wish to
@@ -31,27 +31,23 @@ https://wiki.winehq.org/Ubuntu
 
     sudo apt-get install --install-recommends winehq-staging wine-staging-compat
 
-### Download Bat to EXE Converter
-
-http://www.f2ko.de/en/b2e.php
-
-Extract portable `Bat_To_Exe_Converter_(x64).exe` and rename it to be `./windows_libs/bat2exe/bat2exe.exe`
-
 ### Install WinPython 3.5.4.1Zero.exe
 
 https://github.com/winpython/winpython/releases/download/1.9.20171031/WinPython-64bit-3.5.4.1Zero.exe
 
-Install to `./windows_libs/python`
+Install to `./python` (relative to scriptedforms/exe-bundle).
 
 ### Install dependencies
 
-    wine ./windows_libs/python/python-*/python.exe -m pip --no-cache-dir install scriptedforms numpy pandas matplotlib
+    wine ./python/python-*/python.exe -m pip --no-cache-dir install scriptedforms numpy pandas matplotlib
 
 ### Testing that ScriptedForms works
 
-    wine ./windows_libs/python/python-*/python.exe -m scriptedforms ./simple-form/simple.md
+    wine ./python/python-*/python.exe -m scriptedforms ./simple-form/simple.md
 
-## Create the bundle
+### Test the bat file
 
+This currently doesn't work on Linux, need to test on Windows
 
-
+    wine cmd
+    scriptedforms ./simple-form/simple.md
