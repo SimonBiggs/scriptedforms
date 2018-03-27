@@ -23,7 +23,9 @@ pip install scriptedforms
 ```
 
 Then create a markdown file in terminal's current directory. Call it
-`quick-start.md`. Make the contents of `quick-start.md` be the following:
+`quick-start.md`. Then using any plaintext editor such as [Visual Studio Code](https://code.visualstudio.com/)
+make the contents of
+`quick-start.md` be the following:
 
 ~~~markdown
 # An example
