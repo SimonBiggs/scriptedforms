@@ -1,8 +1,8 @@
-# Creating an exe-bundle of ScriptedForms
+# Creating a portable bundle of ScriptedForms for Windows
 
 ## Overview
 
-To creat an exe bundle of ScriptedForms and have it be able to run a wide range
+To create a portable bundle of ScriptedForms and have it be able to run a wide range
 of forms all of Python needs to be included as well as any potential packages
 that might be imported by the forms themselves. Here is a set of instructions
 that creates a portable bundle of ScriptedForms that includes pandas, numpy and
@@ -13,7 +13,7 @@ packages.
 
 Counter-intuitively these instructions have been tested using a Linux Ubuntu
 distribution. You will need to make appropriate adjustments if you wish to
-create an exe-bundle on another OS.
+create this bundle on another OS.
 
 ### Ubuntu 16.04
 
@@ -35,7 +35,7 @@ Wine staging is installed using the following method:
 
 <https://github.com/winpython/winpython/releases/download/1.9.20171031/WinPython-64bit-3.5.4.1Zero.exe>
 
-Install to `./python` (relative to scriptedforms/exe-bundle).
+Install to `./python` (relative to scriptedforms/portable-windows-bundle).
 
 ### Install dependencies
 
