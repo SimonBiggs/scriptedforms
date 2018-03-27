@@ -66,7 +66,7 @@ class ScriptedForms(NotebookApp):
 def load(filepath):
     absolute_path = os.path.abspath(filepath)
     if not os.path.exists(absolute_path):
-        raise ValueError('file does not exist')
+        raise ValueError('File does not exist: {}'.format(absolute_path))
 
     directory, filename = os.path.split(absolute_path)
 
@@ -86,7 +86,7 @@ def open_docs():
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        'filepath', help='The file path of the form to open.', nargs='?', 
+        'filepath', help='The file path of the form to open.', nargs='?',
         default=None)
 
     args = parser.parse_args()
