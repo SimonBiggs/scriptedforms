@@ -37,19 +37,21 @@ http://www.f2ko.de/en/b2e.php
 
 Extract portable `Bat_To_Exe_Converter_(x64).exe` and rename it to be `./windows_libs/bat2exe/bat2exe.exe`
 
-## Install WinPython 3.5.4.1Zero.exe
+### Install WinPython 3.5.4.1Zero.exe
 
 https://github.com/winpython/winpython/releases/download/1.9.20171031/WinPython-64bit-3.5.4.1Zero.exe
 
 Install to `./windows_libs/python`
 
-## Install dependencies
+### Install dependencies
 
     wine ./windows_libs/python/python-*/python.exe -m pip --no-cache-dir install scriptedforms numpy pandas matplotlib
 
-## Testing that ScriptedForms works
+### Testing that ScriptedForms works
 
     wine ./windows_libs/python/python-*/python.exe -m scriptedforms ./simple-form/simple.md
+
+## Create the bundle
 
 
 
