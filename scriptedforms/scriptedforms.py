@@ -86,7 +86,7 @@ def open_docs():
 def main():
     parser = argparse.ArgumentParser(description='ScriptedForms.')
     parser.add_argument(
-        'filepath', help='The file path of the form to open.', nargs='?', 
+        'filepath', help='The file path of the form to open.', nargs='?',
         default=None)
 
     args = parser.parse_args()

@@ -23,7 +23,7 @@ Using [Ubuntu 16.04](http://releases.ubuntu.com/16.04.4/ubuntu-16.04.4-desktop-a
 
 Wine staging is installed using the following method:
 
-https://wiki.winehq.org/Ubuntu
+<https://wiki.winehq.org/Ubuntu>
 
     wget -nc https://dl.winehq.org/wine-builds/Release.key
     sudo apt-key add Release.key
@@ -33,7 +33,7 @@ https://wiki.winehq.org/Ubuntu
 
 ### Install WinPython 3.5.4.1Zero.exe
 
-https://github.com/winpython/winpython/releases/download/1.9.20171031/WinPython-64bit-3.5.4.1Zero.exe
+<https://github.com/winpython/winpython/releases/download/1.9.20171031/WinPython-64bit-3.5.4.1Zero.exe>
 
 Install to `./python` (relative to scriptedforms/exe-bundle).
 
