@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "update": "wine ./python/python-*/python.exe -m pip --no-cache-dir install --upgrade scriptedforms numpy pandas matplotlib",
+    "test": "wine ./python/python-*/python.exe -m scriptedforms ./my-forms/a-slider.md",
+    "zip": "zip -r scriptedforms-0.7.1.zip python/* my-forms/* scriptedforms.bat"
+  }
+}
