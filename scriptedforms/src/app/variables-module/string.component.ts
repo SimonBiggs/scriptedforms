@@ -37,11 +37,12 @@ import {
   <ng-content></ng-content>
 </span>
 <mat-input-container class="variableString" *ngIf="variableName">
+  <mat-label>{{placeholderValue}}</mat-label>
   <textarea
   [required]="required"
   matInput matTextareaAutosize
   [disabled]="!isFormReady"
-  [placeholder]="placeholderValue"
+  [placeholder]="tempPlaceholderValue"
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged()"
   (blur)="onBlur()" 
@@ -55,7 +56,8 @@ styles: [
 `]
 })
 export class StringComponent extends VariableBaseComponent implements AfterViewInit {
-  variableValue: string
+  variableValue: string;
+  tempPlaceholderValue: string = null;
   
   pythonValueReference() {
     const escapedString = this.variableValue
