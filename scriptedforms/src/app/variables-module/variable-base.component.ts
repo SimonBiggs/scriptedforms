@@ -63,8 +63,10 @@ export class VariableBaseComponent implements AfterViewInit {
   variableValue: VariableValue = null;
 
   @Input() name?: string;
-  placeholderValue: string;
+  labelValue: string;
   variableName: string;
+
+  @Input() placeholder ? = '';
 
   @ViewChild('variablecontainer') variablecontainer: ElementRef;
 
@@ -90,9 +92,9 @@ export class VariableBaseComponent implements AfterViewInit {
     this.loadVariableName();
 
     if (this.name) {
-      this.placeholderValue = this.name;
+      this.labelValue = this.name;
     } else {
-      this.placeholderValue = this.variableName;
+      this.labelValue = this.variableName;
     }
 
     this.myChangeDetectorRef.detectChanges();

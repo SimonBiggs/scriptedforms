@@ -39,11 +39,12 @@ import {
 </span>
 
 <mat-input-container class="variableNumber" *ngIf="variableName" >
+  <mat-label>{{labelValue}}</mat-label>
   <input
   [required]="required"
   matInput
   [disabled]="!isFormReady"
-  [placeholder]="placeholderValue"
+  [placeholder]="placeholder"
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged($event)"
   (blur)="onBlur()"

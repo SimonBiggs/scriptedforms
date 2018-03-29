@@ -42,7 +42,7 @@ import {
 [(ngModel)]="variableValue"
 (ngModelChange)="variableChanged()"
 [disabled]="!isFormReady">
-  {{placeholderValue}}
+  {{labelValue}}
 </mat-slide-toggle>`,
 })
 export class ToggleComponent extends BooleanBaseComponent implements AfterViewInit { }

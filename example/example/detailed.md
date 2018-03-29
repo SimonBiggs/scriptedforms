@@ -248,7 +248,7 @@ The Python code for this notes field takes what is written and renders it as
 markdown. Try writing `## Hello World!` and see what happens.
 
 <section-live>
-<variable-string>notes</variable-string>
+<variable-string placeholder="write some notes here">notes</variable-string>
 
 ```python
 display(Markdown(notes))
@@ -262,7 +262,9 @@ Dropdown allows options to be available in a dropdown list. To define the items
 used within the dropdown a Python list needs to be provided to the `items` html
 parameter. See below for how this works in practice.
 
-<variable-string name="Your own machine name">custom_machine</variable-string>
+<variable-string name="Your own machine name" placeholder="Write a custom machine name here">
+  custom_machine
+</variable-string>
 
 <section-live>
 

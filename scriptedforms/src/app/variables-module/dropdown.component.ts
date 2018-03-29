@@ -38,10 +38,11 @@ import { StringListParameterComponent } from './string-list-parameter.component'
 </span>
 <variable-string-list-parameter #stringListParameterComponent *ngIf="items">{{items}}</variable-string-list-parameter>
 <mat-form-field>
+  <mat-label>{{labelValue}}</mat-label>
   <mat-select
   [required]="required"
   [disabled]="!isFormReady"
-  [placeholder]="placeholderValue"
+  [placeholder]="placeholder"
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged($event)"
   (blur)="onBlur()"
