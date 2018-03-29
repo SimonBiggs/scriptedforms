@@ -29,7 +29,9 @@ import { VariableBaseComponent } from './variable-base.component';
 
 import { Component, AfterViewInit } from '@angular/core';
 
-@Component({})
+@Component({
+  template: ''
+})
 export class BooleanBaseComponent extends VariableBaseComponent
   implements AfterViewInit {
   pythonValueReference() {

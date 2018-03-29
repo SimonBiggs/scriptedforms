@@ -31,7 +31,9 @@ import {
 
 import { VariableBaseComponent } from './variable-base.component';
 
-@Component({})
+@Component({
+  template: ''
+})
 export class NumberBaseComponent extends VariableBaseComponent implements AfterViewInit {
   @Input() min?: number = null;
   @Input() max?: number = null;

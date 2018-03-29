@@ -43,7 +43,9 @@ import { VariableService } from '../services/variable.service';
 import { VariableValue } from '../types/variable-value';
 
 
-@Component({})
+@Component({
+  template: ''
+})
 export class VariableBaseComponent implements AfterViewInit {
   isOutput = false;
   isFormReady = false;
