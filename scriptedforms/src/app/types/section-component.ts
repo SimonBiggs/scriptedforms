@@ -30,4 +30,4 @@ import { ButtonComponent } from '../sections-module/button.component';
 import { OutputComponent } from '../sections-module/output.component';
 import { SectionFileChangeComponent } from '../sections-module/section-file-change.component';
 
-export type SectionComponent = StartComponent | LiveComponent | ButtonComponent | OutputComponent | SectionFileChangeComponent
+export type SectionComponent = StartComponent | LiveComponent | ButtonComponent | OutputComponent | SectionFileChangeComponent;

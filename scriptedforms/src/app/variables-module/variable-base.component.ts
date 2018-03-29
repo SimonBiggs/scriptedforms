@@ -53,15 +53,15 @@ export class VariableBaseComponent implements AfterViewInit {
 
   @Input() required?: string;
 
-  variableIdentifier: string
+  variableIdentifier: string;
 
   @Output() variableChange = new EventEmitter<VariableValue>();
 
   oldVariableValue: VariableValue = null;
   variableValue: VariableValue = null;
 
-  @Input() name?: string
-  placeholderValue: string
+  @Input() name?: string;
+  placeholderValue: string;
   variableName: string;
 
   @ViewChild('variablecontainer') variablecontainer: ElementRef;
@@ -71,26 +71,26 @@ export class VariableBaseComponent implements AfterViewInit {
     public myVariableService: VariableService
   ) { }
 
-   htmlDecode(input: string){
-    let e = document.createElement('div');
+   htmlDecode(input: string) {
+    const e = document.createElement('div');
     e.innerHTML = input;
-    let result = e.childNodes[0].nodeValue;
-    e.remove()
+    const result = e.childNodes[0].nodeValue;
+    e.remove();
     return result;
   }
 
   loadVariableName() {
-    let element: HTMLSpanElement = this.variablecontainer.nativeElement
+    const element: HTMLSpanElement = this.variablecontainer.nativeElement;
     this.variableName = this.htmlDecode(element.innerHTML).trim();
   }
 
   ngAfterViewInit() {
-    this.loadVariableName()
+    this.loadVariableName();
 
     if (this.name) {
-      this.placeholderValue = this.name
+      this.placeholderValue = this.name;
     } else {
-      this.placeholderValue = this.variableName
+      this.placeholderValue = this.variableName;
     }
 
     this.myChangeDetectorRef.detectChanges();
@@ -111,25 +111,25 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonVariableEvaluate() {
-    return `${this.variableName}`
+    return `${this.variableName}`;
   }
 
   testIfDifferent() {
-    return this.variableValue != this.oldVariableValue
+    return this.variableValue !== this.oldVariableValue;
   }
 
   updateOldVariable() {
     this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue));
   }
 
-  onVariableChange(): Promise<void> { 
-    return Promise.resolve(null)
+  onVariableChange(): Promise<void> {
+    return Promise.resolve(null);
   }
 
   variableChanged() {
     this.onVariableChange().then(() => {
       if (this.testIfDifferent()) {
-        const valueReference = this.pythonValueReference()
+        const valueReference = this.pythonValueReference();
         this.myVariableService.pushVariable(this.sessionId, this.variableIdentifier, this.variableName, valueReference)
         .then((status) => {
           if (status !== 'ignore') {
@@ -138,16 +138,16 @@ export class VariableBaseComponent implements AfterViewInit {
         });
         this.updateOldVariable();
       }
-    })
+    });
 
   }
 
   updateVariableView(value: VariableValue) {
     if (!this.isFocus) {
-      if (this.variableValue != value) {
-        this.variableValue = value
-        this.updateOldVariable()
-        this.variableChange.emit(this.variableValue)
+      if (this.variableValue !== value) {
+        this.variableValue = value;
+        this.updateOldVariable();
+        this.variableChange.emit(this.variableValue);
       }
     }
   }
@@ -157,10 +157,10 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   setId(index: number) {
-    this.variableIdentifier = `(${String(index)})-${this.variableName}`
+    this.variableIdentifier = `(${String(index)})-${this.variableName}`;
   }
 
   initialise() {
-    this.myVariableService.initialiseVariableComponent(this.sessionId, this)
+    this.myVariableService.initialiseVariableComponent(this.sessionId, this);
   }
 }

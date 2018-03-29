@@ -24,14 +24,14 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { VariableValue } from '../types/variable-value'
+import { VariableValue } from '../types/variable-value';
 
 export interface VariableStore {
-  [key: string]: { 
+  [key: string]: {
     defined: boolean,
     value?: VariableValue,
     timestamp?: number,
     user?: string,
     signature?: string
-  }
+  };
 }

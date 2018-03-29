@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "../vendors/material.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../vendors/material.module';
 
-import { AppModule } from "../app/app.module";
+import { AppModule } from '../app/app.module';
 import { RoutingModule } from './doc.routing';
 
 import { DocComponent } from './doc.component';
-import { LandingPageComponent } from './landing-page/landing-page.component'
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [

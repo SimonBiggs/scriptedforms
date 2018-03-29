@@ -89,58 +89,58 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
   /**
    * Set or update the template of the form.
-   * 
+   *
    * This function makes sure to only begin building the form once the component
    * has sufficiently initialised.
    */
   public buildForm(sessionId: string, markdownTemplate: string): Promise<IFormComponent> {
     return this.viewInitialised.promise.then(() => {
       const convertedTemplate = this.convertTemplate(markdownTemplate);
-      const htmlTemplate = convertedTemplate['htmlTemplate']
-      const cssStyles = convertedTemplate['cssStyles']
+      const htmlTemplate = convertedTemplate['htmlTemplate'];
+      const cssStyles = convertedTemplate['cssStyles'];
 
       // Create the form component
-      let formComponent = this.createFormFromTemplate(sessionId, htmlTemplate, cssStyles)
-      
+      const formComponent = this.createFormFromTemplate(sessionId, htmlTemplate, cssStyles);
+
       return formComponent.formViewInitialised.promise.then(() => {
         this.myFileService.renderComplete.resolve(null);
-        return formComponent
-      })
+        return formComponent;
+      });
     });
   }
 
   stripStyleTags(html: string) {
-    let tmp = document.createElement("div");
+    const tmp = document.createElement('div');
     tmp.innerHTML = html;
-    let cssStyleNodes = Array.from(tmp.getElementsByTagName('style'));
-    let cssStyles: string[] = []
+    const cssStyleNodes = Array.from(tmp.getElementsByTagName('style'));
+    let cssStyles: string[] = [];
 
     cssStyleNodes.forEach(node => {
-      cssStyles = cssStyles.concat([node.innerHTML])
-    })
+      cssStyles = cssStyles.concat([node.innerHTML]);
+    });
 
-    tmp.remove()
-    return cssStyles
+    tmp.remove();
+    return cssStyles;
   }
 
   /**
    * Convert the form template from markdown to its final html state.
-   * 
+   *
    * @param markdownTemplate The markdown template.
-   * 
+   *
    * @returns The html template.
    */
   private convertTemplate(markdownTemplate: string) {
     // Add new lines around the sections
     const addNewLines = markdownTemplate
-    .replace(/<\/?section-.+>/g, match => '\n' + match + '\n')
+    .replace(/<\/?section-.+>/g, match => '\n' + match + '\n');
 
     // Render the markdown to html
     const html = this.myMarkdownIt.render(addNewLines);
 
 
 
-    let cssStyles: string[] = this.stripStyleTags(html)
+    const cssStyles: string[] = this.stripStyleTags(html);
 
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'
@@ -148,15 +148,16 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     ).replace(/@~lb~@/g, '{{ "{" }}'
     ).replace(/@~rb~@/g, '{{ "}" }}');
 
-    const htmlTemplate = escapedHtml
+    const htmlTemplate = escapedHtml;
     const result = {
-      htmlTemplate, cssStyles}
-    return result
+      htmlTemplate, cssStyles
+    };
+    return result;
   }
 
   /**
    * Create the form component from the html template with the Angular compiler.
-   * 
+   *
    * @param template The html Angular component template
    */
   private createFormFromTemplate(sessionId: string, template: string, cssStyles: string[]): IFormComponent {
@@ -180,8 +181,8 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
     this.formComponentRef.instance.formReady.promise.then(() => {
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-    })
-    return this.formComponentRef.instance
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
+    });
+    return this.formComponentRef.instance;
   }
 }

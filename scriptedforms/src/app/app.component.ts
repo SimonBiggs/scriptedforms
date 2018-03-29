@@ -33,7 +33,7 @@ through the `setFormContents` function.
 
 import {
   Component, ViewChild, AfterViewInit, ElementRef
-} from "@angular/core";
+} from '@angular/core';
 
 import {
   nbformat
@@ -51,31 +51,36 @@ import {
 
 import { FormBuilderComponent } from './form-builder-module/form-builder.component';
 
-import { IScriptedForms, InitialisationService } from './services/initialisation.service'
-import { FormService } from "./services/form.service";
+import { IScriptedForms, InitialisationService } from './services/initialisation.service';
+import { FormService } from './services/form.service';
 import { KernelService } from './services/kernel.service';
 import { VariableService } from './services/variable.service';
-import { FileService } from "./services/file.service";
+import { FileService } from './services/file.service';
 
 import { FormStatus } from './types/form-status';
 
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   template: `
 <div class="margin">
   <div class="hide-on-print">
-    <toolbar></toolbar>
-    <mat-progress-spinner color="accent" *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'" class="floating-spinner" mode="indeterminate"></mat-progress-spinner>
+    <toolbar-base></toolbar-base>
+    <mat-progress-spinner
+      color="accent"
+      *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'"
+      class="floating-spinner"
+      mode="indeterminate">
+    </mat-progress-spinner>
   </div>
   <app-form-builder #formBuilderComponent><div #jupyterErrorMsg></div></app-form-builder>
   <div class="footer-space"></div>
 </div>`
 })
 export class AppComponent implements AfterViewInit {
-  kernelStatus: Kernel.Status = 'unknown'
-  formStatus: FormStatus = null
-  variableStatus: string = null
+  kernelStatus: Kernel.Status = 'unknown';
+  formStatus: FormStatus = null;
+  variableStatus: string = null;
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
   @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
@@ -89,66 +94,66 @@ export class AppComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.myFormService.formBuilderComponent = this.formBuilderComponent
+    this.myFormService.formBuilderComponent = this.formBuilderComponent;
 
     const rendermime = new RenderMimeRegistry({ initialFactories });
 
     this.myKernelSevice.jupyterError.subscribe(msg => {
       if (msg !== null) {
-        let msgType = msg.header.msg_type;
-        let model = new OutputAreaModel();
-        let output = msg.content as nbformat.IOutput;
+        const msgType = msg.header.msg_type;
+        const model = new OutputAreaModel();
+        const output = msg.content as nbformat.IOutput;
         output.output_type = msgType as nbformat.OutputType;
         model.add(output);
-  
-        let outputArea = new OutputArea({ model, rendermime });
-  
-        let errorDiv: HTMLDivElement = this.jupyterErrorMsg.nativeElement
-        
-        let errorHeading = document.createElement("h2")
-        errorHeading.innerText = "Python Error:"
-        let errorParagraph = document.createElement("p")
-        errorParagraph.innerText = (
-          "A Python error has occured. This could be due to an error within " +
-          "your ScriptedForms template or an issue with ScriptedForms itself."
-        )
-        let errorParagraphAfter = document.createElement("p")
-        errorParagraphAfter.innerText = (
-          "This error message will not go away until after a page refresh."
-        )
 
-        errorDiv.appendChild(errorHeading)
-        errorDiv.appendChild(errorParagraph)
-        errorDiv.appendChild(outputArea.node)
-        errorDiv.appendChild(errorParagraphAfter)
+        const outputArea = new OutputArea({ model, rendermime });
+
+        const errorDiv: HTMLDivElement = this.jupyterErrorMsg.nativeElement;
+
+        const errorHeading = document.createElement('h2');
+        errorHeading.innerText = 'Python Error:';
+        const errorParagraph = document.createElement('p');
+        errorParagraph.innerText = (
+          'A Python error has occured. This could be due to an error within ' +
+          'your ScriptedForms template or an issue with ScriptedForms itself.'
+        );
+        const errorParagraphAfter = document.createElement('p');
+        errorParagraphAfter.innerText = (
+          'This error message will not go away until after a page refresh.'
+        );
+
+        errorDiv.appendChild(errorHeading);
+        errorDiv.appendChild(errorParagraph);
+        errorDiv.appendChild(outputArea.node);
+        errorDiv.appendChild(errorParagraphAfter);
       }
-    })
+    });
 
     this.myFormService.formStatus.subscribe(status => {
-      console.log('form: ' + status)
-      this.formStatus = status
-    })
+      console.log('form: ' + status);
+      this.formStatus = status;
+    });
 
     this.myVariableService.variableStatus.subscribe(status => {
-      console.log('variable: ' + status)
-      this.variableStatus = status
-    })
+      console.log('variable: ' + status);
+      this.variableStatus = status;
+    });
 
     this.myKernelSevice.kernelStatus.subscribe(status => {
-      console.log('kernel: ' + status)
-      this.kernelStatus = status
-    })
+      console.log('kernel: ' + status);
+      this.kernelStatus = status;
+    });
   }
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
-    this.myInitialisationService.initiliseScriptedForms(options)
+    this.myInitialisationService.initiliseScriptedForms(options);
   }
 
   public initiliseBaseScriptedForms(options: IScriptedForms.IOptions) {
-    this.myInitialisationService.initiliseBaseScriptedForms(options)
+    this.myInitialisationService.initiliseBaseScriptedForms(options);
   }
 
-  public setTemplateToString(dummyPath: string, template: string) { 
-    this.myFileService.setTemplateToString(dummyPath, template)
+  public setTemplateToString(dummyPath: string, template: string) {
+    this.myFileService.setTemplateToString(dummyPath, template);
   }
 }

@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import {
   PromiseDelegate
@@ -40,18 +40,18 @@ import { VariableService } from './variable.service';
 
 // https://stackoverflow.com/a/6969486/3912576
 function escapeRegExp(str: string) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
 @Injectable()
 export class FileService {
-  path: BehaviorSubject<string> = new BehaviorSubject('scriptedforms_default_path')
-  renderType: 'template' | 'results'
-  node: HTMLElement
+  path: BehaviorSubject<string> = new BehaviorSubject('scriptedforms_default_path');
+  renderType: 'template' | 'results';
+  node: HTMLElement;
 
-  baseUrl = document.getElementsByTagName("base")[0].href
+  baseUrl = document.getElementsByTagName('base')[0].href;
 
-  renderComplete: PromiseDelegate<void>
+  renderComplete: PromiseDelegate<void>;
 
   constructor(
     private myFormService: FormService,
@@ -61,43 +61,43 @@ export class FileService {
   ) { }
 
   setNode(node: HTMLElement) {
-    this.node = node
+    this.node = node;
   }
 
   setRenderType(renderType: 'template' | 'results') {
     if ((renderType !== 'template') && (renderType !== 'results')) {
-      throw new RangeError('renderType must be either template or results')
+      throw new RangeError('renderType must be either template or results');
     }
 
-    this.renderType = renderType
+    this.renderType = renderType;
   }
 
   // loadResultsFile(fileContents: string, sessionId: string) {
   // }
 
   handleFileContents(fileContents: string, sessionId: string) {
-    let priorOverflow = this.node.scrollTop
-    this.renderComplete = new PromiseDelegate<void>()
+    const priorOverflow = this.node.scrollTop;
+    this.renderComplete = new PromiseDelegate<void>();
 
     this.renderComplete.promise.then(() => {
-      this.node.scrollTop = priorOverflow
-    })
+      this.node.scrollTop = priorOverflow;
+    });
 
     if (this.renderType === 'template') {
-      this.myFormService.setTemplate(fileContents, sessionId)
+      this.myFormService.setTemplate(fileContents, sessionId);
     }
     // if (this.renderType === 'results') {
     //   this.loadResultsFile(fileContents, sessionId)
     // }
 
-    return this.renderComplete.promise
+    return this.renderComplete.promise;
   }
 
   loadFileContents(path: string, sessionId: string): Promise<void> {
     return this.myJupyterService.contentsManager.get(path).then(model => {
-      let fileContents: string = model.content
-      return this.handleFileContents(fileContents, sessionId)
-    })
+      const fileContents: string = model.content;
+      return this.handleFileContents(fileContents, sessionId);
+    });
   }
 
   setPath(path: string) {
@@ -105,17 +105,17 @@ export class FileService {
   }
 
   determineRenderType(path: string) {
-    let renderType: "template" | "results"
-    let extension = path.split('.').pop();
+    let renderType: 'template' | 'results';
+    const extension = path.split('.').pop();
     if (extension === 'md') {
-      renderType = "template"
+      renderType = 'template';
     } else if (extension === 'yaml') {
-      renderType = 'results'
+      renderType = 'results';
     } else {
-      throw RangeError('File extension not recognised.')
+      throw RangeError('File extension not recognised.');
     }
 
-    return renderType
+    return renderType;
   }
 
   serviceSessionInitialisation(sessionId: string) {
@@ -129,8 +129,8 @@ export class FileService {
     // this.myKernelService.loadingForm()
     this.myKernelService.sessionConnect(path).then((sessionId: string) => {
       this.serviceSessionInitialisation(sessionId);
-      return this.loadFileContents(path, sessionId)
-    })
+      return this.loadFileContents(path, sessionId);
+    });
   }
 
   setTemplateToString(dummyPath: string, template: string) {
@@ -138,44 +138,43 @@ export class FileService {
     this.setRenderType('template');
     this.myKernelService.sessionConnect(dummyPath).then((sessionId: string) => {
       this.serviceSessionInitialisation(sessionId);
-      return this.handleFileContents(template, sessionId)
-    })
+      return this.handleFileContents(template, sessionId);
+    });
   }
 
   urlToFilePath(url: string) {
-    let pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`)
-    let match = pattern.exec(url)
+    const pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`);
+    const match = pattern.exec(url);
     if (match !== null) {
-      return decodeURIComponent(match[1])
+      return decodeURIComponent(match[1]);
     } else {
-      return null
+      return null;
     }
   }
 
   openUrl(url: string) {
-    let path = this.urlToFilePath(window.location.href)
+    const path = this.urlToFilePath(window.location.href);
     if (path !== null) {
-      this.openFile(path)
+      this.openFile(path);
     }
   }
 
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
-    let config = JSON.parse(document.getElementById(
+    const config = JSON.parse(document.getElementById(
       'scriptedforms-config-data'
-    ).textContent)
-    
-    if (config.applicationToRun == 'use') {
+    ).textContent);
+
+    if (config.applicationToRun === 'use') {
       links.forEach(link => {
-        let path = this.urlToFilePath(link.href)
+        const path = this.urlToFilePath(link.href);
         if (path !== null) {
           link.addEventListener('click', event => {
             event.preventDefault();
-            window.history.pushState(null, null, link.href)
-            this.openFile(path)
-          })
+            window.history.pushState(null, null, link.href);
+            this.openFile(path);
+          });
         }
-      })
+      });
     }
   }
-
 }

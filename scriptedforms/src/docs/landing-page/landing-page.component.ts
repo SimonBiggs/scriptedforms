@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
-import { Widget } from "@phosphor/widgets";
+import { Widget } from '@phosphor/widgets';
 
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
-import { ScriptedFormsWidget } from "../../app/widget";
+import { ServiceManager, ContentsManager } from '@jupyterlab/services';
+import { ScriptedFormsWidget } from '../../app/widget';
 
 
 const aTemplate = `
@@ -35,7 +35,7 @@ for filepath in filepaths:
 ~~~
 
 </section-filechange>
-`
+`;
 
 
 @Component({
@@ -51,19 +51,19 @@ export class LandingPageComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    let serviceManager = new ServiceManager();
-    let contentsManager = new ContentsManager();
-  
-    let formWidget = new ScriptedFormsWidget({
+    const serviceManager = new ServiceManager();
+    const contentsManager = new ContentsManager();
+
+    const formWidget = new ScriptedFormsWidget({
       serviceManager,
       contentsManager
     });
-  
-    formWidget.form.initiliseScriptedForms()
+
+    formWidget.form.initiliseScriptedForms();
 
     window.onresize = () => { formWidget.update(); };
     Widget.attach(formWidget, this.formWrapper.nativeElement);
 
-    formWidget.form.setTemplateToString('a_dummy_path', aTemplate)
+    formWidget.form.setTemplateToString('a_dummy_path', aTemplate);
   }
 }

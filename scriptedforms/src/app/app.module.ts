@@ -27,30 +27,30 @@
 /*
 The root app module.
 */
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule, ApplicationRef, ErrorHandler } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "../vendors/material.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../vendors/material.module';
 
-import { AppErrorHandler } from "./app-error-handler";
+import { AppErrorHandler } from './app-error-handler';
 
-import { KernelService } from "./services/kernel.service";
-import { VariableService } from "./services/variable.service";
-import { FileService } from "./services/file.service";
-import { WatchdogService } from "./services/watchdog.service";
-import { FormService } from "./services/form.service";
-import { JupyterService } from "./services/jupyter.service";
-import { InitialisationService } from "./services/initialisation.service";
-import { ToolbarService } from "./services/toolbar.service";
+import { KernelService } from './services/kernel.service';
+import { VariableService } from './services/variable.service';
+import { FileService } from './services/file.service';
+import { WatchdogService } from './services/watchdog.service';
+import { FormService } from './services/form.service';
+import { JupyterService } from './services/jupyter.service';
+import { InitialisationService } from './services/initialisation.service';
+import { ToolbarService } from './services/toolbar.service';
 
-import { FormBuilderModule } from "./form-builder-module/form-builder.module";
-import { ToolbarModule } from "./toolbar-module/toolbar.module";
+import { FormBuilderModule } from './form-builder-module/form-builder.module';
+import { ToolbarModule } from './toolbar-module/toolbar.module';
 
-import { ToolbarButtonComponent } from "./toolbar-module/toolbar-button.component";
+import { ToolbarButtonComponent } from './toolbar-module/toolbar-button.component';
 
-import { AppComponent } from "./app.component";
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [

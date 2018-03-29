@@ -24,47 +24,39 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { 
-  Injectable, 
-  // ComponentFactoryResolver 
+import {
+  Injectable,
 } from '@angular/core';
 
-import { 
-  // BoxLayout, 
-  Widget 
-} from "@phosphor/widgets";
+import {
+  Widget
+} from '@phosphor/widgets';
 
 import {
-  // showDialog, Dialog, Styling,
-  Toolbar, 
-  // ToolbarButton
+  Toolbar,
 } from '@jupyterlab/apputils';
 import { PromiseDelegate } from '@phosphor/coreutils';
-
-// import {
-//   ToolbarButtonComponent
-// } from '../toolbar-module/toolbar-button.component'
 
 
 @Injectable()
 export class ToolbarService {
-  toolbarReady = new PromiseDelegate<void>()
-  toolbar: Toolbar<Widget>
+  toolbarReady = new PromiseDelegate<void>();
+  toolbar: Toolbar<Widget>;
 
   public setToolbar(toolbar: Toolbar<Widget>) {
-    this.toolbar = toolbar
-    this.toolbarReady.resolve(null)
+    this.toolbar = toolbar;
+    this.toolbarReady.resolve(null);
   }
 
   public addSpacer() {
     this.toolbarReady.promise.then(() => {
-      this.toolbar.addItem('spacer', Toolbar.createSpacerItem())
-    })
+      this.toolbar.addItem('spacer', Toolbar.createSpacerItem());
+    });
   }
 
   public addItem(name: string, widget: Widget) {
     this.toolbarReady.promise.then(() => {
-      this.toolbar.addItem(name, widget)
-    })
+      this.toolbar.addItem(name, widget);
+    });
   }
 }

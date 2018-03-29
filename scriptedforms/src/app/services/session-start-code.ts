@@ -34,4 +34,4 @@ import matplotlib.pyplot as plt
 
 from scriptedforms._utilities import (
   _VariableHandler, _json_table_to_df, _watchdog_path_conversion)
-`
+`;

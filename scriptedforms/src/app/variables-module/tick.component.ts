@@ -37,7 +37,7 @@ import {
   <ng-content></ng-content>
 </span>
 
-<mat-checkbox 
+<mat-checkbox
 [required]="required"
 [(ngModel)]="variableValue"
 (ngModelChange)="variableChanged()"

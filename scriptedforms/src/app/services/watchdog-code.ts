@@ -24,7 +24,7 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-export 
+export
 const startWatchdogSessionCode = `
 try:
     observer
@@ -45,12 +45,12 @@ except NameError:
     event_handler = MyHandler()
     observer = Observer()
     observer.start()
-`
+`;
 
 export
 function addObserverPathCode(observerPath: string) {
     return `
 next_path = os.path.dirname(os.path.abspath(
     os.path.expanduser(os.path.expandvars('${observerPath}'))))
-observer.schedule(event_handler, path=next_path)`
+observer.schedule(event_handler, path=next_path)`;
 }

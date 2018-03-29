@@ -25,14 +25,14 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   Component, ContentChildren, QueryList, OnDestroy, Input, AfterViewInit,
   ViewChild
 } from '@angular/core';
 
-import { StringListParameterComponent } from "../variables-module/string-list-parameter.component";
+import { StringListParameterComponent } from '../variables-module/string-list-parameter.component';
 
 import { WatchdogService } from '../services/watchdog.service';
 
@@ -40,55 +40,55 @@ import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-filechange',
-  template: `<variable-string-list-parameter #stringListParameterComponent *ngIf="paths">
+  template: `<variable-string-list-parameter #stringListParameterComponent *ngIf='paths'>
 _watchdog_path_conversion({{paths}})
 </variable-string-list-parameter><ng-content></ng-content>`
 })
 export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   id: number;
-  watchdogSubscription: Subscription
-  _sessionId: string
-  pathsConverted: string[]
+  watchdogSubscription: Subscription;
+  _sessionId: string;
+  pathsConverted: string[];
 
-  @Input() paths: string
+  @Input() paths: string;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent
+  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent;
 
   constructor(
     private myWatchdogService: WatchdogService
   ) { }
 
   set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId
-    this.initialiseCodeSessionId(theSessionId)
+    this._sessionId = theSessionId;
+    this.initialiseCodeSessionId(theSessionId);
   }
 
   updateFilepathObserver() {
     this.pathsConverted.forEach(value => {
-      this.myWatchdogService.addFilepathObserver(value)
-    })
+      this.myWatchdogService.addFilepathObserver(value);
+    });
   }
 
   ngAfterViewInit() {
     // this.updateFilepathObserver()
 
     this.stringListParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
-      this.pathsConverted = value
-      this.updateFilepathObserver()
-    })
+      this.pathsConverted = value;
+      this.updateFilepathObserver();
+    });
 
     this.watchdogSubscription = this.myWatchdogService.fileChanged.subscribe((value: string) => {
       if (this.pathsConverted) {
         if (
-          (this.pathsConverted.includes(value)) || 
-          (this.pathsConverted.includes(`./${value}`)) || 
+          (this.pathsConverted.includes(value)) ||
+          (this.pathsConverted.includes(`./${value}`)) ||
           (this.pathsConverted.includes(`.\\${value}`))
         ) {
-          this.runCode()
+          this.runCode();
         }
       }
-    })
+    });
   }
 
   runCode() {
@@ -98,19 +98,19 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.watchdogSubscription.unsubscribe()
+    this.watchdogSubscription.unsubscribe();
   }
 
   setId(id: number) {
     this.id = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"section-file"_' + String(this.id) + '_' + String(index)
+      codeComponent.name = '"section-file"_' + String(this.id) + '_' + String(index);
     });
   }
 
   initialiseCodeSessionId(sessionId: string) {
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId
+      codeComponent.sessionId = sessionId;
     });
   }
 }

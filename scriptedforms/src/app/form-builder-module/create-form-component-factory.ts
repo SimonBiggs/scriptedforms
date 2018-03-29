@@ -29,13 +29,13 @@
 /**
  * Since the template for the form changes within the user interface
  * the form component needs to be re-compiled each time the template changes.
- * 
+ *
  * This file exports a the `createFormComponentFactory` function which
  * creates a new form component factory based on the provided template.
- * 
+ *
  * Within that function is the `FormComponent`. This component takes in the
  * provided template and then initialises the form.
- * 
+ *
  * Form initialisation logic and ordering is all defined within the `initialiseForm`
  * function within the `FormComponent`.
  */
@@ -44,11 +44,12 @@
 import {
   Component, ViewChildren, QueryList,
   Compiler, ComponentFactory, NgModule,
-  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef
+  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef,
+  AfterViewInit
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import {
   PromiseDelegate
@@ -89,18 +90,18 @@ import { SectionComponent } from '../types/section-component';
 
 export
 interface IFormComponent {
-  formViewInitialised: PromiseDelegate<void>,
-  formReady: PromiseDelegate<void>,
-  restartFormKernel(): Promise<void>
+  formViewInitialised: PromiseDelegate<void>;
+  formReady: PromiseDelegate<void>;
+  restartFormKernel(): Promise<void>;
 }
 
 
 /**
  * Create a form component factory given an Angular template in the form of metadata.
- * 
+ *
  * @param compiler the Angular compiler
  * @param metadata the template containing metadata
- * 
+ *
  * @returns a factory which creates form components
  */
 export
@@ -112,8 +113,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
 // `
 //   const templateAppendBottom = `
-  
-// <button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button> 
+
+// <button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button>
 // </form>
 
 //   `
@@ -124,12 +125,12 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
    * The form component that is built each time the template changes
    */
   @Component(metadata)
-  class FormComponent implements IFormComponent {
-    formViewInitialised = new PromiseDelegate<void>()
-    formReady = new PromiseDelegate<void>()
+  class FormComponent implements IFormComponent, AfterViewInit {
+    formViewInitialised = new PromiseDelegate<void>();
+    formReady = new PromiseDelegate<void>();
 
-    variableComponents: VariableComponent[] = []
-    sectionComponents: SectionComponent[] = []
+    variableComponents: VariableComponent[] = [];
+    sectionComponents: SectionComponent[] = [];
 
     _sessionId: string;
 
@@ -154,7 +155,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     // Code
     @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  
+
     constructor(
       private myKernelSevice: KernelService,
       private myVariableService: VariableService,
@@ -162,103 +163,106 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       private elementRef: ElementRef,
       private myChangeDetectorRef: ChangeDetectorRef
     ) { }
-  
+
     ngAfterViewInit() {
       // Replace links
-      let links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName("a"))
+      const links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName('a'));
       this.myFileService.morphLinksToUpdateFile(links);
 
-      this.formViewInitialised.resolve(null)
+      this.formViewInitialised.resolve(null);
 
-      this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
+      this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
+      this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
       // this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
 
       this.buttonComponents.toArray().forEach(buttonComponent => {
         if (buttonComponent.conditional) {
-          this.variableComponents = this.variableComponents.concat([buttonComponent.conditionalComponent])
+          this.variableComponents = this.variableComponents.concat([buttonComponent.conditionalComponent]);
         }
-      })
+      });
 
-      this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray())
+      this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray());
+      this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray());
+      this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray());
 
-      this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
-      this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
+      this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
+      this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
 
       this.dropdownComponents.toArray().forEach(dropdownComponent => {
         if (dropdownComponent.items) {
-          this.variableComponents = this.variableComponents.concat([dropdownComponent.stringListParameterComponent])
+          this.variableComponents = this.variableComponents.concat([dropdownComponent.stringListParameterComponent]);
         }
-      })
+      });
 
-      this.sectionComponents = this.sectionComponents.concat(this.startComponents.toArray())
-      this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray())
-      this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray())
-      this.sectionComponents = this.sectionComponents.concat(this.outputComponents.toArray())
-      this.sectionComponents = this.sectionComponents.concat(this.sectionFileChangeComponents.toArray())
+      this.sectionComponents = this.sectionComponents.concat(this.startComponents.toArray());
+      this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray());
+      this.sectionComponents = this.sectionComponents.concat(this.buttonComponents.toArray());
+      this.sectionComponents = this.sectionComponents.concat(this.outputComponents.toArray());
+      this.sectionComponents = this.sectionComponents.concat(this.sectionFileChangeComponents.toArray());
 
       this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
-        this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.stringListParameterComponent])
-      })
-      
+        this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.stringListParameterComponent]);
+      });
+
       // Only begin initialisation once the kernel is connected
       this.setComponentIds();
 
-      this.myKernelSevice.sessionConnected.promise.then((sessionId) => {
-        this._sessionId = sessionId
+      this.myKernelSevice.sessionConnected.promise.then((sessionIdFromKernelService) => {
+        if (sessionId !== sessionIdFromKernelService) {
+          throw RangeError('kernel service provided a different session id than what this form started with');
+        }
+        this._sessionId = sessionId;
         this.sectionComponents.forEach(sectionComponent => {
           sectionComponent.sessionId = sessionId;
-        })
+        });
         this.variableComponents.forEach(variableComponent => {
           variableComponent.sessionId = sessionId;
-        })
+        });
 
         this.outputComponents.toArray().forEach(outputComponent => {
           outputComponent.subscribeToVariableChanges();
         });
 
         this.initialiseForm();
-      })
+      });
     }
 
 
     private setComponentIds() {
       this.sectionComponents.forEach((sectionComponent, index) => {
         sectionComponent.setId(index);
-      })
+      });
       this.variableComponents.forEach((variableComponent, index) => {
         variableComponent.setId(index);
-      })
+      });
 
       this.myChangeDetectorRef.detectChanges();
     }
 
     public restartFormKernel() {
-      this.formReady = new PromiseDelegate<void>()
+      this.formReady = new PromiseDelegate<void>();
       this.buttonComponents.toArray().forEach(buttonComponent => {
         buttonComponent.formReady(false);
       });
       this.variableComponents.forEach(variableComponent => {
         variableComponent.formReady(false);
-      })
+      });
       this.liveComponents.toArray().forEach(liveComponent => {
         liveComponent.formReady(false);
       });
       this.myKernelSevice.restartKernel().then(() => {
-        this.initialiseForm()
-      })
+        this.initialiseForm();
+      });
 
-      return this.formReady.promise
+      return this.formReady.promise;
     }
-  
+
     /**
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
         // The start component section is run first
-        
+
         this.startComponents.toArray().forEach((startComponent, index) => {
           // Only run the code of a start component if it is a new session.
           // Once the data model for the form results has been built it can
@@ -275,33 +279,33 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
         // Variable components are initialised second
         this.myVariableService.resetVariableService(this._sessionId);
-        
+
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise();
-        })
-        this.myVariableService.allVariablesInitilised(this._sessionId)
+        });
+        this.myVariableService.allVariablesInitilised(this._sessionId);
 
         this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
-          sectionFileChangeComponent.runCode()
-        })
+          sectionFileChangeComponent.runCode();
+        });
 
         // Wait until the code queue is complete before declaring form ready to
         // the various components.
         this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
-          
+
           this.liveComponents.toArray().forEach(liveComponent => {
             liveComponent.formReady(true);
           });
 
           this.variableComponents.forEach(variableComponent => {
             variableComponent.formReady(true);
-          })
+          });
 
           this.buttonComponents.toArray().forEach(buttonComponent => {
             buttonComponent.formReady(true);
           });
 
-          this.formReady.resolve(null)
+          this.formReady.resolve(null);
         });
 
     }
@@ -317,7 +321,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
         SectionsModule,
         VariablesModule,
         CodeModule
-      ],  
+      ],
       declarations: [
         FormComponent
       ]

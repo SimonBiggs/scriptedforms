@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   Component, ContentChildren, QueryList, OnDestroy
@@ -41,8 +41,8 @@ import { CodeComponent } from '../code-module/code.component';
 })
 export class OutputComponent implements OnDestroy {
   outputId: number;
-  variableSubscription: Subscription
-  _sessionId: string
+  variableSubscription: Subscription;
+  _sessionId: string;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
@@ -51,8 +51,8 @@ export class OutputComponent implements OnDestroy {
   ) { }
 
   set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId
-    this.initialiseCodeSessionId(theSessionId)
+    this._sessionId = theSessionId;
+    this.initialiseCodeSessionId(theSessionId);
   }
 
   runCode() {
@@ -66,23 +66,23 @@ export class OutputComponent implements OnDestroy {
       if (value !== null) {
         this.runCode();
       }
-    })
+    });
   }
 
   ngOnDestroy() {
-    this.variableSubscription.unsubscribe()
+    this.variableSubscription.unsubscribe();
   }
 
   setId(id: number) {
     this.outputId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"output"_' + String(this.outputId) + '_' + String(index)
+      codeComponent.name = '"output"_' + String(this.outputId) + '_' + String(index);
     });
   }
 
   initialiseCodeSessionId(sessionId: string) {
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId
+      codeComponent.sessionId = sessionId;
     });
   }
 }

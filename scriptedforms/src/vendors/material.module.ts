@@ -28,7 +28,7 @@
 A module containing the form elements.
 */
 
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import {
   MatInputModule,
@@ -45,7 +45,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatDividerModule
-} from "@angular/material";
+} from '@angular/material';
 
 @NgModule({
   imports: [

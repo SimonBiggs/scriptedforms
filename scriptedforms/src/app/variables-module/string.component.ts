@@ -45,7 +45,7 @@ import {
   [placeholder]="tempPlaceholderValue"
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged()"
-  (blur)="onBlur()" 
+  (blur)="onBlur()"
   (focus)="onFocus()"
   type="text" class="variableString"></textarea>
 </mat-input-container>`,
@@ -58,14 +58,14 @@ styles: [
 export class StringComponent extends VariableBaseComponent implements AfterViewInit {
   variableValue: string;
   tempPlaceholderValue: string = null;
-  
+
   pythonValueReference() {
     const escapedString = this.variableValue
     .replace(/\\/g, '\\\\')
-    .replace(/\"/g, '\\\"')
-    const valueReference = `"""${String(escapedString)}"""`
+    .replace(/\"/g, '\\\"');
+    const valueReference = `"""${String(escapedString)}"""`;
 
-    return valueReference
+    return valueReference;
   }
 
   // pythonValueReference() {

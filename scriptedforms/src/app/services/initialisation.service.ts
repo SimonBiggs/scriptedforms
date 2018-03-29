@@ -26,32 +26,25 @@
 
 import { Injectable } from '@angular/core';
 
-// import {
-//   PromiseDelegate
-// } from '@phosphor/coreutils';
+import { Widget } from '@phosphor/widgets';
 
-import {  
-  Widget 
-} from "@phosphor/widgets";
-
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
+import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 
 import {
   Toolbar
 } from '@jupyterlab/apputils';
 
-import { JupyterService } from "./jupyter.service";
-import { WatchdogService } from "./watchdog.service";
-import { FileService } from "./file.service";
-import { ToolbarService } from "./toolbar.service";
-// import { KernelService } from './kernel.service'
+import { JupyterService } from './jupyter.service';
+import { WatchdogService } from './watchdog.service';
+import { FileService } from './file.service';
+import { ToolbarService } from './toolbar.service';
 
 export namespace IScriptedForms {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
     node: HTMLElement;
-    toolbar: Toolbar<Widget>
+    toolbar: Toolbar<Widget>;
   }
 }
 
@@ -70,17 +63,17 @@ export class InitialisationService {
     this.myJupyterService.setContentsManager(options.contentsManager);
 
     this.myFileService.setNode(options.node);
-    this.myToolbarService.setToolbar(options.toolbar)
+    this.myToolbarService.setToolbar(options.toolbar);
     this.myWatchdogService.startWatchdog();
   }
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
-    this.initiliseBaseScriptedForms(options)
+    this.initiliseBaseScriptedForms(options);
 
-    this.myFileService.openUrl(window.location.href)
+    this.myFileService.openUrl(window.location.href);
 
     window.onpopstate = event => {
-      this.myFileService.openUrl(window.location.href)  
-    }
+      this.myFileService.openUrl(window.location.href);
+    };
   }
 }

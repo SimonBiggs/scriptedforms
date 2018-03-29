@@ -45,7 +45,7 @@ import { NumberBaseComponent } from './number-base.component';
   [disabled]="!isFormReady"
   [value]="variableValue"
   (input)="updateValue($event.value)"
-  (blur)="onBlur()" 
+  (blur)="onBlur()"
   (focus)="onFocus()"
   [max]="max"
   [min]="min"
@@ -56,7 +56,7 @@ import { NumberBaseComponent } from './number-base.component';
 <div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
   <span class="ansi-red-fg">
-  The use of commas or semicolons to separate inputs is deprecated. 
+  The use of commas or semicolons to separate inputs is deprecated.
   Please instead use html parameters like so:
   &lt;variable-slider min="{{min}}" max="{{max}}" step="{{step}}"&gt;{{variableName}}&lt;/variable-slider&gt;
 </span>
@@ -67,18 +67,18 @@ styles: [
 .container {
   display: flex;
 }
-  
+
 .variableSlider {
   flex-grow: 1;
 }
 `]
 })
 export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
-  @Input() min?: number = 0;
-  @Input() max?: number = 100;
+  @Input() min ? = 0;
+  @Input() max ? = 100;
 
   updateValue(value: number) {
-    this.variableValue = value
-    this.variableChanged()
+    this.variableValue = value;
+    this.variableChanged();
   }
 }

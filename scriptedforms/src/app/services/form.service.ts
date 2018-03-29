@@ -24,67 +24,65 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { Injectable
-  // , ComponentRef 
-} from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { IFormComponent } from '../form-builder-module/create-form-component-factory';
-import { FormBuilderComponent } from '../form-builder-module/form-builder.component'
+import { FormBuilderComponent } from '../form-builder-module/form-builder.component';
 
 import { FormStatus } from '../types/form-status';
 
 export interface FormStore {
-  [sessionId: string]: { 
+  [sessionId: string]: {
     template: BehaviorSubject<string>;
     component: IFormComponent;
-  }
+  };
 }
 
 @Injectable()
 export class FormService {
   currentFormSessionId: string;
-  formStore: FormStore = {}
+  formStore: FormStore = {};
   formBuilderComponent: FormBuilderComponent;
-  initialising: FormStatus = 'initialising'
-  formStatus: BehaviorSubject<FormStatus> = new BehaviorSubject(this.initialising)
+  initialising: FormStatus = 'initialising';
+  formStatus: BehaviorSubject<FormStatus> = new BehaviorSubject(this.initialising);
 
   formInitialisation(sessionId: string) {
-    this.formStatus.next('initialising')
-    this.currentFormSessionId = sessionId
+    this.formStatus.next('initialising');
+    this.currentFormSessionId = sessionId;
     if (!(sessionId in this.formStore)) {
       this.formStore[sessionId] = {
         template: new BehaviorSubject(null),
         component: null
-      }
+      };
 
       this.formStore[sessionId].template.subscribe(template => {
         if (template !== null) {
           this.formBuilderComponent.buildForm(sessionId, template).then(component => {
-            this.formStore[sessionId].component = component
+            this.formStore[sessionId].component = component;
             component.formReady.promise.then(() => {
-              this.formStatus.next('ready')
-            })
+              this.formStatus.next('ready');
+            });
           });
         }
-      })
+      });
     }
   }
 
   restartFormKernel() {
-    this.formStatus.next('restarting')
-    let formReadyPromise = this.formStore[this.currentFormSessionId].component.restartFormKernel()
+    this.formStatus.next('restarting');
+    const formReadyPromise = this.formStore[this.currentFormSessionId].component.restartFormKernel();
     formReadyPromise.then(() => {
-      this.formStatus.next('ready')
-    })
-    return formReadyPromise
+      this.formStatus.next('ready');
+    });
+    return formReadyPromise;
   }
 
   setTemplate(template: string, sessionId: string) {
-    this.formStore[sessionId].template.next(template)
+    this.formStore[sessionId].template.next(template);
   }
 
   getTemplate(sessionId: string) {
-    return this.formStore[sessionId].template.getValue()
+    return this.formStore[sessionId].template.getValue();
   }
 }

@@ -35,7 +35,7 @@ import {
   MatButtonModule, MatIconModule
 } from '@angular/material';
 
-import { ToolbarComponent } from './toolbar.component';
+import { ToolbarBaseComponent } from './toolbar-base.component';
 import { ToolbarButtonComponent } from './toolbar-button.component';
 
 
@@ -48,11 +48,11 @@ import { ToolbarButtonComponent } from './toolbar-button.component';
   ],
   declarations: [
     ToolbarButtonComponent,
-    ToolbarComponent
+    ToolbarBaseComponent
   ],
   exports: [
     ToolbarButtonComponent,
-    ToolbarComponent
+    ToolbarBaseComponent
   ]
 })
 export class ToolbarModule { }

@@ -37,7 +37,7 @@ import {
   <ng-content></ng-content>
 </span>
 
-<mat-slide-toggle 
+<mat-slide-toggle
 [required]="required"
 [(ngModel)]="variableValue"
 (ngModelChange)="variableChanged()"

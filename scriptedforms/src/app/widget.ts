@@ -24,15 +24,15 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { BoxLayout, Widget } from "@phosphor/widgets";
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
+import { BoxLayout, Widget } from '@phosphor/widgets';
+import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { Toolbar } from '@jupyterlab/apputils';
 
-import { AngularWidget } from "./phosphor-angular-loader";
-import { AppComponent } from "./app.component";
-import { AppModule } from "./app.module";
+import { AngularWidget } from './phosphor-angular-loader';
+import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 
-import { IScriptedForms } from './services/initialisation.service'
+import { IScriptedForms } from './services/initialisation.service';
 
 export namespace IScriptedFormsWidget {
   export interface IOptions {
@@ -54,7 +54,7 @@ export class AngularWrapperWidget extends AngularWidget<
   AppModule
 > {
 
-  scriptedFormsOptions: IScriptedForms.IOptions
+  scriptedFormsOptions: IScriptedForms.IOptions;
 
   constructor(options: IAngularWrapperWidget.IOptions) {
     super(AppComponent, AppModule);
@@ -91,19 +91,19 @@ export class ScriptedFormsWidget extends Widget {
 
   constructor(options: IScriptedFormsWidget.IOptions) {
     super();
-    this.addClass("container");
+    this.addClass('container');
 
-    let layout = (this.layout = new BoxLayout());
-    let toolbar = new Toolbar();
+    const layout = (this.layout = new BoxLayout());
+    const toolbar = new Toolbar();
     toolbar.addClass('jp-NotebookPanel-toolbar');
     toolbar.addClass('custom-toolbar');
     layout.addWidget(toolbar);
     BoxLayout.setStretch(toolbar, 0);
 
-    let angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
+    const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
 
     this.form = new AngularWrapperWidget(angularWrapperWidgetOptions);
-    this.form.addClass("form");
+    this.form.addClass('form');
 
     layout.addWidget(this.form);
     BoxLayout.setStretch(this.form, 1);

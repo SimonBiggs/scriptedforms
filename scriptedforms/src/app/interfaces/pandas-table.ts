@@ -32,6 +32,6 @@ export interface PandasTable {
     }[]
     primaryKey: string
     pandas_version: string
-  }
-  data: { [key: string]: string | number }[]
+  };
+  data: { [key: string]: string | number }[];
 }

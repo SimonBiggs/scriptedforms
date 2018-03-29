@@ -26,39 +26,38 @@
 
 import './polyfills';
 
-import "./vendors/jupyterlab-styles"
-import "./vendors/angular-styles"
+import './vendors/jupyterlab-styles';
+import './vendors/angular-styles';
 
-import "hammerjs";
+import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 
-import { loadApp } from './app'
-import { loadDocs } from './docs'
-import { loadDev } from './dev'
+import { loadApp } from './app';
+import { loadDocs } from './docs';
+import { loadDev } from './dev';
 
 if (process.env.production) {
-  console.log('Angular is in production mode.')
+  console.log('Angular is in production mode.');
   enableProdMode();
 }
 
 if (process.env.development) {
-  console.log('ScriptedForms is live watching js output in dev mode.')
-  loadDev()
+  console.log('ScriptedForms is live watching js output in dev mode.');
+  loadDev();
 }
 
 function main() {
-  let config = JSON.parse(document.getElementById(
+  const config = JSON.parse(document.getElementById(
     'scriptedforms-config-data'
-  ).textContent)
-  
-  if (config.applicationToRun == 'use') {
-    loadApp()
-  }
-  else if (config.applicationToRun == 'docs') {
-    loadDocs()
+  ).textContent);
+
+  if (config.applicationToRun === 'use') {
+    loadApp();
+  } else if (config.applicationToRun === 'docs') {
+    loadDocs();
   } else {
-    throw RangeError("Expected docs or use")
+    throw RangeError('Expected docs or use');
   }
 }
 

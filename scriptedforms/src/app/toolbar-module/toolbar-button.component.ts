@@ -35,7 +35,8 @@ this section will be iteratively run. The button is set to call the runCode
 function on click.
 */
 
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   Component, Input, ElementRef, ViewChild
@@ -71,23 +72,23 @@ export interface IOptions {
 `
 })
 export class ToolbarButtonComponent {
-  _options: IOptions
+  _options: IOptions;
   @Input() set options(optionsInput: IOptions) {
-    this._options = optionsInput
+    this._options = optionsInput;
     if (optionsInput.disable) {
       if (this.previousSubscription) {
-        this.previousSubscription.unsubscribe()
+        this.previousSubscription.unsubscribe();
       }
       this.previousSubscription = optionsInput.disable.subscribe(disableInput => {
-        this.isDisabled = disableInput
-      })
+        this.isDisabled = disableInput;
+      });
     }
   }
 
   @ViewChild('button') button: ElementRef;
 
-  previousSubscription: Subscription = null
-  isDisabled = false
+  previousSubscription: Subscription = null;
+  isDisabled = false;
 
   constructor(
     public myElementRef: ElementRef

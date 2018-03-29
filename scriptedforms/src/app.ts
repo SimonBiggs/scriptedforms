@@ -24,22 +24,22 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import "./app/style.css";
+import './app/style.css';
 
-import { Widget } from "@phosphor/widgets";
-import { ServiceManager, ContentsManager } from "@jupyterlab/services";
-import { ScriptedFormsWidget } from "./app/widget";
+import { Widget } from '@phosphor/widgets';
+import { ServiceManager, ContentsManager } from '@jupyterlab/services';
+import { ScriptedFormsWidget } from './app/widget';
 
 export function loadApp(): void {
-  let serviceManager = new ServiceManager();
-  let contentsManager = new ContentsManager();
+  const serviceManager = new ServiceManager();
+  const contentsManager = new ContentsManager();
 
-  let formWidget = new ScriptedFormsWidget({
+  const formWidget = new ScriptedFormsWidget({
     serviceManager,
     contentsManager
   });
 
-  formWidget.form.initiliseScriptedForms()
+  formWidget.form.initiliseScriptedForms();
 
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);

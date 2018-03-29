@@ -71,7 +71,7 @@ export class StartComponent {
   // }
 
   set sessionId(theSessionId: string) {
-    this.initialiseCodeSessionId(theSessionId)
+    this.initialiseCodeSessionId(theSessionId);
   }
 
   runCode() {
@@ -84,13 +84,13 @@ export class StartComponent {
   setId(id: number) {
     this.startId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"start"_' + String(this.startId) + '_' + String(index)
+      codeComponent.name = '"start"_' + String(this.startId) + '_' + String(index);
     });
   }
 
   initialiseCodeSessionId(sessionId: string) {
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId
+      codeComponent.sessionId = sessionId;
     });
   }
 }

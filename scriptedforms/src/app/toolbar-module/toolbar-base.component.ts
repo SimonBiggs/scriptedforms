@@ -35,9 +35,9 @@ this section will be iteratively run. The button is set to call the runCode
 function on click.
 */
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { 
+import {
   ComponentFactoryResolver, AfterViewInit, ComponentFactory, ViewChild,
   ViewContainerRef, ChangeDetectorRef
 } from '@angular/core';
@@ -47,10 +47,10 @@ import {
   //  Input
 } from '@angular/core';
 
-import { 
+import {
   // BoxLayout,
-  Widget 
-} from "@phosphor/widgets";
+  Widget
+} from '@phosphor/widgets';
 
 import {
   ToolbarButtonComponent, IOptions
@@ -60,19 +60,19 @@ import {
   ToolbarService
 } from '../services/toolbar.service';
 
-import { FormService } from "../services/form.service";
-  
+import { FormService } from '../services/form.service';
+
 @Component({
-  selector: 'toolbar',
+  selector: 'toolbar-base',
   template: `<span #container></span><toolbar-button hidden></toolbar-button>`
 })
-export class ToolbarComponent implements AfterViewInit {
-  restartingKernel: BehaviorSubject<boolean> = new BehaviorSubject(false)
+export class ToolbarBaseComponent implements AfterViewInit {
+  restartingKernel: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
-  buttonFactory: ComponentFactory<ToolbarButtonComponent>
+  buttonFactory: ComponentFactory<ToolbarButtonComponent>;
 
   constructor(
     private myComponentFactoryResolver: ComponentFactoryResolver,
@@ -87,39 +87,38 @@ export class ToolbarComponent implements AfterViewInit {
       // href: '../docs',  // Only change this link once the docs are ready
       href: 'http://scriptedforms.com.au',
       tooltip: 'ScriptedForms documentation, installation instructions, and source code.'
-    })
+    });
     this.addButton({
-      click: () => {window.print()}, 
+      click: () => { window.print(); },
       icon: 'print',
       tooltip: 'Print your ScriptedForm'
-    })
+    });
     this.addButton({
-      click: () => {this.restartKernel()},
+      click: () => { this.restartKernel(); },
       icon: 'refresh',
       disable: this.restartingKernel,
       tooltip: 'Restart the Jupyter Python Kernel. This will reset your inputs.'
-    })
+    });
 
-    this.myToolbarService.addSpacer()
-    
-    this.changeDetectorRef.detectChanges()
+    this.myToolbarService.addSpacer();
+
+    this.changeDetectorRef.detectChanges();
   }
 
   addButton(options: IOptions) {
-    this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent)
-    let button = this.container.createComponent(this.buttonFactory)
+    this.buttonFactory = this.myComponentFactoryResolver.resolveComponentFactory(ToolbarButtonComponent);
+    const button = this.container.createComponent(this.buttonFactory);
 
-    button.instance.options = options
+    button.instance.options = options;
 
-    let widget = new Widget({node: button.instance.myElementRef.nativeElement})
-    this.myToolbarService.addItem(options.icon, widget)
+    const widget = new Widget({node: button.instance.myElementRef.nativeElement});
+    this.myToolbarService.addItem(options.icon, widget);
   }
 
   restartKernel() {
-    this.restartingKernel.next(true)
+    this.restartingKernel.next(true);
     this.myFormService.restartFormKernel().then(() => {
-      this.restartingKernel.next(false)
-    })
+      this.restartingKernel.next(false);
+    });
   }
 }
-    

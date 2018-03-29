@@ -24,9 +24,7 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-// import { combineLatest } from 'rxjs/observable/combineLatest';
-
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Injectable } from '@angular/core';
 
@@ -46,13 +44,13 @@ import { KernelService } from './kernel.service';
 
 import {
   startWatchdogSessionCode, addObserverPathCode
-} from './watchdog-code'
+} from './watchdog-code';
 
 @Injectable()
 export class WatchdogService {
   // formFirstPassComplete = new PromiseDelegate<void>();
   everythingIdle = new PromiseDelegate<void>();
-  session: Session.ISession
+  session: Session.ISession;
   watchdogError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
   fileChanged: BehaviorSubject<string> = new BehaviorSubject(null);
 
@@ -65,66 +63,65 @@ export class WatchdogService {
   ) { }
 
   startWatchdog() {
-    const path = 'scriptedforms_watchdog_kernel'
+    const path = 'scriptedforms_watchdog_kernel';
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {
       kernelName: 'python3',
       serverSettings: settings,
       path: path
     };
-  
+
     this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
       Session.connectTo(model, settings).then(session => {
-        this.watchdogFormUpdate(session)
+        this.watchdogFormUpdate(session);
       });
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
-        session.kernel.requestExecute({code: startWatchdogSessionCode})
-        this.watchdogFormUpdate(session)
+        session.kernel.requestExecute({code: startWatchdogSessionCode});
+        this.watchdogFormUpdate(session);
       });
     });
   }
 
   watchdogFormUpdate(session: Session.ISession) {
-    this.session = session
+    this.session = session;
 
     session.iopubMessage.connect((sender, msg) => {
       if (KernelMessage.isErrorMsg(msg)) {
-        let errorMsg: KernelMessage.IErrorMsg = msg;
-        console.error(errorMsg.content)
-        this.watchdogError.next(msg)
+        const errorMsg: KernelMessage.IErrorMsg = msg;
+        console.error(errorMsg.content);
+        this.watchdogError.next(msg);
       }
       if (msg.content.text) {
-        let content = String(msg.content.text).trim()
-        let files = content.split("\n")
-        console.log(files)
-        let path = this.myFileService.path.getValue()
-        let sessionId = this.myFormService.currentFormSessionId
-        let match = files.some(item => {
+        const content = String(msg.content.text).trim();
+        const files = content.split('\n');
+        console.log(files);
+        const path = this.myFileService.path.getValue();
+        const sessionId = this.myFormService.currentFormSessionId;
+        const match = files.some(item => {
           return (
-            (item.startsWith('relative: ')) && 
-            ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))))
-        })
+            (item.startsWith('relative: ')) &&
+            ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))));
+        });
         if (match) {
-          this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false
-          this.myFileService.loadFileContents(path, sessionId)
+          this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false;
+          this.myFileService.loadFileContents(path, sessionId);
         }
 
         files.forEach(item => {
-          let pathOnly = item.replace('absolute: ', '').replace('relative: ', '')
-          this.fileChanged.next(pathOnly)
-        })
+          const pathOnly = item.replace('absolute: ', '').replace('relative: ', '');
+          this.fileChanged.next(pathOnly);
+        });
       }
-    })
-  
+    });
     this.myFileService.path.subscribe(value => {
-      console.log(`File service path changed to: ${value}`)
-      this.addFilepathObserver(value)
-    })
+      console.log(`File service path changed to: ${value}`);
+      this.addFilepathObserver(value);
+    });
   }
 
   addFilepathObserver(filepath: string) {
-    console.log(`Watchdog service: Adding ${filepath} to watch list`)
-    this.session.kernel.requestExecute({code: addObserverPathCode(filepath)})
+    console.log(`Watchdog service: Adding ${filepath} to watch list`);
+    this.session.kernel.requestExecute({code: addObserverPathCode(filepath)});
   }
 }

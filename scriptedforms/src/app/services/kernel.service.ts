@@ -32,7 +32,7 @@ at a time and in a well defined order. This queue also handles dropping repeat
 requests if the kernel is busy.
 */
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Injectable } from '@angular/core';
 
@@ -52,26 +52,26 @@ import {
 
 import {
   jupyterSessionConnect
-} from '../levelled-files/level-1/jupyter-session-connect'
+} from '../levelled-files/level-1/jupyter-session-connect';
 
 
 export interface SessionStore {
-  [sessionId: string]: { 
+  [sessionId: string]: {
     session: Session.ISession;
     kernel: Kernel.IKernelConnection;
     queueId: number;
     queueLog: {[queueId: number]: string};
     queue: Promise<any>;
     isNewSession: boolean;
-  }
+  };
 }
 
 @Injectable()
 export class KernelService {
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
   kernelStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
-  sessionConnected: PromiseDelegate<string>
-  sessionStore: SessionStore = {}
+  sessionConnected: PromiseDelegate<string>;
+  sessionStore: SessionStore = {};
   currentSession: string = null;
 
   constructor(
@@ -81,31 +81,31 @@ export class KernelService {
   restartKernel(): Promise<string> {
     this.sessionConnected = new PromiseDelegate<string>();
     this.sessionStore[this.currentSession].kernel.restart().then(() => {
-      this.sessionStore[this.currentSession].queueId = 0
-      this.sessionStore[this.currentSession].queueLog = {}
-      this.sessionStore[this.currentSession].queue = Promise.resolve(null)
-      this.sessionStore[this.currentSession].isNewSession = true
+      this.sessionStore[this.currentSession].queueId = 0;
+      this.sessionStore[this.currentSession].queueLog = {};
+      this.sessionStore[this.currentSession].queue = Promise.resolve(null);
+      this.sessionStore[this.currentSession].isNewSession = true;
 
       this.runCode(this.currentSession, sessionStartCode, 'session_start_code').then(() => {
         this.sessionConnected.resolve(this.currentSession);
-      })
-    })
+      });
+    });
 
-    return this.sessionConnected.promise
+    return this.sessionConnected.promise;
   }
 
   sessionConnect(path: string): Promise<string> {
     this.sessionConnected = new PromiseDelegate<string>();
-    const activeSessionIds = Object.keys(this.sessionStore)
+    const activeSessionIds = Object.keys(this.sessionStore);
 
-    this.currentSession = null
+    this.currentSession = null;
 
     jupyterSessionConnect(
       this.myJupyterService.serviceManager, path, activeSessionIds)
     .then(results => {
-      const id = this.currentSession = results.session.id
-      const session = results.session
-      const isNewSession = results.isNewSession
+      const id = this.currentSession = results.session.id;
+      const session = results.session;
+      const isNewSession = results.isNewSession;
 
       if (!(id in this.sessionStore)) {
         this.sessionStore[id] = {
@@ -115,38 +115,38 @@ export class KernelService {
           queueLog: {},
           queue: Promise.resolve(null),
           isNewSession: isNewSession
-        }
+        };
 
-        session.iopubMessage.connect((session, msg) => {
+        session.iopubMessage.connect((_, msg) => {
           if (KernelMessage.isErrorMsg(msg)) {
-            let errorMsg: KernelMessage.IErrorMsg = msg;
-            console.error(errorMsg.content)
-            this.jupyterError.next(msg)
+            const errorMsg: KernelMessage.IErrorMsg = msg;
+            console.error(errorMsg.content);
+            this.jupyterError.next(msg);
           }
           if (KernelMessage.isStatusMsg(msg)) {
-            this.kernelStatus.next(msg.content.execution_state)
+            this.kernelStatus.next(msg.content.execution_state);
           }
-        })
+        });
 
       } else {
-        this.sessionStore[id].isNewSession = isNewSession
+        this.sessionStore[id].isNewSession = isNewSession;
       }
-      
-      this.currentSession = id
+
+      this.currentSession = id;
 
       if (isNewSession) {
-        this.runCode(id, sessionStartCode, 'session_start_code')
+        this.runCode(id, sessionStartCode, 'session_start_code');
       }
 
-      this.sessionConnected.resolve(id)
+      this.sessionConnected.resolve(id);
 
-    })
+    });
 
     this.sessionConnected.promise.then(id => {
 
-    })
+    });
 
-    return this.sessionConnected.promise
+    return this.sessionConnected.promise;
   }
 
   addToQueue(sessionId: string, name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {

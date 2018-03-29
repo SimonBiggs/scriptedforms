@@ -37,7 +37,7 @@ import {
 import * as  stringify from 'json-stable-stringify';
 
 import { VariableBaseComponent } from './variable-base.component';
-import { PandasTable } from '../interfaces/pandas-table'
+import { PandasTable } from '../interfaces/pandas-table';
 
 @Component({
   selector: 'variable-table',
@@ -93,44 +93,44 @@ styles: [
 `]
 })
 export class TableComponent extends VariableBaseComponent implements AfterViewInit {
-  columnDefs: string[] = []
-  oldColumnDefs: string[] = []
+  columnDefs: string[] = [];
+  oldColumnDefs: string[] = [];
   dataSource: MatTableDataSource<{
-    [key: string]: string | number 
+    [key: string]: string | number
   }> = new MatTableDataSource();
 
-  variableValue: PandasTable
-  oldVariableValue: PandasTable
-  isPandas = true
+  variableValue: PandasTable;
+  oldVariableValue: PandasTable;
+  isPandas = true;
   focus: [number, string] = [null, null];
 
   updateVariableView(value: PandasTable) {
-    let numRowsUnchanged: boolean
+    let numRowsUnchanged: boolean;
     if (this.variableValue) {
       numRowsUnchanged = (
-        value.data.length == this.variableValue.data.length
-      )
+        value.data.length === this.variableValue.data.length
+      );
     } else {
-      numRowsUnchanged = false
+      numRowsUnchanged = false;
     }
     this.variableValue = value;
 
-    let columns: string[] = []
+    const columns: string[] = [];
     value.schema.fields.forEach(val => {
-      columns.push(val.name)
-    })
-    this.oldColumnDefs = this.columnDefs
-    this.columnDefs = columns
+      columns.push(val.name);
+    });
+    this.oldColumnDefs = this.columnDefs;
+    this.columnDefs = columns;
 
     const columnsUnchanged = (
-      this.oldColumnDefs.length == this.columnDefs.length && 
+      this.oldColumnDefs.length === this.columnDefs.length &&
       this.columnDefs.every(
-        (item, index) => { return item === this.oldColumnDefs[index] })
-    )
+        (item, index) =>  item === this.oldColumnDefs[index])
+    );
 
     if (columnsUnchanged && numRowsUnchanged) {
       value.data.forEach((row, i) => {
-        const keys = Object.keys(row)
+        const keys = Object.keys(row);
         keys.forEach((key, j) => {
           if ((i !== this.focus[0]) || (key !== this.focus[1])) {
             if (this.oldVariableValue.data[i][key] !== row[key]) {
@@ -138,17 +138,17 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
               this.oldVariableValue.data[i][key] = row[key];
             }
           }
-        })
-      })
+        });
+      });
     } else {
       this.dataSource.data = value.data;
-      this.updateOldVariable()
+      this.updateOldVariable();
     }
   }
 
-  onVariableChange(): Promise<void> { 
+  onVariableChange(): Promise<void> {
     this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
-    return Promise.resolve(null)
+    return Promise.resolve(null);
   }
 
   testIfDifferent() {
@@ -156,11 +156,11 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
   }
 
   pythonValueReference() {
-    return `_json_table_to_df('${JSON.stringify(this.variableValue)}')`
+    return `_json_table_to_df('${JSON.stringify(this.variableValue)}')`;
   }
 
   pythonVariableEvaluate() {
-    return `json.loads(${this.variableName}.to_json(orient='table'))`
+    return `json.loads(${this.variableName}.to_json(orient='table'))`;
   }
 
   onBlur(tableCoords: [number, string]) {

@@ -34,8 +34,8 @@ import {
 
 
 export function loadDev() {
-  let serviceManager = new ServiceManager();
-  runDevModeWatchdog(serviceManager)
+  const serviceManager = new ServiceManager();
+  runDevModeWatchdog(serviceManager);
 }
 
 const watchdogDevModeCode = `
@@ -53,16 +53,16 @@ class MyHandler(FileSystemEventHandler):
 event_handler = MyHandler()
 observer = Observer()
 observer.schedule(
-    event_handler, 
+    event_handler,
     path=os.path.join(os.path.dirname(scriptedforms.__file__), 'lib'),
     recursive=True)
 observer.start()
-`
+`;
 
 function runDevModeWatchdog(serviceManager: ServiceManager) {
-  let sessionReady = new PromiseDelegate<Session.ISession>();
+  const sessionReady = new PromiseDelegate<Session.ISession>();
 
-  const path = 'scriptedforms_watchdog_development_mode_kernel'
+  const path = 'scriptedforms_watchdog_development_mode_kernel';
   const settings = ServerConnection.makeSettings({});
   const startNewOptions = {
     kernelName: 'python3',
@@ -72,27 +72,28 @@ function runDevModeWatchdog(serviceManager: ServiceManager) {
 
   serviceManager.sessions.findByPath(path).then(model => {
     Session.connectTo(model, settings).then(session => {
-      sessionReady.resolve(session)
+      sessionReady.resolve(session);
     });
   }).catch(() => {
     Session.startNew(startNewOptions).then(session => {
-      session.kernel.requestExecute({code: watchdogDevModeCode})
-      sessionReady.resolve(session)
+      session.kernel.requestExecute({code: watchdogDevModeCode});
+      sessionReady.resolve(session);
     });
   });
 
   sessionReady.promise.then(session => {
     session.iopubMessage.connect((sender, msg) => {
       if (KernelMessage.isErrorMsg(msg)) {
-        let errorMsg: KernelMessage.IErrorMsg = msg;
-        console.error(errorMsg.content)
+        const errorMsg: KernelMessage.IErrorMsg = msg;
+        console.error(errorMsg.content);
       }
       if (msg.content.text) {
-        let content = String(msg.content.text).trim()
-        let files = content.split("\n")
-        console.log(files)
-        location.reload(true)
+        const content = String(msg.content.text).trim();
+        const files = content.split('\n');
+        console.log(files);
+        location.reload(true);
       }
-    })
-  })
+    });
+  });
 }
+

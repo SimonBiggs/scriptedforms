@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { PandasTable } from '../interfaces/pandas-table'
-import { Slider } from '../interfaces/slider'
+import { PandasTable } from '../interfaces/pandas-table';
+import { Slider } from '../interfaces/slider';
 
-export type VariableValue = boolean | string | number | PandasTable | Slider | string[]
+export type VariableValue = boolean | string | number | PandasTable | Slider | string[];

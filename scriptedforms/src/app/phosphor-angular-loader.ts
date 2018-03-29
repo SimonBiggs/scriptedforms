@@ -90,7 +90,7 @@ export class AngularWidget<C, M> extends Widget {
   run(func: () => void): void {
     this.componentReady.promise.then(() => {
       this.ngZone.run(func);
-    })
+    });
   }
 
   dispose(): void {

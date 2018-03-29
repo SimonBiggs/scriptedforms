@@ -25,15 +25,15 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { VariableBaseComponent } from "./variable-base.component";
+import { VariableBaseComponent } from './variable-base.component';
 
-import { Component, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: "variable-string-list-parameter",
+  selector: 'variable-string-list-parameter',
   template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
 })
 export class StringListParameterComponent extends VariableBaseComponent
   implements AfterViewInit {
-    variableValue: string[]
+    variableValue: string[];
   }

@@ -25,26 +25,26 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { Component, AfterViewInit, Input, ViewChild } from "@angular/core";
+import { Component, AfterViewInit, Input, ViewChild } from '@angular/core';
 
-import { VariableBaseComponent } from "./variable-base.component";
-import { StringListParameterComponent } from "./string-list-parameter.component";
+import { VariableBaseComponent } from './variable-base.component';
+import { StringListParameterComponent } from './string-list-parameter.component';
 
 @Component({
-  selector: "variable-dropdown",
+  selector: 'variable-dropdown',
   template: `
-<span #variablecontainer *ngIf="variableName === undefined">
+<span #variablecontainer *ngIf='variableName === undefined'>
   <ng-content></ng-content>
 </span>
 <variable-string-list-parameter #stringListParameterComponent *ngIf="items">{{items}}</variable-string-list-parameter>
 <mat-form-field>
-  <mat-select 
+  <mat-select
   [required]="required"
   [disabled]="!isFormReady"
   [placeholder]="placeholderValue"
   [(ngModel)]="variableValue"
   (ngModelChange)="variableChanged($event)"
-  (blur)="onBlur()" 
+  (blur)="onBlur()"
   (focus)="onFocus()">
     <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
   </mat-select>
@@ -52,9 +52,12 @@ import { StringListParameterComponent } from "./string-list-parameter.component"
 <div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
     <span class="ansi-red-fg">
-      The use of commas or semicolons to separate inputs is deprecated. 
+      The use of commas or semicolons to separate inputs is deprecated.
       Please instead use the items html parameter like so:
-      &lt;variable-dropdown items="[<span *ngFor="let option of deprecatedOptions.slice(0,-1)">'{{option}}', </span>'{{deprecatedOptions.slice(-1)}}']"&gt;{{variableName}}&lt;/variable-dropdown&gt;
+      &lt;variable-dropdown
+        items="[<span *ngFor="let option of deprecatedOptions.slice(0,-1)">'{{option}}', </span>'{{deprecatedOptions.slice(-1)}}']"&gt;
+        {{variableName}}
+      &lt;/variable-dropdown&gt;
     </span>
   </pre>
 </div>`})
@@ -62,30 +65,30 @@ export class DropdownComponent extends VariableBaseComponent
   implements AfterViewInit {
   deprecatedOptions: (string | number)[] = [];
   options: (string | number)[] = [];
-  usedSeparator: boolean = false;
+  usedSeparator = false;
 
   // Make this required once internal separators are removed
-  @Input() items?: string
+  @Input() items?: string;
 
-  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent
+  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent;
 
-  
+
   pythonValueReference() {
-    let valueReference: string
-    
-    if (typeof this.variableValue === "string") {
+    let valueReference: string;
+
+    if (typeof this.variableValue === 'string') {
       const escapedString = String(this.variableValue)
       .replace(/\\/g, '\\\\')
-      .replace(/\"/g, '\\\"')
-      valueReference = `"""${String(escapedString)}"""`
+      .replace(/\"/g, '\\\"');
+      valueReference = `"""${String(escapedString)}"""`;
     } else {
-      valueReference = String(this.variableValue)
+      valueReference = String(this.variableValue);
     }
-    return valueReference
+    return valueReference;
   }
 
   loadVariableName() {
-    let element: HTMLSpanElement = this.variablecontainer.nativeElement;
+    const element: HTMLSpanElement = this.variablecontainer.nativeElement;
     const ngContent = this.htmlDecode(element.innerHTML).trim();
 
     // Remove separators in version 0.8.0
@@ -99,13 +102,13 @@ export class DropdownComponent extends VariableBaseComponent
       this.options = this.options.concat([item.trim()]);
     });
 
-    this.deprecatedOptions = this.options
+    this.deprecatedOptions = this.options;
 
     if (this.items) {
-      this.options = this.stringListParameterComponent.variableValue
+      this.options = this.stringListParameterComponent.variableValue;
       this.stringListParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
-        this.options = value
-      })
+        this.options = value;
+      });
     }
   }
 }

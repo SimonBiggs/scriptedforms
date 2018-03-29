@@ -35,6 +35,10 @@ import {
   MaterialModule
 } from '../../vendors/material.module';
 
+import { VariableBaseComponent } from './variable-base.component';
+import { NumberBaseComponent } from './number-base.component';
+import { BooleanBaseComponent } from './boolean-base.component';
+
 import { ToggleComponent } from './toggle.component';
 import { TickComponent } from './tick.component';
 import { ConditionalComponent } from './conditional.component';
@@ -45,7 +49,7 @@ import { TableComponent } from './table.component';
 
 import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
-import { StringListParameterComponent } from './string-list-parameter.component'
+import { StringListParameterComponent } from './string-list-parameter.component';
 
 
 @NgModule({
@@ -55,6 +59,9 @@ import { StringListParameterComponent } from './string-list-parameter.component'
     FormsModule
   ],
   declarations: [
+    VariableBaseComponent,
+    NumberBaseComponent,
+    BooleanBaseComponent,
     ToggleComponent,
     TickComponent,
     ConditionalComponent,

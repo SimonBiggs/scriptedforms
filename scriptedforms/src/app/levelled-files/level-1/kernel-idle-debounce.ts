@@ -25,22 +25,22 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { BehaviorSubject } from 'rxjs';
-import { timer } from 'rxjs/observable/timer'
-import { merge } from 'rxjs/observable/merge'
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// import { timer } from 'rxjs/observable/timer';
+// import { merge } from 'rxjs/observable/merge';
 
-import {
-  Kernel
-} from '@jupyterlab/services';
+// import {
+//   Kernel
+// } from '@jupyterlab/services';
 
 
-export function kernelIdleDebounce(kernelStatus: BehaviorSubject<Kernel.Status>) {
-  let kernelBusy = kernelStatus.filter(status => status !== 'idle')
-  let kernelIdle = kernelStatus.filter(status => status === 'idle')
-  let kernelBusyIdle = merge(kernelIdle, kernelBusy)
-  let debouncedBusyIdle = kernelBusyIdle.debounce(() => timer(50));
-  let merged = merge(kernelBusy, debouncedBusyIdle)
-  let distinct = merged.distinctUntilChanged()
+// export function kernelIdleDebounce(kernelStatus: BehaviorSubject<Kernel.Status>) {
+//   const kernelBusy = kernelStatus.filter(status => status !== 'idle');
+//   const kernelIdle = kernelStatus.filter(status => status === 'idle');
+//   const kernelBusyIdle = merge(kernelIdle, kernelBusy);
+//   const debouncedBusyIdle = kernelBusyIdle.debounce(() => timer(50));
+//   const merged = merge(kernelBusy, debouncedBusyIdle);
+//   const distinct = merged.distinctUntilChanged();
 
-  return distinct
-}
+//   return distinct
+// }

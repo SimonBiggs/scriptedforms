@@ -68,11 +68,11 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 export class ButtonComponent implements AfterViewInit {
 
   @Input() name?: string;
-  @Input() conditional?: string
+  @Input() conditional?: string;
 
-  _sessionId: string
+  _sessionId: string;
 
-  conditionalValue: boolean = true;
+  conditionalValue = true;
 
   buttonId: number;
   afterViewInit = false;
@@ -81,7 +81,7 @@ export class ButtonComponent implements AfterViewInit {
   codeRunning = false;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent
+  @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent;
 
   constructor(
     private myKernelSevice: KernelService
@@ -91,18 +91,18 @@ export class ButtonComponent implements AfterViewInit {
     this.afterViewInit = true;
 
     if (this.conditional) {
-      let value: any = this.conditionalComponent.variableValue
+      const value: any = this.conditionalComponent.variableValue;
       this.conditionalValue = value;
-      
-      this.conditionalComponent.variableChange.asObservable().subscribe((value: boolean) => {
-        this.conditionalValue = value;
-      })
+
+      this.conditionalComponent.variableChange.asObservable().subscribe((newValue: boolean) => {
+        this.conditionalValue = newValue;
+      });
     }
   }
 
   set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId
-    this.initialiseCodeSessionId(theSessionId)
+    this._sessionId = theSessionId;
+    this.initialiseCodeSessionId(theSessionId);
   }
 
   /**
@@ -132,19 +132,19 @@ export class ButtonComponent implements AfterViewInit {
    * Provide a unique id for the purpose of detecting repeat submissions.
    * In practice this isn't an issue for button sections as the button itself
    * is disabled while the submission is in progress.
-   * 
+   *
    * @param id A unique id among the buttons on the form
    */
   setId(id: number) {
     this.buttonId = id;
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"button"_' + String(this.buttonId) + '_' + String(index)
+      codeComponent.name = '"button"_' + String(this.buttonId) + '_' + String(index);
     });
   }
 
   initialiseCodeSessionId(sessionId: string) {
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId
+      codeComponent.sessionId = sessionId;
     });
   }
 }

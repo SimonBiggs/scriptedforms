@@ -25,8 +25,8 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 export interface Slider {
-  min: number
-  max: number
-  step: number
-  value: number
+  min: number;
+  max: number;
+  step: number;
+  value: number;
 }

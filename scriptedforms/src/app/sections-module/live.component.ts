@@ -59,7 +59,7 @@ import { VariableComponent } from '../types/variable-component';
   template: `<ng-content></ng-content>`
 })
 export class LiveComponent implements AfterViewInit {
-  variableComponents: VariableComponent[] = []
+  variableComponents: VariableComponent[] = [];
 
   liveId: number;
   afterViewInit = false;
@@ -81,16 +81,16 @@ export class LiveComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.afterViewInit = true;
 
-    this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray())
-    this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray())
-    this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
+    this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray());
 
-    this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray())
-    this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray())
-    this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray())
+    this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray());
 
-    this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray())
-    this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray())
+    this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
 
     for (const variableComponent of this.variableComponents) {
       variableComponent.variableChange.asObservable().subscribe(
@@ -100,7 +100,7 @@ export class LiveComponent implements AfterViewInit {
   }
 
   set sessionId(theSessionId: string) {
-    this.initialiseCodeSessionId(theSessionId)
+    this.initialiseCodeSessionId(theSessionId);
   }
 
   runCode() {
@@ -121,13 +121,13 @@ export class LiveComponent implements AfterViewInit {
     this.liveId = id;
 
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"live"_' + String(this.liveId) + '_' + String(index)
+      codeComponent.name = '"live"_' + String(this.liveId) + '_' + String(index);
     });
   }
 
   initialiseCodeSessionId(sessionId: string) {
     this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId
+      codeComponent.sessionId = sessionId;
     });
   }
 }

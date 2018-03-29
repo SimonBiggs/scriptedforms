@@ -57,7 +57,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   renderMime: RenderMimeRegistry = new RenderMimeRegistry({
     initialFactories,
     sanitizer: {
-      sanitize: (input: string) => {return input}
+      sanitize: (input: string) => input
     }
   });
   model: OutputAreaModel = new OutputAreaModel();
@@ -100,25 +100,25 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       this._eRef.nativeElement.classList.add('cm-s-jupyter');
     });
 
-    let element: HTMLElement = this._eRef.nativeElement
-    this.outputContainer = document.createElement("div")
+    const element: HTMLElement = this._eRef.nativeElement;
+    this.outputContainer = document.createElement('div');
     // this.outputContainer.classList.add('avoid-page-break')
-    this.outputContainer.appendChild(this.outputArea.node)
-    element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode)
+    this.outputContainer.appendChild(this.outputArea.node);
+    element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
     // Mutation observer is awesome! Use more of this.
     this.mutationObserver = new MutationObserver(() => {
-      let links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName("a"))
+      const links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName('a'));
       this.myFileService.morphLinksToUpdateFile(links);
-    })
+    });
 
     this.mutationObserver.observe(
-      this.outputContainer, 
+      this.outputContainer,
       {
         childList: true,
         subtree: true
       }
-    )
+    );
   }
 
   ngOnDestroy() {
@@ -129,7 +129,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    * Each runnable code component on the form has a unique name. This is defined by
    * it's parent section. The name is used to detect repeat submissions for the purpose
    * of only running the most recent submission.
-   *  
+   *
    * @param name A unique name for the code component
    */
   // codeComponentInit(sessionId: string, name: string) {
@@ -138,36 +138,36 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   // }
 
   /**
-   * Run the code within the code component. Update the output area with the results of the 
+   * Run the code within the code component. Update the output area with the results of the
    * code.
    */
   runCode() {
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
       if (future) {
-        this.model = new OutputAreaModel()
+        this.model = new OutputAreaModel();
 
-        future.onIOPub = this._onIOPub
+        future.onIOPub = this._onIOPub;
 
         future.done.then(() => {
-          this.updateOutputAreaModel()
+          this.updateOutputAreaModel();
 
-          this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild)
+          this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild);
 
-          let element: HTMLDivElement = this.outputContainer
-          element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px'
-        })
+          const element: HTMLDivElement = this.outputContainer;
+          element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px';
+        });
       }
     });
   }
 
   // Extract from @jupyterlab/outputarea/src/widget.ts
   private _onIOPub = (msg: KernelMessage.IIOPubMessage) => {
-    let model = this.model;
-    let msgType = msg.header.msg_type;
+    const model = this.model;
+    const msgType = msg.header.msg_type;
     let output: nbformat.IOutput;
-    let transient = (msg.content.transient || {}) as JSONObject;
-    let displayId = transient['display_id'] as string;
+    const transient = (msg.content.transient || {}) as JSONObject;
+    const displayId = transient['display_id'] as string;
     let targets: number[];
 
     switch (msgType) {
@@ -180,7 +180,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       model.add(output);
       break;
     case 'clear_output':
-      let wait = (msg as KernelMessage.IClearOutputMsg).content.wait;
+      const wait = (msg as KernelMessage.IClearOutputMsg).content.wait;
       model.clear(wait);
       break;
     case 'update_display_data':
@@ -188,7 +188,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       output.output_type = 'display_data';
       targets = this._displayIdMap.get(displayId);
       if (targets) {
-        for (let index of targets) {
+        for (const index of targets) {
           model.set(index, output);
         }
       }
