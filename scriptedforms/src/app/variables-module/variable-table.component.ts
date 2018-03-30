@@ -62,7 +62,7 @@ styles: [
 `]
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
-  availableTypes = ['string', 'number', 'integer', 'boolean'];
+  availableTypes = ['string', 'number', 'integer', 'boolean', 'datetime', 'any'];
   types: string[] = [];
   columnDefs: string[] = [];
   oldColumnDefs: string[] = [];

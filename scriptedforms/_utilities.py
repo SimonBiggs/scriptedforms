@@ -35,9 +35,9 @@ from ._version import __version__
 HERE = os.path.dirname(__file__)
 
 
-def attempt_to_set_type(df, column, python_type):
+def attempt_to_set_type(df, column, numpy_type):
     try:
-        df[column] = df[column].astype(np.dtype(python_type))
+        df[column] = df[column].astype(numpy_type)
     except ValueError:
         pass
 
@@ -57,20 +57,29 @@ def _json_table_to_df(json_table):
     for column, a_type in zip(columns, types):
         if column != index:
             if a_type == "string":
-                attempt_to_set_type(df, column, str)
+                attempt_to_set_type(df, column, np.dtype(str))
 
             elif a_type == "number":
-                attempt_to_set_type(df, column, float)
+                attempt_to_set_type(df, column, np.dtype(float))
 
             elif a_type == "integer":
-                attempt_to_set_type(df, column, int)
+                attempt_to_set_type(df, column, np.dtype(int))
 
             elif a_type == "boolean":
-                attempt_to_set_type(df, column, bool)
+                attempt_to_set_type(df, column, np.dtype(bool))
+
+            elif a_type == "datetime":
+                attempt_to_set_type(df, column, np.datetime64)
+
+            elif a_type == "duration":
+                attempt_to_set_type(df, column, np.timedelta64)
+
+            elif a_type == "any":
+                attempt_to_set_type(df, column, 'category')
 
             else:
                 raise ValueError(
-                    "Expected type to be string, number or boolean, got {}"
+                    "Unexpected type, got {}"
                     .format(a_type)
                 )
 
