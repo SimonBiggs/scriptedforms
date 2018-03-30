@@ -62,7 +62,7 @@ styles: [
 `]
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
-  availableTypes = ['string', 'number', 'integer', 'boolean', 'datetime', 'any'];
+  availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
   columnDefs: string[] = [];
   oldColumnDefs: string[] = [];
@@ -92,7 +92,11 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     const types: string[] = [];
     value.schema.fields.forEach(field => {
       columns.push(field.name);
-      types.push(field.type);
+      if (this.availableTypes.includes(field.type)) {
+        types.push(field.type);
+      } else {
+        types.push('string');
+      }
     });
     this.oldColumnDefs = this.columnDefs;
     this.columnDefs = columns;
