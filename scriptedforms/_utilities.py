@@ -51,7 +51,12 @@ def _json_table_to_df(json_table):
     for column, a_type in zip(columns, types):
         if column != index:
             for row in table['data']:
-                if row[column] is None or row[column] == "":
+                is_empty = (
+                    row[column] is None or
+                    row[column] == "" or
+                    row[column] == np.nan
+                )
+                if is_empty:
                     if a_type == "string":
                         row[column] = ""
                     if a_type == "number" or a_type == "integer":
