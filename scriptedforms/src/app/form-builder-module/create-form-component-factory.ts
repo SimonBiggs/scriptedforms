@@ -106,20 +106,7 @@ interface IFormComponent {
  */
 export
 function createFormComponentFactory(sessionId: string, compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
-
-//   const templateAppendTop = `
-
-// <form (ngSubmit)="onSubmit()" #scriptedForm="ngForm">
-
-// `
-//   const templateAppendBottom = `
-
-// <button class="floating-submit" type="submit" mat-fab [disabled]="!scriptedForm.form.valid"><mat-icon>save</mat-icon></button>
-// </form>
-
-//   `
-
-//   metadata.template = templateAppendTop + metadata.template + templateAppendBottom
+  console.log(metadata);
 
   /**
    * The form component that is built each time the template changes

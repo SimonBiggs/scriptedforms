@@ -36,6 +36,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   display: none;
 }
 
+.float-right {
+  float: right;
+}
+
 @media print {
   body, article {
     width: 100% !important;

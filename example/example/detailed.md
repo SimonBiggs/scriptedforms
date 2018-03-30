@@ -313,7 +313,7 @@ Buttons can also be disabled using the conditional property. An example is the
 following button which is only enabled once the submit count becomes at least
 10.
 
-<section-button value="Super Submit" conditional="submit_count >= 10">
+<section-button inline value="Super Submit" conditional="submit_count >= 10">
 
 ```python
 display(Markdown('## Super Submit!!'))

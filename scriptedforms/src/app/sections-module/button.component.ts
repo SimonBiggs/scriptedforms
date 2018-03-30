@@ -46,18 +46,18 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 @Component({
   selector: 'section-button',
   template: `<div style="min-height: 36px;">
-  <div style="float:right">
+  <div [class.float-right]="inline === null">
     <variable-conditional #conditionalComponent *ngIf="conditional">{{conditional}}</variable-conditional>
     <button *ngIf="value"
-    mat-raised-button color="accent"
-    (click)="runCode()"
-    [disabled]="!isFormReady || codeRunning || !conditionalValue">
+      mat-raised-button color="accent"
+      (click)="runCode()"
+      [disabled]="!isFormReady || codeRunning || !conditionalValue">
       {{value}}
     </button>
     <button *ngIf="!value"
-    mat-mini-fab
-    (click)="runCode()"
-    [disabled]="!isFormReady || codeRunning || !conditionalValue">
+      mat-mini-fab
+      (click)="runCode()"
+      [disabled]="!isFormReady || codeRunning || !conditionalValue">
       <mat-icon>keyboard_return</mat-icon>
     </button>
   </div>
@@ -66,6 +66,8 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 `
 })
 export class ButtonComponent implements AfterViewInit {
+
+  @Input() inline?: string = null;
 
   @Input() value?: string;
   @Input() set name(nameInput: string) {
