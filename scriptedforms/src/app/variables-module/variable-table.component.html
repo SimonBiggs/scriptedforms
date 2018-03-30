@@ -8,7 +8,7 @@
     <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
       <mat-header-cell *matHeaderCellDef>
         {{column}}
-        <mat-select [(value)]="types[i]">
+        <mat-select [(ngModel)]="types[i]" (ngModelChange)="typesChanged()">
           <mat-option *ngFor="let type of availableTypes" [value]="type">
             {{ type }}
           </mat-option>
@@ -26,7 +26,7 @@
           (focus)="onFocus([j, column])"
           [disabled]="!isFormReady"
           [(ngModel)]="row[column]"
-          (ngModelChange)="variableChanged()"
+          (ngModelChange)="dataChanged()"
           type="number">
         </mat-input-container>
       </mat-cell>

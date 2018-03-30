@@ -55,6 +55,9 @@ def _json_table_to_df(json_table):
             elif a_type == "number":
                 df[column] = df[column].astype(np.dtype(float))
 
+            elif a_type == "integer":
+                df[column] = df[column].astype(np.dtype(int))
+
             elif a_type == "boolean":
                 df[column] = df[column].astype(np.dtype(bool))
 

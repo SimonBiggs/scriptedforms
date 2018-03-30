@@ -152,24 +152,17 @@ export class VariableBaseComponent implements AfterViewInit {
     this.oldVariableValue = JSON.parse(JSON.stringify(this.variableValue));
   }
 
-  onVariableChange(): Promise<void> {
-    return Promise.resolve(null);
-  }
-
   variableChanged() {
-    this.onVariableChange().then(() => {
-      if (this.testIfDifferent()) {
-        const valueReference = this.pythonValueReference();
-        this.myVariableService.pushVariable(this.sessionId, this.variableIdentifier, this.variableName, valueReference)
-        .then((status) => {
-          if (status !== 'ignore') {
-            this.variableChange.emit(this.variableValue);
-          }
-        });
-        this.updateOldVariable();
-      }
-    });
-
+    if (this.testIfDifferent()) {
+      const valueReference = this.pythonValueReference();
+      this.myVariableService.pushVariable(this.sessionId, this.variableIdentifier, this.variableName, valueReference)
+      .then((status) => {
+        if (status !== 'ignore') {
+          this.variableChange.emit(this.variableValue);
+        }
+      });
+      this.updateOldVariable();
+    }
   }
 
   updateVariableView(value: VariableValue) {

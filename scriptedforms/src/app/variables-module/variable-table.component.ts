@@ -62,7 +62,7 @@ styles: [
 `]
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
-  availableTypes = ['string', 'number', 'boolean'];
+  availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
   columnDefs: string[] = [];
   oldColumnDefs: string[] = [];
@@ -122,9 +122,16 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     }
   }
 
-  onVariableChange(): Promise<void> {
+  dataChanged() {
     this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
-    return Promise.resolve(null);
+    this.variableChanged();
+  }
+
+  typesChanged() {
+    this.variableValue.schema.fields.forEach((field, index) => {
+      field.type = this.types[index];
+    });
+    this.variableChanged();
   }
 
   testIfDifferent() {
