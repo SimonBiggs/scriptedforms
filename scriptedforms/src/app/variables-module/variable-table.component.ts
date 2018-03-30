@@ -109,6 +109,11 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     );
 
     if (columnsUnchanged && numRowsUnchanged) {
+      types.forEach((type, index) => {
+        if (this.oldVariableValue.schema.fields[index].type !== type) {
+          this.oldVariableValue.schema.fields[index].type = type;
+        }
+      });
       value.data.forEach((row, i) => {
         const keys = Object.keys(row);
         keys.forEach((key, j) => {
@@ -118,9 +123,6 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
               this.oldVariableValue.data[i][key] = row[key];
             }
           }
-        });
-        types.forEach((type, index) => {
-          this.oldVariableValue.schema.fields[index].type = type;
         });
       });
     } else {
@@ -135,9 +137,19 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   }
 
   typesChanged() {
+    let didDataChange = false;
     this.variableValue.schema.fields.forEach((field, index) => {
+      if (this.oldVariableValue.schema.fields[index].type === 'boolean' && this.types[index] === 'string') {
+        this.dataSource.data.forEach(row => {
+          row[this.columnDefs[index]] = '';
+          didDataChange = true;
+        });
+      }
       field.type = this.types[index];
     });
+    if (didDataChange) {
+      this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
+    }
     this.variableChanged();
   }
 
