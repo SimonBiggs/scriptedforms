@@ -63,6 +63,7 @@ export class VariableBaseComponent implements AfterViewInit {
   variableValue: VariableValue = null;
 
   @Input() name?: string;
+  @Input() label?: string;
   labelValue: string;
   variableName: string;
 
@@ -72,7 +73,8 @@ export class VariableBaseComponent implements AfterViewInit {
 
   constructor(
     public myChangeDetectorRef: ChangeDetectorRef,
-    public myVariableService: VariableService
+    public myVariableService: VariableService,
+    public myElementRef: ElementRef
   ) { }
 
    htmlDecode(input: string) {
@@ -92,7 +94,31 @@ export class VariableBaseComponent implements AfterViewInit {
     this.loadVariableName();
 
     if (this.name) {
-      this.labelValue = this.name;
+      this.label = this.name;
+      const element = <HTMLElement>this.myElementRef.nativeElement;
+      const divElement = document.createElement('div');
+      divElement.innerHTML = `
+<pre>
+  <span class="ansi-red-fg">
+    The use of the "name" parameter has been deprecated. Please use the
+    "label" parameter instead.
+
+    Replace:
+
+        &lt;variable-* name="${this.name}"&gt;${this.variableName}&lt;/variable-*&gt;
+
+    With:
+
+        &lt;variable-* label="${this.name}"&gt;${this.variableName}&lt;/variable-*&gt;
+  </span>
+</pre>
+      `;
+      divElement.classList.add('jp-RenderedText');
+      element.appendChild(divElement);
+    }
+
+    if (this.label) {
+      this.labelValue = this.label;
     } else {
       this.labelValue = this.variableName;
     }
