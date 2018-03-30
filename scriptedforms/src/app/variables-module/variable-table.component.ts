@@ -115,6 +115,9 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
             }
           }
         });
+        types.forEach((type, index) => {
+          this.oldVariableValue.schema.fields[index].type = type;
+        });
       });
     } else {
       this.dataSource.data = value.data;

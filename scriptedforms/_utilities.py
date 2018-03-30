@@ -35,6 +35,13 @@ from ._version import __version__
 HERE = os.path.dirname(__file__)
 
 
+def attempt_to_set_type(df, column, python_type):
+    try:
+        df[column] = df[column].astype(np.dtype(python_type))
+    except ValueError:
+        pass
+
+
 def _json_table_to_df(json_table):
     table = json.loads(json_table)
     columns = [fields['name'] for fields in table['schema']['fields']]
@@ -50,16 +57,16 @@ def _json_table_to_df(json_table):
     for column, a_type in zip(columns, types):
         if column != index:
             if a_type == "string":
-                df[column] = df[column].astype(np.dtype(str))
+                attempt_to_set_type(df, column, str)
 
             elif a_type == "number":
-                df[column] = df[column].astype(np.dtype(float))
+                attempt_to_set_type(df, column, float)
 
             elif a_type == "integer":
-                df[column] = df[column].astype(np.dtype(int))
+                attempt_to_set_type(df, column, int)
 
             elif a_type == "boolean":
-                df[column] = df[column].astype(np.dtype(bool))
+                attempt_to_set_type(df, column, bool)
 
             else:
                 raise ValueError(
