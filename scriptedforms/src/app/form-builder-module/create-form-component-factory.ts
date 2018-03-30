@@ -245,6 +245,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
         buttonComponent.formReady(false);
       });
       this.variableComponents.forEach(variableComponent => {
+        variableComponent.variableValue = null;
         variableComponent.formReady(false);
       });
       this.liveComponents.toArray().forEach(liveComponent => {
