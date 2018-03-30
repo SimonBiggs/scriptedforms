@@ -15,6 +15,12 @@ if [[ $GROUP == e2e ]]; then
     cd "$(dirname "$0")"/../e2e
     yarn
     yarn selenium &
+    printf 'Waiting for Selenium Server to load\n'
+    until $(curl --output /dev/null --silent --head --fail http://localhost:4444/wd/hub); do
+        printf '.'
+        sleep 1
+    done
+    printf '\n'
     yarn e2e
     cd - 
 fi
