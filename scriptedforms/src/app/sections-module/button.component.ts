@@ -36,7 +36,7 @@ function on click.
 */
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit, Input, ViewChild
+  Component, ContentChildren, QueryList, AfterViewInit, Input, ViewChild, ElementRef
 } from '@angular/core';
 
 import { CodeComponent } from '../code-module/code.component';
@@ -48,13 +48,13 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
   template: `<div style="min-height: 36px;">
   <div style="float:right">
     <variable-conditional #conditionalComponent *ngIf="conditional">{{conditional}}</variable-conditional>
-    <button *ngIf="name"
+    <button *ngIf="value"
     mat-raised-button color="accent"
     (click)="runCode()"
     [disabled]="!isFormReady || codeRunning || !conditionalValue">
-      {{name}}
+      {{value}}
     </button>
-    <button *ngIf="!name"
+    <button *ngIf="!value"
     mat-mini-fab
     (click)="runCode()"
     [disabled]="!isFormReady || codeRunning || !conditionalValue">
@@ -67,7 +67,31 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 })
 export class ButtonComponent implements AfterViewInit {
 
-  @Input() name?: string;
+  @Input() value?: string;
+  @Input() set name(nameInput: string) {
+    this.value = nameInput;
+    const element = <HTMLElement>this.myElementRef.nativeElement;
+    const divElement = document.createElement('div');
+    divElement.innerHTML = `
+<pre>
+<span class="ansi-red-fg">
+  The use of the "name" parameter has been deprecated. Please use the
+  "value" parameter instead.
+
+  Replace:
+
+      &lt;section-button name="${this.value}"&gt;
+
+  With:
+
+      &lt;section-button value="${this.value}"&gt;
+</span>
+</pre>
+    `;
+    divElement.classList.add('jp-RenderedText');
+    element.appendChild(divElement);
+  }
+
   @Input() conditional?: string;
 
   _sessionId: string;
@@ -84,7 +108,8 @@ export class ButtonComponent implements AfterViewInit {
   @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent;
 
   constructor(
-    private myKernelSevice: KernelService
+    private myKernelSevice: KernelService,
+    public myElementRef: ElementRef
   ) { }
 
   ngAfterViewInit() {

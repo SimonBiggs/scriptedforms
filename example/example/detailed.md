@@ -78,7 +78,7 @@ manually re-run the code if need be.
 
 An example `<section-start>` is given following:
 
-<section-start api="start">
+<section-start>
 
 ```python
 from IPython.display import display, Markdown
@@ -143,7 +143,7 @@ plt.plot(data, 'o');
 
 `<variable-number>` and `<variable-slider>` both have four optional parameters:
 
-* `name`, for changing the visible name of the input
+* `label`, for changing the visible label of the input
 * `min` and `max`, changing the range of the input
 * `step` for changing the step size of the input
 
@@ -152,8 +152,8 @@ respectively for `<variable-slider>`. Step defaults to 1 for both elements.
 
 The use of these optional parameters is demoed below:
 
-<variable-number name="A custom name" min="0" max="10" step="0.1">data[2]</variable-number>
-<variable-slider name="A custom name" min="0" max="10" step="0.1">data[2]</variable-slider>
+<variable-number label="A custom label" min="0" max="10" step="0.1">data[2]</variable-number>
+<variable-slider label="A custom label" min="0" max="10" step="0.1">data[2]</variable-slider>
 
 </section-live>
 
@@ -175,8 +175,8 @@ omega = np.ones(2)
 
 Angular frequencies ($\omega$):
 
-<variable-slider name="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
-<variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
+<variable-slider label="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
+<variable-slider label="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
 
 ```python
 plt.figure(figsize=(5*1.618,5))
@@ -262,7 +262,7 @@ Dropdown allows options to be available in a dropdown list. To define the items
 used within the dropdown a Python list needs to be provided to the `items` html
 parameter. See below for how this works in practice.
 
-<variable-string name="Your own machine name" placeholder="Write a custom machine name here">
+<variable-string label="Your own machine name" placeholder="Write a custom machine name here">
   custom_machine
 </variable-string>
 
@@ -298,9 +298,9 @@ They will not run until their respective button is pressed.
 #### Button customistion
 
 Button sections are customisable, their content can be changed to words by
-changing the name property.
+changing the value property.
 
-<section-button name="Submit" api='submit'>
+<section-button name="Submit">
 
 ```python
 submit_count += 1
@@ -313,7 +313,7 @@ Buttons can also be disabled using the conditional property. An example is the
 following button which is only enabled once the submit count becomes at least
 10.
 
-<section-button name="Super Submit" conditional="submit_count >= 10" api="conditional-submit">
+<section-button name="Super Submit" conditional="submit_count >= 10">
 
 ```python
 display(Markdown('## Super Submit!!'))
