@@ -27,6 +27,7 @@
 
 import os
 import json
+import numpy as np
 import pandas as pd
 
 from ._version import __version__
@@ -36,7 +37,8 @@ HERE = os.path.dirname(__file__)
 
 def _json_table_to_df(json_table):
     table = json.loads(json_table)
-    columns = [t['name'] for t in table['schema']['fields']]
+    columns = [fields['name'] for fields in table['schema']['fields']]
+    types = [fields['type'] for fields in table['schema']['fields']]
     index = table['schema']['primaryKey'][0]
 
     df = pd.DataFrame(
@@ -45,9 +47,22 @@ def _json_table_to_df(json_table):
 
     df.set_index(index, inplace=True)
 
-    for column in columns:
+    for column, a_type in zip(columns, types):
         if column != index:
-            df[column] = df[column].astype('float64')
+            if a_type == "string":
+                df[column] = df[column].astype(np.dtype(str))
+
+            elif a_type == "number":
+                df[column] = df[column].astype(np.dtype(float))
+
+            elif a_type == "boolean":
+                df[column] = df[column].astype(np.dtype(bool))
+
+            else:
+                raise ValueError(
+                    "Expected type to be string, number or boolean, got {}"
+                    .format(a_type)
+                )
 
     return df
 

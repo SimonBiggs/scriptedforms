@@ -45,7 +45,7 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
-import { TableComponent } from '../variables-module/table.component';
+import { VariableTableComponent } from '../variables-module/variable-table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
@@ -71,7 +71,7 @@ export class LiveComponent implements AfterViewInit {
 
   @ContentChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
   @ContentChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
-  @ContentChildren(TableComponent) tableComponents: QueryList<TableComponent>;
+  @ContentChildren(VariableTableComponent) variableTableComponents: QueryList<VariableTableComponent>;
 
   @ContentChildren(StringComponent) stringComponents: QueryList<StringComponent>;
   @ContentChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
@@ -87,7 +87,7 @@ export class LiveComponent implements AfterViewInit {
 
     this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray());
     this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray());
-    this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray());
+    this.variableComponents = this.variableComponents.concat(this.variableTableComponents.toArray());
 
     this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
     this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());

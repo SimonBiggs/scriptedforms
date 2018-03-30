@@ -77,7 +77,7 @@ import { TickComponent } from '../variables-module/tick.component';
 
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
-import { TableComponent } from '../variables-module/table.component';
+import { VariableTableComponent } from '../variables-module/variable-table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
@@ -148,7 +148,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     @ViewChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
     @ViewChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
-    @ViewChildren(TableComponent) tableComponents: QueryList<TableComponent>;
+    @ViewChildren(VariableTableComponent) variableTableComponents: QueryList<VariableTableComponent>;
 
     @ViewChildren(StringComponent) stringComponents: QueryList<StringComponent>;
     @ViewChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
@@ -183,7 +183,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
       this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray());
-      this.variableComponents = this.variableComponents.concat(this.tableComponents.toArray());
+      this.variableComponents = this.variableComponents.concat(this.variableTableComponents.toArray());
 
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());

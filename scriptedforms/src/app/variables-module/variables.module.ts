@@ -45,7 +45,7 @@ import { ConditionalComponent } from './conditional.component';
 
 import { NumberComponent } from './number.component';
 import { SliderComponent } from './slider.component';
-import { TableComponent } from './table.component';
+import { VariableTableComponent } from './variable-table.component';
 
 import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
@@ -67,7 +67,7 @@ import { StringListParameterComponent } from './string-list-parameter.component'
     ConditionalComponent,
     NumberComponent,
     SliderComponent,
-    TableComponent,
+    VariableTableComponent,
     StringComponent,
     DropdownComponent,
     StringListParameterComponent
@@ -78,7 +78,7 @@ import { StringListParameterComponent } from './string-list-parameter.component'
     ConditionalComponent,
     NumberComponent,
     SliderComponent,
-    TableComponent,
+    VariableTableComponent,
     StringComponent,
     DropdownComponent,
     StringListParameterComponent

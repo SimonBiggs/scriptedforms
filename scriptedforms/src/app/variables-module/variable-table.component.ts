@@ -41,38 +41,7 @@ import { PandasTable } from '../interfaces/pandas-table';
 
 @Component({
   selector: 'variable-table',
-  template: `
-<span #variablecontainer *ngIf="variableName === undefined">
-  <ng-content></ng-content>
-</span>
-
-<div class="container mat-elevation-z8 avoid-page-break" >
-  <mat-table #table [dataSource]="dataSource" *ngIf="variableValue">
-    <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
-      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-      <mat-cell *matCellDef="let row; let j = index">
-        <span *ngIf="column == variableValue.schema.primaryKey || isOutput">
-          {{row[column]}}
-        </span>
-        <mat-input-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
-          <input
-          [required]="required"
-          matInput
-          (blur)="onBlur([j, column])"
-          (focus)="onFocus([j, column])"
-          [disabled]="!isFormReady"
-          [(ngModel)]="row[column]"
-          (ngModelChange)="variableChanged()"
-          type="number">
-        </mat-input-container>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="columnDefs"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columnDefs;"></mat-row>
-  </mat-table>
-</div>
-`,
+  templateUrl: 'variable-table.component.html',
 styles: [
 `
 .container {
@@ -92,7 +61,7 @@ styles: [
 }
 `]
 })
-export class TableComponent extends VariableBaseComponent implements AfterViewInit {
+export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
   columnDefs: string[] = [];
   oldColumnDefs: string[] = [];
   dataSource: MatTableDataSource<{
@@ -105,6 +74,8 @@ export class TableComponent extends VariableBaseComponent implements AfterViewIn
   focus: [number, string] = [null, null];
 
   updateVariableView(value: PandasTable) {
+    console.log(value);
+
     let numRowsUnchanged: boolean;
     if (this.variableValue) {
       numRowsUnchanged = (

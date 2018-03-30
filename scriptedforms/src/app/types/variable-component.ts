@@ -30,11 +30,11 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
-import { TableComponent } from '../variables-module/table.component';
+import { VariableTableComponent } from '../variables-module/variable-table.component';
 
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
 export type VariableComponent = (
-  NumberComponent | StringComponent | TableComponent | TickComponent |
+  NumberComponent | StringComponent | VariableTableComponent | TickComponent |
   ToggleComponent | SliderComponent | DropdownComponent | ConditionalComponent);
