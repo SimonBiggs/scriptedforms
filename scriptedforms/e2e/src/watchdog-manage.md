@@ -23,7 +23,7 @@ display(Markdown('[{0}]({0})'.format(test_filename)))
 
 </section-start>
 
-<section-button name="Create" class="create-watchdog-test">
+<section-button value="Create" class="create-watchdog-test">
 
 ```python
 with open(test_filename, 'w') as file:
@@ -32,7 +32,7 @@ with open(test_filename, 'w') as file:
 
 </section-button>
 
-<section-button name="Delete" class="delete-watchdog-test">
+<section-button value="Delete" class="delete-watchdog-test">
 
 ```python
 os.remove(test_filename)

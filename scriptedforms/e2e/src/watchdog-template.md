@@ -23,7 +23,7 @@ display(Markdown('[{0}]({0})'.format(manage_filename)))
 
 </section-start>
 
-<section-button name="Prepend" class="prepend-string-contents">
+<section-button value="Prepend" class="prepend-string-contents">
 
 <variable-string class="write-in-me">to_be_prepended</variable-string>
 

@@ -26,9 +26,9 @@ display(Markdown('# Hello'))
 </section-button>
 
 
-<section-button name="foo" class="check-my-name"></section-button>
+<section-button value="foo" class="check-my-name"></section-button>
 
-<section-button name="Disable" class="make-false">
+<section-button value="Disable" class="make-false">
 
 ```python
 button_enabled = False
@@ -37,7 +37,7 @@ button_enabled = False
 </section-button>
 
 
-<section-button name="Enable" class="make-true">
+<section-button value="Enable" class="make-true">
 
 ```python
 button_enabled = True
