@@ -146,7 +146,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   }
 
   pythonValueReference() {
-    return `_json_table_to_df('${JSON.stringify(this.variableValue)}')`;
+    return `_json_table_to_df(r'${JSON.stringify(this.variableValue)}')`;
   }
 
   pythonVariableEvaluate() {
