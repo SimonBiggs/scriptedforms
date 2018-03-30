@@ -1,12 +1,12 @@
 index, 1st, 2nd, 3rd, 4th, 5th
-a,True,None,3.0,4.0,5
-b,True,None,1.0,2.0,1
-c,True,None,1.0,9.0,1
+a,True,,3.0,4.0,5
+b,True,,1.0,2.0,1
+c,True,,1.0,9.0,1
 d,True,,1.0,2.0,1
-e,False,None,1.0,2.0,1
+e,False,,1.0,2.0,1
 f,False,,12.0,2.0,1
-g,False,None,11.0,2.1,1
-h,True,None,11.1,2.0,1
-i,False,None,11.0,2.0,1
-j,False,None,1.0,2.0,1
-k,False,None,1.0,2.0,1
+g,False,,11.0,2.1,1
+h,True,,11.1,2.0,1
+i,False,,11.0,2.0,1
+j,False,,1.0,2.0,1
+k,False,,1.0,2.0,1

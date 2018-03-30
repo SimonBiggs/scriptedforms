@@ -48,6 +48,17 @@ def _json_table_to_df(json_table):
     types = [fields['type'] for fields in table['schema']['fields']]
     index = table['schema']['primaryKey'][0]
 
+    for column, a_type in zip(columns, types):
+        if column != index:
+            for row in table['data']:
+                if row[column] is None:
+                    if a_type == "string":
+                        row[column] = ""
+                    if a_type == "number" or a_type == "integer":
+                        row[column] = 0
+                    if a_type == "boolean":
+                        row[column] = False
+
     df = pd.DataFrame(
         table['data'],
         columns=columns)
