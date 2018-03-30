@@ -10,7 +10,7 @@
         {{column}}
         <mat-select *ngIf="column != variableValue.schema.primaryKey" [(ngModel)]="types[i]" (ngModelChange)="typesChanged()">
           <mat-option *ngFor="let type of availableTypes" [value]="type">
-            {{ type }}
+            {{type}}
           </mat-option>
         </mat-select>
       </mat-header-cell>
