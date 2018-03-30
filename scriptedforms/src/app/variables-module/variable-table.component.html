@@ -4,7 +4,7 @@
 </span>
 
 <div class="container mat-elevation-z8 avoid-page-break">
-  <mat-table #table [dataSource]="dataSource" *ngIf="variableValue" class="no-max-height">
+  <mat-table #table [dataSource]="dataSource" *ngIf="variableValue">
     <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
       <mat-header-cell *matHeaderCellDef>
         {{column}}

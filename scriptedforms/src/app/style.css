@@ -28,14 +28,13 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.no-max-height {
-  max-height : none !important;
-}
-
 .no-ripple-height .mat-checkbox-ripple {
   height: 0px;
 }
 
+.jp-OutputArea-prompt {
+  display: none;
+}
 
 @media print {
   body, article {

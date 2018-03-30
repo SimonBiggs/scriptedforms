@@ -51,13 +51,7 @@ styles: [
 }
 
 .mat-form-field {
-  font-size: 14px;
   width: 100%;
-}
-
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
 }
 `]
 })
