@@ -3,10 +3,17 @@
   <ng-content></ng-content>
 </span>
 
-<div class="container mat-elevation-z8 avoid-page-break" >
+<div class="container mat-elevation-z8 avoid-page-break">
   <mat-table #table [dataSource]="dataSource" *ngIf="variableValue" class="no-max-height">
     <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
-      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>
+        {{column}}
+        <mat-select [(value)]="types[i]">
+          <mat-option *ngFor="let type of availableTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-header-cell>
       <mat-cell *matCellDef="let row; let j = index">
         <span *ngIf="column == variableValue.schema.primaryKey || isOutput">
           {{row[column]}}

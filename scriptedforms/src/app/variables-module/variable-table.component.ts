@@ -62,6 +62,8 @@ styles: [
 `]
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
+  availableTypes = ['string', 'number', 'boolean'];
+  types: string[] = [];
   columnDefs: string[] = [];
   oldColumnDefs: string[] = [];
   dataSource: MatTableDataSource<{
@@ -87,11 +89,14 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     this.variableValue = value;
 
     const columns: string[] = [];
-    value.schema.fields.forEach(val => {
-      columns.push(val.name);
+    const types: string[] = [];
+    value.schema.fields.forEach(field => {
+      columns.push(field.name);
+      types.push(field.type);
     });
     this.oldColumnDefs = this.columnDefs;
     this.columnDefs = columns;
+    this.types = types;
 
     const columnsUnchanged = (
       this.oldColumnDefs.length === this.columnDefs.length &&
