@@ -27,7 +27,7 @@
             (focus)="onFocus([j, column])"
             [disabled]="!isFormReady"
             [(ngModel)]="row[column]"
-            (ngModelChange)="dataChanged()"
+            (keyup)="dataChanged()"
             type="string">
           </mat-input-container>
           <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
