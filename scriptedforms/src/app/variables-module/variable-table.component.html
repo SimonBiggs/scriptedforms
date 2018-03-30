@@ -18,17 +18,24 @@
         <span *ngIf="column == variableValue.schema.primaryKey || isOutput">
           {{row[column]}}
         </span>
-        <mat-input-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
-          <input
-          [required]="required"
-          matInput
-          (blur)="onBlur([j, column])"
-          (focus)="onFocus([j, column])"
-          [disabled]="!isFormReady"
-          [(ngModel)]="row[column]"
-          (ngModelChange)="dataChanged()"
-          type="string">
-        </mat-input-container>
+        <span *ngIf="column != variableValue.schema.primaryKey && !isOutput">
+          <mat-input-container *ngIf="types[i] !== 'boolean'">
+            <input
+            [required]="required"
+            matInput
+            (blur)="onBlur([j, column])"
+            (focus)="onFocus([j, column])"
+            [disabled]="!isFormReady"
+            [(ngModel)]="row[column]"
+            (ngModelChange)="dataChanged()"
+            type="string">
+          </mat-input-container>
+          <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
+            [(ngModel)]="row[column]"
+            [disabled]="!isFormReady"
+            (ngModelChange)="dataChanged()">
+          </mat-checkbox>
+        </span>
       </mat-cell>
     </ng-container>
 

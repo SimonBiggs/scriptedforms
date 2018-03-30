@@ -32,6 +32,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   max-height : none !important;
 }
 
+.no-ripple-height .mat-checkbox-ripple {
+  height: 0px;
+}
+
 
 @media print {
   body, article {
