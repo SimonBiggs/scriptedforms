@@ -8,7 +8,7 @@
     <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs; let i = index">
       <mat-header-cell *matHeaderCellDef>
         {{column}}
-        <mat-select [(ngModel)]="types[i]" (ngModelChange)="typesChanged()">
+        <mat-select *ngIf="column != variableValue.schema.primaryKey" [(ngModel)]="types[i]" (ngModelChange)="typesChanged()">
           <mat-option *ngFor="let type of availableTypes" [value]="type">
             {{ type }}
           </mat-option>
