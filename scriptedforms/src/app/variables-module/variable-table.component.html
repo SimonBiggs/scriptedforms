@@ -13,41 +13,85 @@
       <mat-header-cell *matHeaderCellDef>
         {{column}}
 
-        <span *ngIf="typeEdit !== null">
+        <ng-container *ngIf="typeEdit !== null">
           <mat-select *ngIf="column != variableValue.schema.primaryKey" [(ngModel)]="types[i]" (ngModelChange)="typesChanged()">
             <mat-option *ngFor="let type of availableTypes" [value]="type">
               {{type}}
             </mat-option>
           </mat-select>
-        </span>
+        </ng-container>
 
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let j = index">
-        <span *ngIf="column == variableValue.schema.primaryKey || isOutput">
+        <ng-container *ngIf="column == variableValue.schema.primaryKey || isOutput">
           {{row[column]}}
-        </span>
-        <span *ngIf="column != variableValue.schema.primaryKey && !isOutput">
+        </ng-container>
+        <ng-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
+          <ng-container *ngIf="definedInputType[column] === undefined">
+            
+            <mat-input-container *ngIf="types[i] !== 'boolean'">
+              <input
+                [required]="required"
+                matInput
+                (blur)="onBlur([j, column])"
+                (focus)="onFocus([j, column])"
+                [disabled]="!isFormReady"
+                [(ngModel)]="row[column]"
+                (keyup)="dataChanged()"
+                type="string">
+            </mat-input-container>
 
-          <mat-input-container *ngIf="types[i] !== 'boolean'">
-            <input
-              [required]="required"
-              matInput
-              (blur)="onBlur([j, column])"
-              (focus)="onFocus([j, column])"
-              [disabled]="!isFormReady"
+            <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
               [(ngModel)]="row[column]"
-              (keyup)="dataChanged()"
-              type="string">
-          </mat-input-container>
+              [disabled]="!isFormReady"
+              (ngModelChange)="dataChanged()">
+            </mat-checkbox>
 
-          <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
-            [(ngModel)]="row[column]"
-            [disabled]="!isFormReady"
-            (ngModelChange)="dataChanged()">
-          </mat-checkbox>
+          </ng-container>
 
-        </span>
+          <!-- All defined input types given below here -->
+          <ng-container *ngIf="definedInputType[column] !== undefined">
+            <ng-container *ngIf="definedInputType[column] === 'string'">
+
+              <mat-input-container>
+                <input
+                  [required]="required"
+                  matInput
+                  (blur)="onBlur([j, column])"
+                  (focus)="onFocus([j, column])"
+                  [disabled]="!isFormReady"
+                  [(ngModel)]="row[column]"
+                  (keyup)="dataChanged()"
+                  type="string">
+              </mat-input-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="definedInputType[column] === 'tick'">
+
+              <mat-checkbox class="no-ripple-height"
+                [(ngModel)]="row[column]"
+                [disabled]="!isFormReady"
+                (ngModelChange)="dataChanged()">
+              </mat-checkbox>
+
+            </ng-container>
+            
+            <ng-container *ngIf="definedInputType[column] === 'toggle'">
+
+              <mat-slide-toggle class="no-ripple-height"
+                [(ngModel)]="row[column]"
+                [disabled]="!isFormReady"
+                (ngModelChange)="dataChanged()">
+              </mat-slide-toggle>
+
+            </ng-container>
+            
+
+          </ng-container>
+
+        </ng-container>
       </mat-cell>
 
     </ng-container>

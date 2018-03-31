@@ -65,8 +65,8 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   @ViewChild('variableInputType') variableInputType: VariableParameterComponent;
   @ViewChild('variableDropdownItems') variableDropdownItems: VariableParameterComponent;
 
-  definedInputType: {};
-  definedDropdownItems: {};
+  definedInputType: {} = {};
+  definedDropdownItems: {} = {};
 
   availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
@@ -84,7 +84,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   ngAfterViewInit() {
     if (this.inputType) {
       this.definedInputType = this.variableInputType.variableValue;
-      this.variableInputType.variableChange.asObservable().subscribe((value: string[]) => {
+      this.variableInputType.variableChange.asObservable().subscribe((value: any ) => {
         this.definedInputType = value;
         console.log(`Input Type: ${this.definedInputType}`);
         console.log(this.definedInputType);
