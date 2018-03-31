@@ -13,7 +13,7 @@ filepath = 'file-change.csv'
 
 <section-live>
 
-<variable-table>from_csv</variable-table>
+<variable-table typeEdit>from_csv</variable-table>
 
 ```python
 from_csv.to_csv(filepath)

@@ -27,7 +27,7 @@
 // import { BehaviorSubject } from 'rxjs';
 
 import {
-  Component, AfterViewInit
+  Component, AfterViewInit, Input
 } from '@angular/core';
 
 import {
@@ -56,6 +56,8 @@ styles: [
 `]
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
+  @Input() typeEdit?: string = null;
+
   availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
   columnDefs: string[] = [];

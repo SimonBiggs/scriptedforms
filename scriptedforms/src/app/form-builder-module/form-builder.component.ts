@@ -145,8 +145,8 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'
     ).replace(/}/g, '@~rb~@'
-    ).replace(/@~lb~@/g, '{{ "{" }}'
-    ).replace(/@~rb~@/g, '{{ "}" }}');
+    ).replace(/@~lb~@/g, '{{ \'{\' }}'
+    ).replace(/@~rb~@/g, '{{ \'}\' }}');
 
     const htmlTemplate = escapedHtml;
     const result = {
