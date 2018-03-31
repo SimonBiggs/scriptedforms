@@ -206,7 +206,7 @@ Table variables display a full pandas dataframe. The live code can update one
 part of the table as other parts are being edited.
 
 <section-live>
-<variable-table>table</variable-table>
+<variable-table inputTypes="{'Meas1': 'number', 'Meas2': 'number', 'Meas3': 'number', 'Avg': 'readonly'}">table</variable-table>
 
 ```python
 table.iloc[:,3] = np.nanmean(table.iloc[:,0:3], axis=1)

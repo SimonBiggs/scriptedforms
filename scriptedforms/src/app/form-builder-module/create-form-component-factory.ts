@@ -171,8 +171,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.variableComponents = this.variableComponents.concat(this.variableTableComponents.toArray());
 
       this.variableTableComponents.toArray().forEach(variableTableComponent => {
-        if (variableTableComponent.inputType) {
-          this.variableComponents = this.variableComponents.concat([variableTableComponent.variableInputType]);
+        if (variableTableComponent.inputTypes) {
+          this.variableComponents = this.variableComponents.concat([variableTableComponent.variableInputTypes]);
         }
         if (variableTableComponent.dropdownItems) {
           this.variableComponents = this.variableComponents.concat([variableTableComponent.variableDropdownItems]);

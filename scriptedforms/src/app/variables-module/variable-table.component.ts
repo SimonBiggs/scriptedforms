@@ -59,13 +59,13 @@ styles: [
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
   @Input() typeEdit?: string = null;
-  @Input() inputType?: string;
+  @Input() inputTypes?: string;
   @Input() dropdownItems?: string;
 
-  @ViewChild('variableInputType') variableInputType: VariableParameterComponent;
+  @ViewChild('variableInputTypes') variableInputTypes: VariableParameterComponent;
   @ViewChild('variableDropdownItems') variableDropdownItems: VariableParameterComponent;
 
-  definedInputType: {} = {};
+  definedInputTypes: {} = {};
   definedDropdownItems: {} = {};
 
   availableTypes = ['string', 'number', 'integer', 'boolean'];
@@ -82,12 +82,12 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   focus: [number, string] = [null, null];
 
   ngAfterViewInit() {
-    if (this.inputType) {
-      this.definedInputType = this.variableInputType.variableValue;
-      this.variableInputType.variableChange.asObservable().subscribe((value: any ) => {
-        this.definedInputType = value;
-        console.log(`Input Type: ${this.definedInputType}`);
-        console.log(this.definedInputType);
+    if (this.inputTypes) {
+      this.definedInputTypes = this.variableInputTypes.variableValue;
+      this.variableInputTypes.variableChange.asObservable().subscribe((value: any ) => {
+        this.definedInputTypes = value;
+        console.log(`Input Type: ${this.definedInputTypes}`);
+        console.log(this.definedInputTypes);
       });
     }
 

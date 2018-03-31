@@ -3,7 +3,7 @@
   <ng-content></ng-content>
 </span>
 
-<variable-parameter #variableInputType *ngIf="inputType">{{inputType}}</variable-parameter>
+<variable-parameter #variableInputTypes *ngIf="inputTypes">{{inputTypes}}</variable-parameter>
 <variable-parameter #variableDropdownItems *ngIf="dropdownItems">{{dropdownItems}}</variable-parameter>
 
 <div class="container mat-elevation-z8 avoid-page-break">
@@ -28,7 +28,7 @@
           {{row[column]}}
         </ng-container>
         <ng-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
-          <ng-container *ngIf="definedInputType[column] === undefined">
+          <ng-container *ngIf="definedInputTypes[column] === undefined">
             
             <mat-input-container *ngIf="types[i] !== 'boolean'">
               <input
@@ -51,8 +51,8 @@
           </ng-container>
 
           <!-- All defined input types given below here -->
-          <ng-container *ngIf="definedInputType[column] !== undefined">
-            <ng-container *ngIf="definedInputType[column] === 'string'">
+          <ng-container *ngIf="definedInputTypes[column] !== undefined">
+            <ng-container *ngIf="definedInputTypes[column] === 'string'">
 
               <mat-input-container>
                 <input
@@ -67,7 +67,7 @@
 
             </ng-container>
 
-            <ng-container *ngIf="definedInputType[column] === 'number'">
+            <ng-container *ngIf="definedInputTypes[column] === 'number'">
 
                 <mat-input-container>
                   <input
@@ -82,7 +82,7 @@
 
             </ng-container>
 
-            <ng-container *ngIf="definedInputType[column] === 'tick'">
+            <ng-container *ngIf="definedInputTypes[column] === 'tick'">
 
               <mat-checkbox class="no-ripple-height"
                 [(ngModel)]="row[column]"
@@ -92,7 +92,7 @@
 
             </ng-container>
             
-            <ng-container *ngIf="definedInputType[column] === 'toggle'">
+            <ng-container *ngIf="definedInputTypes[column] === 'toggle'">
 
               <mat-slide-toggle class="no-ripple-height"
                 [(ngModel)]="row[column]"
@@ -102,7 +102,7 @@
 
             </ng-container>
 
-            <ng-container *ngIf="definedInputType[column] === 'readonly'">
+            <ng-container *ngIf="definedInputTypes[column] === 'readonly'">
 
               {{row[column]}}
 
