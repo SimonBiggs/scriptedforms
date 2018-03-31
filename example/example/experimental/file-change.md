@@ -8,7 +8,7 @@
 from IPython.display import display
 filepath = 'file-change.csv'
 
-type_lock = {
+input_type = {
     '1st': 'toggle',
     '3rd': 'number',
     '4th': 'dropdown',
@@ -67,11 +67,11 @@ from_csv.to_csv(filepath)
 
 ## A table that forces input types
 
-This is using the `typeLock` property within the `<variable-table>` element.
+This is using the `inputType` property within the `<variable-table>` element.
 
 <section-live>
 
-<variable-table typeLock="type_lock" dropdownItems="dropdown_items">from_csv</variable-table>
+<variable-table inputType="input_type" dropdownItems="dropdown_items">from_csv</variable-table>
 
 ```python
 from_csv.to_csv(filepath)
