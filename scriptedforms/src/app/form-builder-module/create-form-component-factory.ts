@@ -106,8 +106,6 @@ interface IFormComponent {
  */
 export
 function createFormComponentFactory(sessionId: string, compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
-  console.log(metadata);
-
   /**
    * The form component that is built each time the template changes
    */
@@ -171,6 +169,15 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.variableComponents = this.variableComponents.concat(this.numberComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.sliderComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.variableTableComponents.toArray());
+
+      this.variableTableComponents.toArray().forEach(variableTableComponent => {
+        if (variableTableComponent.typeLock) {
+          this.variableComponents = this.variableComponents.concat([variableTableComponent.variableTypeLock]);
+        }
+        if (variableTableComponent.dropdownItems) {
+          this.variableComponents = this.variableComponents.concat([variableTableComponent.variableDropdownItems]);
+        }
+      });
 
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());

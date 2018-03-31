@@ -65,6 +65,9 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   @ViewChild('variableTypeLock') variableTypeLock: VariableParameterComponent;
   @ViewChild('variableDropdownItems') variableDropdownItems: VariableParameterComponent;
 
+  definedTypeLock: {};
+  definedDropdownItems: {};
+
   availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
   columnDefs: string[] = [];
@@ -78,9 +81,29 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   isPandas = true;
   focus: [number, string] = [null, null];
 
-  updateVariableView(value: PandasTable) {
-    console.log(value);
+  ngAfterViewInit() {
+    if (this.typeLock) {
+      this.definedTypeLock = this.variableTypeLock.variableValue;
+      this.variableTypeLock.variableChange.asObservable().subscribe((value: string[]) => {
+        this.definedTypeLock = value;
+        console.log(`Type Lock: ${this.definedTypeLock}`);
+        console.log(this.definedTypeLock);
+      });
+    }
 
+    if (this.dropdownItems) {
+      this.definedDropdownItems = this.variableDropdownItems.variableValue;
+      this.variableDropdownItems.variableChange.asObservable().subscribe((value: string[]) => {
+        this.definedDropdownItems = value;
+        console.log(`Dropdown Items: ${this.definedDropdownItems}`);
+        console.log(this.definedDropdownItems);
+      });
+    }
+
+    super.ngAfterViewInit();
+  }
+
+  updateVariableView(value: PandasTable) {
     let numRowsUnchanged: boolean;
     if (this.variableValue) {
       numRowsUnchanged = (
