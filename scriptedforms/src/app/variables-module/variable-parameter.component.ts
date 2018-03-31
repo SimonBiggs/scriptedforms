@@ -30,10 +30,10 @@ import { VariableBaseComponent } from './variable-base.component';
 import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'variable-string-list-parameter',
+  selector: 'variable-parameter',
   template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
 })
-export class StringListParameterComponent extends VariableBaseComponent
+export class VariableParameterComponent extends VariableBaseComponent
   implements AfterViewInit {
-    variableValue: string[];
+    variableValue: any;
   }

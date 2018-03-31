@@ -27,7 +27,7 @@
 // import { BehaviorSubject } from 'rxjs';
 
 import {
-  Component, AfterViewInit, Input
+  Component, AfterViewInit, Input, ViewChild
 } from '@angular/core';
 
 import {
@@ -38,6 +38,8 @@ import * as  stringify from 'json-stable-stringify';
 
 import { VariableBaseComponent } from './variable-base.component';
 import { PandasTable } from '../interfaces/pandas-table';
+
+import { VariableParameterComponent } from './variable-parameter.component';
 
 @Component({
   selector: 'variable-table',
@@ -57,6 +59,11 @@ styles: [
 })
 export class VariableTableComponent extends VariableBaseComponent implements AfterViewInit {
   @Input() typeEdit?: string = null;
+  @Input() typeLock?: string;
+  @Input() dropdownItems?: string;
+
+  @ViewChild('variableTypeLock') variableTypeLock: VariableParameterComponent;
+  @ViewChild('variableDropdownItems') variableDropdownItems: VariableParameterComponent;
 
   availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];

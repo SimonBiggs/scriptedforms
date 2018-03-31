@@ -32,7 +32,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { StringListParameterComponent } from '../variables-module/string-list-parameter.component';
+import { VariableParameterComponent } from '../variables-module/variable-parameter.component';
 
 import { WatchdogService } from '../services/watchdog.service';
 
@@ -40,9 +40,9 @@ import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-filechange',
-  template: `<variable-string-list-parameter #stringListParameterComponent *ngIf='paths'>
+  template: `<variable-parameter #variableParameterComponent *ngIf='paths'>
 _watchdog_path_conversion({{paths}})
-</variable-string-list-parameter><ng-content></ng-content>`
+</variable-parameter><ng-content></ng-content>`
 })
 export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   id: number;
@@ -53,7 +53,7 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   @Input() paths: string;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  @ViewChild('stringListParameterComponent') stringListParameterComponent: StringListParameterComponent;
+  @ViewChild('variableParameterComponent') variableParameterComponent: VariableParameterComponent;
 
   constructor(
     private myWatchdogService: WatchdogService
@@ -73,7 +73,7 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     // this.updateFilepathObserver()
 
-    this.stringListParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
+    this.variableParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
       this.pathsConverted = value;
       this.updateFilepathObserver();
     });

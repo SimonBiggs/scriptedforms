@@ -177,7 +177,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
       this.dropdownComponents.toArray().forEach(dropdownComponent => {
         if (dropdownComponent.items) {
-          this.variableComponents = this.variableComponents.concat([dropdownComponent.stringListParameterComponent]);
+          this.variableComponents = this.variableComponents.concat([dropdownComponent.variableParameterComponent]);
         }
       });
 
@@ -188,7 +188,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.sectionComponents = this.sectionComponents.concat(this.sectionFileChangeComponents.toArray());
 
       this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
-        this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.stringListParameterComponent]);
+        this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.variableParameterComponent]);
       });
 
       // Only begin initialisation once the kernel is connected
