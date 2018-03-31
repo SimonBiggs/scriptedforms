@@ -107,6 +107,19 @@
               {{row[column]}}
 
             </ng-container>
+
+            <ng-container *ngIf="definedInputTypes[column] === 'dropdown'">
+
+              Not implemented
+
+            </ng-container>
+
+
+            <ng-container *ngIf="definedInputTypes[column] === 'slider'">
+
+              Not implemented
+
+            </ng-container>
             
 
           </ng-container>
