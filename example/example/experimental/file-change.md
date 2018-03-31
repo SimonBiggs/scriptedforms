@@ -12,7 +12,8 @@ input_type = {
     '1st': 'toggle',
     '3rd': 'number',
     '4th': 'dropdown',
-    '5th': 'dropdown'
+    '5th': 'dropdown',
+    '6th': 'readonly'
 }
 
 dropdown_items = {
@@ -63,14 +64,31 @@ from_csv.to_csv(filepath)
 
 </section-live>
 
-## A table that allows the types that are sent to pandas to be edited
+
+## A table that allows the json pandas types to be edited
 
 This is using the `typeEdit` property within the `<variable-table>` element.
 
+<section-live>
+
 <variable-table typeEdit>from_csv</variable-table>
+
+```python
+from_csv.to_csv(filepath)
+```
+
+</section-live>
 
 ## A table that forces input types
 
 This is using the `inputType` property within the `<variable-table>` element.
 
+<section-live>
+
 <variable-table inputType="input_type" dropdownItems="dropdown_items">from_csv</variable-table>
+
+```python
+from_csv.to_csv(filepath)
+```
+
+</section-live>

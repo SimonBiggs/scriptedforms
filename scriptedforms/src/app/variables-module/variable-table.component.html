@@ -56,7 +56,6 @@
 
               <mat-input-container>
                 <input
-                  [required]="required"
                   matInput
                   (blur)="onBlur([j, column])"
                   (focus)="onFocus([j, column])"
@@ -65,6 +64,21 @@
                   (keyup)="dataChanged()"
                   type="string">
               </mat-input-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="definedInputType[column] === 'number'">
+
+                <mat-input-container>
+                  <input
+                    matInput
+                    (blur)="onBlur([j, column])"
+                    (focus)="onFocus([j, column])"
+                    [disabled]="!isFormReady"
+                    [(ngModel)]="row[column]"
+                    (keyup)="dataChanged()"
+                    type="number">
+                </mat-input-container>
 
             </ng-container>
 
@@ -85,6 +99,12 @@
                 [disabled]="!isFormReady"
                 (ngModelChange)="dataChanged()">
               </mat-slide-toggle>
+
+            </ng-container>
+
+            <ng-container *ngIf="definedInputType[column] === 'readonly'">
+
+              {{row[column]}}
 
             </ng-container>
             
