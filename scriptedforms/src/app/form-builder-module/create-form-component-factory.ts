@@ -235,6 +235,10 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     public restartFormKernel() {
       this.formReady = new PromiseDelegate<void>();
+      this.variableComponents.forEach(variableComponent => {
+        variableComponent.variableValue = null;
+        variableComponent.formReady(false);
+      });
       this.sectionComponents.forEach(sectionComponent => {
         sectionComponent.formReady(false);
       });
@@ -283,6 +287,9 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
           this.sectionComponents.forEach(sectionComponent => {
             sectionComponent.formReady(true);
+          });
+          this.variableComponents.forEach(variableComponent => {
+            variableComponent.formReady(true);
           });
 
           this.formReady.resolve(null);

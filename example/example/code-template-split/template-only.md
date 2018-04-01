@@ -1,5 +1,9 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
-<section-start code="from code import *"></section-start>
+# A template with no nested code
 
-<section-button code="print('boo')"></section-button>
+All code on this form is stored within a python file.
+
+<section-start always code="from code1 import *"></section-start>
+
+<variable-table>table</variable-table>
