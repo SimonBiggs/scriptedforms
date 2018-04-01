@@ -275,26 +275,20 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise();
         });
-        this.myVariableService.allVariablesInitilised(this._sessionId);
-
-        this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
-          sectionFileChangeComponent.runCode();
-        });
-
-        // Wait until the code queue is complete before declaring form ready to
-        // the various components.
-        this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
-
+        this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
+          this.variableComponents.forEach(variableComponent => {
+            variableComponent.formReady(true);
+          });
           this.sectionComponents.forEach(sectionComponent => {
             sectionComponent.formReady(true);
           });
-          this.variableComponents.forEach(variableComponent => {
-            variableComponent.formReady(true);
+
+          this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
+            sectionFileChangeComponent.runCode();
           });
 
           this.formReady.resolve(null);
         });
-
     }
   }
 

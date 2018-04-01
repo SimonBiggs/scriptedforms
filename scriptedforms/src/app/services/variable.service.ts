@@ -137,15 +137,20 @@ export class VariableService {
   }
 
   allVariablesInitilised(sessionId: string) {
+    const initilisationComplete = new PromiseDelegate<void>();
     this.variableStatus.next('initialising');
     const jsonEvaluateMap = JSON.stringify(this.sessionVariableStore[sessionId].variableEvaluateMap);
     const initialiseHandlerCode = `${this.handlerName} = ${this.variableHandlerClass}("""${jsonEvaluateMap}""", "${this.handlerName}")`;
     this.myKernelSevice.runCode(sessionId, initialiseHandlerCode, '"initialiseVariableHandler"')
     .then((future: Kernel.IFuture) => {
       future.done.then(() => {
-        this.fetchAll(sessionId);
+        this.fetchAll(sessionId, '"firstFetchAllVariables"').then(() => {
+          initilisationComplete.resolve(null);
+        });
       });
     });
+
+    return initilisationComplete.promise;
   }
 
   appendToIdentifierMap(sessionId: string, variableIdentifier: string, variableName: string) {
@@ -192,12 +197,12 @@ export class VariableService {
     return true;
   }
 
-  fetchAll(sessionId: string) {
+  fetchAll(sessionId: string, label = '"fetchAllVariables"') {
     this.variableStatus.next('fetching');
 
     const fetchComplete = new PromiseDelegate<void> ();
     this.myKernelSevice.runCode(
-      sessionId, this.fetchVariablesCode, '"fetchAllVariables"')
+      sessionId, this.fetchVariablesCode, label)
     .then((future: Kernel.IFuture) => {
       if (future) {
         let textContent = '';
