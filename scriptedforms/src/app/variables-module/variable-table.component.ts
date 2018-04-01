@@ -153,7 +153,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
         keys.forEach((key, j) => {
           if ((i !== this.focus[0]) || (key !== this.focus[1])) {
             if (this.oldVariableValue.data[i][key] !== row[key]) {
-              console.log([this.variableIdentifier, i, key]);
+              // console.log([this.variableIdentifier, i, key]);
               this.dataSource.data[i][key] = row[key];
               this.oldVariableValue.data[i][key] = row[key];
             }
@@ -167,7 +167,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
   }
 
   dataChanged(rowIndex: number, columnName: string | number, variable: any) {
-    console.log([rowIndex, columnName, variable]);
+    // console.log([rowIndex, columnName, variable]);
     this.dataSource.data[rowIndex][columnName] = variable;
     this.variableValue.data[rowIndex][columnName] = variable;
     this.variableChanged();
