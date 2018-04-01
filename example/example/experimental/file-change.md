@@ -64,7 +64,6 @@ from_csv.to_csv(filepath)
 
 </section-live>
 
-
 ## A table that allows the json pandas types to be edited
 
 This is using the `typeEdit` property within the `<variable-table>` element.
