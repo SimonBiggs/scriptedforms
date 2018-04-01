@@ -14,7 +14,7 @@ automatically updated.
 <section-filechange paths="['./data.py']" code="reload(data);"></section-filechange>
 <section-filechange paths="['./functions.py']" code="reload(functions);"></section-filechange>
 
-## Varible data is loaded from within the code python file
+## Varible data is loaded from within the data python file
 
 The variable `table` is defined within `data.py`, but it is able to be used
 here.
