@@ -6,7 +6,6 @@
   "scripts": {
     "update": "webdriver-manager update",
     "selenium": "yarn update && webdriver-manager start",
-    "forms": "scriptedforms ./src/landing-page.md --port 8989 --password '' --token '' --disable_check_xsrf",
     "e2e": "../scripts/wait_for_selenium.sh && tsc && python run-test.py"
   },
   "dependencies": {

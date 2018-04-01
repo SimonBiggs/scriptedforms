@@ -68,7 +68,7 @@ import { FormStatus } from './types/form-status';
     <toolbar-base></toolbar-base>
     <mat-progress-spinner
       color="accent"
-      *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle'"
+      *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle' || queueLength !== 0"
       class="floating-spinner"
       mode="indeterminate">
     </mat-progress-spinner>
@@ -81,6 +81,7 @@ export class AppComponent implements AfterViewInit {
   kernelStatus: Kernel.Status = 'unknown';
   formStatus: FormStatus = null;
   variableStatus: string = null;
+  queueLength: number = null;
 
   @ViewChild('formBuilderComponent') formBuilderComponent: FormBuilderComponent;
   @ViewChild('jupyterErrorMsg') jupyterErrorMsg: ElementRef;
@@ -142,6 +143,11 @@ export class AppComponent implements AfterViewInit {
     this.myKernelSevice.kernelStatus.subscribe(status => {
       console.log('kernel: ' + status);
       this.kernelStatus = status;
+    });
+
+    this.myKernelSevice.queueLength.subscribe(length => {
+      console.log('queue-length: ' + length);
+      this.queueLength = length;
     });
   }
 

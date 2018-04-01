@@ -276,17 +276,20 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           variableComponent.initialise();
         });
         this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
-          this.variableComponents.forEach(variableComponent => {
-            variableComponent.formReady(true);
-          });
-          this.sectionComponents.forEach(sectionComponent => {
-            sectionComponent.formReady(true);
-          });
-
           this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
             sectionFileChangeComponent.runCode();
           });
-
+          // Wait until the code queue is complete before declaring form ready to
+          // the various components.
+          return this.myKernelSevice.sessionStore[this._sessionId].queue;
+        })
+        .then(() => {
+          this.sectionComponents.forEach(sectionComponent => {
+            sectionComponent.formReady(true);
+          });
+          this.variableComponents.forEach(variableComponent => {
+            variableComponent.formReady(true);
+          });
           this.formReady.resolve(null);
         });
     }

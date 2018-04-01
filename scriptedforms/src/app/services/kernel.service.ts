@@ -70,6 +70,7 @@ export interface SessionStore {
 export class KernelService {
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
   kernelStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
+  queueLength: BehaviorSubject<number> = new BehaviorSubject(null);
   sessionConnected: PromiseDelegate<string>;
   sessionStore: SessionStore = {};
   currentSession: string = null;
@@ -181,6 +182,9 @@ export class KernelService {
         if (runCode) {
           console.log(`queue: run ${name}`);
           future = this.sessionStore[sessionId].kernel.requestExecute({ code: code });
+          future.done.then(() => {
+            this.queueLength.next(Object.keys(this.sessionStore[sessionId].queueLog).length);
+          });
           return future;
         } else {
           return Promise.resolve();
