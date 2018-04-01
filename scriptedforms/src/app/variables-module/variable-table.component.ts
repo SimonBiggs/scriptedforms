@@ -67,11 +67,12 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
 
   definedInputTypes: {} = {};
   definedDropdownItems: {} = {};
+  tableIndex: (string | number)[] = [];
 
   availableTypes = ['string', 'number', 'integer', 'boolean'];
   types: string[] = [];
-  columnDefs: string[] = [];
-  oldColumnDefs: string[] = [];
+  columnDefs: (string | number)[] = [];
+  oldColumnDefs: (string | number)[] = [];
   dataSource: MatTableDataSource<{
     [key: string]: string | number
   }> = new MatTableDataSource();
@@ -93,7 +94,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
 
     if (this.dropdownItems) {
       this.definedDropdownItems = this.variableDropdownItems.variableValue;
-      this.variableDropdownItems.variableChange.asObservable().subscribe((value: string[]) => {
+      this.variableDropdownItems.variableChange.asObservable().subscribe((value: any) => {
         this.definedDropdownItems = value;
         console.log(`Dropdown Items: ${this.definedDropdownItems}`);
         console.log(this.definedDropdownItems);
@@ -112,11 +113,11 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     } else {
       numRowsUnchanged = false;
     }
-    this.variableValue = value;
+    this.variableValue = JSON.parse(JSON.stringify(value));
 
     const columns: string[] = [];
     const types: string[] = [];
-    value.schema.fields.forEach(field => {
+    this.variableValue.schema.fields.forEach(field => {
       columns.push(field.name);
       if (this.availableTypes.includes(field.type)) {
         types.push(field.type);
@@ -127,6 +128,13 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     this.oldColumnDefs = this.columnDefs;
     this.columnDefs = columns;
     this.types = types;
+
+    const primaryKey = this.variableValue.schema.primaryKey;
+    const tableIndex: (string | number)[] = [];
+    this.variableValue.data.forEach(row => {
+      tableIndex.push(row[primaryKey]);
+    });
+    this.tableIndex = tableIndex;
 
     const columnsUnchanged = (
       this.oldColumnDefs.length === this.columnDefs.length &&
@@ -140,11 +148,12 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
           this.oldVariableValue.schema.fields[index].type = type;
         }
       });
-      value.data.forEach((row, i) => {
+      this.variableValue.data.forEach((row, i) => {
         const keys = Object.keys(row);
         keys.forEach((key, j) => {
           if ((i !== this.focus[0]) || (key !== this.focus[1])) {
             if (this.oldVariableValue.data[i][key] !== row[key]) {
+              console.log([this.variableIdentifier, i, key]);
               this.dataSource.data[i][key] = row[key];
               this.oldVariableValue.data[i][key] = row[key];
             }
@@ -152,13 +161,15 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
         });
       });
     } else {
-      this.dataSource.data = value.data;
+      this.dataSource.data = this.variableValue.data;
       this.updateOldVariable();
     }
   }
 
-  dataChanged() {
-    this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
+  dataChanged(rowIndex: number, columnName: string | number, variable: any) {
+    console.log([rowIndex, columnName, variable]);
+    this.dataSource.data[rowIndex][columnName] = variable;
+    this.variableValue.data[rowIndex][columnName] = variable;
     this.variableChanged();
   }
 

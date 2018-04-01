@@ -37,15 +37,15 @@
                 (blur)="onBlur([j, column])"
                 (focus)="onFocus([j, column])"
                 [disabled]="!isFormReady"
-                [(ngModel)]="row[column]"
-                (keyup)="dataChanged()"
+                [ngModel]="row[column]"
+                (ngModelChange)="dataChanged(j, column, $event)"
                 type="string">
             </mat-input-container>
 
             <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
-              [(ngModel)]="row[column]"
-              [disabled]="!isFormReady"
-              (ngModelChange)="dataChanged()">
+              [ngModel]="row[column]"
+              (ngModelChange)="dataChanged(j, column, $event)"
+              [disabled]="!isFormReady">
             </mat-checkbox>
 
           </ng-container>
@@ -60,8 +60,8 @@
                   (blur)="onBlur([j, column])"
                   (focus)="onFocus([j, column])"
                   [disabled]="!isFormReady"
-                  [(ngModel)]="row[column]"
-                  (keyup)="dataChanged()"
+                  [ngModel]="row[column]"
+                  (ngModelChange)="dataChanged(j, column, $event)"
                   type="string">
               </mat-input-container>
 
@@ -75,19 +75,37 @@
                     (blur)="onBlur([j, column])"
                     (focus)="onFocus([j, column])"
                     [disabled]="!isFormReady"
-                    [(ngModel)]="row[column]"
-                    (keyup)="dataChanged()"
+                    [ngModel]="row[column]"
+                    (ngModelChange)="dataChanged(j, column, $event)"
                     type="number">
                 </mat-input-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="definedInputTypes[column] === 'dropdown'">
+
+              <mat-select
+                (blur)="onBlur([j, column])"
+                (focus)="onFocus([j, column])"
+                [disabled]="!isFormReady"
+                [ngModel]="row[column]"
+                (ngModelChange)="dataChanged(j, column, $event)">
+                <ng-container *ngIf="definedDropdownItems[column][0]">
+                  <mat-option *ngFor="let option of definedDropdownItems[column]" [value]="option">{{option}}</mat-option>
+                </ng-container>
+                <ng-container *ngIf="definedDropdownItems[column][tableIndex[j]]">
+                  <mat-option *ngFor="let option of definedDropdownItems[column][tableIndex[j]]" [value]="option">{{option}}</mat-option>
+                </ng-container>
+              </mat-select>
 
             </ng-container>
 
             <ng-container *ngIf="definedInputTypes[column] === 'tick'">
 
               <mat-checkbox class="no-ripple-height"
-                [(ngModel)]="row[column]"
                 [disabled]="!isFormReady"
-                (ngModelChange)="dataChanged()">
+                [ngModel]="row[column]"
+                (ngModelChange)="dataChanged(j, column, $event)">
               </mat-checkbox>
 
             </ng-container>
@@ -95,9 +113,9 @@
             <ng-container *ngIf="definedInputTypes[column] === 'toggle'">
 
               <mat-slide-toggle class="no-ripple-height"
-                [(ngModel)]="row[column]"
                 [disabled]="!isFormReady"
-                (ngModelChange)="dataChanged()">
+                [ngModel]="row[column]"
+                (ngModelChange)="dataChanged(j, column, $event)">
               </mat-slide-toggle>
 
             </ng-container>
@@ -107,13 +125,6 @@
               {{row[column]}}
 
             </ng-container>
-
-            <ng-container *ngIf="definedInputTypes[column] === 'dropdown'">
-
-              Not implemented
-
-            </ng-container>
-
 
             <ng-container *ngIf="definedInputTypes[column] === 'slider'">
 

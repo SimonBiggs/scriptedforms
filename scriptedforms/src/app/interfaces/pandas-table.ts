@@ -30,7 +30,7 @@ export interface PandasTable {
       name: string
       type: string
     }[]
-    primaryKey: string
+    primaryKey: string | number
     pandas_version: string
   };
   data: { [key: string]: string | number }[];

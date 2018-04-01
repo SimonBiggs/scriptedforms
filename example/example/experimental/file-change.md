@@ -17,24 +17,11 @@ input_types = {
 }
 
 dropdown_items = {
-  '4th': [
-    'hello',
-    'george',
-    'all rows have the same options'
-  ],
+  '4th': ['apple', 'orange', 'pear'],
   '5th': {
-    'a': [
-      'pick a',
-      'or 1'
-    ],
-    'b': [
-      'pick b',
-      'or 2'
-    ],
-    'c': [
-      'pick c',
-      'or 3'
-    ]
+    'a': ['sally', 'margaret', 'annita'],
+    'b': ['george', 'philip', 'simpson'],
+    'c': ['red', 'green', 'blue']
   }
 }
 ```
