@@ -81,6 +81,7 @@ An example `<section-start>` is given following:
 <section-start>
 
 ```python
+import time
 from IPython.display import display, Markdown
 
 plt.rc('font', size=15)
@@ -317,6 +318,14 @@ following button which is only enabled once the submit count becomes at least
 
 ```python
 display(Markdown('## Super Submit!!'))
+```
+
+</section-button>
+
+<section-button value="Slow button">
+
+```python
+time.sleep(1)
 ```
 
 </section-button>

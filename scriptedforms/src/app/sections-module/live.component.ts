@@ -39,6 +39,8 @@ import {
   Component, ContentChildren, QueryList, AfterViewInit
 } from '@angular/core';
 
+import { SectionBaseComponent } from './section-base.component';
+
 import { ToggleComponent } from '../variables-module/toggle.component';
 import { TickComponent } from '../variables-module/tick.component';
 import { ConditionalComponent } from '../variables-module/conditional.component';
@@ -58,12 +60,9 @@ import { VariableComponent } from '../types/variable-component';
   selector: 'section-live',
   template: `<ng-content></ng-content>`
 })
-export class LiveComponent implements AfterViewInit {
+export class LiveComponent extends SectionBaseComponent implements AfterViewInit {
+  sectionType = 'live';
   variableComponents: VariableComponent[] = [];
-
-  liveId: number;
-  afterViewInit = false;
-  isFormReady = false;
 
   @ContentChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
   @ContentChildren(TickComponent) tickComponents: QueryList<TickComponent>;
@@ -79,7 +78,7 @@ export class LiveComponent implements AfterViewInit {
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
   ngAfterViewInit() {
-    this.afterViewInit = true;
+    super.ngAfterViewInit();
 
     this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
     this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
@@ -97,37 +96,5 @@ export class LiveComponent implements AfterViewInit {
         value => this.runCode()
       );
     }
-  }
-
-  set sessionId(theSessionId: string) {
-    this.initialiseCodeSessionId(theSessionId);
-  }
-
-  runCode() {
-    // This would be better done with a promise. It should always run, just
-    // delayed until read and initialised.
-    if (this.afterViewInit && this.isFormReady) {
-      this.codeComponents.toArray().forEach((codeComponent, index) => {
-        codeComponent.runCode();
-      });
-    }
-  }
-
-  formReady(isReady: boolean) {
-    this.isFormReady = isReady;
-  }
-
-  setId(id: number) {
-    this.liveId = id;
-
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"live"_' + String(this.liveId) + '_' + String(index);
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
-    });
   }
 }

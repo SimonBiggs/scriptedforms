@@ -36,10 +36,10 @@ function on click.
 */
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit, Input, ViewChild, ElementRef
+  Component, AfterViewInit, Input, ViewChild, ElementRef
 } from '@angular/core';
 
-import { CodeComponent } from '../code-module/code.component';
+import { SectionBaseComponent } from './section-base.component';
 import { KernelService } from '../services/kernel.service';
 import { ConditionalComponent } from '../variables-module/conditional.component';
 
@@ -65,9 +65,14 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
 </div>
 `
 })
-export class ButtonComponent implements AfterViewInit {
-
+export class ButtonComponent extends SectionBaseComponent implements AfterViewInit {
+  sectionType = 'button';
   @Input() inline?: string = null;
+  @Input() conditional?: string;
+  conditionalValue = true;
+  codeRunning = false;
+
+  @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent;
 
   @Input() value?: string;
   @Input() set name(nameInput: string) {
@@ -94,28 +99,28 @@ export class ButtonComponent implements AfterViewInit {
     element.appendChild(divElement);
   }
 
-  @Input() conditional?: string;
-
-  _sessionId: string;
-
-  conditionalValue = true;
-
-  buttonId: number;
-  afterViewInit = false;
-  isFormReady = false;
-
-  codeRunning = false;
-
-  @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-  @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent;
-
   constructor(
     private myKernelSevice: KernelService,
     public myElementRef: ElementRef
-  ) { }
+  ) { super(); }
+
+  runCode() {
+    this.formReadyPromiseDelegate.promise.then(() => {
+      return this.viewInitPromiseDelegate.promise;
+    })
+    .then(() => {
+      this.codeComponentsArray.forEach((codeComponent, index) => {
+        codeComponent.runCode();
+      });
+      this.codeRunning = true;
+      this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
+        this.codeRunning = false;
+      });
+    });
+  }
 
   ngAfterViewInit() {
-    this.afterViewInit = true;
+    super.ngAfterViewInit();
 
     if (this.conditional) {
       const value: any = this.conditionalComponent.variableValue;
@@ -125,53 +130,5 @@ export class ButtonComponent implements AfterViewInit {
         this.conditionalValue = newValue;
       });
     }
-  }
-
-  set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId;
-    this.initialiseCodeSessionId(theSessionId);
-  }
-
-  /**
-   * Run the code of all child CodeComponents
-   */
-  runCode() {
-    if (this.afterViewInit && this.isFormReady) {
-      this.codeComponents.toArray().forEach((codeComponent, index) => {
-        codeComponent.runCode();
-      });
-      this.codeRunning = true;
-      this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
-        this.codeRunning = false;
-      });
-    }
-  }
-
-  /**
-   * Buttons are only active once the form is ready. Call this function
-   * to declare that the form is ready for user interaction.
-   */
-  formReady(isReady: boolean) {
-    this.isFormReady = isReady;
-  }
-
-  /**
-   * Provide a unique id for the purpose of detecting repeat submissions.
-   * In practice this isn't an issue for button sections as the button itself
-   * is disabled while the submission is in progress.
-   *
-   * @param id A unique id among the buttons on the form
-   */
-  setId(id: number) {
-    this.buttonId = id;
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"button"_' + String(this.buttonId) + '_' + String(index);
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
-    });
   }
 }

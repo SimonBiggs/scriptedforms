@@ -245,6 +245,9 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.liveComponents.toArray().forEach(liveComponent => {
         liveComponent.formReady(false);
       });
+      this.outputComponents.toArray().forEach(outputComponent => {
+        outputComponent.formReady(false);
+      });
       this.myKernelSevice.restartKernel().then(() => {
         this.initialiseForm();
       });
@@ -298,6 +301,10 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
           this.buttonComponents.toArray().forEach(buttonComponent => {
             buttonComponent.formReady(true);
+          });
+
+          this.outputComponents.toArray().forEach(outputComponent => {
+            outputComponent.formReady(true);
           });
 
           this.formReady.resolve(null);

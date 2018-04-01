@@ -35,6 +35,8 @@ import {
   MatButtonModule, MatIconModule
 } from '@angular/material';
 
+import { SectionBaseComponent } from './section-base.component';
+
 import { StartComponent } from './start.component';
 import { LiveComponent } from './live.component';
 import { ButtonComponent } from './button.component';
@@ -51,6 +53,7 @@ import { VariablesModule } from '../variables-module/variables.module';
     VariablesModule
   ],
   declarations: [
+    SectionBaseComponent,
     StartComponent,
     LiveComponent,
     ButtonComponent,

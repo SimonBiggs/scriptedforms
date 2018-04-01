@@ -28,38 +28,23 @@
 import { Subscription } from 'rxjs/Subscription';
 
 import {
-  Component, ContentChildren, QueryList, OnDestroy
+  Component, OnDestroy, AfterViewInit
 } from '@angular/core';
 
+import { SectionBaseComponent } from './section-base.component';
 import { VariableService } from '../services/variable.service';
-
-import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-output',
   template: `<ng-content></ng-content>`
 })
-export class OutputComponent implements OnDestroy {
-  outputId: number;
+export class OutputComponent extends SectionBaseComponent implements OnDestroy, AfterViewInit {
+  sectionType = 'output';
   variableSubscription: Subscription;
-  _sessionId: string;
-
-  @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
   constructor(
     private myVariableService: VariableService
-  ) { }
-
-  set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId;
-    this.initialiseCodeSessionId(theSessionId);
-  }
-
-  runCode() {
-    this.codeComponents.toArray().forEach(codeComponent => {
-      codeComponent.runCode();
-    });
-  }
+  ) { super(); }
 
   subscribeToVariableChanges() {
     this.variableSubscription = this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
@@ -71,18 +56,5 @@ export class OutputComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.variableSubscription.unsubscribe();
-  }
-
-  setId(id: number) {
-    this.outputId = id;
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"output"_' + String(this.outputId) + '_' + String(index);
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
-    });
   }
 }

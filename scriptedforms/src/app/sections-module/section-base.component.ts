@@ -1,0 +1,91 @@
+// Scripted Forms -- Making GUIs easy for everyone on your team.
+// Copyright (C) 2017 Simon Biggs
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version (the "AGPL-3.0+").
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU Affero General Public License and the additional terms for more
+// details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
+// Affrero General Public License. These aditional terms are Sections 1, 5,
+// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
+// where all references to the definition "License" are instead defined to
+// mean the AGPL-3.0+.
+
+// You should have received a copy of the Apache-2.0 along with this
+// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
+
+
+import {
+  Component, ContentChildren, QueryList, AfterViewInit, ViewChildren
+} from '@angular/core';
+import { PromiseDelegate } from '@phosphor/coreutils';
+
+import { CodeComponent } from '../code-module/code.component';
+
+
+@Component({
+  template: ''
+})
+export class SectionBaseComponent implements AfterViewInit {
+  sectionId: number;
+  sectionType: string;
+  _sessionId: string;
+  isFormReady = false;
+
+  formReadyPromiseDelegate = new PromiseDelegate<void>();
+  viewInitPromiseDelegate = new PromiseDelegate<void>();
+
+  codeComponentsArray: CodeComponent[];
+
+  @ContentChildren(CodeComponent) contentCodeComponents: QueryList<CodeComponent>;
+  @ViewChildren(CodeComponent) viewCodeComponents: QueryList<CodeComponent>;
+
+  set sessionId(theSessionId: string) {
+    this._sessionId = theSessionId;
+    this.initialiseCodeSessionId(theSessionId);
+  }
+
+  ngAfterViewInit() {
+    this.viewInitPromiseDelegate.resolve(null);
+    this.codeComponentsArray = this.contentCodeComponents.toArray().concat(this.viewCodeComponents.toArray());
+  }
+
+  runCode() {
+    this.formReadyPromiseDelegate.promise.then(() => {
+      return this.viewInitPromiseDelegate.promise;
+    })
+    .then(() => {
+      this.codeComponentsArray.forEach((codeComponent, index) => {
+        codeComponent.runCode();
+      });
+    });
+  }
+
+  formReady(isReady: boolean) {
+    this.formReadyPromiseDelegate.resolve(null);
+    this.isFormReady = isReady;
+  }
+
+  setId(id: number) {
+    this.sectionId = id;
+    this.codeComponentsArray.forEach((codeComponent, index) => {
+      codeComponent.name = `"${this.sectionType}"_${this.sectionId}_${index}`;
+    });
+  }
+
+  initialiseCodeSessionId(sessionId: string) {
+    this.codeComponentsArray.forEach((codeComponent, index) => {
+      codeComponent.sessionId = sessionId;
+    });
+  }
+}
