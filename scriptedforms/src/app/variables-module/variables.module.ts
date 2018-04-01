@@ -37,7 +37,6 @@ import {
 
 import { VariableBaseComponent } from './variable-base.component';
 import { NumberBaseComponent } from './number-base.component';
-import { BooleanBaseComponent } from './boolean-base.component';
 
 import { ToggleComponent } from './toggle.component';
 import { TickComponent } from './tick.component';
@@ -61,7 +60,6 @@ import { VariableParameterComponent } from './variable-parameter.component';
   declarations: [
     VariableBaseComponent,
     NumberBaseComponent,
-    BooleanBaseComponent,
     ToggleComponent,
     TickComponent,
     ConditionalComponent,

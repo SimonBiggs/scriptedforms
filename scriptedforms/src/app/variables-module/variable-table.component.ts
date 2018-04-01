@@ -166,10 +166,8 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     }
   }
 
-  dataChanged(rowIndex: number, columnName: string | number, variable: any) {
-    // console.log([rowIndex, columnName, variable]);
-    this.dataSource.data[rowIndex][columnName] = variable;
-    this.variableValue.data[rowIndex][columnName] = variable;
+  dataChanged() {
+    this.variableValue.data = JSON.parse(JSON.stringify(this.dataSource.data));
     this.variableChanged();
   }
 

@@ -24,7 +24,7 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { BooleanBaseComponent } from './boolean-base.component';
+import { VariableBaseComponent } from './variable-base.component';
 
 import {
   Component, AfterViewInit
@@ -45,4 +45,4 @@ import {
   {{labelValue}}
 </mat-checkbox>`,
 })
-export class TickComponent extends BooleanBaseComponent implements AfterViewInit { }
+export class TickComponent extends VariableBaseComponent implements AfterViewInit { }

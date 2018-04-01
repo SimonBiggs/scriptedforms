@@ -37,14 +37,14 @@
                 (blur)="onBlur([j, column])"
                 (focus)="onFocus([j, column])"
                 [disabled]="!isFormReady"
-                [ngModel]="row[column]"
-                (ngModelChange)="dataChanged(j, column, $event)"
+                [(ngModel)]="row[column]"
+                (keyup)="dataChanged()"
                 type="string">
             </mat-input-container>
 
             <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
-              [ngModel]="row[column]"
-              (ngModelChange)="dataChanged(j, column, $event)"
+              [(ngModel)]="row[column]"
+              (ngModelChange)="dataChanged()"
               [disabled]="!isFormReady">
             </mat-checkbox>
 
@@ -60,8 +60,8 @@
                   (blur)="onBlur([j, column])"
                   (focus)="onFocus([j, column])"
                   [disabled]="!isFormReady"
-                  [ngModel]="row[column]"
-                  (ngModelChange)="dataChanged(j, column, $event)"
+                  [(ngModel)]="row[column]"
+                  (keyup)="dataChanged()"
                   type="string">
               </mat-input-container>
 
@@ -75,8 +75,8 @@
                     (blur)="onBlur([j, column])"
                     (focus)="onFocus([j, column])"
                     [disabled]="!isFormReady"
-                    [ngModel]="row[column]"
-                    (ngModelChange)="dataChanged(j, column, $event)"
+                    [(ngModel)]="row[column]"
+                    (keyup)="dataChanged()"
                     type="number">
                 </mat-input-container>
 
@@ -88,8 +88,8 @@
                 (blur)="onBlur([j, column])"
                 (focus)="onFocus([j, column])"
                 [disabled]="!isFormReady"
-                [ngModel]="row[column]"
-                (ngModelChange)="dataChanged(j, column, $event)">
+                [(ngModel)]="row[column]"
+                (ngModelChange)="dataChanged()">
                 <ng-container *ngIf="definedDropdownItems[column][0]">
                   <mat-option *ngFor="let option of definedDropdownItems[column]" [value]="option">{{option}}</mat-option>
                 </ng-container>
@@ -104,8 +104,8 @@
 
               <mat-checkbox class="no-ripple-height"
                 [disabled]="!isFormReady"
-                [ngModel]="row[column]"
-                (ngModelChange)="dataChanged(j, column, $event)">
+                [(ngModel)]="row[column]"
+                (ngModelChange)="dataChanged()">
               </mat-checkbox>
 
             </ng-container>
@@ -114,8 +114,8 @@
 
               <mat-slide-toggle class="no-ripple-height"
                 [disabled]="!isFormReady"
-                [ngModel]="row[column]"
-                (ngModelChange)="dataChanged(j, column, $event)">
+                [(ngModel)]="row[column]"
+                (ngModelChange)="dataChanged()">
               </mat-slide-toggle>
 
             </ng-container>

@@ -137,7 +137,7 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   pythonValueReference() {
-    return String(this.variableValue);
+    return `json.loads(r'${JSON.stringify(this.variableValue)}')`;
   }
 
   pythonVariableEvaluate() {

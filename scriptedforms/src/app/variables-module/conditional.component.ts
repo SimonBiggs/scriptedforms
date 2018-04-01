@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { BooleanBaseComponent } from './boolean-base.component';
+import { VariableBaseComponent } from './variable-base.component';
 
 import { Component, AfterViewInit } from '@angular/core';
 
@@ -33,5 +33,5 @@ import { Component, AfterViewInit } from '@angular/core';
   selector: 'variable-conditional',
   template: `<span #variablecontainer *ngIf="variableName === undefined"><ng-content></ng-content></span><span></span>`
 })
-export class ConditionalComponent extends BooleanBaseComponent
+export class ConditionalComponent extends VariableBaseComponent
   implements AfterViewInit {}
