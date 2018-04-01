@@ -113,7 +113,7 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
     } else {
       numRowsUnchanged = false;
     }
-    this.variableValue = JSON.parse(JSON.stringify(value));
+    this.variableValue = value;
 
     const columns: string[] = [];
     const types: string[] = [];

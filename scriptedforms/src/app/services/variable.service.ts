@@ -220,7 +220,7 @@ export class VariableService {
   }
 
   updateComponentView(component: any, value: VariableValue) {
-    component.updateVariableView(value);
+    component.updateVariableView(JSON.parse(JSON.stringify(value)));
   }
 
   updateTimestamp(sessionId: string, identifier: string) {
