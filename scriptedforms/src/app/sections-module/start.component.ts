@@ -26,25 +26,22 @@
 
 
 import {
-  Component, ContentChildren, QueryList, Input
+  Component, Input
 } from '@angular/core';
 
 import { SectionBaseComponent } from './section-base.component';
-import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-start',
-  template: `<ng-content></ng-content>`
+  template: `<code *ngIf="code" class="language-python">{{code}}</code><ng-content></ng-content>`
 })
 export class StartComponent extends SectionBaseComponent {
   sectionType = 'start';
   @Input() always?: string;
 
-  @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
-
   runCode() {
     this.viewInitPromiseDelegate.promise.then(() => {
-      this.codeComponents.toArray().forEach(codeComponent => {
+      this.codeComponentsArray.forEach(codeComponent => {
         codeComponent.runCode();
       });
     });

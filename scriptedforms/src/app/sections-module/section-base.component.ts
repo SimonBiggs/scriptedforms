@@ -26,7 +26,7 @@
 
 
 import {
-  Component, ContentChildren, QueryList, AfterViewInit, ViewChildren
+  Component, ContentChildren, QueryList, AfterViewInit, ViewChildren, Input
 } from '@angular/core';
 import { PromiseDelegate } from '@phosphor/coreutils';
 
@@ -37,6 +37,7 @@ import { CodeComponent } from '../code-module/code.component';
   template: ''
 })
 export class SectionBaseComponent implements AfterViewInit {
+  @Input() code?: string;
   sectionId: number;
   sectionType: string;
   _sessionId: string;

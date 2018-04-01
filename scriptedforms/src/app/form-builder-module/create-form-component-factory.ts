@@ -235,18 +235,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     public restartFormKernel() {
       this.formReady = new PromiseDelegate<void>();
-      this.buttonComponents.toArray().forEach(buttonComponent => {
-        buttonComponent.formReady(false);
-      });
-      this.variableComponents.forEach(variableComponent => {
-        variableComponent.variableValue = null;
-        variableComponent.formReady(false);
-      });
-      this.liveComponents.toArray().forEach(liveComponent => {
-        liveComponent.formReady(false);
-      });
-      this.outputComponents.toArray().forEach(outputComponent => {
-        outputComponent.formReady(false);
+      this.sectionComponents.forEach(sectionComponent => {
+        sectionComponent.formReady(false);
       });
       this.myKernelSevice.restartKernel().then(() => {
         this.initialiseForm();
@@ -291,20 +281,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
         // the various components.
         this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
 
-          this.liveComponents.toArray().forEach(liveComponent => {
-            liveComponent.formReady(true);
-          });
-
-          this.variableComponents.forEach(variableComponent => {
-            variableComponent.formReady(true);
-          });
-
-          this.buttonComponents.toArray().forEach(buttonComponent => {
-            buttonComponent.formReady(true);
-          });
-
-          this.outputComponents.toArray().forEach(outputComponent => {
-            outputComponent.formReady(true);
+          this.sectionComponents.forEach(sectionComponent => {
+            sectionComponent.formReady(true);
           });
 
           this.formReady.resolve(null);

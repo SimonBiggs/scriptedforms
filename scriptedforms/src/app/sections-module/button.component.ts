@@ -61,6 +61,7 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
       <mat-icon>keyboard_return</mat-icon>
     </button>
   </div>
+  <code *ngIf="code" class="language-python">{{code}}</code>
   <ng-content></ng-content>
 </div>
 `
