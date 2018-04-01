@@ -24,73 +24,29 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-/*
-Creates the [start] section.
-
-A section that runs all code within it whenever a kernel is connected to a new
-session.
-
-Eventually this section should be set to also rerun if the code within it
-differs from the previous iteration. That way a kernel restart would not be
-required if new code is added into the [start] section.
-*/
-
 
 import {
   Component, ContentChildren, QueryList, Input
 } from '@angular/core';
 
+import { SectionBaseComponent } from './section-base.component';
 import { CodeComponent } from '../code-module/code.component';
-// import { LiveComponent } from '../sections-module/live.component';
-// import { ButtonComponent } from '../sections-module/button.component';
 
 @Component({
   selector: 'section-start',
   template: `<ng-content></ng-content>`
-// <div align="right" *ngIf="(!hasStartRun)">
-//   <button
-//   mat-mini-fab
-//   (click)="runCode()">
-//     <mat-icon>autorenew</mat-icon>
-//   </button>
-// </div>`
 })
-export class StartComponent {
-  // liveComponents: QueryList<LiveComponent>;
-  // buttonComponents: QueryList<ButtonComponent>;
+export class StartComponent extends SectionBaseComponent {
+  sectionType = 'start';
   @Input() always?: string;
-
-  startId: number;
-  hasStartRun = false;
 
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
-  // provideSections(liveComponents: QueryList<LiveComponent>, buttonComponents: QueryList<ButtonComponent>) {
-  //   this.liveComponents = liveComponents;
-  //   this.buttonComponents = buttonComponents;
-  // }
-
-  set sessionId(theSessionId: string) {
-    this.initialiseCodeSessionId(theSessionId);
-  }
-
   runCode() {
-    this.codeComponents.toArray().forEach(codeComponent => {
-      codeComponent.runCode();
-    });
-    this.hasStartRun = true;
-  }
-
-  setId(id: number) {
-    this.startId = id;
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"start"_' + String(this.startId) + '_' + String(index);
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
+    this.viewInitPromiseDelegate.promise.then(() => {
+      this.codeComponents.toArray().forEach(codeComponent => {
+        codeComponent.runCode();
+      });
     });
   }
 }

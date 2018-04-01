@@ -55,6 +55,12 @@ export class SectionBaseComponent implements AfterViewInit {
     this.initialiseCodeSessionId(theSessionId);
   }
 
+  initialiseCodeSessionId(sessionId: string) {
+    this.codeComponentsArray.forEach((codeComponent, index) => {
+      codeComponent.sessionId = sessionId;
+    });
+  }
+
   ngAfterViewInit() {
     this.viewInitPromiseDelegate.resolve(null);
     this.codeComponentsArray = this.contentCodeComponents.toArray().concat(this.viewCodeComponents.toArray());
@@ -80,12 +86,6 @@ export class SectionBaseComponent implements AfterViewInit {
     this.sectionId = id;
     this.codeComponentsArray.forEach((codeComponent, index) => {
       codeComponent.name = `"${this.sectionType}"_${this.sectionId}_${index}`;
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponentsArray.forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
     });
   }
 }

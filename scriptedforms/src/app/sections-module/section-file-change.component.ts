@@ -28,15 +28,14 @@
 import { Subscription } from 'rxjs/Subscription';
 
 import {
-  Component, ContentChildren, QueryList, OnDestroy, Input, AfterViewInit,
+  Component, OnDestroy, Input, AfterViewInit,
   ViewChild
 } from '@angular/core';
 
+import { SectionBaseComponent } from './section-base.component';
 import { VariableParameterComponent } from '../variables-module/variable-parameter.component';
 
 import { WatchdogService } from '../services/watchdog.service';
-
-import { CodeComponent } from '../code-module/code.component';
 
 @Component({
   selector: 'section-filechange',
@@ -44,25 +43,18 @@ import { CodeComponent } from '../code-module/code.component';
 _watchdog_path_conversion({{paths}})
 </variable-parameter><ng-content></ng-content>`
 })
-export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
-  id: number;
+export class SectionFileChangeComponent extends SectionBaseComponent implements OnDestroy, AfterViewInit {
+  sectionType = 'filechange';
   watchdogSubscription: Subscription;
-  _sessionId: string;
   pathsConverted: string[];
 
   @Input() paths: string;
 
-  @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
   @ViewChild('variableParameterComponent') variableParameterComponent: VariableParameterComponent;
 
   constructor(
     private myWatchdogService: WatchdogService
-  ) { }
-
-  set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId;
-    this.initialiseCodeSessionId(theSessionId);
-  }
+  ) { super(); }
 
   updateFilepathObserver() {
     this.pathsConverted.forEach(value => {
@@ -71,6 +63,7 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    super.ngAfterViewInit();
     // this.updateFilepathObserver()
 
     this.variableParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
@@ -91,26 +84,7 @@ export class SectionFileChangeComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-  runCode() {
-    this.codeComponents.toArray().forEach(codeComponent => {
-      codeComponent.runCode();
-    });
-  }
-
   ngOnDestroy() {
     this.watchdogSubscription.unsubscribe();
-  }
-
-  setId(id: number) {
-    this.id = id;
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.name = '"section-file"_' + String(this.id) + '_' + String(index);
-    });
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponents.toArray().forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
-    });
   }
 }
