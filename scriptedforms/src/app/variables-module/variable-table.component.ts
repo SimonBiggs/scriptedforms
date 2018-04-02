@@ -84,20 +84,28 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
 
   ngAfterViewInit() {
     if (this.inputTypes) {
-      this.definedInputTypes = this.variableInputTypes.variableValue;
+      if (this.variableInputTypes.variableValue) {
+        this.definedInputTypes = this.variableInputTypes.variableValue;
+      }
       this.variableInputTypes.variableChange.asObservable().subscribe((value: any ) => {
-        this.definedInputTypes = value;
-        console.log(`Input Type: ${this.definedInputTypes}`);
-        console.log(this.definedInputTypes);
+        if (value) {
+          this.definedInputTypes = value;
+          console.log(`Input Type: ${this.definedInputTypes}`);
+          console.log(this.definedInputTypes);
+        }
       });
     }
 
     if (this.dropdownItems) {
-      this.definedDropdownItems = this.variableDropdownItems.variableValue;
+      if (this.variableDropdownItems.variableValue) {
+        this.definedDropdownItems = this.variableDropdownItems.variableValue;
+      }
       this.variableDropdownItems.variableChange.asObservable().subscribe((value: any) => {
-        this.definedDropdownItems = value;
-        console.log(`Dropdown Items: ${this.definedDropdownItems}`);
-        console.log(this.definedDropdownItems);
+        if (value) {
+          this.definedDropdownItems = value;
+          console.log(`Dropdown Items: ${this.definedDropdownItems}`);
+          console.log(this.definedDropdownItems);
+        }
       });
     }
 

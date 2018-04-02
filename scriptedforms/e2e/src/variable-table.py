@@ -9,7 +9,7 @@ display(Markdown(
     .format(str(datetime.now()))
 ))
 
-input_types = {
+input_types_1 = {
     '1st': 'toggle',
     '3rd': 'number',
     '4th': 'dropdown',

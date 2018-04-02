@@ -8,16 +8,18 @@
 
 ## Default table
 
-<variable-table>variable_table.table</variable-table>
+<variable-table class="default">variable_table.table</variable-table>
 
 ## Editable pandas json types
 
-<variable-table typeEdit>variable_table.table</variable-table>
+<variable-table class="type-edit" typeEdit>variable_table.table</variable-table>
+
+## Each input type
+
+<variable-table class="input-types-1" inputTypes="variable_table.input_types_1" dropdownItems="variable_table.dropdown_items">variable_table.table</variable-table>
+
+<variable-table class="input-types-1" inputTypes="variable_table.input_types_2" dropdownItems="variable_table.dropdown_items">variable_table.table</variable-table>
 
 ## Dropdown input types with no dropdown items defined
 
-<variable-table inputTypes="variable_table.input_types">variable_table.table</variable-table>
-
-## Dropdown input types with dropdown items
-
-<variable-table inputTypes="variable_table.input_types" dropdownItems="variable_table.dropdown_items">variable_table.table</variable-table>
+<variable-table class="undefined-dropdown-items" inputTypes="variable_table.input_types_1">variable_table.table</variable-table>
