@@ -90,12 +90,15 @@
                 [disabled]="!isFormReady"
                 [(ngModel)]="row[column]"
                 (ngModelChange)="dataChanged()">
-                <ng-container *ngIf="definedDropdownItems[column][0]">
-                  <mat-option *ngFor="let option of definedDropdownItems[column]" [value]="option">{{option}}</mat-option>
+                <ng-container *ngIf="definedDropdownItems[column]">
+                  <ng-container *ngIf="definedDropdownItems[column][0]">
+                    <mat-option *ngFor="let option of definedDropdownItems[column]" [value]="option">{{option}}</mat-option>
+                  </ng-container>
+                  <ng-container *ngIf="definedDropdownItems[column][tableIndex[j]]">
+                    <mat-option *ngFor="let option of definedDropdownItems[column][tableIndex[j]]" [value]="option">{{option}}</mat-option>
+                  </ng-container>
                 </ng-container>
-                <ng-container *ngIf="definedDropdownItems[column][tableIndex[j]]">
-                  <mat-option *ngFor="let option of definedDropdownItems[column][tableIndex[j]]" [value]="option">{{option}}</mat-option>
-                </ng-container>
+
               </mat-select>
 
             </ng-container>
