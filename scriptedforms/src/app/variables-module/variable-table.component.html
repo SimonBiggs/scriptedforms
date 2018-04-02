@@ -38,6 +38,7 @@
                 (focus)="onFocus([j, column])"
                 [disabled]="!isFormReady"
                 [(ngModel)]="row[column]"
+                (ngModelChange)="dataChanged()"
                 (keyup)="dataChanged()"
                 type="string">
             </mat-input-container>
@@ -61,6 +62,7 @@
                   (focus)="onFocus([j, column])"
                   [disabled]="!isFormReady"
                   [(ngModel)]="row[column]"
+                  (ngModelChange)="dataChanged()"
                   (keyup)="dataChanged()"
                   type="string">
               </mat-input-container>
@@ -76,6 +78,7 @@
                     (focus)="onFocus([j, column])"
                     [disabled]="!isFormReady"
                     [(ngModel)]="row[column]"
+                    (ngModelChange)="dataChanged()"
                     (keyup)="dataChanged()"
                     type="number">
                 </mat-input-container>
