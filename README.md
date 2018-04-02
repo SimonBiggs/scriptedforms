@@ -14,9 +14,11 @@ to understand.
 
 ## Quick start
 
-If you would like to take scriptedforms for a spin you will need Python. If you don't have Python on your computer I recommend using Anaconda Python (https://www.anaconda.com/download/).
+If you are on Windows and don't have a version of Python you might want to try
+ScriptedFormsPortable. Download ScriptedFormsPortable from <https://github.com/SimonBiggs/scriptedforms/releases/latest>
 
-After you have python you can then install ScriptedForms by typing the following into a terminal (or command prompt):
+However, as long as you have Python (>=3.5) on your computer installing
+ScriptedForms is as simple as typing the following into a terminal (or command prompt):
 
 ```bash
 pip install scriptedforms
