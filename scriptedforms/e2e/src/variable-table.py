@@ -33,3 +33,7 @@ table = None
 def load_table():
     global table
     table = pd.read_csv('variable-table.csv', index_col=0)
+    display(Markdown(
+        'Loaded variable-table.csv at {}'
+        .format(str(datetime.now()))
+    ))
