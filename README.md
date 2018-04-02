@@ -24,7 +24,7 @@ ScriptedForms is as simple as typing the following into a terminal (or command p
 pip install scriptedforms
 ```
 
-Then create a markdown file called `quick-start.md` using any plaintext editor (such as 
+Then using to use it create a markdown file called `quick-start.md` using any plaintext editor (such as 
 [Visual Studio Code](https://code.visualstudio.com/)) within your terminal's current directory. 
 Make the contents be the following:
 
