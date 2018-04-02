@@ -23,3 +23,7 @@
 ## Dropdown input types with no dropdown items defined
 
 <variable-table class="undefined-dropdown-items" inputTypes="variable_table.input_types_1">variable_table.table</variable-table>
+
+## Nonsense parameter values
+
+<variable-table class="nonsense-parameters" inputTypes="None" dropdownItems="None">variable_table.table</variable-table>

@@ -17,6 +17,15 @@ input_types_1 = {
     '6th': 'readonly'
 }
 
+input_types_2 = {
+    '1st': 'tick',
+    '2nd': 'string',
+    '3rd': 'readonly',
+    '4th': 'readonly',
+    '5th': 'readonly',
+    '6th': 'readonly'
+}
+
 dropdown_items = {
   '4th': ['apple', 'orange', 'pear'],
   '5th': {
