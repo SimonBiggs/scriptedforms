@@ -30,7 +30,7 @@ dropdown_items = {
 
 ## A Jupyter output display of the pandas dataframe from the csv file
 
-<section-filechange paths="[filepath]">
+<section-filechange onLoad paths="[filepath]">
 
 ```python
 from_csv = pd.read_csv(filepath, index_col=0)

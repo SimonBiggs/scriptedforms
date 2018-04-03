@@ -41,7 +41,7 @@ import { WatchdogService } from '../services/watchdog.service';
   selector: 'section-filechange',
   template: `<variable-parameter #variableParameterComponent *ngIf='paths'>
 _watchdog_path_conversion({{paths}})
-</variable-parameter><code *ngIf="code" class="language-python">{{code}}</code><ng-content></ng-content>`
+</variable-parameter><ng-content></ng-content><code *ngIf="code" class="language-python">{{code}}</code>`
 })
 export class SectionFileChangeComponent extends SectionBaseComponent implements OnDestroy, AfterViewInit {
   sectionType = 'filechange';

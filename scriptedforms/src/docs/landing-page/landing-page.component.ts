@@ -25,7 +25,7 @@ from IPython.display import display, Markdown
 
 </section-start>
 
-<section-filechange paths="['.']">
+<section-filechange onLoad paths="['.']">
 
 ~~~python
 filepaths = glob('*.md') + glob('*/*.md') + glob('*/*/*.md')

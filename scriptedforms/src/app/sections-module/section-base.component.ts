@@ -37,6 +37,7 @@ import { CodeComponent } from '../code-module/code.component';
   template: ''
 })
 export class SectionBaseComponent implements AfterViewInit {
+  @Input() onLoad?: string;
   @Input() code?: string;
   sectionId: number;
   sectionType: string;

@@ -33,7 +33,7 @@ import { SectionBaseComponent } from './section-base.component';
 
 @Component({
   selector: 'section-start',
-  template: `<code *ngIf="code" class="language-python">{{code}}</code><ng-content></ng-content>`
+  template: `<ng-content></ng-content><code *ngIf="code" class="language-python">{{code}}</code>`
 })
 export class StartComponent extends SectionBaseComponent {
   sectionType = 'start';

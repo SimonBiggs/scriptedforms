@@ -34,7 +34,7 @@ example.hello(your_name)
 
 ## Links to all of the example files provided
 
-<section-filechange paths="['.']">
+<section-filechange onLoad paths="['.']">
 
 ```python
 filepaths = glob('*.md') + glob('**/*.md')
