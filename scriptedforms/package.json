@@ -23,7 +23,7 @@
     "pip:freeze": "./scripts/pip-freeze.sh",
     "pypi:prep": "jlpm build:prod && jlpm pip:uninstall && jlpm pip:sys && jlpm test && jlpm pip:dev",
     "pypi:upload": "./scripts/pypi.sh",
-    "pypi:post": "jlpm pip:uninstall && pip install --pre scriptedforms && jlpm test && jlpm pip:dev",
+    "pypi:post": "jlpm pip:uninstall && pip install --pre --no-cache scriptedforms && jlpm test && jlpm pip:dev",
     "bundle:update": "yarn --cwd ../portable-windows-bundle update",
     "bundle:test": "yarn --cwd ../portable-windows-bundle test",
     "bundle:zip": "yarn --cwd ../portable-windows-bundle zip",
