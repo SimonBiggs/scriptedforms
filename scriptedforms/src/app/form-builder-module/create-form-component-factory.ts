@@ -279,7 +279,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           const promiseList: Promise<null>[] = [];
           this.sectionComponents.forEach(sectionComponent => {
             if (sectionComponent.onLoad === '') {
-              promiseList.push(sectionComponent.runCode());
+              promiseList.push(sectionComponent.runCode(true));
             }
           });
           // this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {

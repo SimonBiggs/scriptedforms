@@ -70,17 +70,23 @@ export class SectionBaseComponent implements AfterViewInit {
     this.codeComponentsArray = this.contentCodeComponents.toArray().concat(this.viewCodeComponents.toArray());
   }
 
-  runCode() {
-    const runCodeComplete = new PromiseDelegate<null>();
-    this.viewInitPromiseDelegate.promise
-    .then(() => {
-      this.codeRunning = true;
-      this._runAllCodeComponents(runCodeComplete);
-      runCodeComplete.promise.then(() => {
-        this.codeRunning = false;
+  runCode(evenIfNotReady = false) {
+    if (evenIfNotReady || this.formReady) {
+      const runCodeComplete = new PromiseDelegate<null>();
+      this.viewInitPromiseDelegate.promise
+      .then(() => {
+        this.codeRunning = true;
+        this._runAllCodeComponents(runCodeComplete);
+        runCodeComplete.promise.then(() => {
+          this.codeRunning = false;
+        });
       });
-    });
-    return runCodeComplete.promise;
+      return runCodeComplete.promise;
+    } else {
+      console.log(`did not run, form not ready: "${this.sectionType}"_${this.sectionId}`);
+      return Promise.resolve(null);
+    }
+
   }
 
   _runAllCodeComponents(runCodeComplete: PromiseDelegate<null>) {
