@@ -199,11 +199,13 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     default:
       break;
     }
+    if (msgType === 'display_data') {
+      this.firstDisplay.resolve(null);
+    }
     if (displayId && msgType === 'display_data') {
        targets = this._displayIdMap.get(displayId) || [];
        targets.push(model.length - 1);
        this._displayIdMap.set(displayId, targets);
-       this.firstDisplay.resolve(null);
     }
   }
 }
