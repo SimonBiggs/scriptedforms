@@ -26,7 +26,7 @@ import {
 // } from 'rxjs/Observable';
 
 import {
-  JSONObject
+  JSONObject, PromiseDelegate
 } from '@phosphor/coreutils';
 
 import {
@@ -71,6 +71,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   outputContainer: HTMLDivElement;
 
   mutationObserver: MutationObserver;
+
+  firstDisplay: PromiseDelegate<null>;
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
@@ -145,11 +147,12 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
       if (future) {
+        this.firstDisplay = new PromiseDelegate();
         this.model = new OutputAreaModel();
 
         future.onIOPub = this._onIOPub;
 
-        future.done.then(() => {
+        this.firstDisplay.promise.then(() => {
           this.updateOutputAreaModel();
 
           this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild);
@@ -200,6 +203,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
        targets = this._displayIdMap.get(displayId) || [];
        targets.push(model.length - 1);
        this._displayIdMap.set(displayId, targets);
+       this.firstDisplay.resolve(null);
     }
   }
 }
