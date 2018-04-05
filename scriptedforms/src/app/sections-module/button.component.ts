@@ -62,7 +62,7 @@ import { ConditionalComponent } from '../variables-module/conditional.component'
     </button>
   </div>
   <ng-content></ng-content>
-  <code *ngIf="code" class="language-python">{{code}}</code>
+  <div><code *ngIf="code" class="language-python">{{code}}</code></div>
 </div>
 `
 })

@@ -58,7 +58,7 @@ import { VariableComponent } from '../types/variable-component';
 
 @Component({
   selector: 'section-live',
-  template: `<ng-content></ng-content><code *ngIf="code" class="language-python">{{code}}</code>`
+  template: `<ng-content></ng-content><div><code *ngIf="code" class="language-python">{{code}}</code></div>`
 })
 export class LiveComponent extends SectionBaseComponent implements AfterViewInit {
   sectionType = 'live';

@@ -36,7 +36,7 @@ import { VariableService } from '../services/variable.service';
 
 @Component({
   selector: 'section-output',
-  template: `<ng-content></ng-content><code *ngIf="code" class="language-python">{{code}}</code>`
+  template: `<ng-content></ng-content><div><code *ngIf="code" class="language-python">{{code}}</code></div>`
 })
 export class OutputComponent extends SectionBaseComponent implements OnDestroy, AfterViewInit {
   sectionType = 'output';
