@@ -44,6 +44,8 @@ export class SectionBaseComponent implements AfterViewInit {
   _sessionId: string;
   isFormReady = false;
 
+  codeRunning = false;
+
   formReadyPromiseDelegate = new PromiseDelegate<void>();
   viewInitPromiseDelegate = new PromiseDelegate<void>();
 
@@ -69,13 +71,25 @@ export class SectionBaseComponent implements AfterViewInit {
   }
 
   runCode() {
-    this.formReadyPromiseDelegate.promise.then(() => {
-      return this.viewInitPromiseDelegate.promise;
-    })
+    const runCodeComplete = new PromiseDelegate<null>();
+    this.viewInitPromiseDelegate.promise
     .then(() => {
-      this.codeComponentsArray.forEach((codeComponent, index) => {
-        codeComponent.runCode();
+      this.codeRunning = true;
+      this._runAllCodeComponents(runCodeComplete);
+      runCodeComplete.promise.then(() => {
+        this.codeRunning = false;
       });
+    });
+    return runCodeComplete.promise;
+  }
+
+  _runAllCodeComponents(runCodeComplete: PromiseDelegate<null>) {
+    const promiseList: Promise<null>[] = [];
+    this.codeComponentsArray.forEach((codeComponent, index) => {
+      promiseList.push(codeComponent.runCode());
+    });
+    Promise.all(promiseList).then(() => {
+      runCodeComplete.resolve(null);
     });
   }
 

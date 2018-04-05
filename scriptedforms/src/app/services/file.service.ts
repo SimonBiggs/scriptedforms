@@ -119,11 +119,13 @@ export class FileService {
   }
 
   serviceSessionInitialisation(sessionId: string) {
+    console.log('service session initialisation');
     this.myFormService.formInitialisation(sessionId);
     this.myVariableService.variableInitialisation(sessionId);
   }
 
   openFile(path: string) {
+    console.log('open file');
     this.setPath(path);
     this.setRenderType(this.determineRenderType(path));
     // this.myKernelService.loadingForm()
@@ -153,6 +155,7 @@ export class FileService {
   }
 
   openUrl(url: string) {
+    console.log('open url');
     const path = this.urlToFilePath(window.location.href);
     if (path !== null) {
       this.openFile(path);
@@ -165,7 +168,9 @@ export class FileService {
     ).textContent);
 
     if (config.applicationToRun === 'use') {
-      links.forEach(link => {
+      links.forEach(old_link => {
+        const link = <HTMLAnchorElement>old_link.cloneNode(true);
+        old_link.parentNode.replaceChild(link, old_link);
         const path = this.urlToFilePath(link.href);
         if (path !== null) {
           link.addEventListener('click', event => {

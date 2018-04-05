@@ -87,12 +87,4 @@ export class SectionFileChangeComponent extends SectionBaseComponent implements 
   ngOnDestroy() {
     this.watchdogSubscription.unsubscribe();
   }
-
-  runCode() {
-    this.viewInitPromiseDelegate.promise.then(() => {
-      this.codeComponentsArray.forEach(codeComponent => {
-        codeComponent.runCode();
-      });
-    });
-  }
 }

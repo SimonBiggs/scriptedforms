@@ -276,9 +276,10 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           variableComponent.initialise();
         });
         this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
+          const promiseList: Promise<null>[] = [];
           this.sectionComponents.forEach(sectionComponent => {
             if (sectionComponent.onLoad === '') {
-              sectionComponent.runCode();
+              promiseList.push(sectionComponent.runCode());
             }
           });
           // this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
@@ -286,7 +287,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           // });
           // Wait until the code queue is complete before declaring form ready to
           // the various components.
-          return this.myKernelSevice.sessionStore[this._sessionId].queue;
+          return Promise.all(promiseList);
         })
         .then(() => {
           this.sectionComponents.forEach(sectionComponent => {

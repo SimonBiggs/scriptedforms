@@ -40,7 +40,6 @@ import {
 } from '@angular/core';
 
 import { SectionBaseComponent } from './section-base.component';
-import { KernelService } from '../services/kernel.service';
 import { ConditionalComponent } from '../variables-module/conditional.component';
 
 @Component({
@@ -71,7 +70,6 @@ export class ButtonComponent extends SectionBaseComponent implements AfterViewIn
   @Input() inline?: string = null;
   @Input() conditional?: string;
   conditionalValue = true;
-  codeRunning = false;
 
   @ViewChild('conditionalComponent') conditionalComponent: ConditionalComponent;
 
@@ -101,24 +99,8 @@ export class ButtonComponent extends SectionBaseComponent implements AfterViewIn
   }
 
   constructor(
-    private myKernelSevice: KernelService,
     public myElementRef: ElementRef
   ) { super(); }
-
-  runCode() {
-    this.formReadyPromiseDelegate.promise.then(() => {
-      return this.viewInitPromiseDelegate.promise;
-    })
-    .then(() => {
-      this.codeComponentsArray.forEach((codeComponent, index) => {
-        codeComponent.runCode();
-      });
-      this.codeRunning = true;
-      this.myKernelSevice.sessionStore[this._sessionId].queue.then(() => {
-        this.codeRunning = false;
-      });
-    });
-  }
 
   ngAfterViewInit() {
     super.ngAfterViewInit();

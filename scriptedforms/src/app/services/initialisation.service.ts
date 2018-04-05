@@ -68,6 +68,7 @@ export class InitialisationService {
   }
 
   public initiliseScriptedForms(options: IScriptedForms.IOptions) {
+    console.log('Initialising ScriptedForms');
     this.initiliseBaseScriptedForms(options);
 
     this.myFileService.openUrl(window.location.href);

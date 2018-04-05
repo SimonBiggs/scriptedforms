@@ -143,11 +143,15 @@ export class VariableService {
     const initialiseHandlerCode = `${this.handlerName} = ${this.variableHandlerClass}("""${jsonEvaluateMap}""", "${this.handlerName}")`;
     this.myKernelSevice.runCode(sessionId, initialiseHandlerCode, '"initialiseVariableHandler"')
     .then((future: Kernel.IFuture) => {
-      future.done.then(() => {
-        this.fetchAll(sessionId, '"firstFetchAllVariables"').then(() => {
-          initilisationComplete.resolve(null);
+      if (future) {
+        future.done.then(() => {
+          this.fetchAll(sessionId, '"firstFetchAllVariables"').then(() => {
+            initilisationComplete.resolve(null);
+          });
         });
-      });
+      } else {
+        console.log('No future returned from initialiseVariableHandler');
+      }
     });
 
     return initilisationComplete.promise;

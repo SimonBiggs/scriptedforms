@@ -17,13 +17,11 @@ The function 'runCode' can be called on this component to have its code sent
 to the Python kernel.
 */
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import {
   Component, AfterViewInit, ViewChild, ElementRef, OnDestroy
 } from '@angular/core';
-
-// import {
-//   Observable
-// } from 'rxjs/Observable';
 
 import {
   JSONObject, PromiseDelegate
@@ -74,6 +72,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   firstDisplay: PromiseDelegate<null>;
 
+  onIOPub: BehaviorSubject<KernelMessage.IIOPubMessage> = new BehaviorSubject(null);
+
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
 
@@ -108,23 +108,16 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.outputContainer.appendChild(this.outputArea.node);
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
-    // Mutation observer is awesome! Use more of this.
-    this.mutationObserver = new MutationObserver(() => {
-      const links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName('a'));
-      this.myFileService.morphLinksToUpdateFile(links);
-    });
-
-    this.mutationObserver.observe(
-      this.outputContainer,
-      {
-        childList: true,
-        subtree: true
-      }
-    );
+    this.onIOPub.subscribe(() => this.updateLinks());
   }
 
   ngOnDestroy() {
     // this.outputArea.dispose();
+  }
+
+  updateLinks() {
+    const links: HTMLAnchorElement[] = Array.from(this.outputContainer.getElementsByTagName('a'));
+    this.myFileService.morphLinksToUpdateFile(links);
   }
 
   /**
@@ -143,7 +136,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    * Run the code within the code component. Update the output area with the results of the
    * code.
    */
-  runCode() {
+  runCode(): Promise<null> {
+    const codeCompleted = new PromiseDelegate<null>();
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
       if (future) {
@@ -151,6 +145,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
         this.model = new OutputAreaModel();
 
         future.onIOPub = this._onIOPub;
+        future.done.then(() => codeCompleted.resolve(null));
 
         this.firstDisplay.promise.then(() => {
           this.updateOutputAreaModel();
@@ -160,12 +155,16 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
           const element: HTMLDivElement = this.outputContainer;
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px';
         });
+      } else {
+        codeCompleted.resolve(null);
       }
     });
+    return codeCompleted.promise;
   }
 
   // Extract from @jupyterlab/outputarea/src/widget.ts
   private _onIOPub = (msg: KernelMessage.IIOPubMessage) => {
+    this.onIOPub.next(msg);
     const model = this.model;
     const msgType = msg.header.msg_type;
     let output: nbformat.IOutput;

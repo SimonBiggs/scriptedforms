@@ -93,12 +93,7 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
 
     for (const variableComponent of this.variableComponents) {
       variableComponent.variableChange.asObservable().subscribe(
-        value => {
-          if (this.formReady) {
-            this.runCode();
-          }
-        }
-      );
+        value => this.runCode());
     }
   }
 }

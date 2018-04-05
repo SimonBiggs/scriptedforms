@@ -38,12 +38,4 @@ import { SectionBaseComponent } from './section-base.component';
 export class StartComponent extends SectionBaseComponent {
   sectionType = 'start';
   @Input() always?: string;
-
-  runCode() {
-    this.viewInitPromiseDelegate.promise.then(() => {
-      this.codeComponentsArray.forEach(codeComponent => {
-        codeComponent.runCode();
-      });
-    });
-  }
 }
