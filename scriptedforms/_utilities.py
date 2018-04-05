@@ -27,6 +27,8 @@
 
 import os
 import json
+from glob import glob
+
 import numpy as np
 import pandas as pd
 
@@ -182,10 +184,10 @@ def _print_agpl():
 
 
 def _watchdog_path_conversion(paths):
-    converted_paths = [
-        os.path.abspath(os.path.expanduser(os.path.expandvars(item)))
-        for item in paths
-    ]
+    converted_paths = []
+
+    for path in paths:
+        converted_paths += glob(os.path.abspath(path))
 
     for path in converted_paths:
         if not os.path.exists(path):
