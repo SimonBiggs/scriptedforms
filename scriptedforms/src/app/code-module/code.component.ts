@@ -18,6 +18,7 @@ to the Python kernel.
 */
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   Component, AfterViewInit, ViewChild, ElementRef, OnDestroy
@@ -67,12 +68,14 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   promise: Promise<Kernel.IFuture>;
   outputContainer: HTMLDivElement;
+  containerUpdated: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   mutationObserver: MutationObserver;
 
   firstDisplay: PromiseDelegate<null>;
 
   onIOPub: BehaviorSubject<KernelMessage.IIOPubMessage> = new BehaviorSubject(null);
+  onIOPubSubscription: Subscription = null;
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
@@ -108,7 +111,9 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.outputContainer.appendChild(this.outputArea.node);
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
-    this.onIOPub.subscribe(() => this.updateLinks());
+    this.containerUpdated.subscribe(() => {
+        this.updateLinks();
+    });
   }
 
   ngOnDestroy() {
@@ -137,6 +142,9 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    * code.
    */
   runCode(): Promise<null> {
+    if (this.onIOPubSubscription) {
+      this.onIOPubSubscription.unsubscribe();
+    }
     const codeCompleted = new PromiseDelegate<null>();
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
@@ -151,6 +159,13 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
           this.updateOutputAreaModel();
 
           this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild);
+          this.containerUpdated.next(true);
+          this.onIOPubSubscription = this.onIOPub.subscribe(msg => {
+            const msgType = msg.header.msg_type;
+            if (msgType === 'display_data' || msgType === 'stream' || msgType === 'update_display_data') {
+              this.containerUpdated.next(true);
+            }
+          });
 
           const element: HTMLDivElement = this.outputContainer;
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px';
