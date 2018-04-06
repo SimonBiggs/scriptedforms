@@ -39,7 +39,7 @@ setup(
         'pandas',
         'watchdog',
         'matplotlib',
-        'jupyterlab'
+        'jupyterlab >= 0.31.12'
     ],
     classifiers=[],
     url="http://scriptedforms.com.au",

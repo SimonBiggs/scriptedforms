@@ -139,7 +139,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   updateLinks() {
     const links: HTMLAnchorElement[] = Array.from(this.outputArea.node.getElementsByTagName('a'));
-    console.log(this.outputArea.node.innerHTML);
+    // console.log(this.outputArea.node.innerHTML);
     console.log(links);
     this.myFileService.morphLinksToUpdateFile(links);
   }

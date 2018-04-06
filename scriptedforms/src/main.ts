@@ -33,10 +33,6 @@ import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 
-import {
-  JupyterLab, JupyterLabPlugin
-} from '@jupyterlab/application';
-
 import { loadApp } from './app';
 import { loadDocs } from './docs';
 import { loadDev } from './dev';
@@ -68,13 +64,3 @@ function main() {
 if (CONFIG_DIV) {
   window.onload = main;
 }
-
-const extension: JupyterLabPlugin<void> = {
-  id: '{{ cookiecutter.extension_name }}',
-  autoStart: true,
-  activate: (app: JupyterLab) => {
-    console.log('JupyterLab extension scriptedforms is activated!');
-  }
-};
-
-export default extension;

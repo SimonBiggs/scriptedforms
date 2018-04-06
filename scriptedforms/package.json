@@ -1,6 +1,6 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.9.1.dev1",
+  "version": "0.9.1-dev1",
   "license": "AGPL-3.0+",
   "repository": {
     "type": "git",
@@ -11,14 +11,16 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "main": "lib/scriptedforms.js",
+  "main": "labextension/lib/index.js",
+  "types": "labextension/lib/index.d.ts",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",
-    "build": "rimraf lib && webpack --config webpack.dev.js",
-    "build:prod": "rimraf lib && webpack --config webpack.prod.js",
+    "build": "rimraf lib && webpack --config webpack.dev.js && yarn build:labextension",
+    "build:prod": "rimraf lib && webpack --config webpack.prod.js && yarn build:labextension",
+    "build:labextension": "rimraf labextension/lib && tsc --project labextension",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
     "pip:install": "jlpm pip:dev",
