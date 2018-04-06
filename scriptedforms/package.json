@@ -1,12 +1,17 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.9.1.dev1",
   "license": "AGPL-3.0+",
   "repository": {
     "type": "git",
     "url": "https://github.com/SimonBiggs/scriptedforms.git"
   },
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "main": "lib/scriptedforms.js",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
@@ -48,8 +53,8 @@
     "@jupyterlab/apputils": "^0.15.5",
     "@jupyterlab/codemirror": "^0.15.4",
     "@jupyterlab/docregistry": "^0.15.5",
-    "@jupyterlab/notebook": "^0.15.6",
-    "@jupyterlab/outputarea": "^0.15.5",
+    "@jupyterlab/notebook": "^0.15.7",
+    "@jupyterlab/outputarea": "^0.15.6",
     "@jupyterlab/rendermime": "^0.15.4",
     "@jupyterlab/services": "^1.1.4",
     "@jupyterlab/theme-light-extension": "^0.15.4",
@@ -90,5 +95,8 @@
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
+  },
+  "jupyterlab": {
+    "extension": true
   }
 }

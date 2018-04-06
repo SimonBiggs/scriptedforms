@@ -33,6 +33,10 @@ import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 
+import {
+  JupyterLab, JupyterLabPlugin
+} from '@jupyterlab/application';
+
 import { loadApp } from './app';
 import { loadDocs } from './docs';
 import { loadDev } from './dev';
@@ -47,10 +51,10 @@ if (process.env.development) {
   loadDev();
 }
 
+const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
+
 function main() {
-  const config = JSON.parse(document.getElementById(
-    'scriptedforms-config-data'
-  ).textContent);
+  const config = JSON.parse(CONFIG_DIV.textContent);
 
   if (config.applicationToRun === 'use') {
     loadApp();
@@ -61,4 +65,16 @@ function main() {
   }
 }
 
-window.onload = main;
+if (CONFIG_DIV) {
+  window.onload = main;
+}
+
+const extension: JupyterLabPlugin<void> = {
+  id: '{{ cookiecutter.extension_name }}',
+  autoStart: true,
+  activate: (app: JupyterLab) => {
+    console.log('JupyterLab extension scriptedforms is activated!');
+  }
+};
+
+export default extension;

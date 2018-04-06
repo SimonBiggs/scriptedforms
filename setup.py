@@ -38,11 +38,9 @@ setup(
         'numpy',
         'pandas',
         'watchdog',
-        'matplotlib'
+        'matplotlib',
+        'jupyterlab'
     ],
-    extras_require={
-        'test': ['jupyterlab'],
-    },
     classifiers=[],
     url="http://scriptedforms.com.au",
     include_package_data=True
