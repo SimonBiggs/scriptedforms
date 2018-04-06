@@ -1,0 +1,14 @@
+.jp-Form {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.jp-FormContainer > .jp-Toolbar {
+    display: block;
+    min-height: var(--jp-toolbar-micro-height);
+    background: var(--jp-toolbar-background);
+    border-bottom: 1px solid var(--jp-toolbar-border-color);
+    box-shadow: var(--jp-toolbar-box-shadow);
+    z-index: 1;
+}
