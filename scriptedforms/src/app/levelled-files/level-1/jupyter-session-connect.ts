@@ -36,7 +36,7 @@ import {
   ServiceManager
 } from '@jupyterlab/services';
 
-interface PromiseReturn {
+export interface PromiseReturn {
   session: Session.ISession;
   isNewSession: boolean;
 }
