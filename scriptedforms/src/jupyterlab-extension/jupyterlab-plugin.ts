@@ -9,6 +9,14 @@ import { InstanceTracker } from '@jupyterlab/apputils';
 import { ScriptedFormsWidget } from './../app/widget';
 
 
+const FACTORY = 'ScriptedForms';
+
+namespace CommandIDs {
+  export
+  const preview = 'scriptedforms:open';
+}
+
+
 export function loadApp(): void {
   const serviceManager = new ServiceManager();
   const contentsManager = new ContentsManager();
@@ -62,17 +70,9 @@ function activate(
 ) {
   console.log('ScriptedForms is activated!');
 
-  app.docRegistry.addFileType({
-    name: 'scripted-form',
-    mimeTypes: ['text/markdown'],
-    extensions: ['.md'],
-    contentType: 'file',
-    fileFormat: 'text'
-  });
-
   const factory = new ScriptedFormsWidgetFactory({
-    name: 'ScriptedFormsWidgetFactory',
-    fileTypes: ['scripted-form'],
+    name: FACTORY,
+    fileTypes: ['markdown'],
     readOnly: true,
     serviceManager: app.serviceManager,
     contentsManager: app.serviceManager.contents,
@@ -80,12 +80,12 @@ function activate(
 
   app.docRegistry.addWidgetFactory(factory);
   const tracker = new InstanceTracker<ScriptedFormsWidget>({
-    namespace: '@simonbiggs/ScriptedForms'
+    namespace: '@simonbiggs/scriptedforms'
   });
 
   restorer.restore(tracker, {
     command: 'docmanager:open',
-    args: widget => ({ path: widget.context.path, factory: 'ScriptedFormsWidgetFactory' }),
+    args: widget => ({ path: widget.context.path, factory: FACTORY }),
     name: widget => widget.context.path
   });
 
@@ -95,12 +95,25 @@ function activate(
       tracker.save(widget);
     });
   });
+
+  app.commands.addCommand(CommandIDs.preview, {
+    label: 'ScriptedForms',
+    execute: args => {
+      const path = args['path'];
+      if (typeof path !== 'string') {
+        return;
+      }
+      return app.commands.execute('docmanager:open', {
+        path, factory: FACTORY
+      });
+    }
+  });
 }
 
 
-export const extension: JupyterLabPlugin<void> = {
-  id: 'ScriptedForms',
+export const plugin: JupyterLabPlugin<void> = {
+  id: '@simonbiggs/scriptedforms:plugin',
   autoStart: true,
   requires: [ILayoutRestorer, ISettingRegistry],
-  activate: activate
+  activate
 };

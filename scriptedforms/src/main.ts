@@ -35,7 +35,7 @@ import 'hammerjs';
 import { enableProdMode } from '@angular/core';
 
 import {
-  extension
+  plugin
 } from './jupyterlab-extension/jupyterlab-plugin';
 
 import { loadApp } from './app';
@@ -69,4 +69,4 @@ if (CONFIG_DIV) {
   window.onload = main;
 }
 
-export default extension;
+export default plugin;
