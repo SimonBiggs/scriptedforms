@@ -63,7 +63,7 @@ export class WatchdogService {
   ) { }
 
   startWatchdog() {
-    const path = 'scriptedforms_watchdog_kernel';
+    const path = 'watchdog_scriptedforms';
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {
       kernelName: 'python3',

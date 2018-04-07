@@ -103,7 +103,7 @@ export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IRea
       this.onPathChanged();
       this._context.pathChanged.connect(this.onPathChanged, this);
     }
-    this.addClass('container');
+    this.addClass('scripted-form-widget');
 
     const layout = (this.layout = new BoxLayout());
     const toolbar = new Toolbar();
@@ -115,7 +115,7 @@ export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IRea
     const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
 
     this.form = new AngularWrapperWidget(angularWrapperWidgetOptions);
-    this.form.addClass('form');
+    this.form.addClass('form-container');
 
     layout.addWidget(this.form);
     BoxLayout.setStretch(this.form, 1);

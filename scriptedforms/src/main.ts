@@ -24,6 +24,10 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
+const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
+if (CONFIG_DIV) {
+  document.body.classList.add('fullscreen-body');
+}
 
 import './polyfills';
 
@@ -46,8 +50,6 @@ if (process.env.NODE_ENV === 'production') {
   console.log('Angular is in production mode.');
   enableProdMode();
 }
-
-const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
 
 function main() {
   const config = JSON.parse(CONFIG_DIV.textContent);

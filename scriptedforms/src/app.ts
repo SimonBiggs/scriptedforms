@@ -40,7 +40,6 @@ export function loadApp(): void {
   });
 
   formWidget.form.initiliseScriptedForms();
-
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);
 }

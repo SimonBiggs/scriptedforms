@@ -181,6 +181,7 @@ export class KernelService {
         }
         if (runCode) {
           console.log(`queue: run ${name}`);
+          code = `# ${name}\n${code}`;
           future = this.sessionStore[sessionId].kernel.requestExecute({ code: code });
           future.done.then(() => {
             this.queueLength.next(Object.keys(this.sessionStore[sessionId].queueLog).length);

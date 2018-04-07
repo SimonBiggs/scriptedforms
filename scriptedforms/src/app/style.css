@@ -24,19 +24,19 @@ mean the AGPL-3.0+.
 You should have received a copy of the Apache-2.0 along with this
 program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
-.form {
+.scripted-form-widget .form-container {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.no-ripple-height .mat-ripple {
+.scripted-form-widget .no-ripple-height .mat-ripple {
   height: 0px;
 }
 
-.ScriptedForms .jp-OutputArea-prompt {
+.scripted-form-widget .jp-OutputArea-prompt {
   display: none;
 }
 
-.float-right {
+.scripted-form-widget .float-right {
   float: right;
 }
 
@@ -92,7 +92,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
 
 @media only screen {
-  body {
+  .fullscreen-body {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -103,48 +103,49 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background: white;
   }
 
-  .margin { 
+  .scripted-form-widget .margin { 
     margin: 20px;
   }
 
-  .form-contents {
+  .scripted-form-widget .form-contents {
     max-width: 940px;
     margin: 0 auto;
   }
   
-  .container {
+  .scripted-form-widget {
     flex: 1 1 auto;
     margin: 0;
     padding: 0;
   }
 
-  .form {
+  .scripted-form-widget .form-container {
     overflow: auto;
   }
 
-  .output-container div .jp-RenderedText {
+  .scripted-form-widget .output-container div .jp-RenderedText {
     padding-left: 0;
   }
 
-  .output-container div div .jp-OutputPrompt {
+  .scripted-form-widget .output-container div div .jp-OutputPrompt {
     padding: 0;
     flex: 0;
     border: 0;
   }
 
-  .floating-spinner {
+  .scripted-form-widget .floating-spinner {
     position: fixed !important;
     bottom: 20px;
     right: 40px;
   }
 
-  .footer-space {
+  .scripted-form-widget .footer-space {
     height: 300px;
   }
 
-  .custom-toolbar {
+  .scripted-form-widget .custom-toolbar {
     min-height: 45px !important;
   }
 }
