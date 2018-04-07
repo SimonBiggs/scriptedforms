@@ -29,6 +29,7 @@ import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { Toolbar } from '@jupyterlab/apputils';
 
 import { DocumentRegistry } from '@jupyterlab/docregistry';
+import { PathExt } from '@jupyterlab/coreutils';
 
 import { AngularWidget } from './phosphor-angular-loader';
 import { AppComponent } from './app.component';
@@ -99,6 +100,8 @@ export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IRea
     super();
     if (options.context) {
       this._context = options.context;
+      this.onPathChanged();
+      this._context.pathChanged.connect(this.onPathChanged, this);
     }
     this.addClass('container');
 
@@ -124,5 +127,9 @@ export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IRea
 
   get context(): DocumentRegistry.Context {
     return this._context;
+  }
+
+  onPathChanged(): void {
+    this.title.label = PathExt.basename(this._context.path);
   }
 }

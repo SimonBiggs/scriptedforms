@@ -72,9 +72,18 @@ function activate(
 ) {
   console.log('ScriptedForms is activated!');
 
+  app.docRegistry.addFileType({
+    name: 'scripted-form',
+    mimeTypes: ['text/markdown'],
+    extensions: ['.form.md'],
+    contentType: 'file',
+    fileFormat: 'text'
+  });
+
   const factory = new ScriptedFormsWidgetFactory({
     name: FACTORY,
-    fileTypes: ['markdown'],
+    fileTypes: ['markdown', 'scripted-form'],
+    defaultFor: ['scripted-form'],
     readOnly: true,
     serviceManager: app.serviceManager,
     contentsManager: app.serviceManager.contents,
