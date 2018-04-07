@@ -11,17 +11,14 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "main": "lab-build/main.js",
-  "types": "lab-build/main.d.ts",
+  "main": "src/jupyterlab-entry.ts",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
     "ng": "ng",
     "lint": "ng lint",
-    "build": "rimraf lib && webpack --config webpack.dev.js && yarn build:labextension",
-    "build:prod": "rimraf lib && webpack --config webpack.prod.js && yarn build:labextension",
-    "build:labextension": "rimraf lab-build && yarn copy:labextension && tsc",
-    "copy:labextension": "copyfiles --up 1 src/**/*.html src/**/*.css src/**/*.scss lab-build/",
+    "build": "rimraf lib && webpack --config webpack.dev.js",
+    "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
     "pip:install": "jlpm pip:dev",
@@ -35,12 +32,10 @@
     "bundle:update": "yarn --cwd ../portable-windows-bundle update",
     "bundle:test": "yarn --cwd ../portable-windows-bundle test",
     "bundle:zip": "yarn --cwd ../portable-windows-bundle zip",
-    "watch": "yarn watch:main & yarn watch:labextension",
-    "watch:main": "webpack --config webpack.dev.js --watch",
-    "watch:labextension": "yarn copy:labextension && tsc --watch"
+    "watch": "webpack --config webpack.dev.js --watch"
   },
   "files": [
-    "lab-build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
+    "src/**/*.{d.ts,ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
   ],
   "dependencies": {
     "@angular/animations": "5.2.5",
@@ -65,6 +60,11 @@
     "@jupyterlab/theme-light-extension": "^0.15.4",
     "@phosphor/signaling": "^1.2.2",
     "@phosphor/widgets": "^1.5.0",
+    "@types/codemirror": "^0.0.55",
+    "@types/hammerjs": "^2.0.35",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/markdown-it": "^0.0.4",
+    "@types/uuid": "^3.4.3",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "json-stable-stringify": "^1.0.1",
@@ -77,11 +77,6 @@
   "devDependencies": {
     "@angular/cli": "^1.7.3",
     "@angular/language-service": "^5.2.9",
-    "@types/codemirror": "^0.0.55",
-    "@types/hammerjs": "^2.0.35",
-    "@types/json-stable-stringify": "^1.0.32",
-    "@types/markdown-it": "^0.0.4",
-    "@types/uuid": "^3.4.3",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.4.1",
     "codelyzer": "^4.2.1",

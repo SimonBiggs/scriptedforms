@@ -24,6 +24,8 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
+
+
 import './polyfills';
 
 import './vendors/jupyterlab-styles';
@@ -46,7 +48,7 @@ if (process.env.NODE_ENV === 'production') {
   enableProdMode();
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   console.log('ScriptedForms is live watching js output in dev mode.');
   loadDev();
 }
