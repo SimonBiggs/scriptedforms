@@ -59,7 +59,9 @@ class ScriptedFormsWidgetFactory extends ABCWidgetFactory<ScriptedFormsWidget, D
       context: context
     });
 
-    formWidget.form.initiliseScriptedForms();
+    formWidget.context.ready.then(() => {
+      formWidget.form.initiliseScriptedForms();
+    });
 
     return formWidget;
   }

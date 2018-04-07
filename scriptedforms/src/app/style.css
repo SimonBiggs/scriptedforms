@@ -136,7 +136,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
   .floating-spinner {
     position: fixed !important;
-    top: 50px;
+    bottom: 20px;
     right: 40px;
   }
 

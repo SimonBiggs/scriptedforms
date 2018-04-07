@@ -49,8 +49,6 @@ export class FileService {
   renderType: 'template' | 'results';
   node: HTMLElement;
 
-  baseUrl = document.getElementsByTagName('base')[0].href;
-
   renderComplete: PromiseDelegate<void>;
 
   constructor(
@@ -145,7 +143,8 @@ export class FileService {
   }
 
   urlToFilePath(url: string) {
-    const pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`);
+    const baseUrl = document.getElementsByTagName('base')[0].href;
+    const pattern = RegExp(`^${escapeRegExp(baseUrl)}(.*\.(md|yaml))`);
     const match = pattern.exec(url);
     if (match !== null) {
       return decodeURIComponent(match[1]);

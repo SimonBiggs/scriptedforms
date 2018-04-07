@@ -49,6 +49,7 @@ export namespace IAngularWrapperWidget {
     toolbar: Toolbar<Widget>;
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
+    context?: DocumentRegistry.Context;
   }
 }
 
