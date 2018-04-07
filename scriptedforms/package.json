@@ -11,7 +11,7 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "main": "src/jupyterlab-entry.ts",
+  "main": "src/main.ts",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {

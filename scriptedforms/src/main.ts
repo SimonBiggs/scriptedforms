@@ -75,7 +75,7 @@ const extension: JupyterLabPlugin<void> = {
   id: 'ScriptedForms',
   autoStart: true,
   activate: (app: JupyterLab) => {
-    console.log('JupyterLab extension ScriptedForms is activated boo!');
+    console.log('JupyterLab extension ScriptedForms is activated from main.ts!');
   }
 };
 
