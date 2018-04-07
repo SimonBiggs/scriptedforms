@@ -326,7 +326,7 @@ class OpenFormResultsWidget extends BaseOpenFormWidget implements DocumentRegist
 
     this.id = '@simonbiggs/jupyterlab-form/open-form-results';
 
-    console.log(options.templateEditor)
+    console.log(options.templateEditor);
 
     this._context = options.context;
     this._services = options.services;

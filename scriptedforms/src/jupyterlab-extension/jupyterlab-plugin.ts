@@ -70,8 +70,6 @@ class ScriptedFormsWidgetFactory extends ABCWidgetFactory<ScriptedFormsWidget, D
 function activate(
   app: JupyterLab, restorer: ILayoutRestorer, settingRegistry: ISettingRegistry
 ) {
-  console.log('ScriptedForms is activated!');
-
   app.docRegistry.addFileType({
     name: 'scripted-form',
     mimeTypes: ['text/markdown'],

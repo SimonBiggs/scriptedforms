@@ -68,15 +68,8 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   promise: Promise<Kernel.IFuture>;
   outputContainer: HTMLDivElement;
-  // containerUpdated: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  // mutationObserver: MutationObserver;
-  // mutationBehaviorSubject: BehaviorSubject<null> = new BehaviorSubject(null);
 
   firstDisplay: PromiseDelegate<null>;
-
-  // onIOPub: BehaviorSubject<KernelMessage.IIOPubMessage> = new BehaviorSubject(null);
-  // onIOPubSubscription: Subscription = null;
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
@@ -112,25 +105,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.outputContainer.appendChild(this.outputArea.node);
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
-    // // Mutation observer is awesome! Use more of this.
-    // this.mutationObserver = new MutationObserver(() => {
-    //   this.mutationBehaviorSubject.next(null);
-    // });
-
-    // this.mutationObserver.observe(
-    //   this.outputContainer,
-    //   {
-    //     childList: true,
-    //     subtree: true
-    //   }
-    // );
-
-    // this.containerUpdated.subscribe(() => {
-    //   console.log('container updated');
-    //   this.mutationBehaviorSubject.asObservable().toPromise().then(() => {
-    //     this.updateLinks();
-    //   });
-    // });
   }
 
   ngOnDestroy() {
@@ -139,8 +113,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   updateLinks() {
     const links: HTMLAnchorElement[] = Array.from(this.outputArea.node.getElementsByTagName('a'));
-    // console.log(this.outputArea.node.innerHTML);
-    console.log(links);
     this.myFileService.morphLinksToUpdateFile(links);
   }
 
@@ -161,9 +133,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
    * code.
    */
   runCode(): Promise<null> {
-    // if (this.onIOPubSubscription) {
-    //   this.onIOPubSubscription.unsubscribe();
-    // }
     const codeCompleted = new PromiseDelegate<null>();
     this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
     this.promise.then(future => {
@@ -181,14 +150,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
           this.updateOutputAreaModel();
 
           this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild);
-          // this.containerUpdated.next(true);
-          // this.onIOPubSubscription = this.onIOPub.subscribe(msg => {
-          //   const msgType = msg.header.msg_type;
-          //   if (msgType === 'display_data' || msgType === 'stream' || msgType === 'update_display_data') {
-          //     this.containerUpdated.next(true);
-          //   }
-          // });
-
           const element: HTMLDivElement = this.outputContainer;
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px';
         });
