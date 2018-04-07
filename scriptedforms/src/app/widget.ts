@@ -108,4 +108,8 @@ export class ScriptedFormsWidget extends Widget {
     layout.addWidget(this.form);
     BoxLayout.setStretch(this.form, 1);
   }
+
+  get ready() {
+    return Promise.resolve();
+  }
 }

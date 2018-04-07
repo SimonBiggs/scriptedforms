@@ -33,8 +33,8 @@ import {
 } from '@jupyterlab/services';
 
 
-export function loadDev() {
-  const serviceManager = new ServiceManager();
+export function loadDev(serviceManager = new ServiceManager()) {
+  // const serviceManager = new ServiceManager();
   runDevModeWatchdog(serviceManager);
 }
 

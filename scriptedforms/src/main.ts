@@ -25,7 +25,6 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-
 import './polyfills';
 
 import './vendors/jupyterlab-styles';
@@ -36,8 +35,8 @@ import 'hammerjs';
 import { enableProdMode } from '@angular/core';
 
 import {
-  JupyterLab, JupyterLabPlugin
-} from '@jupyterlab/application';
+  extension
+} from './jupyterlab-extension/jupyterlab-plugin';
 
 import { loadApp } from './app';
 import { loadDocs } from './docs';
@@ -46,11 +45,6 @@ import { loadDev } from './dev';
 if (process.env.NODE_ENV === 'production') {
   console.log('Angular is in production mode.');
   enableProdMode();
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  console.log('ScriptedForms is live watching js output in dev mode.');
-  loadDev();
 }
 
 const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
@@ -68,15 +62,11 @@ function main() {
 }
 
 if (CONFIG_DIV) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('ScriptedForms is live watching js output in dev mode.');
+    loadDev();
+  }
   window.onload = main;
 }
-
-const extension: JupyterLabPlugin<void> = {
-  id: 'ScriptedForms',
-  autoStart: true,
-  activate: (app: JupyterLab) => {
-    console.log('JupyterLab extension ScriptedForms is activated from main.ts!');
-  }
-};
 
 export default extension;
