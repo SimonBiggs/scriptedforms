@@ -28,6 +28,8 @@ import { BoxLayout, Widget } from '@phosphor/widgets';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { Toolbar } from '@jupyterlab/apputils';
 
+import { DocumentRegistry } from '@jupyterlab/docregistry';
+
 import { AngularWidget } from './phosphor-angular-loader';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
@@ -38,6 +40,7 @@ export namespace IScriptedFormsWidget {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
+    context?: DocumentRegistry.Context;
   }
 }
 
@@ -86,11 +89,16 @@ export class AngularWrapperWidget extends AngularWidget<
   }
 }
 
-export class ScriptedFormsWidget extends Widget {
+export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IReadyWidget {
+  _context: DocumentRegistry.Context;
   form: AngularWrapperWidget;
+  id: 'ScriptedForms';
 
   constructor(options: IScriptedFormsWidget.IOptions) {
     super();
+    if (options.context) {
+      this._context = options.context;
+    }
     this.addClass('container');
 
     const layout = (this.layout = new BoxLayout());
@@ -111,5 +119,9 @@ export class ScriptedFormsWidget extends Widget {
 
   get ready() {
     return Promise.resolve();
+  }
+
+  get context(): DocumentRegistry.Context {
+    return this._context;
   }
 }
