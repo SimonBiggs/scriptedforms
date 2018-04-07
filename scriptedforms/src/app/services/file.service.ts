@@ -27,9 +27,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+import { PromiseDelegate } from '@phosphor/coreutils';
+import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 // import * as yaml from 'js-yaml';
 
@@ -48,6 +47,12 @@ export class FileService {
   path: BehaviorSubject<string> = new BehaviorSubject('scriptedforms_default_path');
   renderType: 'template' | 'results';
   node: HTMLElement;
+  _context: DocumentRegistry.Context;
+
+  set context(_context: DocumentRegistry.Context) {
+    this._context = _context;
+    this._context.pathChanged.connect(this.setPathFromContext, this);
+  }
 
   renderComplete: PromiseDelegate<void>;
 
@@ -96,6 +101,10 @@ export class FileService {
       const fileContents: string = model.content;
       return this.handleFileContents(fileContents, sessionId);
     });
+  }
+
+  setPathFromContext(): void {
+    this.path.next(this.context.path);
   }
 
   setPath(path: string) {
@@ -162,23 +171,25 @@ export class FileService {
   }
 
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
-    // const config = JSON.parse(document.getElementById(
-    //   'scriptedforms-config-data'
-    // ).textContent);
+    if (!this._context) {
+      const config = JSON.parse(document.getElementById(
+        'scriptedforms-config-data'
+      ).textContent);
 
-    // if (config.applicationToRun === 'use') {
-    //   links.forEach(old_link => {
-    //     const link = <HTMLAnchorElement>old_link.cloneNode(true);
-    //     old_link.parentNode.replaceChild(link, old_link);
-    //     const path = this.urlToFilePath(link.href);
-    //     if (path !== null) {
-    //       link.addEventListener('click', event => {
-    //         event.preventDefault();
-    //         window.history.pushState(null, null, link.href);
-    //         this.openFile(path);
-    //       });
-    //     }
-    //   });
-    // }
+      if (config.applicationToRun === 'use') {
+        links.forEach(old_link => {
+          const link = <HTMLAnchorElement>old_link.cloneNode(true);
+          old_link.parentNode.replaceChild(link, old_link);
+          const path = this.urlToFilePath(link.href);
+          if (path !== null) {
+            link.addEventListener('click', event => {
+              event.preventDefault();
+              window.history.pushState(null, null, link.href);
+              this.openFile(path);
+            });
+          }
+        });
+      }
+    }
   }
 }

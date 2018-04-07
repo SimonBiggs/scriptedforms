@@ -76,6 +76,7 @@ export class InitialisationService {
     if (!options.context) {
       this.myFileService.openUrl(window.location.href);
     } else {
+      this.myFileService.context = options.context;
       this.myFileService.openFile(options.context.path);
     }
 
