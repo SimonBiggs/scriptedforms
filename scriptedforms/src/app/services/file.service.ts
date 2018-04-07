@@ -162,23 +162,23 @@ export class FileService {
   }
 
   morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
-    const config = JSON.parse(document.getElementById(
-      'scriptedforms-config-data'
-    ).textContent);
+    // const config = JSON.parse(document.getElementById(
+    //   'scriptedforms-config-data'
+    // ).textContent);
 
-    if (config.applicationToRun === 'use') {
-      links.forEach(old_link => {
-        const link = <HTMLAnchorElement>old_link.cloneNode(true);
-        old_link.parentNode.replaceChild(link, old_link);
-        const path = this.urlToFilePath(link.href);
-        if (path !== null) {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.history.pushState(null, null, link.href);
-            this.openFile(path);
-          });
-        }
-      });
-    }
+    // if (config.applicationToRun === 'use') {
+    //   links.forEach(old_link => {
+    //     const link = <HTMLAnchorElement>old_link.cloneNode(true);
+    //     old_link.parentNode.replaceChild(link, old_link);
+    //     const path = this.urlToFilePath(link.href);
+    //     if (path !== null) {
+    //       link.addEventListener('click', event => {
+    //         event.preventDefault();
+    //         window.history.pushState(null, null, link.href);
+    //         this.openFile(path);
+    //       });
+    //     }
+    //   });
+    // }
   }
 }

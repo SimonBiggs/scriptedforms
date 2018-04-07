@@ -38,7 +38,7 @@ import {
   Compiler, ElementRef
 } from '@angular/core';
 
-declare var MathJax: any;
+// declare var MathJax: any;
 import * as  MarkdownIt from 'markdown-it';
 
 import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
@@ -180,9 +180,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
-    this.formComponentRef.instance.formReady.promise.then(() => {
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
-    });
+    // this.formComponentRef.instance.formReady.promise.then(() => {
+    //   MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
+    // });
     return this.formComponentRef.instance;
   }
 }
