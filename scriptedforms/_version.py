@@ -9,5 +9,5 @@ except NameError:
 with open(os.path.join(HERE, 'package.json')) as file:
     data = json.load(file)
 
-version_info = data['version'].replace('.', ' ').replace('-', ' ').split('.')
+version_info = data['version'].replace('.', ' ').replace('-', ' ').split(' ')
 __version__ = '.'.join(map(str, version_info[:3])) + ''.join(version_info[3:])

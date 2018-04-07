@@ -145,6 +145,6 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   }
 
   .custom-toolbar {
-    min-height: 40px !important;
+    min-height: 45px !important;
   }
 }
