@@ -20,27 +20,15 @@ to the Python kernel.
 // import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // import { Subscription } from 'rxjs/Subscription';
 
-import {
-  Component, AfterViewInit, ViewChild, ElementRef, OnDestroy
-} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
-import {
-  JSONObject, PromiseDelegate
-} from '@phosphor/coreutils';
+import { JSONObject, PromiseDelegate } from '@phosphor/coreutils';
 
-import {
-  nbformat
-} from '@jupyterlab/coreutils';
-
-import {
-  RenderMimeRegistry, standardRendererFactories as initialFactories
-} from '@jupyterlab/rendermime';
+import { nbformat } from '@jupyterlab/coreutils';
+import { RenderMimeRegistry, standardRendererFactories as initialFactories } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 import { Kernel, KernelMessage } from '@jupyterlab/services';
-
-import {
-  Mode
-} from '@jupyterlab/codemirror';
+import { Mode } from '@jupyterlab/codemirror';
 
 import { KernelService } from '../services/kernel.service';
 import { FileService } from '../services/file.service';
@@ -85,6 +73,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       model: this.model,
       rendermime: this.renderMime
     };
+    this.outputAreaDispose();
     this.outputArea = new OutputArea(this.outputAreaOptions);
   }
 
@@ -107,8 +96,18 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   }
 
+  outputAreaDispose() {
+    if (this.outputArea.future) {
+      this.outputArea.future.done.then(() => {
+        this.outputArea.dispose();
+      });
+    } else {
+      this.outputArea.dispose();
+    }
+  }
+
   ngOnDestroy() {
-    // this.outputArea.dispose();
+    this.outputAreaDispose();
   }
 
   updateLinks() {

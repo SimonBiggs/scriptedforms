@@ -42,10 +42,8 @@
 
 
 import {
-  Component, ViewChildren, QueryList,
-  Compiler, ComponentFactory, NgModule,
-  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef,
-  AfterViewInit
+  Component, ViewChildren, QueryList, Compiler, ComponentFactory, NgModule,
+  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef, AfterViewInit
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -54,9 +52,7 @@ import { FormsModule } from '@angular/forms';
 import { PromiseDelegate } from '@phosphor/coreutils';
 import { Kernel } from '@jupyterlab/services';
 
-import {
-  MaterialModule
-} from '../../vendors/material.module';
+import { MaterialModule } from '../../vendors/material.module';
 
 import { sessionStartCode } from './session-start-code';
 
@@ -127,7 +123,6 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     // Variables
     @ViewChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
     @ViewChildren(TickComponent) tickComponents: QueryList<TickComponent>;
-    // @ViewChildren(ConditionalComponent) conditionalComponents: QueryList<ConditionalComponent>;
 
     @ViewChildren(NumberComponent) numberComponents: QueryList<NumberComponent>;
     @ViewChildren(SliderComponent) sliderComponents: QueryList<SliderComponent>;
@@ -148,15 +143,13 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     ) { }
 
     ngAfterViewInit() {
-      // Replace links
+      this.formViewInitialised.resolve(null);
+
       const links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName('a'));
       this.myFileService.morphLinksToUpdateFile(links);
 
-      this.formViewInitialised.resolve(null);
-
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
-      // this.variableComponents = this.variableComponents.concat(this.conditionalComponents.toArray())
 
       this.buttonComponents.toArray().forEach(buttonComponent => {
         if (buttonComponent.conditional) {
@@ -196,19 +189,13 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
         this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.variableParameterComponent]);
       });
 
-      // Only begin initialisation once the kernel is connected
-      this.setComponentIds();
-
-      this.myKernelService.sessionConnected.promise.then(() => this.initialiseForm());
-    }
-
-    private setComponentIds() {
       this.sectionComponents.forEach((sectionComponent, index) => {
         sectionComponent.setId(index);
       });
       this.variableComponents.forEach((variableComponent, index) => {
         variableComponent.setId(index);
       });
+      this.myKernelService.sessionConnected.promise.then(() => this.initialiseForm());
 
       this.myChangeDetectorRef.detectChanges();
     }
@@ -220,8 +207,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
       this.myVariableService.resetVariableService();
 
       const sessionStartCodeComplete = new PromiseDelegate<boolean>();
-      this.myKernelService.runCode(
-        sessionStartCode, 'session_start_code')
+      this.myKernelService.runCode(sessionStartCode, 'session_start_code')
       .then((future: Kernel.IFuture) => {
         if (future) {
           let textContent = '';
@@ -230,9 +216,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
               textContent = textContent.concat(String(msg.content.text));
             }
           });
-          future.done.then(() => {
-            sessionStartCodeComplete.resolve(JSON.parse(textContent));
-          });
+          future.done.then(() => sessionStartCodeComplete.resolve(JSON.parse(textContent)));
         }
       });
       sessionStartCodeComplete.promise.then(isNewSession => {
@@ -250,6 +234,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];
           this.startComponents.toArray().forEach((startComponent, index) => {
+            console.log(startComponent);
             if (isNewSession) {
               startPromiseList.push(
                 startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())
