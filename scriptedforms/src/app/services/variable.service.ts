@@ -32,15 +32,10 @@ Not yet implemented.
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-// import { Slot } from '@phosphor/signaling';
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+import { Slot } from '@phosphor/signaling';
+import { PromiseDelegate } from '@phosphor/coreutils';
 
-import {
-  Kernel, KernelMessage
-} from '@jupyterlab/services';
-
+import { Kernel, KernelMessage, Session } from '@jupyterlab/services';
 import { nbformat } from '@jupyterlab/coreutils';
 
 import * as  stringify from 'json-stable-stringify';
@@ -48,12 +43,12 @@ import * as uuid from 'uuid';
 
 import { Injectable } from '@angular/core';
 import { KernelService } from './kernel.service';
-// import { FileService } from './file.service';
 
 import { VariableStore } from '../interfaces/variable-store';
 import { VariableValue } from '../types/variable-value';
 
 import { VariableComponent } from '../types/variable-component';
+
 
 
 export interface SessionVariableStore {
@@ -68,12 +63,10 @@ export interface SessionVariableStore {
     };
     pythonVariables: VariableStore;
     variableChangedObservable: BehaviorSubject<VariableStore>;
-    timestamps: BehaviorSubject<{
-      [key: string]: number
-    }>;
     variableComponentStore: {
       [key: string]: VariableComponent
     };
+    updateExecutionSlot: Slot<Session.ISession, KernelMessage.IIOPubMessage>
     executionCount: BehaviorSubject<nbformat.ExecutionCount>;
     lastCode: BehaviorSubject<string>;
   };
@@ -89,9 +82,16 @@ export class VariableService {
   variableStatus: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
-    private myKernelSevice: KernelService,
-    // private myFileService: FileService
+    private myKernelSevice: KernelService
   ) { }
+
+  updateExecution(session: Session.ISession, msg: KernelMessage.IIOPubMessage) {
+    if (KernelMessage.isExecuteInputMsg(msg)) {
+      const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
+      this.sessionVariableStore[session.id].executionCount.next(executeInputMessage.content.execution_count);
+      this.sessionVariableStore[session.id].lastCode.next(executeInputMessage.content.code);
+    }
+  }
 
   variableInitialisation(sessionId: string) {
     if (!(sessionId in this.sessionVariableStore)) {
@@ -102,10 +102,10 @@ export class VariableService {
         variableEvaluateMap: {},
         pythonVariables: {},
         variableChangedObservable: new BehaviorSubject(null),
-        timestamps: new BehaviorSubject({}),
         variableComponentStore: {},
         executionCount: new BehaviorSubject(null),
-        lastCode: new BehaviorSubject(null)
+        lastCode: new BehaviorSubject(null),
+        updateExecutionSlot: (session, msg) => {this.updateExecution(session, msg); }
       };
 
       this.sessionVariableStore[sessionId].lastCode.subscribe((code) => {
@@ -116,25 +116,24 @@ export class VariableService {
           }
         }
       });
-
-      this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.connect((session, msg) => {
-        if (KernelMessage.isExecuteInputMsg(msg)) {
-          const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
-          this.sessionVariableStore[sessionId].executionCount.next(executeInputMessage.content.execution_count);
-          this.sessionVariableStore[sessionId].lastCode.next(executeInputMessage.content.code);
-        }
-      });
     }
+  }
+
+  startListeningForChanges(sessionId: string) {
+    this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.connect(
+      this.sessionVariableStore[sessionId].updateExecutionSlot);
   }
 
   resetVariableService(sessionId: string) {
     this.variableStatus.next('reset');
-    this.sessionVariableStore[sessionId].timestamps.next({});
     this.sessionVariableStore[sessionId].variableStore.next({});
     this.sessionVariableStore[sessionId].oldVariableStore = {};
     this.sessionVariableStore[sessionId].variableComponentStore = {};
     this.sessionVariableStore[sessionId].variableIdentifierMap = {};
     this.sessionVariableStore[sessionId].variableEvaluateMap = {};
+
+    this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.disconnect(
+      this.sessionVariableStore[sessionId].updateExecutionSlot);
   }
 
   allVariablesInitilised(sessionId: string) {
@@ -150,6 +149,7 @@ export class VariableService {
           // doesn't get clobbered. This particular fetch must always occur so that
           // the form can be declared ready.
           this.fetchAll(sessionId, '"InitialFetchAllVariables"').then(() => {
+            this.startListeningForChanges(sessionId);
             initilisationComplete.resolve(null);
           });
         });
@@ -236,18 +236,10 @@ export class VariableService {
     component.updateVariableView(JSON.parse(JSON.stringify(value)));
   }
 
-  updateTimestamp(sessionId: string, identifier: string) {
-    const timestamps = this.sessionVariableStore[sessionId].timestamps.getValue();
-    timestamps[identifier] = Date.now();
-
-    this.sessionVariableStore[sessionId].timestamps.next(timestamps);
-  }
-
   variableHasChanged(sessionId: string, identifier: string) {
     this.updateComponentView(
       this.sessionVariableStore[sessionId].variableComponentStore[identifier],
       this.sessionVariableStore[sessionId].variableStore.getValue()[identifier].value);
-    this.updateTimestamp(sessionId, identifier);
   }
 
   checkForChanges(sessionId: string) {
@@ -294,8 +286,6 @@ export class VariableService {
 
   pushVariable(sessionId: string, variableIdentifier: string, variableName: string, valueReference: string) {
     const pushCode = `${variableName} = ${valueReference}`;
-
-    this.updateTimestamp(sessionId, variableIdentifier);
 
     this.sessionVariableStore[sessionId].oldVariableStore[variableIdentifier] = {
       defined: true,

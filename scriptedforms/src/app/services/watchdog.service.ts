@@ -39,8 +39,6 @@ import {
 import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
 import { FormService } from './form.service';
-import { KernelService } from './kernel.service';
-// import { VariableService } from './variable.service';
 
 import {
   startWatchdogSessionCode, addObserverPathCode
@@ -57,9 +55,7 @@ export class WatchdogService {
   constructor(
     private myFileService: FileService,
     private myJupyterService: JupyterService,
-    private myFormService: FormService,
-    // private myVariableService: VariableService,
-    private myKernelService: KernelService
+    private myFormService: FormService
   ) { }
 
   startWatchdog() {
@@ -104,7 +100,6 @@ export class WatchdogService {
             ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))));
         });
         if (match) {
-          this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false;
           this.myFileService.loadFileContents(path, sessionId);
         }
 

@@ -109,18 +109,6 @@ class _VariableHandler(object):
         self.variable_evaluate_map = json.loads(variable_evaluate_map)
         self.handlername = handlername
 
-        self.timestamp = dict()
-        for key in self.variable_evaluate_map:
-            self.timestamp[key] = None
-
-        self.userid = dict()
-        for key in self.variable_evaluate_map:
-            self.userid[key] = None
-
-        self.signature = dict()
-        for key in self.variable_evaluate_map:
-            self.signature[key] = None
-
         self.value = dict()
         self.defined = dict()
 
@@ -149,9 +137,6 @@ except:
                 variables[key] = {
                     "value": self.value[key],
                     "defined": True,
-                    "userid": self.userid[key],
-                    "timestamp": self.timestamp[key],
-                    "signature": self.signature[key]
                 }
             else:
                 variables[key] = {

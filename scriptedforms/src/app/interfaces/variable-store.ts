@@ -30,8 +30,5 @@ export interface VariableStore {
   [key: string]: {
     defined: boolean,
     value?: VariableValue,
-    timestamp?: number,
-    user?: string,
-    signature?: string
   };
 }

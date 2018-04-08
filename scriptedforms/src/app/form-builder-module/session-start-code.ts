@@ -24,14 +24,21 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-export const sessionStartCode = `
-import json
+export const sessionStartCode = (
+`try:
+    _VariableHandler
+    _is_new_session = False
+except NameError:
+    _is_new_session = True
+    import json
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-%matplotlib inline
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    %matplotlib inline
 
-from scriptedforms._utilities import (
-  _VariableHandler, _json_table_to_df, _watchdog_path_conversion)
-`;
+    from scriptedforms._utilities import (
+      _VariableHandler, _json_table_to_df, _watchdog_path_conversion)
+
+print(json.dumps(_is_new_session))
+`);

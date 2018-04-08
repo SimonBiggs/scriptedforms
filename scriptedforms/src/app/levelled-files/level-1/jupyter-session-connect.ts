@@ -38,11 +38,9 @@ import {
 
 export interface PromiseReturn {
   session: Session.ISession;
-  isNewSession: boolean;
 }
 
-// Change this to using rxjs it will look simpler in the end.
-// This is a good set to trial rxjs with.
+
 export function jupyterSessionConnect(
   serviceManager: ServiceManager, path: string, activeSessionIds: string[]
 ): Promise<PromiseReturn> {
@@ -53,7 +51,7 @@ export function jupyterSessionConnect(
     serviceManager.sessions.connectTo(sessionModel)
     .then(session => {
       resultsPromiseDelegate.resolve({
-        session, isNewSession: false
+        session
       });
     });
   })
@@ -77,7 +75,7 @@ function connectToNewSession(serviceManager: ServiceManager, path: string): Prom
   };
 
   serviceManager.sessions.startNew(startNewOptions).then(session => {
-    promiseDelegate.resolve({session, isNewSession: true});
+    promiseDelegate.resolve({session});
   });
 
   return promiseDelegate.promise;

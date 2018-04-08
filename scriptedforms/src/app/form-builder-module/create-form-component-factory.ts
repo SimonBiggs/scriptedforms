@@ -51,13 +51,14 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+import { PromiseDelegate } from '@phosphor/coreutils';
+import { Kernel } from '@jupyterlab/services';
 
 import {
   MaterialModule
 } from '../../vendors/material.module';
+
+import { sessionStartCode } from './session-start-code';
 
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';
@@ -142,7 +143,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
     @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
     constructor(
-      private myKernelSevice: KernelService,
+      private myKernelService: KernelService,
       private myVariableService: VariableService,
       private myFileService: FileService,
       private elementRef: ElementRef,
@@ -201,7 +202,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       // Only begin initialisation once the kernel is connected
       this.setComponentIds();
 
-      this.myKernelSevice.sessionConnected.promise.then((sessionIdFromKernelService) => {
+      this.myKernelService.sessionConnected.promise.then((sessionIdFromKernelService) => {
         if (sessionId !== sessionIdFromKernelService) {
           throw RangeError('kernel service provided a different session id than what this form started with');
         }
@@ -242,7 +243,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.sectionComponents.forEach(sectionComponent => {
         sectionComponent.formReady(false);
       });
-      this.myKernelSevice.restartKernel().then(() => {
+      this.myKernelService.restartKernel().then(() => {
         this.initialiseForm();
       });
 
@@ -253,41 +254,63 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
-        // The start component section is run first
+      this.myVariableService.resetVariableService(this._sessionId);
 
-        this.startComponents.toArray().forEach((startComponent, index) => {
-          // Only run the code of a start component if it is a new session.
-          // Once the data model for the form results has been built it can
-          // be used to facilitate determining whether or not the code within
-          // start component(s) have changed. If it has changed the code should
-          // be re-run even if it isn't a new session.
-          if (startComponent.always === '') {
-            startComponent.runCode();
-          } else if (this.myKernelSevice.sessionStore[this._sessionId].isNewSession) {
-            startComponent.runCode();
-          }
-        });
-        // this.myKernelSevice.isNewSession = false;
-
-        // Variable components are initialised second
-        this.myVariableService.resetVariableService(this._sessionId);
+      const sessionStartCodeComplete = new PromiseDelegate<boolean>();
+      this.myKernelService.runCode(
+        this._sessionId, sessionStartCode, 'session_start_code')
+      .then((future: Kernel.IFuture) => {
+        if (future) {
+          let textContent = '';
+          future.onIOPub = (msg => {
+            if (msg.content.text) {
+              textContent = textContent.concat(String(msg.content.text));
+            }
+          });
+          future.done.then(() => {
+            sessionStartCodeComplete.resolve(JSON.parse(textContent));
+          });
+        }
+      });
+      sessionStartCodeComplete.promise.then(isNewSession => {
+        if (isNewSession) {
+          console.log('Restoring old session');
+        } else {
+          console.log('Starting a new session');
+        }
 
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise();
         });
+
         this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
-          const promiseList: Promise<null>[] = [];
-          this.sectionComponents.forEach(sectionComponent => {
-            if (sectionComponent.onLoad === '') {
-              promiseList.push(sectionComponent.runCode(true));
+          const initialPromise = Promise.resolve(null);
+          const startPromiseList: Promise<null>[] = [initialPromise];
+          this.startComponents.toArray().forEach((startComponent, index) => {
+            if (startComponent.always === '') {
+              startPromiseList.push(
+                startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())
+              );
+            } else if (isNewSession) {
+              startPromiseList.push(
+                startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())
+              );
             }
           });
-          // this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
-          //   sectionFileChangeComponent.runCode();
-          // });
+          return Promise.all(startPromiseList);
+        }).then(() => {
+          const initialPromise = Promise.resolve(null);
+          const sectionPromiseList: Promise<null>[] = [initialPromise];
+          this.sectionComponents.forEach(sectionComponent => {
+            if (sectionComponent.onLoad === '') {
+              sectionPromiseList.push(
+                sectionPromiseList[sectionPromiseList.length - 1].then(() => sectionComponent.runCode())
+              );
+            }
+          });
           // Wait until the code queue is complete before declaring form ready to
           // the various components.
-          return Promise.all(promiseList);
+          return Promise.all(sectionPromiseList);
         })
         .then(() => {
           this.sectionComponents.forEach(sectionComponent => {
@@ -298,6 +321,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           });
           this.formReady.resolve(null);
         });
+      });
     }
   }
 
