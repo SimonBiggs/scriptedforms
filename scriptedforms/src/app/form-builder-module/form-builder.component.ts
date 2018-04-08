@@ -33,23 +33,19 @@ with the provided contents.
 */
 
 import {
-  Component, OnInit, AfterViewInit,
-  ViewChild, ViewContainerRef, ComponentRef,
+  Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef,
   Compiler, ElementRef
 } from '@angular/core';
+
+import { PromiseDelegate } from '@phosphor/coreutils';
 
 declare var MathJax: any;
 import * as  MarkdownIt from 'markdown-it';
 
+import { FileService } from '../services/file.service';
+
 import { createFormComponentFactory, IFormComponent } from './create-form-component-factory';
 
-// import { FormService } from '../services/form.service';
-import { FileService } from '../services/file.service';
-// import { WatchdogService } from '../services/watchdog.service';
-
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
 
 @Component({
   selector: 'app-form-builder',

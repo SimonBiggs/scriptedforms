@@ -78,8 +78,6 @@ function connectToNewSession(serviceManager: ServiceManager, path: string): Prom
 @Injectable()
 export class KernelService {
   session: Session.ISession;
-  sessionConnected: PromiseDelegate<Session.ISession>;
-
   kernel: Kernel.IKernelConnection;
   kernelStatus: BehaviorSubject<Kernel.Status> = new BehaviorSubject(null);
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
@@ -94,17 +92,21 @@ export class KernelService {
   ) { }
 
   sessionConnect(path: string): Promise<Session.ISession> {
-    this.sessionConnected = new PromiseDelegate<Session.ISession>();
+    const sessionConnected = new PromiseDelegate<Session.ISession>();
 
     jupyterSessionConnect(this.myJupyterService.serviceManager, path)
     .then(session => {
+      console.log(`Connection request to Jupyter Session: ${path}`);
+
       this.session = session;
       this.kernel = session.kernel;
       this.queueId = 0;
       this.queueLog = {};
       this.queue = Promise.resolve(null);
 
-      this.sessionConnected.resolve(session);
+      this.runCode('# KernelTest', '"KernelTest"').then(future => {
+        future.done.then(() => sessionConnected.resolve(session));
+      });
 
       session.iopubMessage.connect((_, msg) => {
         if (KernelMessage.isErrorMsg(msg)) {
@@ -118,20 +120,25 @@ export class KernelService {
       });
     });
 
-    return this.sessionConnected.promise;
+    return sessionConnected.promise;
+  }
+
+  queueReset() {
+    console.log('queue reset');
+    this.queueId = 0;
+    this.queueLog = {};
+    this.queue = Promise.resolve(null);
   }
 
   restartKernel(): Promise<Session.ISession> {
-    this.sessionConnected = new PromiseDelegate<Session.ISession>();
+    const sessionConnected = new PromiseDelegate<Session.ISession>();
     this.kernel.restart().then(() => {
-      this.queueId = 0;
-      this.queueLog = {};
-      this.queue = Promise.resolve(null);
+      this.queueReset();
 
-      this.sessionConnected.resolve(this.session);
+      sessionConnected.resolve(this.session);
     });
 
-    return this.sessionConnected.promise;
+    return sessionConnected.promise;
   }
 
   addToQueue(name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {

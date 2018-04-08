@@ -100,7 +100,8 @@ interface IFormComponent {
  * @returns a factory which creates form components
  */
 export
-function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
+function createFormComponentFactory(
+  compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
   /**
    * The form component that is built each time the template changes
    */
@@ -141,6 +142,9 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
 
     ngAfterViewInit() {
       this.formViewInitialised.resolve(null);
+
+      this.myVariableService.resetVariableService();
+      this.myKernelService.queueReset();
 
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
@@ -189,17 +193,15 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
       this.variableComponents.forEach((variableComponent, index) => {
         variableComponent.setId(index);
       });
-      this.myKernelService.sessionConnected.promise.then(() => this.initialiseForm());
-
       this.myChangeDetectorRef.detectChanges();
+
+      this.initialiseForm();
     }
 
     /**
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
-      this.myVariableService.resetVariableService();
-
       const sessionStartCodeComplete = new PromiseDelegate<boolean>();
       this.myKernelService.runCode(sessionStartCode, 'session_start_code')
       .then((future: Kernel.IFuture) => {
