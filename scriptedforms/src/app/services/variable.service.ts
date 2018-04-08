@@ -110,8 +110,8 @@ export class VariableService {
 
       this.sessionVariableStore[sessionId].lastCode.subscribe((code) => {
         if (code) {
-          // if (code !== `# "fetchAllVariables"\n${this.fetchVariablesCode}`) {
-          if (code !== this.fetchVariablesCode) {
+          const commentRemovedCode = code.replace(/^#.*\n/, '');
+          if (commentRemovedCode !== this.fetchVariablesCode) {
             this.fetchAll(sessionId);
           }
         }
@@ -146,6 +146,9 @@ export class VariableService {
     .then((future: Kernel.IFuture) => {
       if (future) {
         future.done.then(() => {
+          // This needs to have a different name than "fetchAllVariables" so that it
+          // doesn't get clobbered. This particular fetch must always occur so that
+          // the form can be declared ready.
           this.fetchAll(sessionId, '"InitialFetchAllVariables"').then(() => {
             initilisationComplete.resolve(null);
           });
