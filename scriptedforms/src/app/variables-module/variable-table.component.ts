@@ -90,8 +90,8 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
       this.variableInputTypes.variableChange.asObservable().subscribe((value: any ) => {
         if (value) {
           this.definedInputTypes = value;
-          console.log(`Input Type: ${this.definedInputTypes}`);
-          console.log(this.definedInputTypes);
+          // console.log(`Input Type: ${this.definedInputTypes}`);
+          // console.log(this.definedInputTypes);
         }
       });
     }
@@ -103,8 +103,8 @@ export class VariableTableComponent extends VariableBaseComponent implements Aft
       this.variableDropdownItems.variableChange.asObservable().subscribe((value: any) => {
         if (value) {
           this.definedDropdownItems = value;
-          console.log(`Dropdown Items: ${this.definedDropdownItems}`);
-          console.log(this.definedDropdownItems);
+          // console.log(`Dropdown Items: ${this.definedDropdownItems}`);
+          // console.log(this.definedDropdownItems);
         }
       });
     }

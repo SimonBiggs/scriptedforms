@@ -24,6 +24,11 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
+const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
+if (CONFIG_DIV) {
+  document.body.classList.add('fullscreen-body');
+}
+
 import './polyfills';
 
 import './vendors/jupyterlab-styles';
@@ -33,24 +38,21 @@ import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 
+import {
+  plugin
+} from './jupyterlab-extension/jupyterlab-plugin';
+
 import { loadApp } from './app';
 import { loadDocs } from './docs';
 import { loadDev } from './dev';
 
-if (process.env.production) {
-  console.log('Angular is in production mode.');
+if (process.env.NODE_ENV === 'production') {
+  console.log('Production Mode: Angular is in production mode.');
   enableProdMode();
 }
 
-if (process.env.development) {
-  console.log('ScriptedForms is live watching js output in dev mode.');
-  loadDev();
-}
-
 function main() {
-  const config = JSON.parse(document.getElementById(
-    'scriptedforms-config-data'
-  ).textContent);
+  const config = JSON.parse(CONFIG_DIV.textContent);
 
   if (config.applicationToRun === 'use') {
     loadApp();
@@ -61,4 +63,12 @@ function main() {
   }
 }
 
-window.onload = main;
+if (CONFIG_DIV) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Development Mode: ScriptedForms is watching for JavaScript changes.');
+    loadDev();
+  }
+  window.onload = main;
+}
+
+export default plugin;

@@ -29,6 +29,7 @@ import { Injectable } from '@angular/core';
 import { Widget } from '@phosphor/widgets';
 
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
+import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import {
   Toolbar
@@ -45,6 +46,7 @@ export namespace IScriptedForms {
     contentsManager: ContentsManager;
     node: HTMLElement;
     toolbar: Toolbar<Widget>;
+    context?: DocumentRegistry.Context;
   }
 }
 
@@ -71,10 +73,19 @@ export class InitialisationService {
     console.log('Initialising ScriptedForms');
     this.initiliseBaseScriptedForms(options);
 
-    this.myFileService.openUrl(window.location.href);
-
-    window.onpopstate = event => {
+    if (!options.context) {
+      console.log('No Widget Context. Assuming in standalone mode.');
       this.myFileService.openUrl(window.location.href);
-    };
+    } else {
+      console.log('Widget context found. Assuming running as JupyterLab extension.');
+      this.myFileService.context = options.context;
+      this.myFileService.openFile(options.context.path);
+    }
+
+    if (!options.context) {
+      window.onpopstate = event => {
+        this.myFileService.openUrl(window.location.href);
+      };
+    }
   }
 }

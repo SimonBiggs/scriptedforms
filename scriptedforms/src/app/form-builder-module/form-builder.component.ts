@@ -93,14 +93,14 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * This function makes sure to only begin building the form once the component
    * has sufficiently initialised.
    */
-  public buildForm(sessionId: string, markdownTemplate: string): Promise<IFormComponent> {
+  public buildForm(markdownTemplate: string): Promise<IFormComponent> {
     return this.viewInitialised.promise.then(() => {
       const convertedTemplate = this.convertTemplate(markdownTemplate);
       const htmlTemplate = convertedTemplate['htmlTemplate'];
       const cssStyles = convertedTemplate['cssStyles'];
 
       // Create the form component
-      const formComponent = this.createFormFromTemplate(sessionId, htmlTemplate, cssStyles);
+      const formComponent = this.createFormFromTemplate(htmlTemplate, cssStyles);
 
       return formComponent.formViewInitialised.promise.then(() => {
         this.myFileService.renderComplete.resolve(null);
@@ -160,7 +160,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    *
    * @param template The html Angular component template
    */
-  private createFormFromTemplate(sessionId: string, template: string, cssStyles: string[]): IFormComponent {
+  private createFormFromTemplate(template: string, cssStyles: string[]): IFormComponent {
     const metadata = {
       selector: `app-form`,
       template: template,
@@ -168,7 +168,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     };
 
     // Create the form component factory
-    const formFactory = createFormComponentFactory(sessionId, this.compiler, metadata);
+    const formFactory = createFormComponentFactory(this.compiler, metadata);
 
     // If a form already exists remove it before continuing
     if (this.formComponentRef) {
@@ -180,9 +180,11 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     // Create the form component
     this.formComponentRef = this.container.createComponent(formFactory);
-    this.formComponentRef.instance.formReady.promise.then(() => {
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
-    });
+    if (typeof MathJax !== 'undefined') {
+      this.formComponentRef.instance.formReady.promise.then(() => {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
+      });
+    }
     return this.formComponentRef.instance;
   }
 }

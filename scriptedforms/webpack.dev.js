@@ -5,9 +5,7 @@ var baseConfig = require('./webpack.config.js');
 module.exports = webpackMerge(baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'development': JSON.stringify(true)
-      }
+      'process.env.NODE_ENV': JSON.stringify('development')
     })
   ]
 });

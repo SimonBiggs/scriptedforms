@@ -1,12 +1,17 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.9.1-dev1",
   "license": "AGPL-3.0+",
   "repository": {
     "type": "git",
     "url": "https://github.com/SimonBiggs/scriptedforms.git"
   },
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "main": "src/main.ts",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
@@ -30,7 +35,7 @@
     "watch": "webpack --config webpack.dev.js --watch"
   },
   "files": [
-    "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
+    "src/**/*.{d.ts,ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
   ],
   "dependencies": {
     "@angular/animations": "5.2.5",
@@ -47,14 +52,22 @@
     "@jupyterlab/application": "^0.15.4",
     "@jupyterlab/apputils": "^0.15.5",
     "@jupyterlab/codemirror": "^0.15.4",
+    "@jupyterlab/docmanager": "^0.15.5",
     "@jupyterlab/docregistry": "^0.15.5",
-    "@jupyterlab/notebook": "^0.15.6",
-    "@jupyterlab/outputarea": "^0.15.5",
+    "@jupyterlab/launcher": "^0.15.5",
+    "@jupyterlab/notebook": "^0.15.7",
+    "@jupyterlab/outputarea": "^0.15.6",
     "@jupyterlab/rendermime": "^0.15.4",
     "@jupyterlab/services": "^1.1.4",
     "@jupyterlab/theme-light-extension": "^0.15.4",
     "@phosphor/signaling": "^1.2.2",
     "@phosphor/widgets": "^1.5.0",
+    "@types/codemirror": "^0.0.55",
+    "@types/hammerjs": "^2.0.35",
+    "@types/json-stable-stringify": "^1.0.32",
+    "@types/markdown-it": "^0.0.4",
+    "@types/uuid": "^3.4.3",
+    "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "json-stable-stringify": "^1.0.1",
     "markdown-it": "^8.4.0",
@@ -66,11 +79,6 @@
   "devDependencies": {
     "@angular/cli": "^1.7.3",
     "@angular/language-service": "^5.2.9",
-    "@types/codemirror": "^0.0.55",
-    "@types/hammerjs": "^2.0.35",
-    "@types/json-stable-stringify": "^1.0.32",
-    "@types/markdown-it": "^0.0.4",
-    "@types/uuid": "^3.4.3",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.4.1",
     "codelyzer": "^4.2.1",
@@ -90,5 +98,8 @@
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
+  },
+  "jupyterlab": {
+    "extension": true
   }
 }

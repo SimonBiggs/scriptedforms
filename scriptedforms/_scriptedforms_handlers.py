@@ -58,7 +58,7 @@ class ScriptedFormsHandler(IPythonHandler):
     def get(self):
         return self.write(self.render_template(
             "index.html",
-            base_url=self.base_url, token=self.settings['token'],
+            base_url=self.base_url,
             application_to_run=self.application_to_run))
 
     def get_template(self, name):

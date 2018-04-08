@@ -27,9 +27,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {
-  PromiseDelegate
-} from '@phosphor/coreutils';
+import { PromiseDelegate } from '@phosphor/coreutils';
+import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 // import * as yaml from 'js-yaml';
 
@@ -46,10 +45,13 @@ function escapeRegExp(str: string) {
 @Injectable()
 export class FileService {
   path: BehaviorSubject<string> = new BehaviorSubject('scriptedforms_default_path');
-  renderType: 'template' | 'results';
   node: HTMLElement;
+  _context: DocumentRegistry.Context;
 
-  baseUrl = document.getElementsByTagName('base')[0].href;
+  set context(_context: DocumentRegistry.Context) {
+    this._context = _context;
+    this._context.pathChanged.connect(this.setPathFromContext, this);
+  }
 
   renderComplete: PromiseDelegate<void>;
 
@@ -64,88 +66,61 @@ export class FileService {
     this.node = node;
   }
 
-  setRenderType(renderType: 'template' | 'results') {
-    if ((renderType !== 'template') && (renderType !== 'results')) {
-      throw new RangeError('renderType must be either template or results');
-    }
-
-    this.renderType = renderType;
-  }
-
-  // loadResultsFile(fileContents: string, sessionId: string) {
-  // }
-
-  handleFileContents(fileContents: string, sessionId: string) {
+  handleFileContents(fileContents: string) {
     const priorOverflow = this.node.scrollTop;
     this.renderComplete = new PromiseDelegate<void>();
 
     this.renderComplete.promise.then(() => {
       this.node.scrollTop = priorOverflow;
     });
-
-    if (this.renderType === 'template') {
-      this.myFormService.setTemplate(fileContents, sessionId);
-    }
-    // if (this.renderType === 'results') {
-    //   this.loadResultsFile(fileContents, sessionId)
-    // }
+    this.myFormService.setTemplate(fileContents);
 
     return this.renderComplete.promise;
   }
 
-  loadFileContents(path: string, sessionId: string): Promise<void> {
+  loadFileContents(path: string): Promise<void> {
     return this.myJupyterService.contentsManager.get(path).then(model => {
       const fileContents: string = model.content;
-      return this.handleFileContents(fileContents, sessionId);
+      return this.handleFileContents(fileContents);
     });
+  }
+
+  setPathFromContext(): void {
+    this.path.next(this.context.path);
   }
 
   setPath(path: string) {
     this.path.next(path);
   }
 
-  determineRenderType(path: string) {
-    let renderType: 'template' | 'results';
-    const extension = path.split('.').pop();
-    if (extension === 'md') {
-      renderType = 'template';
-    } else if (extension === 'yaml') {
-      renderType = 'results';
-    } else {
-      throw RangeError('File extension not recognised.');
-    }
-
-    return renderType;
-  }
-
-  serviceSessionInitialisation(sessionId: string) {
+  serviceSessionInitialisation() {
     console.log('service session initialisation');
-    this.myFormService.formInitialisation(sessionId);
-    this.myVariableService.variableInitialisation(sessionId);
+    this.myFormService.formInitialisation();
+    this.myVariableService.variableInitialisation();
   }
 
   openFile(path: string) {
     console.log('open file');
     this.setPath(path);
-    this.setRenderType(this.determineRenderType(path));
-    // this.myKernelService.loadingForm()
-    this.myKernelService.sessionConnect(path).then((sessionId: string) => {
-      this.serviceSessionInitialisation(sessionId);
-      return this.loadFileContents(path, sessionId);
+
+    this.myKernelService.sessionConnect(path).then(() => {
+      this.serviceSessionInitialisation();
+      return this.loadFileContents(path);
     });
   }
 
   setTemplateToString(dummyPath: string, template: string) {
     this.setPath(dummyPath);
-    this.setRenderType('template');
-    this.myKernelService.sessionConnect(dummyPath).then((sessionId: string) => {
-      this.serviceSessionInitialisation(sessionId);
-      return this.handleFileContents(template, sessionId);
+
+    this.myKernelService.sessionConnect(dummyPath).then(() => {
+      this.serviceSessionInitialisation();
+      return this.handleFileContents(template);
     });
   }
 
   urlToFilePath(url: string) {
-    const pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\.(md|yaml))`);
+    const baseUrl = document.getElementsByTagName('base')[0].href;
+    const pattern = RegExp(`^${escapeRegExp(baseUrl)}(.*\.(md|yaml))`);
     const match = pattern.exec(url);
     if (match !== null) {
       return decodeURIComponent(match[1]);
@@ -159,27 +134,6 @@ export class FileService {
     const path = this.urlToFilePath(window.location.href);
     if (path !== null) {
       this.openFile(path);
-    }
-  }
-
-  morphLinksToUpdateFile(links: HTMLAnchorElement[]) {
-    const config = JSON.parse(document.getElementById(
-      'scriptedforms-config-data'
-    ).textContent);
-
-    if (config.applicationToRun === 'use') {
-      links.forEach(old_link => {
-        const link = <HTMLAnchorElement>old_link.cloneNode(true);
-        old_link.parentNode.replaceChild(link, old_link);
-        const path = this.urlToFilePath(link.href);
-        if (path !== null) {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.history.pushState(null, null, link.href);
-            this.openFile(path);
-          });
-        }
-      });
     }
   }
 }

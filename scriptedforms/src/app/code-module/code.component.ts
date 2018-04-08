@@ -20,30 +20,17 @@ to the Python kernel.
 // import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // import { Subscription } from 'rxjs/Subscription';
 
-import {
-  Component, AfterViewInit, ViewChild, ElementRef, OnDestroy
-} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
-import {
-  JSONObject, PromiseDelegate
-} from '@phosphor/coreutils';
+import { JSONObject, PromiseDelegate } from '@phosphor/coreutils';
 
-import {
-  nbformat
-} from '@jupyterlab/coreutils';
-
-import {
-  RenderMimeRegistry, standardRendererFactories as initialFactories
-} from '@jupyterlab/rendermime';
+import { nbformat } from '@jupyterlab/coreutils';
+import { RenderMimeRegistry, standardRendererFactories as initialFactories } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
 import { Kernel, KernelMessage } from '@jupyterlab/services';
-
-import {
-  Mode
-} from '@jupyterlab/codemirror';
+import { Mode } from '@jupyterlab/codemirror';
 
 import { KernelService } from '../services/kernel.service';
-import { FileService } from '../services/file.service';
 
 @Component({
   selector: 'code.language-python',
@@ -51,7 +38,7 @@ import { FileService } from '../services/file.service';
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   private _displayIdMap = new Map<string, number[]>();
-  sessionId: string;
+
   name: string;
   renderMime: RenderMimeRegistry = new RenderMimeRegistry({
     initialFactories,
@@ -68,22 +55,14 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   promise: Promise<Kernel.IFuture>;
   outputContainer: HTMLDivElement;
-  // containerUpdated: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  // mutationObserver: MutationObserver;
-  // mutationBehaviorSubject: BehaviorSubject<null> = new BehaviorSubject(null);
 
   firstDisplay: PromiseDelegate<null>;
-
-  // onIOPub: BehaviorSubject<KernelMessage.IIOPubMessage> = new BehaviorSubject(null);
-  // onIOPubSubscription: Subscription = null;
 
   code: string;
   @ViewChild('codecontainer') codecontainer: ElementRef;
 
   constructor(
     private myKernelSevice: KernelService,
-    private myFileService: FileService,
     private _eRef: ElementRef
   ) { }
 
@@ -92,6 +71,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       model: this.model,
       rendermime: this.renderMime
     };
+    this.outputAreaDispose();
     this.outputArea = new OutputArea(this.outputAreaOptions);
   }
 
@@ -108,64 +88,32 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     const element: HTMLElement = this._eRef.nativeElement;
     this.outputContainer = document.createElement('div');
-    // this.outputContainer.classList.add('avoid-page-break')
     this.outputContainer.appendChild(this.outputArea.node);
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
-    // // Mutation observer is awesome! Use more of this.
-    // this.mutationObserver = new MutationObserver(() => {
-    //   this.mutationBehaviorSubject.next(null);
-    // });
+  }
 
-    // this.mutationObserver.observe(
-    //   this.outputContainer,
-    //   {
-    //     childList: true,
-    //     subtree: true
-    //   }
-    // );
-
-    // this.containerUpdated.subscribe(() => {
-    //   console.log('container updated');
-    //   this.mutationBehaviorSubject.asObservable().toPromise().then(() => {
-    //     this.updateLinks();
-    //   });
-    // });
+  outputAreaDispose() {
+    if (this.outputArea.future) {
+      this.outputArea.future.done.then(() => {
+        this.outputArea.dispose();
+      });
+    } else {
+      this.outputArea.dispose();
+    }
   }
 
   ngOnDestroy() {
-    // this.outputArea.dispose();
+    this.outputAreaDispose();
   }
-
-  updateLinks() {
-    const links: HTMLAnchorElement[] = Array.from(this.outputArea.node.getElementsByTagName('a'));
-    console.log(this.outputArea.node.innerHTML);
-    console.log(links);
-    this.myFileService.morphLinksToUpdateFile(links);
-  }
-
-  /**
-   * Each runnable code component on the form has a unique name. This is defined by
-   * it's parent section. The name is used to detect repeat submissions for the purpose
-   * of only running the most recent submission.
-   *
-   * @param name A unique name for the code component
-   */
-  // codeComponentInit(sessionId: string, name: string) {
-  //   this.name = name;
-  //   this.sessionId = sessionId
-  // }
 
   /**
    * Run the code within the code component. Update the output area with the results of the
    * code.
    */
   runCode(): Promise<null> {
-    // if (this.onIOPubSubscription) {
-    //   this.onIOPubSubscription.unsubscribe();
-    // }
     const codeCompleted = new PromiseDelegate<null>();
-    this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
+    this.promise = this.myKernelSevice.runCode(this.code, this.name);
     this.promise.then(future => {
       if (future) {
         this.firstDisplay = new PromiseDelegate();
@@ -173,7 +121,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
         future.onIOPub = this._onIOPub;
         future.done.then(() => {
-          this.updateLinks();
           codeCompleted.resolve(null);
         });
 
@@ -181,14 +128,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
           this.updateOutputAreaModel();
 
           this.outputContainer.replaceChild(this.outputArea.node, this.outputContainer.firstChild);
-          // this.containerUpdated.next(true);
-          // this.onIOPubSubscription = this.onIOPub.subscribe(msg => {
-          //   const msgType = msg.header.msg_type;
-          //   if (msgType === 'display_data' || msgType === 'stream' || msgType === 'update_display_data') {
-          //     this.containerUpdated.next(true);
-          //   }
-          // });
-
           const element: HTMLDivElement = this.outputContainer;
           element.style.minHeight = String(this.outputArea.node.clientHeight) + 'px';
         });

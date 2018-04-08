@@ -32,57 +32,48 @@ import { FormBuilderComponent } from '../form-builder-module/form-builder.compon
 
 import { FormStatus } from '../types/form-status';
 
-export interface FormStore {
-  [sessionId: string]: {
-    template: BehaviorSubject<string>;
-    component: IFormComponent;
-  };
-}
 
 @Injectable()
 export class FormService {
-  currentFormSessionId: string;
-  formStore: FormStore = {};
+  template: BehaviorSubject<string>;
+  component: IFormComponent;
+
   formBuilderComponent: FormBuilderComponent;
   initialising: FormStatus = 'initialising';
   formStatus: BehaviorSubject<FormStatus> = new BehaviorSubject(this.initialising);
 
-  formInitialisation(sessionId: string) {
+  formInitialisation() {
     this.formStatus.next('initialising');
-    this.currentFormSessionId = sessionId;
-    if (!(sessionId in this.formStore)) {
-      this.formStore[sessionId] = {
-        template: new BehaviorSubject(null),
-        component: null
-      };
 
-      this.formStore[sessionId].template.subscribe(template => {
-        if (template !== null) {
-          this.formBuilderComponent.buildForm(sessionId, template).then(component => {
-            this.formStore[sessionId].component = component;
-            component.formReady.promise.then(() => {
-              this.formStatus.next('ready');
-            });
+    this.template = new BehaviorSubject(null);
+    this.component = null;
+
+    this.template.subscribe(template => {
+      if (template !== null) {
+        this.formBuilderComponent.buildForm(template).then(component => {
+          this.component = component;
+          component.formReady.promise.then(() => {
+            this.formStatus.next('ready');
           });
-        }
-      });
-    }
+        });
+      }
+    });
   }
 
   restartFormKernel() {
     this.formStatus.next('restarting');
-    const formReadyPromise = this.formStore[this.currentFormSessionId].component.restartFormKernel();
+    const formReadyPromise = this.component.restartFormKernel();
     formReadyPromise.then(() => {
       this.formStatus.next('ready');
     });
     return formReadyPromise;
   }
 
-  setTemplate(template: string, sessionId: string) {
-    this.formStore[sessionId].template.next(template);
+  setTemplate(template: string) {
+    this.template.next(template);
   }
 
-  getTemplate(sessionId: string) {
-    return this.formStore[sessionId].template.getValue();
+  getTemplate() {
+    return this.template.getValue();
   }
 }

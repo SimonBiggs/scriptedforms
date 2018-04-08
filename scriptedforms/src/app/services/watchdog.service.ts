@@ -38,9 +38,6 @@ import {
 
 import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
-import { FormService } from './form.service';
-import { KernelService } from './kernel.service';
-// import { VariableService } from './variable.service';
 
 import {
   startWatchdogSessionCode, addObserverPathCode
@@ -57,13 +54,10 @@ export class WatchdogService {
   constructor(
     private myFileService: FileService,
     private myJupyterService: JupyterService,
-    private myFormService: FormService,
-    // private myVariableService: VariableService,
-    private myKernelService: KernelService
   ) { }
 
   startWatchdog() {
-    const path = 'scriptedforms_watchdog_kernel';
+    const path = '_watchdog_scriptedforms';
     const settings = ServerConnection.makeSettings({});
     const startNewOptions = {
       kernelName: 'python3',
@@ -97,15 +91,13 @@ export class WatchdogService {
         const files = content.split('\n');
         console.log(files);
         const path = this.myFileService.path.getValue();
-        const sessionId = this.myFormService.currentFormSessionId;
         const match = files.some(item => {
           return (
             (item.startsWith('relative: ')) &&
             ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))));
         });
         if (match) {
-          this.myKernelService.sessionStore[this.myKernelService.currentSession].isNewSession = false;
-          this.myFileService.loadFileContents(path, sessionId);
+          this.myFileService.loadFileContents(path);
         }
 
         files.forEach(item => {

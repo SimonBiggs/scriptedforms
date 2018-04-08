@@ -33,8 +33,8 @@ import {
 } from '@jupyterlab/services';
 
 
-export function loadDev() {
-  const serviceManager = new ServiceManager();
+export function loadDev(serviceManager = new ServiceManager()) {
+  // const serviceManager = new ServiceManager();
   runDevModeWatchdog(serviceManager);
 }
 
@@ -62,7 +62,7 @@ observer.start()
 function runDevModeWatchdog(serviceManager: ServiceManager) {
   const sessionReady = new PromiseDelegate<Session.ISession>();
 
-  const path = 'scriptedforms_watchdog_development_mode_kernel';
+  const path = '_dev_watchdog_scriptedforms';
   const settings = ServerConnection.makeSettings({});
   const startNewOptions = {
     kernelName: 'python3',

@@ -41,20 +41,34 @@ import { VariableService } from '../services/variable.service';
 export class OutputComponent extends SectionBaseComponent implements OnDestroy, AfterViewInit {
   sectionType = 'output';
   variableSubscription: Subscription;
+  hasFirstSubRun = false;
 
   constructor(
     private myVariableService: VariableService
   ) { super(); }
 
   subscribeToVariableChanges() {
-    this.variableSubscription = this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
-      if (value !== null) {
-        this.runCode();
+    this.variableSubscription = this.myVariableService.variableChangedObservable
+    .subscribe(value => {
+      if (this.hasFirstSubRun) {
+        if (value !== null) {
+          this.runCode();
+        }
+      } else {
+        this.hasFirstSubRun = true;
       }
     });
   }
 
-  ngOnDestroy() {
+  unsubscribe() {
     this.variableSubscription.unsubscribe();
+  }
+
+  kernelReset() {
+    this.unsubscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe();
   }
 }
