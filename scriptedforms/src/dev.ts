@@ -62,7 +62,7 @@ observer.start()
 function runDevModeWatchdog(serviceManager: ServiceManager) {
   const sessionReady = new PromiseDelegate<Session.ISession>();
 
-  const path = 'dev_watchdog_scriptedforms';
+  const path = '_dev_watchdog_scriptedforms';
   const settings = ServerConnection.makeSettings({});
   const startNewOptions = {
     kernelName: 'python3',

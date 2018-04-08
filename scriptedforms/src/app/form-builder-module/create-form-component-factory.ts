@@ -287,11 +287,11 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];
           this.startComponents.toArray().forEach((startComponent, index) => {
-            if (startComponent.always === '') {
+            if (isNewSession) {
               startPromiseList.push(
                 startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())
               );
-            } else if (isNewSession) {
+            } else if (startComponent.always === '') {
               startPromiseList.push(
                 startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())
               );

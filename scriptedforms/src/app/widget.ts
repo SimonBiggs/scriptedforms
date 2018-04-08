@@ -132,4 +132,9 @@ export class ScriptedFormsWidget extends Widget implements DocumentRegistry.IRea
   onPathChanged(): void {
     this.title.label = PathExt.basename(this._context.path);
   }
+
+  dispose() {
+    this.form.dispose();
+    super.dispose();
+  }
 }
