@@ -51,7 +51,7 @@ import { FileService } from '../services/file.service';
 })
 export class CodeComponent implements AfterViewInit, OnDestroy {
   private _displayIdMap = new Map<string, number[]>();
-  sessionId: string;
+
   name: string;
   renderMime: RenderMimeRegistry = new RenderMimeRegistry({
     initialFactories,
@@ -117,24 +117,12 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Each runnable code component on the form has a unique name. This is defined by
-   * it's parent section. The name is used to detect repeat submissions for the purpose
-   * of only running the most recent submission.
-   *
-   * @param name A unique name for the code component
-   */
-  // codeComponentInit(sessionId: string, name: string) {
-  //   this.name = name;
-  //   this.sessionId = sessionId
-  // }
-
-  /**
    * Run the code within the code component. Update the output area with the results of the
    * code.
    */
   runCode(): Promise<null> {
     const codeCompleted = new PromiseDelegate<null>();
-    this.promise = this.myKernelSevice.runCode(this.sessionId, this.code, this.name);
+    this.promise = this.myKernelSevice.runCode(this.code, this.name);
     this.promise.then(future => {
       if (future) {
         this.firstDisplay = new PromiseDelegate();

@@ -45,7 +45,6 @@ function escapeRegExp(str: string) {
 @Injectable()
 export class FileService {
   path: BehaviorSubject<string> = new BehaviorSubject('scriptedforms_default_path');
-  renderType: 'template' | 'results';
   node: HTMLElement;
   _context: DocumentRegistry.Context;
 
@@ -67,39 +66,22 @@ export class FileService {
     this.node = node;
   }
 
-  setRenderType(renderType: 'template' | 'results') {
-    if ((renderType !== 'template') && (renderType !== 'results')) {
-      throw new RangeError('renderType must be either template or results');
-    }
-
-    this.renderType = renderType;
-  }
-
-  // loadResultsFile(fileContents: string, sessionId: string) {
-  // }
-
-  handleFileContents(fileContents: string, sessionId: string) {
+  handleFileContents(fileContents: string) {
     const priorOverflow = this.node.scrollTop;
     this.renderComplete = new PromiseDelegate<void>();
 
     this.renderComplete.promise.then(() => {
       this.node.scrollTop = priorOverflow;
     });
-
-    if (this.renderType === 'template') {
-      this.myFormService.setTemplate(fileContents, sessionId);
-    }
-    // if (this.renderType === 'results') {
-    //   this.loadResultsFile(fileContents, sessionId)
-    // }
+    this.myFormService.setTemplate(fileContents);
 
     return this.renderComplete.promise;
   }
 
-  loadFileContents(path: string, sessionId: string): Promise<void> {
+  loadFileContents(path: string): Promise<void> {
     return this.myJupyterService.contentsManager.get(path).then(model => {
       const fileContents: string = model.content;
-      return this.handleFileContents(fileContents, sessionId);
+      return this.handleFileContents(fileContents);
     });
   }
 
@@ -111,43 +93,28 @@ export class FileService {
     this.path.next(path);
   }
 
-  determineRenderType(path: string) {
-    let renderType: 'template' | 'results';
-    const extension = path.split('.').pop();
-    if (extension === 'md') {
-      renderType = 'template';
-    } else if (extension === 'yaml') {
-      renderType = 'results';
-    } else {
-      throw RangeError('File extension not recognised.');
-    }
-
-    return renderType;
-  }
-
-  serviceSessionInitialisation(sessionId: string) {
+  serviceSessionInitialisation() {
     console.log('service session initialisation');
-    this.myFormService.formInitialisation(sessionId);
-    this.myVariableService.variableInitialisation(sessionId);
+    this.myFormService.formInitialisation();
+    this.myVariableService.variableInitialisation();
   }
 
   openFile(path: string) {
     console.log('open file');
     this.setPath(path);
-    this.setRenderType(this.determineRenderType(path));
-    // this.myKernelService.loadingForm()
-    this.myKernelService.sessionConnect(path).then((sessionId: string) => {
-      this.serviceSessionInitialisation(sessionId);
-      return this.loadFileContents(path, sessionId);
+
+    this.myKernelService.sessionConnect(path).then(() => {
+      this.serviceSessionInitialisation();
+      return this.loadFileContents(path);
     });
   }
 
   setTemplateToString(dummyPath: string, template: string) {
     this.setPath(dummyPath);
-    this.setRenderType('template');
-    this.myKernelService.sessionConnect(dummyPath).then((sessionId: string) => {
-      this.serviceSessionInitialisation(sessionId);
-      return this.handleFileContents(template, sessionId);
+
+    this.myKernelService.sessionConnect(dummyPath).then(() => {
+      this.serviceSessionInitialisation();
+      return this.handleFileContents(template);
     });
   }
 

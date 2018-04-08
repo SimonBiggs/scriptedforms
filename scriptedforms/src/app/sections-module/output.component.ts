@@ -47,7 +47,7 @@ export class OutputComponent extends SectionBaseComponent implements OnDestroy, 
   ) { super(); }
 
   subscribeToVariableChanges() {
-    this.variableSubscription = this.myVariableService.sessionVariableStore[this._sessionId].variableChangedObservable.subscribe(value => {
+    this.variableSubscription = this.myVariableService.variableChangedObservable.subscribe(value => {
       if (value !== null) {
         this.runCode();
       }

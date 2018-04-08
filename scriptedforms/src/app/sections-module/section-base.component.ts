@@ -41,7 +41,6 @@ export class SectionBaseComponent implements AfterViewInit {
   @Input() code?: string;
   sectionId: number;
   sectionType: string;
-  _sessionId: string;
   isFormReady = false;
 
   codeRunning = false;
@@ -53,17 +52,6 @@ export class SectionBaseComponent implements AfterViewInit {
 
   @ContentChildren(CodeComponent) contentCodeComponents: QueryList<CodeComponent>;
   @ViewChildren(CodeComponent) viewCodeComponents: QueryList<CodeComponent>;
-
-  set sessionId(theSessionId: string) {
-    this._sessionId = theSessionId;
-    this.initialiseCodeSessionId(theSessionId);
-  }
-
-  initialiseCodeSessionId(sessionId: string) {
-    this.codeComponentsArray.forEach((codeComponent, index) => {
-      codeComponent.sessionId = sessionId;
-    });
-  }
 
   ngAfterViewInit() {
     this.viewInitPromiseDelegate.resolve(null);

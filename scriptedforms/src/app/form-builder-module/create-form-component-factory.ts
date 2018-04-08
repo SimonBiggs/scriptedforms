@@ -74,7 +74,6 @@ import { SectionFileChangeComponent } from '../sections-module/section-file-chan
 import { VariablesModule } from '../variables-module/variables.module';
 import { ToggleComponent } from '../variables-module/toggle.component';
 import { TickComponent } from '../variables-module/tick.component';
-// import { ConditionalComponent } from '../variables-module/conditional.component';
 
 import { NumberComponent } from '../variables-module/number.component';
 import { SliderComponent } from '../variables-module/slider.component';
@@ -106,7 +105,7 @@ interface IFormComponent {
  * @returns a factory which creates form components
  */
 export
-function createFormComponentFactory(sessionId: string, compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
+function createFormComponentFactory(compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
   /**
    * The form component that is built each time the template changes
    */
@@ -117,8 +116,6 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
 
     variableComponents: VariableComponent[] = [];
     sectionComponents: SectionComponent[] = [];
-
-    _sessionId: string;
 
     // Sections
     @ViewChildren(StartComponent) startComponents: QueryList<StartComponent>;
@@ -202,26 +199,8 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       // Only begin initialisation once the kernel is connected
       this.setComponentIds();
 
-      this.myKernelService.sessionConnected.promise.then((sessionIdFromKernelService) => {
-        if (sessionId !== sessionIdFromKernelService) {
-          throw RangeError('kernel service provided a different session id than what this form started with');
-        }
-        this._sessionId = sessionId;
-        this.sectionComponents.forEach(sectionComponent => {
-          sectionComponent.sessionId = sessionId;
-        });
-        this.variableComponents.forEach(variableComponent => {
-          variableComponent.sessionId = sessionId;
-        });
-
-        this.outputComponents.toArray().forEach(outputComponent => {
-          outputComponent.subscribeToVariableChanges();
-        });
-
-        this.initialiseForm();
-      });
+      this.myKernelService.sessionConnected.promise.then(() => this.initialiseForm());
     }
-
 
     private setComponentIds() {
       this.sectionComponents.forEach((sectionComponent, index) => {
@@ -234,31 +213,15 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
       this.myChangeDetectorRef.detectChanges();
     }
 
-    public restartFormKernel() {
-      this.formReady = new PromiseDelegate<void>();
-      this.variableComponents.forEach(variableComponent => {
-        variableComponent.variableValue = null;
-        variableComponent.formReady(false);
-      });
-      this.sectionComponents.forEach(sectionComponent => {
-        sectionComponent.formReady(false);
-      });
-      this.myKernelService.restartKernel().then(() => {
-        this.initialiseForm();
-      });
-
-      return this.formReady.promise;
-    }
-
     /**
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
-      this.myVariableService.resetVariableService(this._sessionId);
+      this.myVariableService.resetVariableService();
 
       const sessionStartCodeComplete = new PromiseDelegate<boolean>();
       this.myKernelService.runCode(
-        this._sessionId, sessionStartCode, 'session_start_code')
+        sessionStartCode, 'session_start_code')
       .then((future: Kernel.IFuture) => {
         if (future) {
           let textContent = '';
@@ -283,7 +246,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           variableComponent.initialise();
         });
 
-        this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
+        this.myVariableService.allVariablesInitilised().then(() => {
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];
           this.startComponents.toArray().forEach((startComponent, index) => {
@@ -313,6 +276,9 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           return Promise.all(sectionPromiseList);
         })
         .then(() => {
+          this.outputComponents.toArray().forEach(outputComponent => {
+            outputComponent.subscribeToVariableChanges();
+          });
           this.sectionComponents.forEach(sectionComponent => {
             sectionComponent.formReady(true);
           });
@@ -322,6 +288,22 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
           this.formReady.resolve(null);
         });
       });
+    }
+
+    public restartFormKernel() {
+      this.formReady = new PromiseDelegate<void>();
+      this.variableComponents.forEach(variableComponent => {
+        variableComponent.variableValue = null;
+        variableComponent.formReady(false);
+      });
+      this.sectionComponents.forEach(sectionComponent => {
+        sectionComponent.formReady(false);
+      });
+      this.myKernelService.restartKernel().then(() => {
+        this.initialiseForm();
+      });
+
+      return this.formReady.promise;
     }
   }
 

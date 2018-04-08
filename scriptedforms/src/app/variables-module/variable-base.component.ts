@@ -51,7 +51,6 @@ export class VariableBaseComponent implements AfterViewInit {
   isFormReady = false;
   isPandas = false;
   isFocus = false;
-  sessionId: string;
 
   @Input() required?: string;
 
@@ -155,7 +154,7 @@ export class VariableBaseComponent implements AfterViewInit {
   variableChanged() {
     if (this.testIfDifferent()) {
       const valueReference = this.pythonValueReference();
-      this.myVariableService.pushVariable(this.sessionId, this.variableIdentifier, this.variableName, valueReference)
+      this.myVariableService.pushVariable(this.variableIdentifier, this.variableName, valueReference)
       .then((status) => {
         if (status !== 'ignore') {
           this.variableChange.emit(this.variableValue);
@@ -184,6 +183,6 @@ export class VariableBaseComponent implements AfterViewInit {
   }
 
   initialise() {
-    this.myVariableService.initialiseVariableComponent(this.sessionId, this);
+    this.myVariableService.initialiseVariableComponent(this);
   }
 }

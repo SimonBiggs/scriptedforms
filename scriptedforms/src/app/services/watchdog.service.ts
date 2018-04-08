@@ -38,7 +38,6 @@ import {
 
 import { JupyterService } from './jupyter.service';
 import { FileService } from './file.service';
-import { FormService } from './form.service';
 
 import {
   startWatchdogSessionCode, addObserverPathCode
@@ -55,7 +54,6 @@ export class WatchdogService {
   constructor(
     private myFileService: FileService,
     private myJupyterService: JupyterService,
-    private myFormService: FormService
   ) { }
 
   startWatchdog() {
@@ -93,14 +91,13 @@ export class WatchdogService {
         const files = content.split('\n');
         console.log(files);
         const path = this.myFileService.path.getValue();
-        const sessionId = this.myFormService.currentFormSessionId;
         const match = files.some(item => {
           return (
             (item.startsWith('relative: ')) &&
             ((item.replace('\\', '/') === `relative: ${path}`) || (item.includes('goutputstream'))));
         });
         if (match) {
-          this.myFileService.loadFileContents(path, sessionId);
+          this.myFileService.loadFileContents(path);
         }
 
         files.forEach(item => {

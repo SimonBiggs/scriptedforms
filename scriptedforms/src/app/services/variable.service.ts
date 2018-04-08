@@ -52,102 +52,91 @@ import { VariableValue } from '../types/variable-value';
 import { VariableComponent } from '../types/variable-component';
 
 
-
-export interface SessionVariableStore {
-  [sessionId: string]: {
-    variableStore: BehaviorSubject<VariableStore>;
-    oldVariableStore: VariableStore;
-    variableIdentifierMap: {
-      [key: string]: string
-    };
-    variableEvaluateMap: {
-      [key: string]: string
-    };
-    pythonVariables: VariableStore;
-    variableChangedObservable: BehaviorSubject<VariableStore>;
-    variableComponentStore: {
-      [key: string]: VariableComponent
-    };
-    executionCount: BehaviorSubject<nbformat.ExecutionCount>;
-    lastCode: BehaviorSubject<string>;
-    variableChangeSubscription: Subscription;
-  };
-}
-
-
 @Injectable()
 export class VariableService {
-  sessionVariableStore: SessionVariableStore = {};
   variableHandlerClass = '_VariableHandler';
   handlerName = '_scriptedforms_variable_handler';
   fetchVariablesCode = `exec(${this.handlerName}.fetch_code)`;
+
+  variableStore: BehaviorSubject<VariableStore>;
+  oldVariableStore: VariableStore;
+  variableIdentifierMap: {
+    [key: string]: string
+  };
+  variableEvaluateMap: {
+    [key: string]: string
+  };
+  pythonVariables: VariableStore;
+  variableChangedObservable: BehaviorSubject<VariableStore>;
+  variableComponentStore: {
+    [key: string]: VariableComponent
+  };
+  executionCount: BehaviorSubject<nbformat.ExecutionCount>;
+  lastCode: BehaviorSubject<string>;
+  variableChangeSubscription: Subscription;
+
   variableStatus: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
-    private myKernelSevice: KernelService,
-    // private myFileService: FileService
+    private myKernelSevice: KernelService
   ) { }
 
-  variableInitialisation(sessionId: string) {
-    if (!(sessionId in this.sessionVariableStore)) {
-      this.sessionVariableStore[sessionId] = {
-        variableStore: new BehaviorSubject({}),
-        oldVariableStore: null,
-        variableIdentifierMap: {},
-        variableEvaluateMap: {},
-        pythonVariables: {},
-        variableChangedObservable: new BehaviorSubject(null),
-        variableComponentStore: {},
-        executionCount: new BehaviorSubject(null),
-        lastCode: new BehaviorSubject(null),
-        variableChangeSubscription: null
-      };
+  variableInitialisation() {
+    this.variableStore = new BehaviorSubject({});
+    this.oldVariableStore = null;
+    this.variableIdentifierMap = {};
+    this.variableEvaluateMap = {};
+    this.pythonVariables = {};
+    this.variableChangedObservable = new BehaviorSubject(null);
+    this.variableComponentStore = {};
+    this.executionCount = new BehaviorSubject(null);
+    this.lastCode = new BehaviorSubject(null);
+    this.variableChangeSubscription = null;
 
-      this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.connect((session, msg) => {
-        if (KernelMessage.isExecuteInputMsg(msg)) {
-          const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
-          this.sessionVariableStore[sessionId].executionCount.next(executeInputMessage.content.execution_count);
-          this.sessionVariableStore[sessionId].lastCode.next(executeInputMessage.content.code);
-        }
-      });
-    }
+    this.myKernelSevice.session.iopubMessage.connect((session, msg) => {
+      if (KernelMessage.isExecuteInputMsg(msg)) {
+        const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
+        this.executionCount.next(executeInputMessage.content.execution_count);
+        this.lastCode.next(executeInputMessage.content.code);
+      }
+    });
   }
 
-  startListeningForChanges(sessionId: string) {
-    this.sessionVariableStore[sessionId].variableChangeSubscription = (
-      this.sessionVariableStore[sessionId].lastCode.subscribe((code) => {
+  startListeningForChanges() {
+    this.variableChangeSubscription = (
+      this.lastCode.subscribe((code) => {
         if (code) {
           const commentRemovedCode = code.replace(/^#.*\n/, '');
           if (commentRemovedCode !== this.fetchVariablesCode) {
-            this.fetchAll(sessionId);
+            this.fetchAll();
           }
         }
       })
     );
   }
 
-  resetVariableService(sessionId: string) {
-    if (this.sessionVariableStore[sessionId].variableChangeSubscription) {
-      this.sessionVariableStore[sessionId].variableChangeSubscription.unsubscribe();
+  resetVariableService() {
+    if (this.variableChangeSubscription) {
+      this.variableChangeSubscription.unsubscribe();
     }
     this.variableStatus.next('reset');
-    this.sessionVariableStore[sessionId].variableStore.next({});
-    this.sessionVariableStore[sessionId].oldVariableStore = {};
-    this.sessionVariableStore[sessionId].variableComponentStore = {};
-    this.sessionVariableStore[sessionId].variableIdentifierMap = {};
-    this.sessionVariableStore[sessionId].variableEvaluateMap = {};
+    this.variableStore.next({});
+    this.oldVariableStore = {};
+    this.variableComponentStore = {};
+    this.variableIdentifierMap = {};
+    this.variableEvaluateMap = {};
   }
 
-  allVariablesInitilised(sessionId: string) {
+  allVariablesInitilised() {
     const initilisationComplete = new PromiseDelegate<void>();
     this.variableStatus.next('initialising');
-    const jsonEvaluateMap = JSON.stringify(this.sessionVariableStore[sessionId].variableEvaluateMap);
+    const jsonEvaluateMap = JSON.stringify(this.variableEvaluateMap);
     const initialiseHandlerCode = `${this.handlerName} = ${this.variableHandlerClass}("""${jsonEvaluateMap}""", "${this.handlerName}")`;
-    this.myKernelSevice.runCode(sessionId, initialiseHandlerCode, '"initialiseVariableHandler"')
+    this.myKernelSevice.runCode(initialiseHandlerCode, '"initialiseVariableHandler"')
     .then((future: Kernel.IFuture) => {
       if (future) {
         future.done.then(() => {
-          this.startListeningForChanges(sessionId);
+          this.startListeningForChanges();
           initilisationComplete.resolve(null);
         });
       } else {
@@ -158,39 +147,39 @@ export class VariableService {
     return initilisationComplete.promise;
   }
 
-  appendToIdentifierMap(sessionId: string, variableIdentifier: string, variableName: string) {
-    this.sessionVariableStore[sessionId].variableIdentifierMap[variableIdentifier] = variableName;
+  appendToIdentifierMap(variableIdentifier: string, variableName: string) {
+    this.variableIdentifierMap[variableIdentifier] = variableName;
   }
 
-  appendToEvaluateMap(sessionId: string, variableName: string, variableEvaluate: string) {
-    if (!(variableName in this.sessionVariableStore[sessionId].variableEvaluateMap)) {
-      this.sessionVariableStore[sessionId].variableEvaluateMap[variableName] = variableEvaluate;
+  appendToEvaluateMap(variableName: string, variableEvaluate: string) {
+    if (!(variableName in this.variableEvaluateMap)) {
+      this.variableEvaluateMap[variableName] = variableEvaluate;
     }
   }
 
-  initialiseVariableComponent(sessionId: string, component: VariableComponent) {
+  initialiseVariableComponent(component: VariableComponent) {
     const variableIdentifier = component.variableIdentifier;
-    this.sessionVariableStore[sessionId].variableComponentStore[variableIdentifier] = component;
+    this.variableComponentStore[variableIdentifier] = component;
 
     const variableEvaluate = component.pythonVariableEvaluate();
     const variableName = component.variableName;
 
-    this.appendToIdentifierMap(sessionId, variableIdentifier, variableName);
-    this.appendToEvaluateMap(sessionId, variableName, variableEvaluate);
+    this.appendToIdentifierMap(variableIdentifier, variableName);
+    this.appendToEvaluateMap(variableName, variableEvaluate);
   }
 
-  convertToVariableStore(sessionId: string, textContent: string) {
+  convertToVariableStore(textContent: string) {
     const result = JSON.parse(textContent);
 
-    this.sessionVariableStore[sessionId].pythonVariables = result;
+    this.pythonVariables = result;
 
     const newVariableStore: VariableStore = {};
-    Object.entries(this.sessionVariableStore[sessionId].variableIdentifierMap).forEach(
+    Object.entries(this.variableIdentifierMap).forEach(
       ([variableIdentifier, variableName]) => {
         newVariableStore[variableIdentifier] = result[variableName];
       }
     );
-    this.sessionVariableStore[sessionId].variableStore.next(newVariableStore);
+    this.variableStore.next(newVariableStore);
   }
 
   ifJsonString(string: string) {
@@ -202,12 +191,11 @@ export class VariableService {
     return true;
   }
 
-  fetchAll(sessionId: string, label = '"fetchAllVariables"') {
+  fetchAll(label = '"fetchAllVariables"') {
     this.variableStatus.next('fetching');
 
     const fetchComplete = new PromiseDelegate<void> ();
-    this.myKernelSevice.runCode(
-      sessionId, this.fetchVariablesCode, label)
+    this.myKernelSevice.runCode(this.fetchVariablesCode, label)
     .then((future: Kernel.IFuture) => {
       if (future) {
         let textContent = '';
@@ -215,8 +203,8 @@ export class VariableService {
           if (msg.content.text) {
             textContent = textContent.concat(String(msg.content.text));
             if (this.ifJsonString(textContent)) {
-              this.convertToVariableStore(sessionId, textContent);
-              this.checkForChanges(sessionId);
+              this.convertToVariableStore(textContent);
+              this.checkForChanges();
             }
           }
         });
@@ -233,36 +221,36 @@ export class VariableService {
     component.updateVariableView(JSON.parse(JSON.stringify(value)));
   }
 
-  variableHasChanged(sessionId: string, identifier: string) {
+  variableHasChanged(identifier: string) {
     this.updateComponentView(
-      this.sessionVariableStore[sessionId].variableComponentStore[identifier],
-      this.sessionVariableStore[sessionId].variableStore.getValue()[identifier].value);
+      this.variableComponentStore[identifier],
+      this.variableStore.getValue()[identifier].value);
   }
 
-  checkForChanges(sessionId: string) {
+  checkForChanges() {
     this.variableStatus.next('checking-for-changes');
-    const variableIdentifiers = Object.keys(this.sessionVariableStore[sessionId].variableComponentStore);
+    const variableIdentifiers = Object.keys(this.variableComponentStore);
 
     for (const identifier of variableIdentifiers) {
-      if (this.sessionVariableStore[sessionId].variableStore.getValue()[identifier].defined) {
-        if (this.sessionVariableStore[sessionId].oldVariableStore) {
+      if (this.variableStore.getValue()[identifier].defined) {
+        if (this.oldVariableStore) {
           if (
-            stringify(this.sessionVariableStore[sessionId].variableStore.getValue()[identifier]) !==
-            stringify(this.sessionVariableStore[sessionId].oldVariableStore[identifier])
+            stringify(this.variableStore.getValue()[identifier]) !==
+            stringify(this.oldVariableStore[identifier])
           ) {
-            this.variableHasChanged(sessionId, identifier);
+            this.variableHasChanged(identifier);
           }
         } else {
-          this.variableHasChanged(sessionId, identifier);
+          this.variableHasChanged(identifier);
         }
       }
     }
     const aVariableHasChanged = (
-      stringify(this.sessionVariableStore[sessionId].variableStore.getValue()) !==
-      stringify(this.sessionVariableStore[sessionId].oldVariableStore)
+      stringify(this.variableStore.getValue()) !==
+      stringify(this.oldVariableStore)
     );
     if (aVariableHasChanged) {
-      this.sessionVariableStore[sessionId].variableChangedObservable.next(this.sessionVariableStore[sessionId].variableStore.getValue());
+      this.variableChangedObservable.next(this.variableStore.getValue());
       this.variableStatus.next('a-change-was-made');
     } else {
       this.variableStatus.next('no-change-was-made');
@@ -271,26 +259,26 @@ export class VariableService {
     const id = uuid.v4();
     const staticStatus = 'prepping-for-idle: ' + id;
     this.variableStatus.next(staticStatus);
-    this.myKernelSevice.sessionStore[this.myKernelSevice.currentSession].queue.then(() => {
+    this.myKernelSevice.queue.then(() => {
       if (this.variableStatus.getValue() === staticStatus) {
         this.variableStatus.next('idle');
       }
     });
-    this.sessionVariableStore[sessionId].oldVariableStore = JSON.parse(
-      JSON.stringify(this.sessionVariableStore[sessionId].variableStore.getValue())
+    this.oldVariableStore = JSON.parse(
+      JSON.stringify(this.variableStore.getValue())
     );
   }
 
-  pushVariable(sessionId: string, variableIdentifier: string, variableName: string, valueReference: string) {
+  pushVariable(variableIdentifier: string, variableName: string, valueReference: string) {
     const pushCode = `${variableName} = ${valueReference}`;
 
-    this.sessionVariableStore[sessionId].oldVariableStore[variableIdentifier] = {
+    this.oldVariableStore[variableIdentifier] = {
       defined: true,
       value: JSON.parse(JSON.stringify(valueReference))
     };
 
     return this.myKernelSevice.runCode(
-      sessionId, pushCode, '"push"_"' + variableIdentifier + '"'
+      pushCode, '"push"_"' + variableIdentifier + '"'
     ).then(future => {
       if (future) {
         const promise = future.done;
