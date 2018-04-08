@@ -110,7 +110,8 @@ export class VariableService {
 
       this.sessionVariableStore[sessionId].lastCode.subscribe((code) => {
         if (code) {
-          if (code !== `# "fetchAllVariables"\n${this.fetchVariablesCode}`) {
+          // if (code !== `# "fetchAllVariables"\n${this.fetchVariablesCode}`) {
+          if (code !== this.fetchVariablesCode) {
             this.fetchAll(sessionId);
           }
         }
@@ -145,7 +146,7 @@ export class VariableService {
     .then((future: Kernel.IFuture) => {
       if (future) {
         future.done.then(() => {
-          this.fetchAll(sessionId, '"fetchAllVariables"').then(() => {
+          this.fetchAll(sessionId, '"InitialFetchAllVariables"').then(() => {
             initilisationComplete.resolve(null);
           });
         });

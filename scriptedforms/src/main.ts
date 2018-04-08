@@ -47,7 +47,7 @@ import { loadDocs } from './docs';
 import { loadDev } from './dev';
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('Angular is in production mode.');
+  console.log('Production Mode: Angular is in production mode.');
   enableProdMode();
 }
 
@@ -65,7 +65,7 @@ function main() {
 
 if (CONFIG_DIV) {
   if (process.env.NODE_ENV !== 'production') {
-    console.log('ScriptedForms is live watching js output in dev mode.');
+    console.log('Development Mode: ScriptedForms is watching for JavaScript changes.');
     loadDev();
   }
   window.onload = main;
