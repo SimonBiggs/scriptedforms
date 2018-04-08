@@ -282,7 +282,7 @@ function createFormComponentFactory(sessionId: string, compiler: Compiler, metad
         this.variableComponents.forEach((variableComponent, index) => {
           variableComponent.initialise();
         });
-
+        
         this.myVariableService.allVariablesInitilised(this._sessionId).then(() => {
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];

@@ -30,12 +30,13 @@ This will eventually be how the variables are saved.
 Not yet implemented.
 */
 
+import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Slot } from '@phosphor/signaling';
+// import { Slot } from '@phosphor/signaling';
 import { PromiseDelegate } from '@phosphor/coreutils';
 
-import { Kernel, KernelMessage, Session } from '@jupyterlab/services';
+import { Kernel, KernelMessage } from '@jupyterlab/services';
 import { nbformat } from '@jupyterlab/coreutils';
 
 import * as  stringify from 'json-stable-stringify';
@@ -43,6 +44,7 @@ import * as uuid from 'uuid';
 
 import { Injectable } from '@angular/core';
 import { KernelService } from './kernel.service';
+// import { FileService } from './file.service';
 
 import { VariableStore } from '../interfaces/variable-store';
 import { VariableValue } from '../types/variable-value';
@@ -66,9 +68,9 @@ export interface SessionVariableStore {
     variableComponentStore: {
       [key: string]: VariableComponent
     };
-    updateExecutionSlot: Slot<Session.ISession, KernelMessage.IIOPubMessage>
     executionCount: BehaviorSubject<nbformat.ExecutionCount>;
     lastCode: BehaviorSubject<string>;
+    variableChangeSubscription: Subscription;
   };
 }
 
@@ -82,16 +84,9 @@ export class VariableService {
   variableStatus: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
-    private myKernelSevice: KernelService
+    private myKernelSevice: KernelService,
+    // private myFileService: FileService
   ) { }
-
-  updateExecution(session: Session.ISession, msg: KernelMessage.IIOPubMessage) {
-    if (KernelMessage.isExecuteInputMsg(msg)) {
-      const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
-      this.sessionVariableStore[session.id].executionCount.next(executeInputMessage.content.execution_count);
-      this.sessionVariableStore[session.id].lastCode.next(executeInputMessage.content.code);
-    }
-  }
 
   variableInitialisation(sessionId: string) {
     if (!(sessionId in this.sessionVariableStore)) {
@@ -105,9 +100,21 @@ export class VariableService {
         variableComponentStore: {},
         executionCount: new BehaviorSubject(null),
         lastCode: new BehaviorSubject(null),
-        updateExecutionSlot: (session, msg) => {this.updateExecution(session, msg); }
+        variableChangeSubscription: null
       };
 
+      this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.connect((session, msg) => {
+        if (KernelMessage.isExecuteInputMsg(msg)) {
+          const executeInputMessage: KernelMessage.IExecuteInputMsg = msg;
+          this.sessionVariableStore[sessionId].executionCount.next(executeInputMessage.content.execution_count);
+          this.sessionVariableStore[sessionId].lastCode.next(executeInputMessage.content.code);
+        }
+      });
+    }
+  }
+
+  startListeningForChanges(sessionId: string) {
+    this.sessionVariableStore[sessionId].variableChangeSubscription = (
       this.sessionVariableStore[sessionId].lastCode.subscribe((code) => {
         if (code) {
           const commentRemovedCode = code.replace(/^#.*\n/, '');
@@ -115,25 +122,20 @@ export class VariableService {
             this.fetchAll(sessionId);
           }
         }
-      });
-    }
-  }
-
-  startListeningForChanges(sessionId: string) {
-    this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.connect(
-      this.sessionVariableStore[sessionId].updateExecutionSlot);
+      })
+    );
   }
 
   resetVariableService(sessionId: string) {
+    if (this.sessionVariableStore[sessionId].variableChangeSubscription) {
+      this.sessionVariableStore[sessionId].variableChangeSubscription.unsubscribe();
+    }
     this.variableStatus.next('reset');
     this.sessionVariableStore[sessionId].variableStore.next({});
     this.sessionVariableStore[sessionId].oldVariableStore = {};
     this.sessionVariableStore[sessionId].variableComponentStore = {};
     this.sessionVariableStore[sessionId].variableIdentifierMap = {};
     this.sessionVariableStore[sessionId].variableEvaluateMap = {};
-
-    this.myKernelSevice.sessionStore[sessionId].session.iopubMessage.disconnect(
-      this.sessionVariableStore[sessionId].updateExecutionSlot);
   }
 
   allVariablesInitilised(sessionId: string) {
@@ -145,13 +147,8 @@ export class VariableService {
     .then((future: Kernel.IFuture) => {
       if (future) {
         future.done.then(() => {
-          // This needs to have a different name than "fetchAllVariables" so that it
-          // doesn't get clobbered. This particular fetch must always occur so that
-          // the form can be declared ready.
-          this.fetchAll(sessionId, '"InitialFetchAllVariables"').then(() => {
-            this.startListeningForChanges(sessionId);
-            initilisationComplete.resolve(null);
-          });
+          this.startListeningForChanges(sessionId);
+          initilisationComplete.resolve(null);
         });
       } else {
         console.log('No future returned from initialiseVariableHandler');
