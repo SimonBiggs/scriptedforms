@@ -86,7 +86,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
       rendermime: this.renderMime
     };
     this.outputArea = new OutputArea(this.outputAreaOptions);
-    this.outputArea.addClass('ScriptedForms');
   }
 
   ngAfterViewInit() {

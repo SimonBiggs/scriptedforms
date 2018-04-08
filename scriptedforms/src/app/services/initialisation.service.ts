@@ -74,8 +74,10 @@ export class InitialisationService {
     this.initiliseBaseScriptedForms(options);
 
     if (!options.context) {
+      console.log('No Widget Context. Assuming in standalone mode.');
       this.myFileService.openUrl(window.location.href);
     } else {
+      console.log('Widget context found. Assuming running as JupyterLab extension.');
       this.myFileService.context = options.context;
       this.myFileService.openFile(options.context.path);
     }
