@@ -77,6 +77,8 @@ export class VariableService {
 
   variableStatus: BehaviorSubject<string> = new BehaviorSubject(null);
 
+  hasFirstSubRun = false;
+
   constructor(
     private myKernelSevice: KernelService
   ) { }
@@ -104,12 +106,16 @@ export class VariableService {
 
   startListeningForChanges() {
     this.variableChangeSubscription = (
-      this.lastCode.subscribe((code) => {
-        if (code) {
-          const commentRemovedCode = code.replace(/^#.*\n/, '');
-          if (commentRemovedCode !== this.fetchVariablesCode) {
-            this.fetchAll();
+      this.lastCode.subscribe(code => {
+        if (this.hasFirstSubRun) {
+          if (code) {
+            const commentRemovedCode = code.replace(/^#.*\n/, '');
+            if (commentRemovedCode !== this.fetchVariablesCode) {
+              this.fetchAll();
+            }
           }
+        } else {
+          this.hasFirstSubRun = true;
         }
       })
     );
@@ -117,6 +123,7 @@ export class VariableService {
 
   resetVariableService() {
     if (this.variableChangeSubscription) {
+      this.hasFirstSubRun = false;
       this.variableChangeSubscription.unsubscribe();
     }
     this.variableStatus.next('reset');
@@ -136,7 +143,6 @@ export class VariableService {
     .then((future: Kernel.IFuture) => {
       if (future) {
         future.done.then(() => {
-          this.startListeningForChanges();
           initilisationComplete.resolve(null);
         });
       } else {

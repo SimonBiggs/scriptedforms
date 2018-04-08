@@ -35,9 +35,9 @@ within this section will be iteratively run. Changes on each contained
 variable component are subscribed to and `variableChanged` function is called.
 */
 
-import {
-  Component, ContentChildren, QueryList, AfterViewInit
-} from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
+import { Component, ContentChildren, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { SectionBaseComponent } from './section-base.component';
 
@@ -60,9 +60,12 @@ import { VariableComponent } from '../types/variable-component';
   selector: 'section-live',
   template: `<ng-content></ng-content><div><code *ngIf="code" class="language-python">{{code}}</code></div>`
 })
-export class LiveComponent extends SectionBaseComponent implements AfterViewInit {
+export class LiveComponent extends SectionBaseComponent implements AfterViewInit, OnDestroy {
   sectionType = 'live';
   variableComponents: VariableComponent[] = [];
+  hasFirstSubRun = false;
+
+  subscriptions: Subscription[] = [];
 
   @ContentChildren(ToggleComponent) toggleComponents: QueryList<ToggleComponent>;
   @ContentChildren(TickComponent) tickComponents: QueryList<TickComponent>;
@@ -92,8 +95,25 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
     this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
 
     for (const variableComponent of this.variableComponents) {
-      variableComponent.variableChange.asObservable().subscribe(
-        value => this.runCode());
+      this.subscriptions.push(variableComponent.variableChange.asObservable().subscribe(value => {
+        if (this.hasFirstSubRun) {
+          this.runCode();
+        } else {
+          this.hasFirstSubRun = true;
+        }
+      }));
     }
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  kernelReset() {
+    this.unsubscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe();
   }
 }

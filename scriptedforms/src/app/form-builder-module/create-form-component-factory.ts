@@ -230,6 +230,8 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
           variableComponent.initialise();
         });
 
+        this.myVariableService.startListeningForChanges();
+
         this.myVariableService.allVariablesInitilised().then(() => {
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];
@@ -282,6 +284,7 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
         variableComponent.formReady(false);
       });
       this.sectionComponents.forEach(sectionComponent => {
+        sectionComponent.kernelReset();
         sectionComponent.formReady(false);
       });
       this.myKernelService.restartKernel().then(() => {

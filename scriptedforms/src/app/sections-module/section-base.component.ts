@@ -98,4 +98,6 @@ export class SectionBaseComponent implements AfterViewInit {
       codeComponent.name = `"${this.sectionType}"_${this.sectionId}_${index}`;
     });
   }
+
+  kernelReset() { }
 }
