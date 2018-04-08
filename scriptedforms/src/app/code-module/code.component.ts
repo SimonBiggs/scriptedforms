@@ -31,7 +31,6 @@ import { Kernel, KernelMessage } from '@jupyterlab/services';
 import { Mode } from '@jupyterlab/codemirror';
 
 import { KernelService } from '../services/kernel.service';
-import { FileService } from '../services/file.service';
 
 @Component({
   selector: 'code.language-python',
@@ -64,7 +63,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private myKernelSevice: KernelService,
-    private myFileService: FileService,
     private _eRef: ElementRef
   ) { }
 
@@ -90,7 +88,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
     const element: HTMLElement = this._eRef.nativeElement;
     this.outputContainer = document.createElement('div');
-    // this.outputContainer.classList.add('avoid-page-break')
     this.outputContainer.appendChild(this.outputArea.node);
     element.parentNode.parentNode.insertBefore(this.outputContainer, element.parentNode);
 
@@ -110,11 +107,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     this.outputAreaDispose();
   }
 
-  updateLinks() {
-    const links: HTMLAnchorElement[] = Array.from(this.outputArea.node.getElementsByTagName('a'));
-    this.myFileService.morphLinksToUpdateFile(links);
-  }
-
   /**
    * Run the code within the code component. Update the output area with the results of the
    * code.
@@ -129,7 +121,6 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
 
         future.onIOPub = this._onIOPub;
         future.done.then(() => {
-          this.updateLinks();
           codeCompleted.resolve(null);
         });
 

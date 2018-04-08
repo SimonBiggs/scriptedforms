@@ -43,7 +43,7 @@
 
 import {
   Component, ViewChildren, QueryList, Compiler, ComponentFactory, NgModule,
-  ModuleWithComponentFactories, ElementRef, ChangeDetectorRef, AfterViewInit
+  ModuleWithComponentFactories, ChangeDetectorRef, AfterViewInit
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -58,7 +58,6 @@ import { sessionStartCode } from './session-start-code';
 
 import { KernelService } from '../services/kernel.service';
 import { VariableService } from '../services/variable.service';
-import { FileService } from '../services/file.service';
 
 import { SectionsModule } from '../sections-module/sections.module';
 import { StartComponent } from '../sections-module/start.component';
@@ -137,16 +136,11 @@ function createFormComponentFactory(compiler: Compiler, metadata: Component): Co
     constructor(
       private myKernelService: KernelService,
       private myVariableService: VariableService,
-      private myFileService: FileService,
-      private elementRef: ElementRef,
       private myChangeDetectorRef: ChangeDetectorRef
     ) { }
 
     ngAfterViewInit() {
       this.formViewInitialised.resolve(null);
-
-      const links: HTMLAnchorElement[] = Array.from(this.elementRef.nativeElement.getElementsByTagName('a'));
-      this.myFileService.morphLinksToUpdateFile(links);
 
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());

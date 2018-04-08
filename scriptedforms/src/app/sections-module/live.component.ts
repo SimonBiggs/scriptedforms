@@ -63,7 +63,7 @@ import { VariableComponent } from '../types/variable-component';
 export class LiveComponent extends SectionBaseComponent implements AfterViewInit, OnDestroy {
   sectionType = 'live';
   variableComponents: VariableComponent[] = [];
-  hasFirstSubRun = false;
+  // hasFirstSubRun = false;
 
   subscriptions: Subscription[] = [];
 
@@ -96,11 +96,11 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
 
     for (const variableComponent of this.variableComponents) {
       this.subscriptions.push(variableComponent.variableChange.asObservable().subscribe(value => {
-        if (this.hasFirstSubRun) {
+        // if (this.hasFirstSubRun) {
           this.runCode();
-        } else {
-          this.hasFirstSubRun = true;
-        }
+        // } else {
+          // this.hasFirstSubRun = true;
+        // }
       }));
     }
   }
