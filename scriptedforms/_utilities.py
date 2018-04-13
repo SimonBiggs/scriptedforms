@@ -109,40 +109,28 @@ class _VariableHandler(object):
         self.variable_evaluate_map = json.loads(variable_evaluate_map)
         self.handlername = handlername
 
-        self.value = dict()
-        self.defined = dict()
+        self.variables_dict = {
+            "_scriptedforms.__version__": __version__
+        }
 
     @property
     def fetch_code(self):
-        fetch_code_list = ["{}.value = dict()\n".format(self.handlername)]
+        fetch_code_list = []
+
+        # Need to use double quotes here for the key parameter
+        # as in {0}.variables_dict["{1}"] not {0}.variables_dict['{1}']
+        # key paramters assume they can use single quotes.
         for key, evaluate in self.variable_evaluate_map.items():
             fetch_code_list.append("""
 try:
-    {0}.value["{1}"] = {2}
-    {0}.defined["{1}"] = True
+    {0}.variables_dict["{1}"] = {{"value": {2}, "defined": True}}
 except:
-    {0}.defined["{1}"] = False
+    {0}.variables_dict["{1}"] = {{"defined": False}}
 """.format(self.handlername, key, evaluate))
         fetch_code_list.append(
             "print({}.variables_json)".format(self.handlername))
 
         return ''.join(fetch_code_list)
-
-    @property
-    def variables_dict(self):
-        variables = dict()
-        variables["_scriptedforms.__version__"] = __version__
-        for key in self.variable_evaluate_map:
-            if self.defined[key]:
-                variables[key] = {
-                    "value": self.value[key],
-                    "defined": True,
-                }
-            else:
-                variables[key] = {
-                    "defined": False
-                }
-        return variables
 
     @property
     def variables_json(self):
