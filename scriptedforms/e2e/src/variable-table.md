@@ -27,3 +27,7 @@
 ## Nonsense parameter values
 
 <variable-table class="nonsense-parameters" inputTypes="None" dropdownItems="None">variable_table.table</variable-table>
+
+## Standalone Table
+
+<variable-table inputTypes="variable_table.input_types_1" dropdownItems="variable_table.dropdown_items">variable_table.table_other</variable-table>

@@ -36,11 +36,16 @@ dropdown_items = {
 }
 
 table = None
+table_other = None
 
 
 def load_table():
     global table
+    global table_other
     table = pd.read_csv('variable-table.csv', index_col=0)
+
+    table_other = pd.DataFrame(
+        data=[], columns=table.columns, index=table.index)
     display(Markdown(
         'Loaded variable-table.csv at {}'
         .format(str(datetime.now()))
