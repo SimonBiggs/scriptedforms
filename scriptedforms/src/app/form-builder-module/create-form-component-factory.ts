@@ -143,9 +143,6 @@ function createFormComponentFactory(
     ngAfterViewInit() {
       this.formViewInitialised.resolve(null);
 
-      this.myVariableService.resetVariableService();
-      this.myKernelService.queueReset();
-
       this.variableComponents = this.variableComponents.concat(this.toggleComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.tickComponents.toArray());
 
@@ -202,8 +199,11 @@ function createFormComponentFactory(
      * Initialise the form. Code ordering during initialisation is defined here.
      */
     private initialiseForm() {
+      this.myVariableService.resetVariableService();
+      this.myKernelService.queueReset();
+
       const sessionStartCodeComplete = new PromiseDelegate<boolean>();
-      this.myKernelService.runCode(sessionStartCode, 'session_start_code')
+      this.myKernelService.runCode(sessionStartCode, '"session_start_code"')
       .then((future: Kernel.IFuture) => {
         if (future) {
           let textContent = '';
@@ -232,7 +232,7 @@ function createFormComponentFactory(
           const initialPromise = Promise.resolve(null);
           const startPromiseList: Promise<null>[] = [initialPromise];
           this.startComponents.toArray().forEach((startComponent, index) => {
-            console.log(startComponent);
+            // console.log(startComponent);
             if (isNewSession) {
               startPromiseList.push(
                 startPromiseList[startPromiseList.length - 1].then(() => startComponent.runCode())

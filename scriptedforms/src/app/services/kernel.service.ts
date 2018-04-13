@@ -133,7 +133,7 @@ export class KernelService {
   restartKernel(): Promise<Session.ISession> {
     const sessionConnected = new PromiseDelegate<Session.ISession>();
     this.kernel.restart().then(() => {
-      this.queueReset();
+      // this.queueReset();
 
       sessionConnected.resolve(this.session);
     });

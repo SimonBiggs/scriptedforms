@@ -77,7 +77,7 @@ export class VariableService {
 
   variableStatus: BehaviorSubject<string> = new BehaviorSubject(null);
 
-  hasFirstSubRun = false;
+  variableHandlerInitialised = false;
 
   constructor(
     private myKernelSevice: KernelService
@@ -107,23 +107,21 @@ export class VariableService {
   startListeningForChanges() {
     this.variableChangeSubscription = (
       this.lastCode.subscribe(code => {
-        if (this.hasFirstSubRun) {
+        if (this.variableHandlerInitialised) {
           if (code) {
             const commentRemovedCode = code.replace(/^#.*\n/, '');
             if (commentRemovedCode !== this.fetchVariablesCode) {
               this.fetchAll();
             }
           }
-        } else {
-          this.hasFirstSubRun = true;
         }
       })
     );
   }
 
   resetVariableService() {
+    this.variableHandlerInitialised = false;
     if (this.variableChangeSubscription) {
-      this.hasFirstSubRun = false;
       this.variableChangeSubscription.unsubscribe();
     }
     this.variableStatus.next('reset');
@@ -144,6 +142,8 @@ export class VariableService {
       if (future) {
         future.done.then(() => {
           initilisationComplete.resolve(null);
+          this.variableHandlerInitialised = true;
+          this.fetchAll();
         });
       } else {
         console.log('No future returned from initialiseVariableHandler');
@@ -198,8 +198,11 @@ export class VariableService {
   }
 
   fetchAll(label = '"fetchAllVariables"') {
+    if (!this.variableHandlerInitialised) {
+      console.log('fetch called before ready');
+      return Promise.resolve(null);
+    }
     this.variableStatus.next('fetching');
-
     const fetchComplete = new PromiseDelegate<void> ();
     this.myKernelSevice.runCode(this.fetchVariablesCode, label)
     .then((future: Kernel.IFuture) => {
