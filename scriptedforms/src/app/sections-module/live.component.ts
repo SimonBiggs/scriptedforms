@@ -93,7 +93,9 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
 
     this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
     this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
+  }
 
+  subscribe() {
     for (const variableComponent of this.variableComponents) {
       this.subscriptions.push(variableComponent.variableChange.asObservable().subscribe(value => {
         // if (this.hasFirstSubRun) {

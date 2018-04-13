@@ -259,15 +259,10 @@ function createFormComponentFactory(
           return Promise.all(sectionPromiseList);
         })
         .then(() => {
-          this.outputComponents.toArray().forEach(outputComponent => {
-            outputComponent.subscribeToVariableChanges();
-          });
-          this.sectionComponents.forEach(sectionComponent => {
-            sectionComponent.formReady(true);
-          });
-          this.variableComponents.forEach(variableComponent => {
-            variableComponent.formReady(true);
-          });
+          this.liveComponents.toArray().forEach(liveComponent => liveComponent.subscribe());
+          this.outputComponents.toArray().forEach(outputComponent => outputComponent.subscribeToVariableChanges());
+          this.sectionComponents.forEach(sectionComponent => sectionComponent.formReady(true));
+          this.variableComponents.forEach(variableComponent => variableComponent.formReady(true));
           this.formReady.resolve(null);
         });
       });
