@@ -11,7 +11,7 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "main": "src/main.ts",
+  "main": "lib/scriptedforms.js",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
@@ -35,7 +35,7 @@
     "watch": "webpack --config webpack.dev.js --watch"
   },
   "files": [
-    "src/**/*.{d.ts,ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
+    "lib/**/*.{d.ts,ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
   ],
   "dependencies": {
     "@angular/animations": "5.2.5",
