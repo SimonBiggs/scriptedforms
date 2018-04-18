@@ -40,7 +40,7 @@ for filepath in filepaths:
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html'
+  templateUrl: './JUPYTERLAB_RAW_LOADER_landing-page.component.html'
 })
 export class LandingPageComponent implements AfterViewInit {
   @ViewChild('formWrapper') formWrapper: ElementRef;

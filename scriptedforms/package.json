@@ -11,7 +11,8 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "main": "src/main.ts",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
   "description": "Interactive forms.",
   "author": "Simon Biggs",
   "scripts": {
@@ -21,6 +22,7 @@
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
+    "build:jupyterlab": "rimraf build && copyfiles -u 1 'src/**/*.html' build && node-sass ./src/vendors/theme.scss ./build/vendors/theme.css && tsc",
     "pip:install": "jlpm pip:dev",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "yes | pip uninstall scriptedforms",
@@ -35,7 +37,7 @@
     "watch": "webpack --config webpack.dev.js --watch"
   },
   "files": [
-    "src/**/*.{d.ts,ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf,scss}"
+    "build/**/*.{d.ts,eot,gif,html,css,jpg,js,js.map,json,png,svg,woff2,ttf}"
   ],
   "dependencies": {
     "@angular/animations": "5.2.5",

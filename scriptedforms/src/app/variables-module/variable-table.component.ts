@@ -43,7 +43,7 @@ import { VariableParameterComponent } from './variable-parameter.component';
 
 @Component({
   selector: 'variable-table',
-  templateUrl: 'variable-table.component.html',
+  templateUrl: 'JUPYTERLAB_RAW_LOADER_variable-table.component.html',
 styles: [
 `
 .container {
