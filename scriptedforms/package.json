@@ -22,7 +22,7 @@
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
-    "build:jupyterlab": "rimraf build && copyfiles -u 1 'src/**/*.html' build && node-sass ./src/vendors/theme.scss ./build/vendors/theme.css && tsc",
+    "build:jupyterlab": "rimraf build && copyfiles -u 1 'src/**/*.{html,css}' build && node-sass ./src/vendors/theme.scss ./build/vendors/theme.css && tsc",
     "pip:install": "jlpm pip:dev",
     "pip:dev": "pip install -e ../",
     "pip:uninstall": "yes | pip uninstall scriptedforms",
