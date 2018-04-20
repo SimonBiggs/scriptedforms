@@ -47,11 +47,6 @@ module.exports = {
           'angular2-template-loader'
         ]
       },
-      {
-        test: /\.html$/,
-        loader: 'html-loader'
-      },
-      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       { test: /\.(woff|woff2|ttf|eot)$/, use: 'file-loader' },
       { test: /\.svg$/, use: 'svg-url-loader' }
