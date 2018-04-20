@@ -39,12 +39,13 @@ import { PandasTable } from '../interfaces/pandas-table';
 
 import { VariableParameterComponent } from './variable-parameter.component';
 
-const htmlTemplate = <string>require('html-loader!./variable-table.component.html');
+import * as htmlTemplate from 'html-loader!./variable-table.component.html';
+const template = '' + htmlTemplate;
 
 
 @Component({
   selector: 'variable-table',
-  template: htmlTemplate,
+  template: template,
   styles: [
 `
 .container {

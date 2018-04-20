@@ -5,7 +5,8 @@ import { Widget } from '@phosphor/widgets';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { ScriptedFormsWidget } from '../../app/widget';
 
-const htmlTemplate = <string>require('html-loader!./landing-page.component.html');
+import * as htmlTemplate from 'html-loader!./landing-page.component.html';
+const template = '' + htmlTemplate;
 
 const aTemplate = `
 # Live documentation
@@ -41,7 +42,7 @@ for filepath in filepaths:
 
 @Component({
   selector: 'app-landing-page',
-  template: htmlTemplate
+  template: template
 })
 export class LandingPageComponent implements AfterViewInit {
   @ViewChild('formWrapper') formWrapper: ElementRef;
