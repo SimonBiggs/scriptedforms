@@ -163,4 +163,4 @@ ENV/
 # mypy
 .mypy_cache/
 
-scriptedforms/lab-build
+scriptedforms/jlab-build
