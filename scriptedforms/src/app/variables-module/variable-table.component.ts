@@ -24,8 +24,6 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-// import { BehaviorSubject } from 'rxjs';
-
 import {
   Component, AfterViewInit, Input, ViewChild
 } from '@angular/core';
@@ -41,10 +39,15 @@ import { PandasTable } from '../interfaces/pandas-table';
 
 import { VariableParameterComponent } from './variable-parameter.component';
 
+import htmlTemplate from 'html-loader!./variable-table.component.html';
+const template = '' + htmlTemplate;
+console.log(template);
+
+
 @Component({
   selector: 'variable-table',
-  templateUrl: 'variable-table.component.html',
-styles: [
+  template: template,
+  styles: [
 `
 .container {
   display: flex;

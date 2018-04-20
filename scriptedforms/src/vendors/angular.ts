@@ -1,5 +1,5 @@
-import '@angular/animations'
-import '@angular/cdk'
+import '@angular/animations';
+import '@angular/cdk';
 import '@angular/common';
 import '@angular/compiler';
 import '@angular/core';
@@ -9,8 +9,9 @@ import '@angular/material';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
 
-import "hammerjs"
-import "rxjs"
-import "zone.js"
+import 'hammerjs';
+import 'rxjs/BehaviorSubject';
+import 'rxjs/Subscription';
+import 'zone.js';
 
-import './angular-styles'
+import './angular-styles';

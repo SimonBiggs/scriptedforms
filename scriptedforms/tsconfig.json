@@ -10,7 +10,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "outDir": "./build",
+    "outDir": "./jlab-build",
     "lib": [
       "es2017",
       "dom"
