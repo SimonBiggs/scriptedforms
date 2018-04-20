@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
-import htmlTemplate from 'html-loader!./doc.component.html';
-const template = '' + htmlTemplate;
+const htmlTemplate = <string>require('html-loader!./doc.component.html');
 
 @Component({
   selector: 'doc-root',
-  template: template
+  template: htmlTemplate
 })
 export class DocComponent {
   constructor(

@@ -20,7 +20,7 @@
     "lint": "ng lint",
     "build": "rimraf lib && webpack --config webpack.dev.js",
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
-    "build:jlab": "rimraf ./jlab-build && copyfiles -u 1 './src/**/*.{css,html}' ./jlab-build && node-sass ./src/vendors/theme.scss ./jlab-build/vendors/theme.css && tsc",
+    "build:jlab": "rimraf ./jlab-build && copyfiles -u 1 './src/**/*.{css,html,scss}' ./jlab-build && tsc",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
     "pip:install": "jlpm pip:dev",
