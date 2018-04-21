@@ -1,16 +1,32 @@
 import os
+from glob import glob
 from setuptools import setup
 
-repo_root = os.path.dirname(os.path.abspath(__file__))
+here = os.path.dirname(os.path.abspath(__file__))
 name = 'scriptedforms'
 pjoin = os.path.join
+tar_path = pjoin(here, 'scriptedforms', '*.tgz')
 
 version_ns = {}
-with open(pjoin(repo_root, name, '_version.py')) as file:
+with open(pjoin(here, name, '_version.py')) as file:
     code = file.read()
     exec(code, version_ns)
 
 version = version_ns['__version__']
+
+
+def get_data_files():
+    """Get the data files for the package.
+    """
+    return [
+        ('share/jupyter/lab/extensions', [
+            os.path.relpath(f, '.') for f in glob(tar_path)
+        ]),
+        ('etc/jupyter/jupyter_notebook_config.d', [
+            os.path.relpath(
+                pjoin(here, 'scriptedforms', 'scriptedforms.json'), '.')
+        ])
+    ]
 
 
 setup(
@@ -31,6 +47,7 @@ setup(
             'scriptedforms=scriptedforms:main',
         ],
     },
+    data_files=get_data_files(),
     license='AGPL-3.0+',
     python_requires='>=3.5',
     install_requires=[

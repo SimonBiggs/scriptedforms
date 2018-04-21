@@ -1,6 +1,6 @@
 {
   "name": "@simonbiggs/scriptedforms",
-  "version": "0.9.1",
+  "version": "0.9.2-dev0",
   "license": "AGPL-3.0+",
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
     "lint": "ng lint",
     "build": "rimraf lib && webpack --config webpack.dev.js",
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
-    "build:jlab": "rimraf ./jlab-build && copyfiles -u 1 './src/**/*.{css,html,scss}' ./jlab-build && tsc",
+    "build:jlab": "rimraf ./jlab-build && copyfiles -u 1 './src/**/*.{css,html,scss}' ./jlab-build && tsc && yarn package",
+    "package": "rimraf simonbiggs-scriptedforms*.tgz && yarn pack",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",
     "pip:install": "jlpm pip:dev",
@@ -28,7 +29,7 @@
     "pip:uninstall": "yes | pip uninstall scriptedforms",
     "pip:sys": "pip install ../",
     "pip:freeze": "./scripts/pip-freeze.sh",
-    "pypi:prep": "jlpm build:prod && jlpm pip:uninstall && jlpm pip:sys && jlpm test && jlpm pip:dev",
+    "pypi:prep": "jlpm build:prod && jlpm build:jlab && jlpm pip:uninstall && jlpm pip:sys && jlpm test && jlpm pip:dev",
     "pypi:upload": "./scripts/pypi.sh",
     "pypi:post": "jlpm pip:uninstall && pip install --pre --no-cache scriptedforms && jlpm test && jlpm pip:dev",
     "bundle:update": "yarn --cwd ../portable-windows-bundle update",
