@@ -39,9 +39,6 @@ import { PandasTable } from '../interfaces/pandas-table';
 
 import { VariableParameterComponent } from './variable-parameter.component';
 
-<<<<<<< HEAD
-import * as htmlTemplate from 'html-loader!./variable-table.component.html';
-=======
 // JupyterLab doesn't have custom webpack loaders. Need to be able to
 // inline the loaders so that they get picked up without having access to the
 // webpack.config.js file
@@ -52,7 +49,6 @@ import * as htmlTemplate from 'html-loader!./variable-table.component.html';
 // a template for this component.
 // Idealy I shall create a pull request which will enable the angular lanugage
 // service to detect the template loading method given above.
->>>>>>> inline-webpack
 const template = '' + htmlTemplate;
 
 
