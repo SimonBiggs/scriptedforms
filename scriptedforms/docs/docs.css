@@ -1,0 +1,61 @@
+.mat-sidenav {
+  padding: 0px 40px;
+  border-right: 1px solid #e0e0e0;
+  background-color: #fafafa !important;
+}
+
+html {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.content-frame {
+  padding: 50px;
+  line-height: 150%;
+}
+
+.fixed-toolbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.mat-sidenav-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+a {
+  word-wrap: break-word;
+}
+
+
+.primary-header-container {
+  background: #009688;
+}
+
+.primary-header {
+  padding: 50px;
+  color: #fff;
+  font-weight: 300;
+  margin: 0;
+  font-size: 35px;
+}
+
+.form {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mini-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-form .p-Widget {
+  position: static !important;
+}
