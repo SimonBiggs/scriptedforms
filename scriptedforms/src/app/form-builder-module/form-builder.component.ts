@@ -134,9 +134,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     // Render the markdown to html
     const html = this.myMarkdownIt.render(addNewLines);
 
-
-
     const cssStyles: string[] = this.stripStyleTags(html);
+    const userStyle = document.getElementById('scripted-forms-custom-user-style');
+    userStyle.innerHTML = cssStyles.join('\n\n');
 
     // Escape '{}' characters as these are special characters within Angular
     const escapedHtml = html.replace(/{/g, '@~lb~@'

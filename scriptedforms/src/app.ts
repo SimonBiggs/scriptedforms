@@ -26,6 +26,10 @@
 
 import './app/style.css';
 
+const userStyle = document.createElement('style');
+userStyle.id = 'scripted-forms-custom-user-style';
+document.getElementsByTagName('head').item(0).appendChild(userStyle);
+
 import { Widget } from '@phosphor/widgets';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { ScriptedFormsWidget } from './app/widget';
