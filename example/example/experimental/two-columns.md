@@ -36,6 +36,8 @@ def plot_yx():
 
 # Multi columns with CSS
 
+Need at least version `0.9.2-dev2` for this to work.
+
 <div class="flex-grid">
   <div class="column">
     ## Markdown won't work in here
