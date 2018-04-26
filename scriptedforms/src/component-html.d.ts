@@ -5,7 +5,8 @@
 /*
  *  # Create your own Angular JupyterLab extension (cont.)
  *
- *  This is part of the guide found at 
+ *  This is part of the guide available at
+ *  <https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/docs/create-your-own-angular-jupyterlab-extension.md>
  *
  *  ## The custom html loader module
  *

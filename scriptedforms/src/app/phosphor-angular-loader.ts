@@ -36,6 +36,9 @@ import {
 /*
  *  # Create your own Angular JupyterLab extension (cont.)
  *
+ *  This is part of the guide available at
+ *  <https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/docs/create-your-own-angular-jupyterlab-extension.md>
+ *
  *  ## The Phosphor Wrapper
  *
  *  Angular's default setup is to run the entire page. Usually there isn't anything

@@ -1,4 +1,6 @@
-import { Widget } from '@phosphor/widgets';
+// Copyright (c) Jupyter Development Team.
+// Distributed under the terms of the Modified BSD License.
+
 
 import { JupyterLab, JupyterLabPlugin, ILayoutRestorer } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/coreutils';
@@ -9,6 +11,23 @@ import { InstanceTracker } from '@jupyterlab/apputils';
 import { ScriptedFormsWidget } from './../app/widget';
 
 
+/*
+ *  # Create your own Angular JupyterLab extension (cont.)
+ *
+ *  This is part of the guide available at
+ *  <https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/docs/create-your-own-angular-jupyterlab-extension.md>
+ *
+ *  ## Defining the JupyterLab extension
+ *
+ *  Here the JupyterLab extension is defined. The majority of this file is not
+ *  unique to an Angular setup. However, there is one section which is of interest.
+ *
+ *  The "initialiseScriptedForms" function which has been defined on the AngularWrapperWidget
+ *  is called within the `createNewWidget` function on the `ScriptedFormsWidgetFactory`.
+ *  It is set to execute once the widget context is ready.
+ */
+
+
 const FACTORY = 'ScriptedForms';
 
 namespace CommandIDs {
@@ -16,21 +35,6 @@ namespace CommandIDs {
   const preview = 'scriptedforms:open';
 }
 
-
-export function loadApp(): void {
-  const serviceManager = new ServiceManager();
-  const contentsManager = new ContentsManager();
-
-  const formWidget = new ScriptedFormsWidget({
-    serviceManager,
-    contentsManager
-  });
-
-  formWidget.form.initiliseScriptedForms();
-
-  window.onresize = () => { formWidget.update(); };
-  Widget.attach(formWidget, document.body);
-}
 
 export
 namespace IScriptedFormsWidgetFactory {

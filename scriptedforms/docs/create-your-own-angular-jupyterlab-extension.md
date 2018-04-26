@@ -20,8 +20,8 @@ ScriptedForms itself is licensed under the AGPLv3.0+ license with additional ter
 However, so that you can make your own Angular JupyterLab extensions, and not
 have to use the AGPLv3.0+ yourself, the specific files required to achieve this
 in a bare bones fashion have been licensed either under the Apache 2.0+ or the
-BSD. The choice of which license depends on whether or not that file was
-derived from work done by the Jupyter team.
+BSD. The choice of which license the file is under depends on whether or not
+that file was derived from work done by the Jupyter team.
 
 ### Files specific to an Angular JupyterLab extension
 
@@ -35,3 +35,24 @@ are needed.
 * [phosphor-angular-loader.ts](../src/app/phosphor-angular-loader.ts)
 * [app.component.ts](../src/app/app.component.ts)
 * [component-html.d.ts](../src/component-html.d.ts)
+* [widget.ts](../src/app/widget.ts)
+* [jupyterlab-plugin.ts](../src/jupyterlab-extension/jupyterlab-plugin.ts)
+
+There are of course other files required. However they are not specific to this
+particular combination.
+
+If you believe more files from within ScriptedForms should be a part of this
+guide please either [create an issue](https://github.com/SimonBiggs/scriptedforms/issues/new)
+or a pull request to ScriptedForms.
+
+## Providing your extension to JupyterLab
+
+To build ScriptedForms ready to be installed as a JupyterLab extension `tsc` is run
+and then html, css, and scss files are copied into the build directory. This command
+uses the [tsconfig.json](../tsconfig.json) file.
+
+This bundle of primarily css, html, and js is what is given to JupyterLab.
+
+To see the specific JupyterLab build process have a look at the [package.json](../package.json)
+file. In particular the "build:jlab" script. Also note how within "files" the "html"
+extension has been included.

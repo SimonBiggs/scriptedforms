@@ -45,6 +45,9 @@ import { FormStatus } from './types/form-status';
 /*
  *  # Create your own Angular JupyterLab extension (cont.)
  *
+ *  This is part of the guide available at
+ *  <https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/docs/create-your-own-angular-jupyterlab-extension.md>
+ *
  *  ## The Root Angular App Component
  *
  *  There's a lot going on in this file, but the greater majority of its content
