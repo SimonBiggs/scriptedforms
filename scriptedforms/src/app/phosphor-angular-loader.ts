@@ -1,28 +1,19 @@
-// Scripted Forms -- Making GUIs easy for everyone on your team.
-// Copyright (C) 2017 Simon Biggs
+/*
+ *  Copyright 2017 Simon Biggs
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version (the "AGPL-3.0+").
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Affero General Public License and the additional terms for more
-// details.
-
-// You should have received a copy of the GNU Affero General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-// Affrero General Public License. These aditional terms are Sections 1, 5,
-// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-// where all references to the definition "License" are instead defined to
-// mean the AGPL-3.0+.
-
-// You should have received a copy of the Apache-2.0 along with this
-// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 import {
   Widget
@@ -41,6 +32,31 @@ import {
 import {
   platformBrowserDynamic
 } from '@angular/platform-browser-dynamic';
+
+/*
+ *  # Create your own Angular JupyterLab extension (cont.)
+ *
+ *  ## The Phosphor Wrapper
+ *
+ *  Angular's default setup is to run the entire page. Usually there isn't anything
+ *  around or 'above' Angular. In this case however the non-Angular application
+ *  JupyterLab needs to be above it. This means that Angular's default browser
+ *  bootstrapping cannot be used. Therefore
+ *  [manual bootstrapping](https://blog.angularindepth.com/how-to-manually-bootstrap-an-angular-application-9a36ccf86429)
+ *  is required.
+ *
+ *  Not only that but we want JupyterLab to see a Phoshor Widget, not an Angular
+ *  app.
+ *
+ *  And lastly, anytime JupyterLab does something which impacts the Angular app
+ *  that change needs to be wrapped up within [ngZone](https://angular.io/api/core/NgZone)
+ *  which kicks off Angular's all mighty change detection.
+ *
+ *  So that's what this file does. It creates an Angular Loader to bootstrap
+ *  the Angular App, and then a Phosphor Widget is created which calls that loader
+ *  while also providing a `run` function for the purpose of passing actions
+ *  into Angular's change detecting ngZone.
+ */
 
 
 export class AngularLoader<M> {

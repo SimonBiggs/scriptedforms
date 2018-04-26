@@ -1,35 +1,19 @@
-// Scripted Forms -- Making GUIs easy for everyone on your team.
-// Copyright (C) 2017 Simon Biggs
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version (the "AGPL-3.0+").
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Affero General Public License and the additional terms for more
-// details.
-
-// You should have received a copy of the GNU Affero General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-// Affrero General Public License. These aditional terms are Sections 1, 5,
-// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-// where all references to the definition "License" are instead defined to
-// mean the AGPL-3.0+.
-
-// You should have received a copy of the Apache-2.0 along with this
-// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
-
 /*
-The root form component.
+ *  Copyright 2017 Simon Biggs
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 
-Passes the jupyterlab session into the kernel service and connects. Passes
-through the `setFormContents` function.
-*/
 
 import {
   Component, ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef
@@ -42,8 +26,6 @@ import {
   RenderMimeRegistry, standardRendererFactories as initialFactories
 } from '@jupyterlab/rendermime';
 import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
-
-// import { kernelIdleDebounce } from './levelled-files/level-1/kernel-idle-debounce';
 
 import {
   Kernel
@@ -60,22 +42,42 @@ import { FileService } from './services/file.service';
 import { FormStatus } from './types/form-status';
 
 
+/*
+ *  # Create your own Angular JupyterLab extension (cont.)
+ *
+ *  ## The Root Angular App Component
+ *
+ *  There's a lot going on in this file, but the greater majority of its content
+ *  is ScriptedForms specific. There are only two things you will need from this
+ *  file.
+ *
+ *  The first is how the template is defined. The key part is the 'html-loader!'.
+ *  JupyterLab does not have a webpack method for loading up Angular templates.
+ *  This loader text tells the JupyterLab webpack that it needs to use the html-loader.
+ *  So that typescript doesn't complain about this import a module type needs
+ *  to be defined. This is done in [component-html.d.ts](../component-html.d.ts).
+ *
+ *  The last feature that is worth noting are the public functions provided at
+ *  the bottom of AppComponent such as `initiliseScriptedForms`.
+ *  These functions are passed up to the Phosphor Widget
+ *  and are called using the AngularWidget run() function.
+ */
+
+
+// JupyterLab doesn't have custom webpack loaders. Need to be able to
+// inline the loaders so that they get picked up without having access to the
+// webpack.config.js file
+// See https://github.com/jupyterlab/jupyterlab/pull/4334#issuecomment-383104318
+import * as htmlTemplate from 'html-loader!./app.component.html';
+
+// This is currently needed to silence the angular-language-service not finding
+// a template for this component.
+// See https://github.com/angular/angular/issues/23478
+const linterWorkaroundHtmlTemplate = '' + htmlTemplate;
+
 @Component({
   selector: 'app-root',
-  template: `
-<div class="margin">
-  <div class="hide-on-print">
-    <toolbar-base></toolbar-base>
-    <mat-progress-spinner
-      color="accent"
-      *ngIf="kernelStatus !== 'idle' || formStatus !== 'ready' || variableStatus !== 'idle' || queueLength !== 0"
-      class="floating-spinner"
-      mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-  <app-form-builder #formBuilderComponent><div #jupyterErrorMsg></div></app-form-builder>
-  <div class="footer-space"></div>
-</div>`
+  template: linterWorkaroundHtmlTemplate
 })
 export class AppComponent implements AfterViewInit {
   kernelStatus: Kernel.Status = 'unknown';
