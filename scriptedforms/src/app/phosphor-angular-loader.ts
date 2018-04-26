@@ -41,7 +41,7 @@ import {
  *
  *  ## The Phosphor Wrapper
  *
- *  Angular's default setup is to run the entire page. Usually there isn't anything
+ *  Angular's default setup is to be in control of the entire page. Usually there isn't anything
  *  around or 'above' Angular. In this case however the non-Angular application
  *  JupyterLab needs to be above it. This means that Angular's default browser
  *  bootstrapping cannot be used. Therefore
@@ -53,11 +53,11 @@ import {
  *
  *  And lastly, anytime JupyterLab does something which impacts the Angular app
  *  that change needs to be wrapped up within [ngZone](https://angular.io/api/core/NgZone)
- *  which kicks off Angular's all mighty change detection.
+ *  which kicks off Angular's brilliant change detection.
  *
  *  So that's what this file does. It creates an Angular Loader to bootstrap
  *  the Angular App, and then a Phosphor Widget is created which calls that loader
- *  while also providing a `run` function for the purpose of passing actions
+ *  while also providing a `run()` function for the purpose of passing actions
  *  into Angular's change detecting ngZone.
  */
 
