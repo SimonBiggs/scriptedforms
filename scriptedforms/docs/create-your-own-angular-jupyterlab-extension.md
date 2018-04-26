@@ -56,3 +56,7 @@ This bundle of primarily css, html, and js is what is given to JupyterLab.
 To see the specific JupyterLab build process have a look at the [package.json](../package.json)
 file. In particular the "build:jlab" script. Also note how within "files" the "html"
 extension has been included.
+
+Importantly within the package.json file the `html-loader` is listed as a dependency
+not a `devDependency`. That way JupyterLab will install the `html-loader` package when it is
+building your extension.
