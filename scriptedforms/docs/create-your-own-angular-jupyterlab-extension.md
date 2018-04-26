@@ -25,10 +25,25 @@ that file was derived from work done by the Jupyter team.
 
 The source code for the Angular portion of ScriptedForms is all contained within
 [src](../src). The key files which are unique to the JupyterLab Angular
-combination are listed below. Below the imports of each file a description is
-provided which is aimed at the readers of this document. Please click through
-each of the links below to read what each of the required files do and why they
-are needed.
+combination are listed below.
+
+Key parts of this guide are actually contained as descriptive text within these
+listed files. This descriptive text is below the package imports and looks something like:
+
+```typescript
+/*
+ *  # Create your own Angular JupyterLab extension (cont.)
+ *
+ *  This is part of the guide available at
+ *  <https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/docs/create-your-own-angular-jupyterlab-extension.md>
+ *
+ *  ...
+ *
+ */
+```
+
+Please click through each of the links below to read what each of the required
+files do and why they are needed.
 
 * [phosphor-angular-loader.ts](../src/app/phosphor-angular-loader.ts)
 * [app.component.ts](../src/app/app.component.ts)
