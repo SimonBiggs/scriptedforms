@@ -12,9 +12,7 @@ If you just want to use ScriptedForms head on over to <http://scriptedforms.com.
 This guide assumes that you are comfortable using Angular, and you are
 comfortable creating a basic JupyterLab extension.
 
-## Overview
-
-### Copying permissions
+## Copying permissions
 
 ScriptedForms itself is licensed under the AGPLv3.0+ license with additional terms.
 However, so that you can make your own Angular JupyterLab extensions, and not
@@ -23,7 +21,7 @@ in a bare bones fashion have been licensed either under the Apache 2.0+ or the
 BSD. The choice of which license the file is under depends on whether or not
 that file was derived from work done by the Jupyter team.
 
-### Files specific to an Angular JupyterLab extension
+## Files specific to an Angular JupyterLab extension
 
 The source code for the Angular portion of ScriptedForms is all contained within
 [src](../src). The key files which are unique to the JupyterLab Angular
