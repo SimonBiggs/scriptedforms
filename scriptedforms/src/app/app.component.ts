@@ -16,7 +16,8 @@
 
 
 import {
-  Component, ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef
+  Component, ViewChild, AfterViewInit, ElementRef,
+  // ChangeDetectorRef
 } from '@angular/core';
 
 import {
@@ -97,7 +98,7 @@ export class AppComponent implements AfterViewInit {
     private myInitialisationService: InitialisationService,
     private myKernelSevice: KernelService,
     private myVariableService: VariableService,
-    private myChangeDetectorRef: ChangeDetectorRef
+    // private myChangeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {
@@ -139,25 +140,25 @@ export class AppComponent implements AfterViewInit {
     this.myFormService.formStatus.subscribe(status => {
       console.log('form: ' + status);
       this.formStatus = status;
-      this.myChangeDetectorRef.detectChanges();
+      // this.myChangeDetectorRef.detectChanges();
     });
 
     this.myVariableService.variableStatus.subscribe(status => {
       console.log('variable: ' + status);
       this.variableStatus = status;
-      this.myChangeDetectorRef.detectChanges();
+      // this.myChangeDetectorRef.detectChanges();
     });
 
     this.myKernelSevice.kernelStatus.subscribe(status => {
       console.log('kernel: ' + status);
       this.kernelStatus = status;
-      this.myChangeDetectorRef.detectChanges();
+      // this.myChangeDetectorRef.detectChanges();
     });
 
     this.myKernelSevice.queueLength.subscribe(length => {
       console.log('queue-length: ' + length);
       this.queueLength = length;
-      this.myChangeDetectorRef.detectChanges();
+      // this.myChangeDetectorRef.detectChanges();
     });
   }
 
