@@ -136,7 +136,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   }
 
   .scripted-form-widget .floating-spinner {
-    position: fixed !important;
+    position: fixed;
     bottom: 20px;
     right: 40px;
   }
@@ -146,6 +146,6 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   }
 
   .scripted-form-widget .custom-toolbar {
-    min-height: 45px !important;
+    min-height: 45px;
   }
 }

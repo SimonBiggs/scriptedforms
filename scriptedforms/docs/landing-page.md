@@ -1,8 +1,5 @@
 <!-- markdownlint-disable MD033 MD041 MD002 -->
 
-{% extends "docs-base.md" %}
-{% block content %}
-
 # Live documentation
 
 There isn't any docs here yet.
@@ -31,5 +28,3 @@ for filepath in filepaths:
 ```
 
 </section-filechange>
-
-{% endblock %}
