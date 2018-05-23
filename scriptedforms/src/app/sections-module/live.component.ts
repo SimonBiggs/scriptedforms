@@ -52,6 +52,8 @@ import { VariableTableComponent } from '../variables-module/variable-table.compo
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
+import { VariableFileComponent } from '../variables-module/variable-file.component';
+
 import { CodeComponent } from '../code-module/code.component';
 
 import { VariableComponent } from '../types/variable-component';
@@ -78,6 +80,8 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
   @ContentChildren(StringComponent) stringComponents: QueryList<StringComponent>;
   @ContentChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
 
+  @ContentChildren(VariableFileComponent) variableFileComponents: QueryList<VariableFileComponent>;
+
   @ContentChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
   ngAfterViewInit() {
@@ -93,6 +97,8 @@ export class LiveComponent extends SectionBaseComponent implements AfterViewInit
 
     this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
     this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
+
+    this.variableComponents = this.variableComponents.concat(this.variableFileComponents.toArray());
   }
 
   subscribe() {

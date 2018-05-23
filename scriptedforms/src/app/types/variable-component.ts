@@ -35,6 +35,8 @@ import { VariableTableComponent } from '../variables-module/variable-table.compo
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
+import { VariableFileComponent } from '../variables-module/variable-file.component';
+
 export type VariableComponent = (
   NumberComponent | StringComponent | VariableTableComponent | TickComponent |
-  ToggleComponent | SliderComponent | DropdownComponent | ConditionalComponent);
+  ToggleComponent | SliderComponent | DropdownComponent | ConditionalComponent | VariableFileComponent);

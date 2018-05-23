@@ -77,6 +77,8 @@ import { VariableTableComponent } from '../variables-module/variable-table.compo
 import { StringComponent } from '../variables-module/string.component';
 import { DropdownComponent } from '../variables-module/dropdown.component';
 
+import { VariableFileComponent } from '../variables-module/variable-file.component';
+
 import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
 
@@ -131,6 +133,8 @@ function createFormComponentFactory(
     @ViewChildren(StringComponent) stringComponents: QueryList<StringComponent>;
     @ViewChildren(DropdownComponent) dropdownComponents: QueryList<DropdownComponent>;
 
+    @ViewChildren(VariableFileComponent) variableFileComponents: QueryList<VariableFileComponent>;
+
     // Code
     @ViewChildren(CodeComponent) codeComponents: QueryList<CodeComponent>;
 
@@ -173,6 +177,8 @@ function createFormComponentFactory(
           this.variableComponents = this.variableComponents.concat([dropdownComponent.variableParameterComponent]);
         }
       });
+
+      this.variableComponents = this.variableComponents.concat(this.variableFileComponents.toArray());
 
       this.sectionComponents = this.sectionComponents.concat(this.startComponents.toArray());
       this.sectionComponents = this.sectionComponents.concat(this.liveComponents.toArray());

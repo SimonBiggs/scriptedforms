@@ -50,6 +50,8 @@ import { StringComponent } from './string.component';
 import { DropdownComponent } from './dropdown.component';
 import { VariableParameterComponent } from './variable-parameter.component';
 
+import { VariableFileComponent } from './variable-file.component';
+
 
 @NgModule({
   imports: [
@@ -68,7 +70,8 @@ import { VariableParameterComponent } from './variable-parameter.component';
     VariableTableComponent,
     StringComponent,
     DropdownComponent,
-    VariableParameterComponent
+    VariableParameterComponent,
+    VariableFileComponent
   ],
   exports: [
     ToggleComponent,
@@ -79,7 +82,8 @@ import { VariableParameterComponent } from './variable-parameter.component';
     VariableTableComponent,
     StringComponent,
     DropdownComponent,
-    VariableParameterComponent
+    VariableParameterComponent,
+    VariableFileComponent
   ]
 })
 export class VariablesModule { }

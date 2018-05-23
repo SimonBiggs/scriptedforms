@@ -51,7 +51,7 @@ setup(
     license='AGPL-3.0+',
     python_requires='>=3.5',
     install_requires=[
-        'notebook >= 5.3',
+        'notebook >= 5.5',
         'numpy',
         'pandas',
         'watchdog',

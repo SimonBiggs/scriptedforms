@@ -25,7 +25,44 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { PandasTable } from '../interfaces/pandas-table';
-import { Slider } from '../interfaces/slider';
+import { VariableBaseComponent } from './variable-base.component';
 
-export type VariableValue = boolean | string | number | PandasTable | Slider | string[] | number[];
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+
+import * as htmlTemplate from 'html-loader!./variable-file.component.html';
+const template = '' + htmlTemplate;
+
+@Component({
+  selector: 'variable-file',
+  template: template
+})
+export class VariableFileComponent extends VariableBaseComponent implements OnInit, AfterViewInit {
+  variableValue: number[];
+  reader = new FileReader();
+
+  ngOnInit() {
+    this.reader.onload = () => this.onFileLoaded();
+  }
+
+  fileChanged(event: any) {
+    const file = event.target.files[0];
+    this.reader.readAsArrayBuffer(file);
+  }
+
+  onFileLoaded() {
+    const fileArray = new Int8Array(this.reader.result);
+    // const encoded = String.fromCharCode.apply(null, fileArray);
+    // const b64encoded = btoa(this.decoder.decode(fileArray));
+    this.variableValue = Array.from(fileArray);
+    console.log(this.variableValue);
+    this.variableChanged();
+  }
+
+  pythonValueReference() {
+    return `bytes(json.loads(r'${JSON.stringify(this.variableValue)}'))`;
+  }
+
+  pythonVariableEvaluate() {
+    return `int.from_bytes(${this.variableName}, byteorder='little', signed=False)`;
+  }
+}
