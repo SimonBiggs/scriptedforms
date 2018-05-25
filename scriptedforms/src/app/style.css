@@ -40,6 +40,15 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   float: right;
 }
 
+.hidden-iframe {
+  width: 0;
+  height: 0;
+  border: 0;
+  border: none;
+  position: absolute;
+  visibility: 0;
+}
+
 @media print {
   body, article {
     width: 100% !important;
@@ -60,7 +69,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     width: 20cm !important;
     padding: 0 5mm !important;
   }
-  
+
   .margin {
     margin: 0 0 !important;
   }
@@ -84,7 +93,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   ul, img, .avoid-page-break {
     page-break-inside: avoid;
   }
-  
+
   @page {
     margin: 2cm;
   }
@@ -106,7 +115,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     background: white;
   }
 
-  .scripted-form-widget .margin { 
+  .scripted-form-widget .margin {
     margin: 20px;
   }
 
@@ -114,7 +123,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     max-width: 940px;
     margin: 0 auto;
   }
-  
+
   .scripted-form-widget {
     flex: 1 1 auto;
     margin: 0;
