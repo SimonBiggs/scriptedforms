@@ -24,6 +24,8 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
+import './public-path';
+
 const CONFIG_DIV = document.getElementById('scriptedforms-config-data');
 if (CONFIG_DIV) {
   document.body.classList.add('fullscreen-body');
@@ -31,8 +33,9 @@ if (CONFIG_DIV) {
 
 import './polyfills';
 
-import './vendors/jupyterlab-styles';
-import './vendors/angular-styles';
+import './vendors/jupyterlab';
+import './vendors/angular';
+import './vendors/misc';
 
 import 'hammerjs';
 

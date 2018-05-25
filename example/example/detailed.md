@@ -2,9 +2,17 @@
 
 # A Demo Form
 
-## Description
+This is a detailed example demonstrating the usage of ScriptedForms.
 
-This is a detailed example demonstrating the usage of scriptedforms.
+To have this document help you the most ideally you should have it open both as
+a ScriptedForm and as a plain text document. If you open the document itself
+in a plain text editor (such as [Visual Studio Code](https://code.visualstudio.com/))
+then within the same directory as this document run `scriptedforms detailed.md`
+within a terminal you will be able to see the resulting form, and the syntax
+that produces it. You will also be able to edit the file and see the changes
+live within the ScriptedForm.
+
+## Description
 
 This file format is based upon markdown. There are however a few
 extra custom html elements. The custom html elements come in two
@@ -114,7 +122,7 @@ As can be seen from this code there are already a few namespaces included by
 default within the Python session. Some of these are for convenience, some are
 required for the proper running of the form. The code that is run at boot of
 a new form kernel can be found within the
-[source code](https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/src/services/session-start-code.ts).
+[source code](https://github.com/SimonBiggs/scriptedforms/blob/master/scriptedforms/src/app/form-builder-module/session-start-code.ts).
 
 ### Live sections and demo of each of the variable types
 
@@ -234,6 +242,8 @@ if bye:
 
 if hello and world:
     display(Markdown('Hello World!'))
+else:
+    display(Markdown(''))
 ```
 
 <variable-toggle>bye</variable-toggle>

@@ -53,6 +53,7 @@ export class FileService {
     this._context.pathChanged.connect(this.setPathFromContext, this);
   }
 
+  baseUrl = this.getApplicationBaseUrl();
   renderComplete: PromiseDelegate<void>;
 
   constructor(
@@ -61,6 +62,16 @@ export class FileService {
     private myKernelService: KernelService,
     private myVariableService: VariableService,
   ) { }
+
+  getApplicationBaseUrl() {
+    const jupyterBaseUrl = JSON.parse(document.getElementById('jupyter-config-data').textContent).baseUrl;
+    const application = JSON.parse(document.getElementById('scriptedforms-config-data').textContent).applicationToRun;
+
+    const baseUrl = `${window.location.protocol}//${window.location.host}${jupyterBaseUrl}scriptedforms/${application}/`;
+    console.log(baseUrl);
+
+    return baseUrl;
+  }
 
   setNode(node: HTMLElement) {
     this.node = node;
@@ -119,8 +130,7 @@ export class FileService {
   }
 
   urlToFilePath(url: string) {
-    const baseUrl = document.getElementsByTagName('base')[0].href;
-    const pattern = RegExp(`^${escapeRegExp(baseUrl)}(.*\.(md|yaml))`);
+    const pattern = RegExp(`^${escapeRegExp(this.baseUrl)}(.*\\.(md|yaml))`);
     const match = pattern.exec(url);
     if (match !== null) {
       return decodeURIComponent(match[1]);

@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <base href="{{base_url}}scriptedforms/{{application_to_run}}/">
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
@@ -17,13 +16,14 @@
     </script>
     <script id='scriptedforms-config-data' type="application/json">
       {
-        "applicationToRun": "{{application_to_run}}"
+        "applicationToRun": "{{application_to_run}}",
+        "publicPath": "{{base_url}}scriptedforms/static/"
       }
     </script>
     <script src="{{base_url}}scriptedforms/static/polyfills.js"></script>
     <script src="{{base_url}}scriptedforms/static/angular.js"></script>
     <script src="{{base_url}}scriptedforms/static/jupyterlab.js"></script>
-    <script src="{{base_url}}scriptedforms/static/misc-vendors.js"></script>
+    <script src="{{base_url}}scriptedforms/static/misc.js"></script>
     <script src="{{base_url}}scriptedforms/static/scriptedforms.js"></script>
     {% if application_to_run == 'docs' %}
     <doc-root></doc-root>

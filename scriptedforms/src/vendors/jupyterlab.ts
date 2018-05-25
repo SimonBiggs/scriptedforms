@@ -1,3 +1,5 @@
+import '../public-path';
+
 import '@jupyterlab/codemirror';
 import '@jupyterlab/docregistry';
 import '@jupyterlab/outputarea';

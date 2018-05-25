@@ -1,3 +1,5 @@
+import '../public-path';
+
 import '@angular/animations';
 import '@angular/cdk';
 import '@angular/common';

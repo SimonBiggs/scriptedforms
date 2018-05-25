@@ -21,14 +21,6 @@ import {
 } from '@angular/core';
 
 import {
-  nbformat
-} from '@jupyterlab/coreutils';
-import {
-  RenderMimeRegistry, standardRendererFactories as initialFactories
-} from '@jupyterlab/rendermime';
-import { OutputArea, OutputAreaModel } from '@jupyterlab/outputarea';
-
-import {
   Kernel
 } from '@jupyterlab/services';
 
@@ -103,39 +95,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.myFormService.formBuilderComponent = this.formBuilderComponent;
-
-    const rendermime = new RenderMimeRegistry({ initialFactories });
-
-    this.myKernelSevice.jupyterError.subscribe(msg => {
-      if (msg !== null) {
-        const msgType = msg.header.msg_type;
-        const model = new OutputAreaModel();
-        const output = msg.content as nbformat.IOutput;
-        output.output_type = msgType as nbformat.OutputType;
-        model.add(output);
-
-        const outputArea = new OutputArea({ model, rendermime });
-
-        const errorDiv: HTMLDivElement = this.jupyterErrorMsg.nativeElement;
-
-        const errorHeading = document.createElement('h2');
-        errorHeading.innerText = 'Python Error:';
-        const errorParagraph = document.createElement('p');
-        errorParagraph.innerText = (
-          'A Python error has occured. This could be due to an error within ' +
-          'your ScriptedForms template or an issue with ScriptedForms itself.'
-        );
-        const errorParagraphAfter = document.createElement('p');
-        errorParagraphAfter.innerText = (
-          'This error message will not go away until after a page refresh.'
-        );
-
-        errorDiv.appendChild(errorHeading);
-        errorDiv.appendChild(errorParagraph);
-        errorDiv.appendChild(outputArea.node);
-        errorDiv.appendChild(errorParagraphAfter);
-      }
-    });
 
     this.myFormService.formStatus.subscribe(status => {
       console.log('form: ' + status);
