@@ -24,7 +24,7 @@
 // You should have received a copy of the Apache-2.0 along with this
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 

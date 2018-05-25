@@ -32,7 +32,7 @@ at a time and in a well defined order. This queue also handles dropping repeat
 requests if the kernel is busy.
 */
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 

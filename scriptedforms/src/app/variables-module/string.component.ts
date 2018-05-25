@@ -36,7 +36,7 @@ import {
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
 </span>
-<mat-input-container class="variableString" *ngIf="variableName">
+<mat-form-field class="variableString" *ngIf="variableName">
   <mat-label>{{labelValue}}</mat-label>
   <textarea
   [required]="required"
@@ -48,7 +48,7 @@ import {
   (blur)="onBlur()"
   (focus)="onFocus()"
   type="text" class="variableString"></textarea>
-</mat-input-container>`,
+</mat-form-field>`,
 styles: [
   `.variableString {
   width: 100%;

@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { IFormComponent } from '../form-builder-module/create-form-component-factory';
 import { FormBuilderComponent } from '../form-builder-module/form-builder.component';

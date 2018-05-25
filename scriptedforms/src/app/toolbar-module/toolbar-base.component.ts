@@ -35,7 +35,7 @@ this section will be iteratively run. The button is set to call the runCode
 function on click.
 */
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import {
   ComponentFactoryResolver, AfterViewInit, ComponentFactory, ViewChild,

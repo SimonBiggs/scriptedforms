@@ -30,8 +30,7 @@ This will eventually be how the variables are saved.
 Not yet implemented.
 */
 
-import { Subscription } from 'rxjs/Subscription';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription ,  BehaviorSubject } from 'rxjs';
 
 // import { Slot } from '@phosphor/signaling';
 import { PromiseDelegate } from '@phosphor/coreutils';

@@ -25,7 +25,7 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import {
   Component, OnDestroy, Input, AfterViewInit,

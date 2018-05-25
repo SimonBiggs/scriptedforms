@@ -38,7 +38,7 @@ import {
   <ng-content></ng-content>
 </span>
 
-<mat-input-container class="variableNumber" *ngIf="variableName" >
+<mat-form-field class="variableNumber" *ngIf="variableName" >
   <mat-label>{{labelValue}}</mat-label>
   <input
   [required]="required"
@@ -53,7 +53,7 @@ import {
   [min]="min"
   [step]="step"
   type="number">
-</mat-input-container>
+</mat-form-field>
 <div class="jp-RenderedText" *ngIf="usedSeparator">
   <pre>
     <span class="ansi-red-fg">

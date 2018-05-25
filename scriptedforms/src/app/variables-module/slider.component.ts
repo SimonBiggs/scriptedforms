@@ -50,7 +50,7 @@ import { NumberBaseComponent } from './number-base.component';
   [max]="max"
   [min]="min"
   [step]="step"
-  [thumb-label]="true">
+  [thumbLabel]="true">
   </mat-slider>
 </span>
 <div class="jp-RenderedText" *ngIf="usedSeparator">

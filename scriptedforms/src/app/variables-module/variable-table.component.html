@@ -57,7 +57,7 @@
         <ng-container *ngIf="column != variableValue.schema.primaryKey && !isOutput">
           <ng-container *ngIf="definedInputTypes[column] === undefined">
             
-            <mat-input-container *ngIf="types[i] !== 'boolean'">
+            <mat-form-field *ngIf="types[i] !== 'boolean'">
               <input
                 [required]="required"
                 matInput
@@ -68,7 +68,7 @@
                 (ngModelChange)="dataChanged()"
                 (keyup)="dataChanged()"
                 type="string">
-            </mat-input-container>
+            </mat-form-field>
 
             <mat-checkbox *ngIf="types[i] === 'boolean'" class="no-ripple-height"
               [(ngModel)]="row[column]"
@@ -82,7 +82,7 @@
           <ng-container *ngIf="definedInputTypes[column] !== undefined">
             <ng-container *ngIf="definedInputTypes[column] === 'string'">
 
-              <mat-input-container>
+              <mat-form-field>
                 <input
                   matInput
                   (blur)="onBlur([j, column])"
@@ -92,13 +92,13 @@
                   (ngModelChange)="dataChanged()"
                   (keyup)="dataChanged()"
                   type="string">
-              </mat-input-container>
+              </mat-form-field>
 
             </ng-container>
 
             <ng-container *ngIf="definedInputTypes[column] === 'number'">
 
-                <mat-input-container>
+                <mat-form-field>
                   <input
                     matInput
                     (blur)="onBlur([j, column])"
@@ -108,7 +108,7 @@
                     (ngModelChange)="dataChanged()"
                     (keyup)="dataChanged()"
                     type="number">
-                </mat-input-container>
+                </mat-form-field>
 
             </ng-container>
 

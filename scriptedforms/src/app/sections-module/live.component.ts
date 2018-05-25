@@ -35,7 +35,7 @@ within this section will be iteratively run. Changes on each contained
 variable component are subscribed to and `variableChanged` function is called.
 */
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { Component, ContentChildren, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
 
