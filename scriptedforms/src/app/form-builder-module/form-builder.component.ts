@@ -49,13 +49,20 @@ import { createFormComponentFactory, IFormComponent } from './create-form-compon
 
 @Component({
   selector: 'app-form-builder',
-  template: `<div class="form-contents"><ng-content></ng-content><div #errorbox class="errorbox"></div><div #container></div></div>`
+  template: `
+<div class="form-contents"><ng-content></ng-content>
+  <div #errorbox class="errorbox"></div>
+  <div #container></div>
+</div>
+<iframe #usageStatistics class="hidden-iframe"></iframe>
+`
 })
 export class FormBuilderComponent implements OnInit, AfterViewInit {
   myMarkdownIt: MarkdownIt.MarkdownIt;
   viewInitialised = new PromiseDelegate<void>();
 
-  @ViewChild('errorbox') errorbox: ElementRef;
+  @ViewChild('errorbox') errorbox: ElementRef<HTMLDivElement>;
+  @ViewChild('usageStatistics') usageStatistics: ElementRef<HTMLIFrameElement>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -83,6 +90,18 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     this.viewInitialised.resolve(null);
   }
 
+  // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+  private _setUsageStatistics(string: string) {
+    if (string) {
+      crypto.subtle.digest('SHA-256', Buffer.from(string)).then((hash) => {
+        const intArrayHash = new Uint8Array(hash);
+        const base64String = btoa(String.fromCharCode.apply(null, intArrayHash));
+        const uriEncoded = encodeURIComponent(base64String);
+        this.usageStatistics.nativeElement.src = `http://scriptedforms.com.au/usage?hash=${uriEncoded}`;
+      });
+    }
+  }
+
   /**
    * Set or update the template of the form.
    *
@@ -90,6 +109,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
    * has sufficiently initialised.
    */
   public buildForm(markdownTemplate: string): Promise<IFormComponent> {
+    this._setUsageStatistics(markdownTemplate);
     return this.viewInitialised.promise.then(() => {
       const convertedTemplate = this.convertTemplate(markdownTemplate);
       const htmlTemplate = convertedTemplate['htmlTemplate'];
