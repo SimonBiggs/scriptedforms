@@ -96,8 +96,8 @@ omega = np.ones(2)
 
 Angular frequencies ($\omega$):
 
-<variable-slider name="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
-<variable-slider name="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
+<variable-slider label="$\omega [0]$" min="0" max="6" step="0.1">omega[0]</variable-slider>
+<variable-slider label="$\omega [1]$" min="0" max="6" step="0.1">omega[1]</variable-slider>
 
 ```python
 plt.figure(figsize=(5*1.618,5))
