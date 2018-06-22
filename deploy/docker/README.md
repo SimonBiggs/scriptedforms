@@ -17,3 +17,43 @@ documentation + examples will also be the focus of the selenium tests.
 If you want to run this on a computer that has a public IP then you should
 (as in MUST) **secure it with ssl** by adding ssl options to the docker
 configuration for nginx.
+
+## Usage
+
+### Prep
+
+You will need docker and docker-compose:
+
+* [Docker](https://docs.docker.com/install/)
+* docker-compose -- `pip install docker-compose`
+
+For Linux you will need to set up docker to be able to managed as a non-root
+user:
+
+> https://docs.docker.com/install/linux/linux-postinstall/
+
+
+### Building
+
+Building is as simple as running the following in this directory
+
+```bash
+docker-compose build
+```
+
+### Running
+
+To start the server call the following in this directory:
+
+```bash
+docker-compose up
+```
+
+To run as a daemon that will automatically boot when your computer turns on
+run the following:
+
+```bash
+docker-compose up -d
+```
+
+You will be able to access the server by typing `localhost` within a browser.
