@@ -7,7 +7,7 @@ provided as a [JupyterLab extension](http://jupyterlab.readthedocs.io/en/stable/
 If you would like to use the above tools to create your own JupyterLab extension
 this document is for you. If you just want to make your own JupyterLab extension
 you should instead be reading the [xkcd extension tutorial](http://jupyterlab.readthedocs.io/en/stable/developer/xkcd_extension_tutorial.html).
-If you just want to use ScriptedForms head on over to <http://scriptedforms.com.au>.
+If you just want to use ScriptedForms head on over to <https://scriptedforms.com.au>.
 
 This guide assumes that you are comfortable using Angular, and you are
 comfortable creating a basic JupyterLab extension.

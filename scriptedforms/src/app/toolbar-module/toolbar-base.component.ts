@@ -85,7 +85,7 @@ export class ToolbarBaseComponent implements AfterViewInit {
     this.addButton({
       icon: 'chrome_reader_mode',
       // href: '../docs',  // Only change this link once the docs are ready
-      href: 'http://scriptedforms.com.au',
+      href: 'https://scriptedforms.com.au',
       tooltip: 'ScriptedForms documentation, installation instructions, and source code.'
     });
     this.addButton({

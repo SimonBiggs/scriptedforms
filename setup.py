@@ -59,6 +59,6 @@ setup(
         'jupyterlab >= 0.32.0'
     ],
     classifiers=[],
-    url="http://scriptedforms.com.au",
+    url="https://scriptedforms.com.au",
     include_package_data=True
 )

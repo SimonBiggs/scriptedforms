@@ -54,7 +54,7 @@ import { createFormComponentFactory, IFormComponent } from './create-form-compon
   <div #errorbox class="errorbox"></div>
   <div #container></div>
 </div>
-<iframe #usageStatistics class="hidden-iframe"></iframe>
+<iframe #telemetry class="hidden-iframe"></iframe>
 `
 })
 export class FormBuilderComponent implements OnInit, AfterViewInit {
@@ -62,7 +62,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
   viewInitialised = new PromiseDelegate<void>();
 
   @ViewChild('errorbox') errorbox: ElementRef<HTMLDivElement>;
-  @ViewChild('usageStatistics') usageStatistics: ElementRef<HTMLIFrameElement>;
+  @ViewChild('telemetry') telemetry: ElementRef<HTMLIFrameElement>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
@@ -97,7 +97,7 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
         const intArrayHash = new Uint8Array(hash);
         const base64String = btoa(String.fromCharCode.apply(null, intArrayHash));
         const uriEncoded = encodeURIComponent(base64String);
-        this.usageStatistics.nativeElement.src = `http://scriptedforms.com.au/usage?hash=${uriEncoded}`;
+        this.telemetry.nativeElement.src = `https://scriptedforms.com.au/telemetry?hash=${uriEncoded}`;
       });
     }
   }
