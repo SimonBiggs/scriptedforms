@@ -56,3 +56,20 @@ docker-compose up -d
 ```
 
 You will be able to access the server by typing `localhost` within a browser.
+
+### Shutdown the server
+
+To shutdown the server run:
+
+```bash
+docker-compose stop
+```
+
+### Delete all docker data
+
+If for some reason you need it, the following command will delete all docker
+data from all docker projects (WARNING, IRREVERSABLE):
+
+```bash
+docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && echo 'y' | docker volume prune
+```
