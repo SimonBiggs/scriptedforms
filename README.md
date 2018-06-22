@@ -12,6 +12,10 @@ to understand.
 * Just write in markdown + variables / UI types
 * Based on Jupyter
 
+## Development stage
+
+This is currently in alpha stage development. Expect bugs, expect the experience to be rough around he edges at times. There are still significant changes in store for this library before it is ready to be classified as beta. However, I do encourage you to take it for a spin and journey with me, influencing what this will become.
+
 ## Quick start
 
 If you are on Windows and don't have a version of Python you might want to try
