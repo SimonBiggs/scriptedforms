@@ -18,7 +18,7 @@ This is currently in alpha stage development. Expect bugs, expect the experience
 
 ## Quick start
 
-To use ScriptedForms you will need Python (>=3.5) on your computer. A platform independent way to install Python is to [download and install the Anaconda distribution](https://www.anaconda.com/download).
+To use ScriptedForms you will need Python (>=3.5) on your computer. A platform independent way to install Python is to [download and install the Anaconda Python distribution](https://www.anaconda.com/download).
 
 Once you have Python on your computer installing
 ScriptedForms is as simple as typing the following into a terminal (or command prompt):
