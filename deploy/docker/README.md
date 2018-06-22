@@ -32,7 +32,6 @@ user:
 
 > https://docs.docker.com/install/linux/linux-postinstall/
 
-
 ### Building
 
 Building is as simple as running the following in this directory
