@@ -30,7 +30,7 @@ You will need docker and docker-compose:
 For Linux you will need to set up docker to be able to managed as a non-root
 user:
 
-> https://docs.docker.com/install/linux/linux-postinstall/
+> <https://docs.docker.com/install/linux/linux-postinstall/>
 
 ### Building
 
