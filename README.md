@@ -18,10 +18,9 @@ This is currently in alpha stage development. Expect bugs, expect the experience
 
 ## Quick start
 
-If you are on Windows and don't have a version of Python you might want to try
-ScriptedFormsPortable. Download ScriptedFormsPortable from <https://github.com/SimonBiggs/scriptedforms/releases/latest>
+To use ScriptedForms you will need Python (>=3.5) on your computer. A platform independent way to install Python is to [download and install the Anaconda Python distribution](https://www.anaconda.com/download).
 
-However, as long as you have Python (>=3.5) on your computer installing
+Once you have Python on your computer installing
 ScriptedForms is as simple as typing the following into a terminal (or command prompt):
 
 ```bash
