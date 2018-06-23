@@ -86,7 +86,7 @@ ScriptedForm):
 Using the slider and live sections combined with matplotlib plots you can
 produce utilities like the following:
 
-<section-start>
+<section-start >
 
 ```python
 t = np.linspace(-2*np.pi, 2*np.pi, 500)
