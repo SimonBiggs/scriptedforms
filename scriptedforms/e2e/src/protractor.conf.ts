@@ -17,7 +17,6 @@ if (process.env.SAUCE_USERNAME) {
     'name': `ScriptedForms`,
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'tags': [process.env.TRAVIS_PYTHON_VERSION, 'CI'],
     'platform': process.env.PLATFORM
   };
   config.seleniumAddress = `http://${process.env.SAUCE_USERNAME}:${process.env.SAUCE_ACCESS_KEY}@localhost:4445/wd/hub`
