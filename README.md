@@ -2,8 +2,6 @@
 
 # Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/plotting-example.md)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
-
 Making GUIs easy for everyone on your team.
 
 The primary benefit is that front ends for Python code become easily accessible
@@ -13,6 +11,12 @@ to understand.
 * Quickly create live-update GUIs for Python packages using Markdown and a few custom HTML elements.
 * Just write in markdown + variables / UI types
 * Based on Jupyter
+
+## Compatibility matrix
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
 
 ## Development stage
 
