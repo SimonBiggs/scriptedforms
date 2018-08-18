@@ -10,14 +10,13 @@ let config: Config = {
 };
 
 if (process.env.SAUCE_USERNAME) {
-  config.sauceUser = process.env.SAUCE_USERNAME;
-  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
   config.capabilities = {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'platform': "Windows 10"
   };
+  config.seleniumAddress = `http://${process.env.SAUCE_USERNAME}:${process.env.SAUCE_ACCESS_KEY}@localhost:4445/wd/hub`
 } else {
   config.capabilities = {
     browserName: 'chrome'
