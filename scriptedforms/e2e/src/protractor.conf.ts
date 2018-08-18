@@ -20,7 +20,7 @@ if (process.env.SAUCE_USERNAME) {
     'tags': [process.env.TRAVIS_PYTHON_VERSION, 'CI'],
     'platform': process.env.PLATFORM
   };
-  // config.seleniumAddress = `http://${process.env.SAUCE_USERNAME}:${process.env.SAUCE_ACCESS_KEY}@localhost:4445/wd/hub`
+  config.seleniumAddress = `http://${process.env.SAUCE_USERNAME}:${process.env.SAUCE_ACCESS_KEY}@localhost:4445/wd/hub`
 } else {
   config.capabilities = {
     browserName: 'chrome'
