@@ -12,12 +12,6 @@ to understand.
 * Just write in markdown + variables / UI types
 * Based on Jupyter
 
-## Compatibility matrix
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
-
-Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
-
 ## Development stage
 
 This is currently in alpha stage development. Expect bugs, expect the experience to be rough around he edges at times. There are still significant changes in store for this library before it is ready to be classified as beta. However, I do encourage you to take it for a spin and journey with me, influencing what this will become.
@@ -148,6 +142,12 @@ see
 [detailed.form.md](https://raw.githubusercontent.com/SimonBiggs/scriptedforms/master/detailed.form.md).
 Try writing some of the contents of that file into a ScriptedForm to see how
 they work.
+
+## Compatibility matrix
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
 
 ## Security notice
 

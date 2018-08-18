@@ -1,4 +1,4 @@
-import { Config } from 'protractor';
+import { Config, browser } from 'protractor';
 
 let config: Config = {
   framework: 'jasmine',
@@ -12,11 +12,14 @@ let config: Config = {
 if (process.env.SAUCE_USERNAME) {
   config.capabilities = {
     'browserName': 'chrome',
+    'name': `ScriptedForms`,
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'platform': "Windows 10"
   };
   config.seleniumAddress = `http://${process.env.SAUCE_USERNAME}:${process.env.SAUCE_ACCESS_KEY}@localhost:4445/wd/hub`
+
+  process.env.SELENIUM_SESSION_ID = browser.getSession()
 } else {
   config.capabilities = {
     browserName: 'chrome'
