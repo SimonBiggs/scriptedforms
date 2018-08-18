@@ -147,7 +147,7 @@ they work.
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
 
-Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
+Cross-browser Testing Platform and Open Source :hearts: Provided by [Sauce Labs](https://saucelabs.com)
 
 ## Security notice
 

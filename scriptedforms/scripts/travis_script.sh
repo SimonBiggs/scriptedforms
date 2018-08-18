@@ -16,20 +16,5 @@ if [[ $GROUP == e2e ]]; then
     yarn
     yarn selenium &
     yarn e2e
-
-    if [[ $SAUCE_USERNAME ]]; then
-        
-        if [[ $? ]]; then
-            SAUCE_API_PAYLOAD='{"passed": true}'
-        else
-            SAUCE_API_PAYLOAD='{"passed": false}'
-        fi
-
-        curl -X PUT \
-        -s -d $SAUCE_API_PAYLOAD \
-        -u $SAUCE_USERNAME:$SAUCE_ACCESS_KEY \
-        https://saucelabs.com/rest/v1/$SAUCE_USERNAME/jobs/$SELENIUM_SESSION_ID 
-    fi
-
     cd - 
 fi
