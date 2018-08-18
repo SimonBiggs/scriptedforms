@@ -21,7 +21,7 @@ env:
     - BROWSER="firefox"
       PLATFORM="Windows 7"
     - BROWSER="edge"
-      PLATFORM="Windows 7"
+      PLATFORM="Windows 10"
     - BROWSER="safari"
       PLATFORM="OS X 10.9"
     - BROWSER="firefox"
