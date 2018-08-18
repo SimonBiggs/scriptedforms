@@ -10,11 +10,8 @@ sh -e /etc/init.d/xvfb start || true
 export PATH="$MINICONDA_DIR/bin:$PATH"
 source activate test
 
-
-if [[ $GROUP == e2e ]]; then
-    cd "$(dirname "$0")"/../e2e
-    yarn
-    yarn selenium &
-    yarn e2e
-    cd - 
-fi
+cd "$(dirname "$0")"/../e2e
+yarn
+yarn selenium &
+yarn e2e
+cd - 

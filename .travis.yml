@@ -16,7 +16,10 @@ cache:
     - $HOME/.cache/pip
 env:
   matrix:
-    - GROUP=e2e
+    - BROWSER="chrome"
+      PLATFORM="Windows 7"
+    - BROWSER="firefox"
+      PLATFORM="Windows 7"
   global:
   - MINICONDA_DIR="$HOME/miniconda"
   - GH_REF: github.com/SimonBiggs/scriptedforms.git
