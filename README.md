@@ -143,11 +143,11 @@ see
 Try writing some of the contents of that file into a ScriptedForm to see how
 they work.
 
-## Compatibility matrix
+## Platform/browser testing matrix
+
+The following OS Browser combinations are explicitly tested using [Sauce Labs](https://saucelabs.com):
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ScriptedForms.svg)](https://saucelabs.com/u/ScriptedForms)
-
-Cross-browser Testing Platform and Open Source :hearts: Provided by [Sauce Labs](https://saucelabs.com)
 
 ## Security notice
 
