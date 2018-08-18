@@ -18,7 +18,6 @@ if (process.env.SAUCE_USERNAME) {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'platform': "Windows 10"
   };
-  config.seleniumAddress = `http://${config.sauceUser}:${config.sauceKey}@localhost:4445/wd/hub`
 } else {
   config.capabilities = {
     browserName: 'chrome'
