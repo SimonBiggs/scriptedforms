@@ -1,6 +1,6 @@
-import {Config} from 'protractor';
+import { Config } from 'protractor';
 
-export let config: Config = {
+let config: Config = {
   framework: 'jasmine',
   capabilities: {
     browserName: 'chrome'
@@ -13,3 +13,15 @@ export let config: Config = {
 
   noGlobals: false
 };
+
+if (process.env.TRAVIS) {
+  config.sauceUser = process.env.SAUCE_USERNAME;
+  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+  config.capabilities = {
+    'browserName': 'chrome',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER
+  };
+}
+
+export { config };
