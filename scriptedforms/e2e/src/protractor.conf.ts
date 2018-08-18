@@ -14,6 +14,7 @@ let config: Config = {
   noGlobals: false
 };
 
+
 if (process.env.TRAVIS) {
   config.sauceUser = process.env.SAUCE_USERNAME;
   config.sauceKey = process.env.SAUCE_ACCESS_KEY;
