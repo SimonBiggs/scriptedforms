@@ -17,21 +17,21 @@ cache:
 env:
   matrix:
     - BROWSER="chrome" PLATFORM="Windows 7"
-    - BROWSER="firefox" PLATFORM="Windows 7"
-    - BROWSER="edge" PLATFORM="Windows 10"
-    - BROWSER="safari" PLATFORM="OS X 10.9"
-    - BROWSER="chrome" PLATFORM="OS X 10.9"
-    - BROWSER="firefox" PLATFORM="Linux"
-    - BROWSER="chrome" PLATFORM="Linux"
+#     - BROWSER="firefox" PLATFORM="Windows 7"
+#     - BROWSER="edge" PLATFORM="Windows 10"
+#     - BROWSER="safari" PLATFORM="OS X 10.9"
+#     - BROWSER="chrome" PLATFORM="OS X 10.9"
+#     - BROWSER="firefox" PLATFORM="Linux"
+#     - BROWSER="chrome" PLATFORM="Linux"
   global:
   - MINICONDA_DIR="$HOME/miniconda"
   - GH_REF: github.com/SimonBiggs/scriptedforms.git
-matrix:
-  allow_failures:
-    - env: BROWSER="firefox" PLATFORM="Windows 7"
-    - env: BROWSER="edge" PLATFORM="Windows 10"
-    - env: BROWSER="safari" PLATFORM="OS X 10.9"
-    - env: BROWSER="firefox" PLATFORM="Linux"
+# matrix:
+#   allow_failures:
+#     - env: BROWSER="firefox" PLATFORM="Windows 7"
+#     - env: BROWSER="edge" PLATFORM="Windows 10"
+#     - env: BROWSER="safari" PLATFORM="OS X 10.9"
+#     - env: BROWSER="firefox" PLATFORM="Linux"
 install:
 - bash ./scriptedforms/scripts/travis_install.sh
 script:
