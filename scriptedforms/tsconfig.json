@@ -10,7 +10,7 @@
     "noUnusedLocals": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "outDir": "./jlab-build",
     "lib": [
       "es2017",
