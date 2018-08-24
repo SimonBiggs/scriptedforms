@@ -48,8 +48,8 @@ function jupyterSessionConnect(serviceManager: ServiceManager, path: string): Pr
 
   serviceManager.sessions.findByPath(path)
   .then(sessionModel => {
-    serviceManager.sessions.connectTo(sessionModel)
-    .then(session => promiseDelegate.resolve(session));
+    let session = serviceManager.sessions.connectTo(sessionModel)
+    promiseDelegate.resolve(session);
   })
   .catch(() => {
     connectToNewSession(serviceManager, path)

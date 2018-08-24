@@ -66,9 +66,8 @@ export class WatchdogService {
     };
 
     this.myJupyterService.serviceManager.sessions.findByPath(path).then(model => {
-      Session.connectTo(model, settings).then(session => {
-        this.watchdogFormUpdate(session);
-      });
+      let session = Session.connectTo(model, settings)
+      this.watchdogFormUpdate(session);
     }).catch(() => {
       Session.startNew(startNewOptions).then(session => {
         session.kernel.requestExecute({code: startWatchdogSessionCode});

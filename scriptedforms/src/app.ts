@@ -32,18 +32,17 @@ document.getElementsByTagName('head').item(0).appendChild(userStyle);
 
 import { Widget } from '@phosphor/widgets';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
-import { ScriptedFormsWidget } from './app/widget';
+import { createScriptedFormsWidget } from './app/widget';
 
 export function loadApp(): void {
   const serviceManager = new ServiceManager();
   const contentsManager = new ContentsManager();
 
-  const formWidget = new ScriptedFormsWidget({
+  const formWidget = createScriptedFormsWidget({
     serviceManager,
     contentsManager
   });
 
-  formWidget.form.initiliseScriptedForms();
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);
 }

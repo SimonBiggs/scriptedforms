@@ -31,6 +31,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { APP_BASE_HREF } from '@angular/common';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../vendors/material.module';
 
@@ -51,6 +53,20 @@ import { ToolbarModule } from './toolbar-module/toolbar.module';
 import { ToolbarButtonComponent } from './toolbar-module/toolbar-button.component';
 
 import { AppComponent } from './app.component';
+
+const SF_CONFIG = document.getElementById('scriptedforms-config-data');
+const JLAB_CONFIG = document.getElementById('jupyter-config-data');
+
+let config: {baseUrl: string};
+
+if (SF_CONFIG) {
+  config = JSON.parse(SF_CONFIG.textContent);
+} else {
+  config = JSON.parse(JLAB_CONFIG.textContent);
+}
+
+const baseUrl = config.baseUrl;
+
 
 @NgModule({
   declarations: [
@@ -74,7 +90,8 @@ import { AppComponent } from './app.component';
     JupyterService,
     InitialisationService,
     ToolbarService,
-    { provide: ErrorHandler, useClass: AppErrorHandler }
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    { provide: APP_BASE_HREF, useValue: baseUrl }
   ],
   exports: [
     AppComponent,

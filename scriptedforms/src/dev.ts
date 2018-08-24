@@ -71,9 +71,8 @@ function runDevModeWatchdog(serviceManager: ServiceManager) {
   };
 
   serviceManager.sessions.findByPath(path).then(model => {
-    Session.connectTo(model, settings).then(session => {
-      sessionReady.resolve(session);
-    });
+    let session = Session.connectTo(model, settings)
+    sessionReady.resolve(session);
   }).catch(() => {
     Session.startNew(startNewOptions).then(session => {
       session.kernel.requestExecute({code: watchdogDevModeCode});
