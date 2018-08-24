@@ -14,23 +14,12 @@
  *  limitations under the License.
  */
 
-import { Widget } from '@phosphor/widgets';
-// import { Signal, ISignal } from '@phosphor/signaling';
+import { BoxLayout, Widget } from '@phosphor/widgets';
+import { ServiceManager, ContentsManager } from '@jupyterlab/services';
+import { Toolbar } from '@jupyterlab/apputils';
 
-import {
-   ServiceManager, ContentsManager, 
-  //  Contents 
-} from '@jupyterlab/services';
-import {
-  Toolbar, 
-  // MainAreaWidget
-} from '@jupyterlab/apputils';
-// import { IModelDB } from '@jupyterlab/observables';
-
-import { 
-  DocumentRegistry, DocumentWidget,
-  // DocumentModel, Context 
-} from '@jupyterlab/docregistry';
+import { DocumentRegistry } from '@jupyterlab/docregistry';
+import { PathExt } from '@jupyterlab/coreutils';
 
 import { AngularWidget } from './phosphor-angular-loader';
 import { AppComponent } from './app.component';
@@ -49,14 +38,6 @@ import { IScriptedForms } from './services/initialisation.service';
  *  This is where the ScriptedForms AngularWrapperWidget is made. Note that the
  *  Angular Component functions are only ever called within the `run()` function.
  */
-
-// class DummySignal {
-//   get dummySignal(): ISignal<DocumentRegistry.IContext<DocumentRegistry.IModel>, DocumentRegistry.IModel> {
-//     return this._dummySignal;
-//   }
-//   private _dummySignal = new Signal<DocumentRegistry.IContext<DocumentRegistry.IModel>, DocumentRegistry.IModel>(null);
-// }
-
 
 export namespace IScriptedFormsWidget {
   export interface IOptions {
@@ -112,89 +93,52 @@ export class AngularWrapperWidget extends AngularWidget<
   }
 }
 
-// interface IScriptedFormsModel extends DocumentRegistry.IModel {
+export class ScriptedFormsWidget extends Widget {
+  _context: DocumentRegistry.Context;
+  content: AngularWrapperWidget;
+  toolbar: Toolbar
+  id: 'ScriptedForms';
 
-// }
+  constructor(options: IScriptedFormsWidget.IOptions) {
+    super();
+    if (options.context) {
+      this._context = options.context;
+      this.onPathChanged();
+      this._context.pathChanged.connect(this.onPathChanged, this);
+    }
+    this.addClass('scripted-form-widget');
 
-// class ScriptedFormsModelFactory implements DocumentRegistry.IModelFactory<IScriptedFormsModel> {
-//   private _disposed = false;
+    const layout = (this.layout = new BoxLayout());
+    const toolbar = new Toolbar();
+    this.toolbar = toolbar;
+    toolbar.addClass('jp-NotebookPanel-toolbar');
+    toolbar.addClass('custom-toolbar');
+    layout.addWidget(toolbar);
+    BoxLayout.setStretch(toolbar, 0);
 
-//   get name(): string {
-//     return 'scriptedform';
-//   }
+    const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
 
-//   get contentType(): Contents.ContentType {
-//     return 'file';
-//   }
+    this.content = new AngularWrapperWidget(angularWrapperWidgetOptions);
+    this.content.addClass('form-container');
 
-//   get fileFormat(): Contents.FileFormat {
-//     return 'text';
-//   }
-
-//   createNew(languagePreference?: string, modelDB?: IModelDB): IScriptedFormsModel {
-//     return new DocumentModel()
-//   }
-
-//   preferredLanguage(path: string): string {
-//     return 'python';
-//   }
-
-//   get isDisposed(): boolean {
-//     return this._disposed;
-//   }
-
-//   dispose(): void {
-//     this._disposed = true;
-//   }
-// }
-
-export function createScriptedFormsWidget(options: IScriptedFormsWidget.IOptions): DocumentWidget<AngularWrapperWidget> {
-  const toolbar = new Toolbar();
-  toolbar.addClass('jp-NotebookPanel-toolbar');
-  toolbar.addClass('custom-toolbar');
-
-  const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
-  let content = new AngularWrapperWidget(angularWrapperWidgetOptions);
-  content.addClass('form-container');
-
-  let reveal = content.componentReady.promise
-
-  // let context = options.context
-  // if (context === undefined) {
-  //   const dummySignal = new DummySignal();
-  //   context = {
-  //     ready: Promise.resolve(null),
-  //     pathChanged: dummySignal.dummySignal,
-  //     fileChanged: null,
-  //     saveState: null,
-  //     disposed: null,
-  //     model: null,
-  //     session: null,
-  //     path: null,
-  //     localPath: null,
-  //     contentsModel: null,
-  //     urlResolver: null,
-  //     isReady: true,
-  //     save: null,
-  //     saveAs: null,
-  //     revert: null,
-  //     createCheckpoint: null,
-  //     deleteCheckpoint: null,
-  //     restoreCheckpoint: null,
-  //     listCheckpoints: null,
-  //     addSibling: null,
-  //     isDisposed: false,
-  //     dispose: null
-  //   }
-  // }
-
-  const documentWidgetOptions = {
-    content, toolbar, reveal, context: options.context
+    layout.addWidget(this.content);
+    BoxLayout.setStretch(this.content, 1);
   }
 
-  const documentWidget = new DocumentWidget<AngularWrapperWidget>(documentWidgetOptions);
-  documentWidget.addClass('scripted-form-widget');
-  documentWidget.content.initiliseScriptedForms();
+  get revealed() {
+    return Promise.resolve();
+  }
 
-  return documentWidget
+  get context(): DocumentRegistry.Context {
+    return this._context;
+  }
+
+  onPathChanged(): void {
+    this.title.label = PathExt.basename(this._context.path);
+  }
+
+  dispose() {
+    this.content.dispose();
+    super.dispose();
+  }
 }

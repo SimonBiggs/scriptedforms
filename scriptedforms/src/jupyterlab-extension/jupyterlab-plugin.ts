@@ -1,14 +1,13 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-
 import { JupyterLab, JupyterLabPlugin, ILayoutRestorer } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/coreutils';
-import { ABCWidgetFactory, DocumentRegistry, DocumentWidget } from '@jupyterlab/docregistry';
+import { ABCWidgetFactory, DocumentRegistry } from '@jupyterlab/docregistry';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { InstanceTracker } from '@jupyterlab/apputils';
 
-import { createScriptedFormsWidget } from './../app/widget';
+import { ScriptedFormsWidget } from './../app/widget';
 
 
 /*
@@ -46,7 +45,7 @@ namespace IScriptedFormsWidgetFactory {
 }
 
 export
-class ScriptedFormsWidgetFactory extends ABCWidgetFactory<DocumentWidget, DocumentRegistry.IModel> {
+class ScriptedFormsWidgetFactory extends ABCWidgetFactory<ScriptedFormsWidget, DocumentRegistry.IModel> {
   serviceManager: ServiceManager;
   contentsManager: ContentsManager;
 
@@ -56,11 +55,15 @@ class ScriptedFormsWidgetFactory extends ABCWidgetFactory<DocumentWidget, Docume
     this.contentsManager = options.contentsManager;
   }
 
-  protected createNewWidget(context: DocumentRegistry.Context): DocumentWidget {
-    const formWidget = createScriptedFormsWidget({
+  protected createNewWidget(context: DocumentRegistry.Context): ScriptedFormsWidget {
+    const formWidget = new ScriptedFormsWidget({
       serviceManager: this.serviceManager,
       contentsManager: this.contentsManager,
       context: context
+    });
+
+    formWidget.context.ready.then(() => {
+      formWidget.content.initiliseScriptedForms();
     });
 
     return formWidget;
@@ -88,7 +91,7 @@ function activate(
   });
 
   app.docRegistry.addWidgetFactory(factory);
-  const tracker = new InstanceTracker<DocumentWidget>({
+  const tracker = new InstanceTracker<ScriptedFormsWidget>({
     namespace: '@simonbiggs/scriptedforms'
   });
 

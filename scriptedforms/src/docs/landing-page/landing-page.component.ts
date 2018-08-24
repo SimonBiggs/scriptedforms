@@ -3,7 +3,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Widget } from '@phosphor/widgets';
 
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
-import { createScriptedFormsWidget } from '../../app/widget';
+import { ScriptedFormsWidget } from '../../app/widget';
 
 import * as htmlTemplate from 'html-loader!./landing-page.component.html';
 const template = '' + htmlTemplate;
@@ -56,10 +56,12 @@ export class LandingPageComponent implements AfterViewInit {
     const serviceManager = new ServiceManager();
     const contentsManager = new ContentsManager();
 
-    const formWidget = createScriptedFormsWidget({
+    const formWidget = new ScriptedFormsWidget({
       serviceManager,
       contentsManager
     });
+
+    formWidget.content.initiliseScriptedForms();
 
     window.onresize = () => { formWidget.update(); };
     Widget.attach(formWidget, this.formWrapper.nativeElement);
