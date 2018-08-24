@@ -26,6 +26,7 @@
     "build": "rimraf lib && webpack --config webpack.dev.js",
     "build:prod": "rimraf lib && webpack --config webpack.prod.js",
     "build:jlab": "rimraf ./jlab-build && copyfiles -u 1 './src/**/*.{css,html,scss}' ./jlab-build && tsc && yarn package",
+    "watch:jlab": "tsc -w",
     "package": "rimraf simonbiggs-scriptedforms*.tgz && yarn pack",
     "selenium": "./scripts/selenium.sh",
     "test": "yarn --cwd ./e2e e2e",

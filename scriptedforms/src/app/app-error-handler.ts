@@ -40,19 +40,19 @@ import { ErrorHandler } from '@angular/core';
 export class AppErrorHandler extends ErrorHandler {
 
   handleError(error: any) {
-   const errorbox = document.getElementsByClassName('errorbox');
-   if (errorbox.length > 0) {
-    errorbox[0].innerHTML = `<h2>Javascript Error:</h2>
-<p>
-  A Javascript error has occured. This could be due to an error within your
-  ScriptedForms template or an issue with ScriptedForms itself.
-</p>
-<div class="jp-OutputArea-child">
-  <div class="jp-OutputPrompt"></div>
-  <div class="jp-RenderedText" data-mime-type="application/vnd.jupyter.stderr">
-    <pre style="white-space: pre-wrap;">
-  ` + error + '</pre></div></div>';
-   }
+//    const errorbox = document.getElementsByClassName('errorbox');
+//    if (errorbox.length > 0) {
+//     errorbox[0].innerHTML = `<h2>Javascript Error:</h2>
+// <p>
+//   A Javascript error has occured. This could be due to an error within your
+//   ScriptedForms template or an issue with ScriptedForms itself.
+// </p>
+// <div class="jp-OutputArea-child">
+//   <div class="jp-OutputPrompt"></div>
+//   <div class="jp-RenderedText" data-mime-type="application/vnd.jupyter.stderr">
+//     <pre style="white-space: pre-wrap;">
+//   ` + error + '</pre></div></div>';
+//    }
 
    // delegate to the default handler
    super.handleError(error);

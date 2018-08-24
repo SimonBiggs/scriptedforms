@@ -64,12 +64,20 @@ export class FileService {
   ) { }
 
   getApplicationBaseUrl() {
-    const jupyterBaseUrl = JSON.parse(document.getElementById('jupyter-config-data').textContent).baseUrl;
-    const application = JSON.parse(document.getElementById('scriptedforms-config-data').textContent).applicationToRun;
+    const SF_CONFIG = document.getElementById('scriptedforms-config-data');
+    const JLAB_CONFIG = document.getElementById('jupyter-config-data');
+    
+    let config: {baseUrl: string};
+    
+    if (SF_CONFIG) {
+      config = JSON.parse(SF_CONFIG.textContent);
+    } else {
+      config = JSON.parse(JLAB_CONFIG.textContent);
+    }
 
-    const baseUrl = `${window.location.protocol}//${window.location.host}${jupyterBaseUrl}scriptedforms/${application}/`;
-    console.log(baseUrl);
-
+    const baseUrl = `${window.location.protocol}//${window.location.host}${config.baseUrl}`;
+    // console.log(baseUrl);
+    
     return baseUrl;
   }
 

@@ -26,7 +26,7 @@ import {
 import {
   ApplicationRef, Type, Injector,
   ComponentFactoryResolver, ComponentRef, NgZone,
-  NgModuleRef
+  // NgModuleRef
 } from '@angular/core';
 
 import {
@@ -67,43 +67,57 @@ export class AngularLoader<M> {
   private componentFactoryResolver: ComponentFactoryResolver;
   ngZone: NgZone;
   private injector: Injector;
+  loaderReady = new PromiseDelegate<void>();
 
-  constructor( ngModuleRef: NgModuleRef<M>) {
-    this.injector = ngModuleRef.injector;
-    this.applicationRef = this.injector.get(ApplicationRef);
-    this.ngZone = this.injector.get(NgZone);
-    this.componentFactoryResolver = this.injector.get(ComponentFactoryResolver);
+  constructor(ngModule: Type<M>) {
+    platformBrowserDynamic().bootstrapModule(ngModule)
+    .then(ngModuleRef => {
+      this.injector = ngModuleRef.injector;
+      this.applicationRef = this.injector.get(ApplicationRef);
+      this.ngZone = this.injector.get(NgZone);
+      this.componentFactoryResolver = this.injector.get(ComponentFactoryResolver);
+
+      this.loaderReady.resolve(null)
+    })
   }
 
-  attachComponent<T>(ngComponent: Type<T>, dom: Element): ComponentRef<T> {
-    let componentRef: ComponentRef<T>;
-    this.ngZone.run(() => {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ngComponent);
-      componentRef = componentFactory.create(this.injector, [], dom);
-      this.applicationRef.attachView(componentRef.hostView);
-    });
-    return componentRef;
+  attachComponent<T>(ngComponent: Type<T>, dom: Element): Promise<ComponentRef<T>> {
+    const attachedComponent = new PromiseDelegate<ComponentRef<T>>();
+    this.loaderReady.promise
+    .then(() => {
+      let componentRef: ComponentRef<T>;
+      this.ngZone.run(() => {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ngComponent);
+        componentRef = componentFactory.create(this.injector, [], dom);
+        this.applicationRef.attachView(componentRef.hostView);
+
+        attachedComponent.resolve(componentRef)
+      });
+    })
+
+    return attachedComponent.promise;
   }
 }
 
 export class AngularWidget<C, M> extends Widget {
-  angularLoader: AngularLoader<M>;
   ngZone: NgZone;
   componentRef: ComponentRef<C>;
   componentInstance: C;
   componentReady = new PromiseDelegate<void>();
 
-  constructor(ngComponent: Type<C>, ngModule: Type<M>, options?: Widget.IOptions) {
+  constructor(ngComponent: Type<C>, angularLoader: AngularLoader<M>, options?: Widget.IOptions) {
     super(options);
-    platformBrowserDynamic().bootstrapModule(ngModule)
-    .then(ngModuleRef => {
-      this.angularLoader = new AngularLoader(ngModuleRef);
-      this.ngZone = this.angularLoader.ngZone;
-      this.componentRef = this.angularLoader.attachComponent(
+    angularLoader.loaderReady.promise
+    .then(() => {
+      this.ngZone = angularLoader.ngZone;
+      return angularLoader.attachComponent(
         ngComponent, this.node);
+    })
+    .then(componentRef => {
+      this.componentRef = componentRef;
       this.componentInstance = this.componentRef.instance;
       this.componentReady.resolve(undefined);
-    });
+    })
   }
 
   run(func: () => void): void {

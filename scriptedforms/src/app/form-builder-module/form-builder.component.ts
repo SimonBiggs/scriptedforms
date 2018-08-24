@@ -81,8 +81,9 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
     this.myMarkdownIt = new MarkdownIt({
       html: true,
       linkify: true,
-      typographer: true
+      typographer: true,
     });
+    this.myMarkdownIt.disable('code')
   }
 
   ngAfterViewInit() {

@@ -7,6 +7,9 @@ import { ABCWidgetFactory, DocumentRegistry } from '@jupyterlab/docregistry';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { InstanceTracker } from '@jupyterlab/apputils';
 
+import { AngularLoader } from '../app/phosphor-angular-loader';
+
+import { AppModule } from '../app/app.module';
 import { ScriptedFormsWidget } from './../app/widget';
 
 
@@ -41,6 +44,7 @@ namespace IScriptedFormsWidgetFactory {
   interface IOptions extends DocumentRegistry.IWidgetFactoryOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
+    angularLoader: AngularLoader<AppModule>;
   }
 }
 
@@ -48,23 +52,23 @@ export
 class ScriptedFormsWidgetFactory extends ABCWidgetFactory<ScriptedFormsWidget, DocumentRegistry.IModel> {
   serviceManager: ServiceManager;
   contentsManager: ContentsManager;
+  angularLoader: AngularLoader<AppModule>;
 
   constructor(options: IScriptedFormsWidgetFactory.IOptions) {
     super(options);
     this.serviceManager = options.serviceManager;
     this.contentsManager = options.contentsManager;
+    this.angularLoader = options.angularLoader;
   }
 
   protected createNewWidget(context: DocumentRegistry.Context): ScriptedFormsWidget {
     const formWidget = new ScriptedFormsWidget({
       serviceManager: this.serviceManager,
       contentsManager: this.contentsManager,
+      angularLoader: this.angularLoader,
       context: context
     });
-
-    formWidget.context.ready.then(() => {
-      formWidget.content.initiliseScriptedForms();
-    });
+    // formWidget.content.initiliseScriptedForms();
 
     return formWidget;
   }
@@ -73,6 +77,8 @@ class ScriptedFormsWidgetFactory extends ABCWidgetFactory<ScriptedFormsWidget, D
 function activate(
   app: JupyterLab, restorer: ILayoutRestorer, settingRegistry: ISettingRegistry
 ) {
+  const angularLoader = new AngularLoader<AppModule>(AppModule);
+
   app.docRegistry.addFileType({
     name: 'scripted-form',
     mimeTypes: ['text/markdown'],
@@ -88,6 +94,7 @@ function activate(
     readOnly: true,
     serviceManager: app.serviceManager,
     contentsManager: app.serviceManager.contents,
+    angularLoader
   });
 
   app.docRegistry.addWidgetFactory(factory);

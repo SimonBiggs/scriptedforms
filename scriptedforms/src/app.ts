@@ -27,17 +27,21 @@ document.getElementsByTagName('head').item(0).appendChild(userStyle);
 import { Widget } from '@phosphor/widgets';
 import { ServiceManager, ContentsManager } from '@jupyterlab/services';
 import { ScriptedFormsWidget } from './app/widget';
+import { AngularLoader } from './app/phosphor-angular-loader';
+import { AppModule } from './app/app.module';
 
 export function loadApp(): void {
   const serviceManager = new ServiceManager();
   const contentsManager = new ContentsManager();
+  const angularLoader = new AngularLoader<AppModule>(AppModule);
 
   const formWidget = new ScriptedFormsWidget({
     serviceManager,
-    contentsManager
+    contentsManager,
+    angularLoader
   });
 
-  formWidget.content.initiliseScriptedForms();
+  // formWidget.content.initiliseScriptedForms();
   window.onresize = () => { formWidget.update(); };
   Widget.attach(formWidget, document.body);
 }

@@ -21,7 +21,7 @@ import { Toolbar } from '@jupyterlab/apputils';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { PathExt } from '@jupyterlab/coreutils';
 
-import { AngularWidget } from './phosphor-angular-loader';
+import { AngularWidget, AngularLoader } from './phosphor-angular-loader';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 
@@ -43,6 +43,7 @@ export namespace IScriptedFormsWidget {
   export interface IOptions {
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
+    angularLoader: AngularLoader<AppModule>;
     context?: DocumentRegistry.Context;
   }
 }
@@ -52,6 +53,7 @@ export namespace IAngularWrapperWidget {
     toolbar: Toolbar<Widget>;
     serviceManager: ServiceManager;
     contentsManager: ContentsManager;
+    angularLoader: AngularLoader<AppModule>;
     context?: DocumentRegistry.Context;
   }
 }
@@ -64,7 +66,8 @@ export class AngularWrapperWidget extends AngularWidget<
   scriptedFormsOptions: IScriptedForms.IOptions;
 
   constructor(options: IAngularWrapperWidget.IOptions) {
-    super(AppComponent, AppModule);
+
+    super(AppComponent, options.angularLoader);
 
     this.scriptedFormsOptions = Object.assign(
       {
@@ -95,8 +98,8 @@ export class AngularWrapperWidget extends AngularWidget<
 
 export class ScriptedFormsWidget extends Widget {
   _context: DocumentRegistry.Context;
-  content: AngularWrapperWidget;
-  toolbar: Toolbar
+  private _content: AngularWrapperWidget;
+  toolbar = new Toolbar();
   id: 'ScriptedForms';
 
   constructor(options: IScriptedFormsWidget.IOptions) {
@@ -109,20 +112,24 @@ export class ScriptedFormsWidget extends Widget {
     this.addClass('scripted-form-widget');
 
     const layout = (this.layout = new BoxLayout());
-    const toolbar = new Toolbar();
-    this.toolbar = toolbar;
-    toolbar.addClass('jp-NotebookPanel-toolbar');
-    toolbar.addClass('custom-toolbar');
-    layout.addWidget(toolbar);
-    BoxLayout.setStretch(toolbar, 0);
+    this.toolbar.addClass('jp-NotebookPanel-toolbar');
+    this.toolbar.addClass('custom-toolbar');
+    layout.addWidget(this.toolbar);
+    BoxLayout.setStretch(this.toolbar, 0);
 
-    const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
+    const angularWrapperWidgetOptions = Object.assign({ toolbar: this.toolbar }, options);
 
-    this.content = new AngularWrapperWidget(angularWrapperWidgetOptions);
-    this.content.addClass('form-container');
+    this._content = new AngularWrapperWidget(angularWrapperWidgetOptions);
+    this._content.addClass('form-container');
 
-    layout.addWidget(this.content);
-    BoxLayout.setStretch(this.content, 1);
+    layout.addWidget(this._content);
+    BoxLayout.setStretch(this._content, 1);
+
+    this._content.initiliseScriptedForms();
+  }
+
+  get content() {
+    return this._content;
   }
 
   get revealed() {
@@ -135,10 +142,5 @@ export class ScriptedFormsWidget extends Widget {
 
   onPathChanged(): void {
     this.title.label = PathExt.basename(this._context.path);
-  }
-
-  dispose() {
-    this.content.dispose();
-    super.dispose();
   }
 }
