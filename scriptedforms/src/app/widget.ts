@@ -96,10 +96,12 @@ export class AngularWrapperWidget extends AngularWidget<
   }
 }
 
+const sleep = (ms: number) => new Promise(_ => setTimeout(_, ms));
+
 export class ScriptedFormsWidget extends Widget {
   _context: DocumentRegistry.Context;
   private _content: AngularWrapperWidget;
-  toolbar = new Toolbar();
+  private _toolbar: Toolbar
   id: 'ScriptedForms';
 
   constructor(options: IScriptedFormsWidget.IOptions) {
@@ -112,12 +114,14 @@ export class ScriptedFormsWidget extends Widget {
     this.addClass('scripted-form-widget');
 
     const layout = (this.layout = new BoxLayout());
-    this.toolbar.addClass('jp-NotebookPanel-toolbar');
-    this.toolbar.addClass('custom-toolbar');
-    layout.addWidget(this.toolbar);
-    BoxLayout.setStretch(this.toolbar, 0);
+    const toolbar = new Toolbar();
+    this._toolbar = toolbar;
+    toolbar.addClass('jp-NotebookPanel-toolbar');
+    toolbar.addClass('custom-toolbar');
+    layout.addWidget(toolbar);
+    BoxLayout.setStretch(toolbar, 0);
 
-    const angularWrapperWidgetOptions = Object.assign({ toolbar: this.toolbar }, options);
+    const angularWrapperWidgetOptions = Object.assign({ toolbar }, options);
 
     this._content = new AngularWrapperWidget(angularWrapperWidgetOptions);
     this._content.addClass('form-container');
@@ -126,10 +130,15 @@ export class ScriptedFormsWidget extends Widget {
     BoxLayout.setStretch(this._content, 1);
 
     this._content.initiliseScriptedForms();
+    // sleep(4000).then(() => {this._content.initiliseScriptedForms();});
   }
 
   get content() {
     return this._content;
+  }
+
+  get toolbar() {
+    return this._toolbar;
   }
 
   get revealed() {

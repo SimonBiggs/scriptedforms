@@ -20,7 +20,7 @@ import {
 } from '@phosphor/widgets';
 
 import {
-  PromiseDelegate
+  PromiseDelegate, UUID
 } from '@phosphor/coreutils';
 
 import {
@@ -107,6 +107,7 @@ export class AngularWidget<C, M> extends Widget {
 
   constructor(ngComponent: Type<C>, angularLoader: AngularLoader<M>, options?: Widget.IOptions) {
     super(options);
+    console.log(`Created an Angular Widget ${UUID.uuid4()}`)
     angularLoader.loaderReady.promise
     .then(() => {
       this.ngZone = angularLoader.ngZone;
@@ -127,6 +128,7 @@ export class AngularWidget<C, M> extends Widget {
   }
 
   dispose(): void {
+    console.log('AngularWidget DISPOSED')
     this.ngZone.run(() => {
       this.componentRef.destroy();
     });
