@@ -96,7 +96,7 @@ export class AngularWrapperWidget extends AngularWidget<
   }
 }
 
-const sleep = (ms: number) => new Promise(_ => setTimeout(_, ms));
+// const sleep = (ms: number) => new Promise(_ => setTimeout(_, ms));
 
 export class ScriptedFormsWidget extends Widget {
   _context: DocumentRegistry.Context;
