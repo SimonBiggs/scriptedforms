@@ -37,9 +37,9 @@ import { VariableParameterComponent } from './variable-parameter.component';
   <ng-content></ng-content>
 </span>
 <variable-parameter #variableParameterComponent *ngIf="items">{{items}}</variable-parameter>
-<mat-form-field>
+<mat-form-field class="variableDropdown">
   <mat-label>{{labelValue}}</mat-label>
-  <mat-select
+  <mat-select class="variableDropdown"
   [required]="required"
   [disabled]="!isFormReady"
   [placeholder]="placeholder"
@@ -61,7 +61,12 @@ import { VariableParameterComponent } from './variable-parameter.component';
       &lt;/variable-dropdown&gt;
     </span>
   </pre>
-</div>`})
+</div>`,
+styles: [
+  `.variableDropdown {
+  width: 100%;
+}
+`]})
 export class DropdownComponent extends VariableBaseComponent
   implements AfterViewInit {
   deprecatedOptions: (string | number)[] = [];
