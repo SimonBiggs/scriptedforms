@@ -36,7 +36,7 @@ import { VariableParameterComponent } from './variable-parameter.component';
 <span #variablecontainer *ngIf='variableName === undefined'>
   <ng-content></ng-content>
 </span>
-<variable-parameter #variableParameterComponent *ngIf="items">{{items}}</variable-parameter>
+<variable-parameter #optionsParameter *ngIf="items">{{items}}</variable-parameter>
 <mat-form-field class="variableDropdown">
   <mat-label>{{labelValue}}</mat-label>
   <mat-select class="variableDropdown"
@@ -47,21 +47,9 @@ import { VariableParameterComponent } from './variable-parameter.component';
   (ngModelChange)="variableChanged($event)"
   (blur)="onBlur()"
   (focus)="onFocus()">
-    <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+    <mat-option *ngFor="let option of parameterValues.optionsValue" [value]="option">{{option}}</mat-option>
   </mat-select>
-</mat-form-field>
-<div class="jp-RenderedText" *ngIf="usedSeparator">
-  <pre>
-    <span class="ansi-red-fg">
-      The use of commas or semicolons to separate inputs is deprecated.
-      Please instead use the items html parameter like so:
-      &lt;variable-dropdown
-        items="[<span *ngFor="let option of deprecatedOptions.slice(0,-1)">'{{option}}', </span>'{{deprecatedOptions.slice(-1)}}']"&gt;
-        {{variableName}}
-      &lt;/variable-dropdown&gt;
-    </span>
-  </pre>
-</div>`,
+</mat-form-field>`,
 styles: [
   `.variableDropdown {
   width: 100%;
@@ -69,15 +57,20 @@ styles: [
 `]})
 export class DropdownComponent extends VariableBaseComponent
   implements AfterViewInit {
-  deprecatedOptions: (string | number)[] = [];
-  options: (string | number)[] = [];
-  usedSeparator = false;
 
-  // Make this required once internal separators are removed
-  @Input() items?: string;
+  @Input() items: string;
 
-  @ViewChild('variableParameterComponent') variableParameterComponent: VariableParameterComponent;
+  @ViewChild('optionsParameter') optionsParameter: VariableParameterComponent;
 
+  parameterValues: { [s: string]: (string | number)[]; } = {
+    optionsValue: []
+  }
+
+  setVariableParameterMap() {
+    this.variableParameterMap = [
+      [this.optionsParameter, 'optionsValue'],
+    ]
+  }
 
   pythonValueReference() {
     let valueReference: string;
@@ -91,30 +84,5 @@ export class DropdownComponent extends VariableBaseComponent
       valueReference = String(this.variableValue);
     }
     return valueReference;
-  }
-
-  loadVariableName() {
-    const element: HTMLSpanElement = this.variablecontainer.nativeElement;
-    const ngContent = this.htmlDecode(element.innerHTML).trim();
-
-    // Remove separators in version 0.8.0
-    const deprecatedItems = ngContent.split(/[,;]/);
-    if (deprecatedItems.length > 1) {
-      this.usedSeparator = true;
-    }
-
-    this.variableName = deprecatedItems[0].trim();
-    deprecatedItems.slice(1).forEach(item => {
-      this.options = this.options.concat([item.trim()]);
-    });
-
-    this.deprecatedOptions = this.options;
-
-    if (this.items) {
-      this.options = this.variableParameterComponent.variableValue;
-      this.variableParameterComponent.variableChange.asObservable().subscribe((value: string[]) => {
-        this.options = value;
-      });
-    }
   }
 }

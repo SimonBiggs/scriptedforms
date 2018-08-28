@@ -79,11 +79,14 @@ import { DropdownComponent } from '../variables-module/dropdown.component';
 
 import { VariableFileComponent } from '../variables-module/variable-file.component';
 
+import { VariableParameterComponent } from '../variables-module/variable-parameter.component';
+
 import { CodeModule } from '../code-module/code.module';
 import { CodeComponent } from '../code-module/code.component';
 
 import { VariableComponent } from '../types/variable-component';
 import { SectionComponent } from '../types/section-component';
+
 
 export
 interface IFormComponent {
@@ -172,11 +175,11 @@ function createFormComponentFactory(
       this.variableComponents = this.variableComponents.concat(this.stringComponents.toArray());
       this.variableComponents = this.variableComponents.concat(this.dropdownComponents.toArray());
 
-      this.dropdownComponents.toArray().forEach(dropdownComponent => {
-        if (dropdownComponent.items) {
-          this.variableComponents = this.variableComponents.concat([dropdownComponent.variableParameterComponent]);
-        }
-      });
+      // this.dropdownComponents.toArray().forEach(dropdownComponent => {
+      //   if (dropdownComponent.items) {
+      //     this.variableComponents = this.variableComponents.concat([dropdownComponent.variableParameterComponent]);
+      //   }
+      // });
 
       this.variableComponents = this.variableComponents.concat(this.variableFileComponents.toArray());
 
@@ -189,6 +192,19 @@ function createFormComponentFactory(
       this.sectionFileChangeComponents.toArray().forEach(sectionFileChangeComponent => {
         this.variableComponents = this.variableComponents.concat([sectionFileChangeComponent.variableParameterComponent]);
       });
+
+      // Make parameter components be appended to the variable component list
+      this.variableComponents.forEach(variableComponent => {
+        variableComponent.variableParameterMap.forEach(map => {
+          const parameterComponent = <VariableParameterComponent> map[0]
+          if (parameterComponent) {
+            console.log(parameterComponent)
+            this.variableComponents = this.variableComponents.concat([parameterComponent]);
+          }
+        })
+      })
+
+      console.log(this.variableComponents)
 
       this.sectionComponents.forEach((sectionComponent, index) => {
         sectionComponent.setId(index);

@@ -41,6 +41,7 @@ import {
 
 import { VariableService } from '../services/variable.service';
 import { VariableValue } from '../types/variable-value';
+import { VariableParameterComponent } from './variable-parameter.component';
 
 
 @Component({
@@ -51,6 +52,9 @@ export class VariableBaseComponent implements AfterViewInit {
   isFormReady = false;
   isPandas = false;
   isFocus = false;
+
+  parameterValues: { [s: string]: any; } = {};
+  variableParameterMap: (string | VariableParameterComponent)[][] = [];
 
   @Input() required?: string;
 
@@ -89,6 +93,23 @@ export class VariableBaseComponent implements AfterViewInit {
     this.variableName = this.htmlDecode(element.innerHTML).trim();
   }
 
+  setVariableParameterMap() {}
+
+  attachVariableParameters() {
+    for (let map of this.variableParameterMap) {
+      const variableComponent = <VariableParameterComponent> map[0];
+      console.log(map)
+      const key = <string> map[1];
+      this.parameterValues[key] = variableComponent.variableValue;
+      console.log(variableComponent.variableName)
+      console.log(variableComponent.variableValue)
+      variableComponent.variableChange.asObservable().subscribe((value: any) => {
+        this.parameterValues[key] = value;
+        console.log(value)
+      })
+    }
+  }
+
   ngAfterViewInit() {
     this.loadVariableName();
 
@@ -121,6 +142,9 @@ export class VariableBaseComponent implements AfterViewInit {
     } else {
       this.labelValue = this.variableName;
     }
+
+    this.setVariableParameterMap();
+    this.attachVariableParameters();
 
     this.myChangeDetectorRef.detectChanges();
   }

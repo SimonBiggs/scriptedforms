@@ -53,16 +53,7 @@ import {
   [min]="min"
   [step]="step"
   type="number">
-</mat-form-field>
-<div class="jp-RenderedText" *ngIf="usedSeparator">
-  <pre>
-    <span class="ansi-red-fg">
-      The use of commas or semicolons to separate inputs is deprecated.
-      Please instead use html parameters like so:
-      &lt;variable-number min="{{min}}" max="{{max}}" step="{{step}}"&gt;{{variableName}}&lt;/variable-number&gt;
-    </span>
-  </pre>
-</div>`,
+</mat-form-field>`,
   styles: [
     `.variableNumber {
     width: 200px;

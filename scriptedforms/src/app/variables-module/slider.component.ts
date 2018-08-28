@@ -25,10 +25,11 @@
 // program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 import {
-  Component, AfterViewInit, Input
+  Component, AfterViewInit, Input, ViewChild
 } from '@angular/core';
 
-import { NumberBaseComponent } from './number-base.component';
+import { VariableBaseComponent } from './variable-base.component';
+import { VariableParameterComponent } from './variable-parameter.component';
 // import { Slider } from '../interfaces/slider';
 
 // import * as  stringify from 'json-stable-stringify';
@@ -39,7 +40,9 @@ import { NumberBaseComponent } from './number-base.component';
 <span #variablecontainer *ngIf="variableName === undefined">
   <ng-content></ng-content>
 </span>
-
+<variable-parameter #minParameter *ngIf="min">{{min}}</variable-parameter>
+<variable-parameter #maxParameter *ngIf="max">{{max}}</variable-parameter>
+<variable-parameter #stepParameter *ngIf="step">{{step}}</variable-parameter>
 <span class="container">{{labelValue}}
   <mat-slider class="variableSlider" *ngIf="variableName"
   [disabled]="!isFormReady"
@@ -47,9 +50,9 @@ import { NumberBaseComponent } from './number-base.component';
   (input)="updateValue($event.value)"
   (blur)="onBlur()"
   (focus)="onFocus()"
-  [max]="max"
-  [min]="min"
-  [step]="step"
+  [max]="parameterValues.maxValue"
+  [min]="parameterValues.minValue"
+  [step]="parameterValues.stepValue"
   [thumbLabel]="true">
   </mat-slider>
 </span>
@@ -73,9 +76,28 @@ styles: [
 }
 `]
 })
-export class SliderComponent extends NumberBaseComponent implements AfterViewInit {
-  @Input() min ? = 0;
-  @Input() max ? = 100;
+export class SliderComponent extends VariableBaseComponent implements AfterViewInit {
+  @Input() min ?: number | string;
+  @Input() max ?: number | string;
+  @Input() step ?: number | string;
+
+  @ViewChild('minParameter') minParameter: VariableParameterComponent;
+  @ViewChild('maxParameter') maxParameter: VariableParameterComponent;
+  @ViewChild('stepParameter') stepParameter: VariableParameterComponent;
+
+  parameterValues: { [s: string]: number; } = {
+    minValue: 0,
+    maxValue: 100,
+    stepValue: 1
+  }
+
+  setVariableParameterMap() {
+    this.variableParameterMap = [
+      [this.minParameter, 'minValue'],
+      [this.maxParameter, 'maxValue'],
+      [this.stepParameter, 'stepValue'],
+    ]
+  }
 
   updateValue(value: number) {
     this.variableValue = value;

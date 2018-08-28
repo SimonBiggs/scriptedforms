@@ -38,33 +38,4 @@ export class NumberBaseComponent extends VariableBaseComponent implements AfterV
   @Input() min?: number = null;
   @Input() max?: number = null;
   @Input() step ? = 1;
-
-  usedSeparator = false;
-
-  // variableValue: number
-
-  loadVariableName() {
-    const element: HTMLSpanElement = this.variablecontainer.nativeElement;
-    const ngContent = this.htmlDecode(element.innerHTML).trim();
-
-    // Make both , and ; work for now, remove this in version 0.8.0.
-    const items = ngContent.split(/[,;]/);
-    if (items.length > 1) {
-      this.usedSeparator = true;
-    }
-
-    this.variableName = items[0].trim();
-
-    if (items.length > 1) {
-      this.min = Number(items[1]);
-    }
-
-    if (items.length > 2) {
-      this.max = Number(items[2]);
-    }
-
-    if (items.length > 3) {
-      this.step = Number(items[3]);
-    }
-  }
 }
