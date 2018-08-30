@@ -40,6 +40,12 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   float: right;
 }
 
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hidden-iframe {
   width: 0;
   height: 0;
@@ -65,9 +71,19 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
     max-width: 21cm !important;
   }
 
-  .form-contents {
+  /* .form-contents {
     width: 20cm !important;
     padding: 0 5mm !important;
+  } */
+
+  .scripted-form-widget {
+    width: 20cm !important;
+    /* padding: 0 5mm !important; */
+  }
+
+  .form-container {
+    width: 20cm !important;
+    height: 100% !important;
   }
 
   .margin {
@@ -92,6 +108,10 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
 
   ul, img, .avoid-page-break {
     page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 450px !important;
   }
 
   @page {
