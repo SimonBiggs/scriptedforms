@@ -40,7 +40,7 @@ program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>. */
   float: right;
 }
 
-img {
+.scripted-form-widget img {
   display: block;
   margin-left: auto;
   margin-right: auto;
