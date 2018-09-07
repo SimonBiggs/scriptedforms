@@ -14,7 +14,7 @@ to understand.
 
 ## Development stage
 
-This is currently in alpha stage development. Expect bugs, expect the experience to be rough around he edges at times. There are still significant changes in store for this library before it is ready to be classified as beta. However, I do encourage you to take it for a spin and journey with me, influencing what this will become.
+This is currently in alpha stage development. Expect bugs, expect the experience to be rough around the edges at times. There are still significant changes in store for this library before it is ready to be classified as beta. However, I do encourage you to take it for a spin and journey with me, influencing what this will become.
 
 ## Quick start
 
