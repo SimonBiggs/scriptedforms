@@ -30,7 +30,7 @@ import {
 } from 'protractor';
 
 import { 
-  beforeFromFile, after, waitForSpinner, makeUrlFromFile
+  beforeFromFile, after, waitForSpinner, makeUrlFromFile, customGet
 } from './utilities/before-and-after'
 
 describe('watchdog-test.md', () => {
@@ -43,7 +43,7 @@ describe('watchdog-test.md', () => {
     createButton.click()
 
     waitForSpinner()
-    browser.get(makeUrlFromFile('watchdog-test.md'))
+    customGet(makeUrlFromFile('watchdog-test.md'))
     waitForSpinner()
 
     let writeInMe = element(by.css('.write-in-me textarea'))
@@ -61,7 +61,7 @@ describe('watchdog-test.md', () => {
     expect(newHeader.getText()).toEqual(testTextHeading)
 
     waitForSpinner()
-    browser.get(makeUrlFromFile('watchdog-manage.md'))
+    customGet(makeUrlFromFile('watchdog-manage.md'))
     waitForSpinner()
 
     let deleteButton = element(by.css('.delete-watchdog-test button'))

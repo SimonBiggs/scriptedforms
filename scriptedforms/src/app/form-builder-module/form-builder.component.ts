@@ -94,12 +94,18 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
   // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
   private _setUsageStatistics(string: string) {
     if (string) {
-      crypto.subtle.digest('SHA-256', Buffer.from(string)).then((hash) => {
-        const intArrayHash = new Uint8Array(hash);
-        const base64String = btoa(String.fromCharCode.apply(null, intArrayHash));
-        const uriEncoded = encodeURIComponent(base64String);
-        this.telemetry.nativeElement.src = `https://scriptedforms.com.au/telemetry?hash=${uriEncoded}`;
-      });
+      const url = new URL(location.href);
+      const telemetry = url.searchParams.get('telemetry');
+      if (telemetry !== '0') {
+        crypto.subtle.digest('SHA-256', Buffer.from(string)).then((hash) => {
+          const intArrayHash = new Uint8Array(hash);
+          const base64String = btoa(String.fromCharCode.apply(null, intArrayHash));
+          const uriEncoded = encodeURIComponent(base64String);
+          this.telemetry.nativeElement.src = `https://scriptedforms.com.au/telemetry?hash=${uriEncoded}`;
+        });
+      } else {
+        console.log('telemetry blocked using ?telemetry=0');
+      }
     }
   }
 
