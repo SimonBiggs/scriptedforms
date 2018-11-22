@@ -34,10 +34,14 @@ export function waitForSpinner() {
   browser.wait(ExpectedConditions.stalenessOf(spinner))
 }
 
+export function customGet(url: string) {
+  browser.get(`${url}?telemetry=0`)
+}
+
 export function before(url: string) {
   return () => {
     browser.waitForAngularEnabled(false)
-    browser.get(url);
+    customGet(url);
     browser.wait(ExpectedConditions.presenceOf(
       element(by.tagName('app-form'))
     ))
