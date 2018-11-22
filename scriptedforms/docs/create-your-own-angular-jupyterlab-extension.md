@@ -1,4 +1,4 @@
-# Create your own Angular JupyerLab extension
+# Create your own Angular JupyterLab extension
 
 ScriptedForms is built on top of [Angular](https://angular.io) and it is
 embedded within [PhosphorJS](http://phosphorjs.github.io/) so that it can be
