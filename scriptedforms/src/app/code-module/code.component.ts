@@ -173,7 +173,7 @@ export class CodeComponent implements AfterViewInit, OnDestroy {
     default:
       break;
     }
-    if (msgType === 'display_data' || msgType === 'stream' || msgType === 'update_display_data') {
+    if (msgType === 'display_data' || msgType === 'stream' || msgType === 'update_display_data' || msgType === 'execute_result') {
       this.firstDisplay.resolve(null);
     }
     if (displayId && msgType === 'display_data') {
