@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/plotting-example.md)
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md)
 
 Making GUIs easy for everyone on your team.
 
