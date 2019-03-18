@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms?ref=badge_shield)
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms?ref=badge_shield)
+
 
 Making GUIs easy for everyone on your team.
 
