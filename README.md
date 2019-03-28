@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms?ref=badge_shield) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md) 
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md) 
 
 
 Making GUIs easy for everyone on your team.
@@ -229,9 +229,6 @@ mean the AGPL-3.0+.
 
 You should have received a copy of the Apache-2.0 along with this
 program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
-
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSimonBiggs%2Fscriptedforms?ref=badge_large)
 
 ### Justification for using a copyleft license
 
