@@ -2,6 +2,11 @@
 
 # Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md) 
 
+## Project Archived
+
+This project has been archived. It was aiming to achieve similar aims to projects such as [Voila](https://github.com/QuantStack/voila). Voila is building a valuable community and support. I recommend using it over ScriptedForms. Feel free to reach out to me (me@simonbiggs.net) if you would like ScriptedForms to continue and you don't believe Voila meets your needs. If enough people reach out I shall reconsider this decision.
+
+## Overview
 
 Making GUIs easy for everyone on your team.
 
