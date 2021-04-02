@@ -4,7 +4,9 @@
 
 ## Project Archived
 
-This project has been archived. It was aiming to achieve similar aims to projects such as [Voila](https://github.com/QuantStack/voila). Voila is building a valuable community and support. I recommend using it over ScriptedForms. Feel free to reach out to me (me@simonbiggs.net) if you would like ScriptedForms to continue and you don't believe Voila meets your needs. If enough people reach out I shall reconsider this decision.
+This project has been archived. It was aiming to achieve similar aims to projects such as 
+[Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md). 
+Streamlit is building a valuable community and support. I recommend using it over ScriptedForms.
 
 ## Overview
 
