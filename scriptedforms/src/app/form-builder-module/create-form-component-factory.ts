@@ -1,28 +1,17 @@
 // Scripted Forms -- Making GUIs easy for everyone on your team.
 // Copyright (C) 2017 Simon Biggs
 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version (the "AGPL-3.0+").
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Affero General Public License and the additional terms for more
-// details.
+//     http://www.apache.org/licenses/LICENSE-2.0
 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-// Affrero General Public License. These aditional terms are Sections 1, 5,
-// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-// where all references to the definition "License" are instead defined to
-// mean the AGPL-3.0+.
-
-// You should have received a copy of the Apache-2.0 along with this
-// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 
 
@@ -89,7 +78,7 @@ import { SectionComponent } from '../types/section-component';
 
 
 export
-interface IFormComponent {
+  interface IFormComponent {
   formViewInitialised: PromiseDelegate<void>;
   formReady: PromiseDelegate<void>;
   restartFormKernel(): Promise<void>;
@@ -105,8 +94,8 @@ interface IFormComponent {
  * @returns a factory which creates form components
  */
 export
-function createFormComponentFactory(
-  compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
+  function createFormComponentFactory(
+    compiler: Compiler, metadata: Component): ComponentFactory<IFormComponent> {
   /**
    * The form component that is built each time the template changes
    */
@@ -196,7 +185,7 @@ function createFormComponentFactory(
       // Make parameter components be appended to the variable component list
       this.variableComponents.forEach(variableComponent => {
         variableComponent.variableParameterMap.forEach(map => {
-          const parameterComponent = <VariableParameterComponent> map[0]
+          const parameterComponent = <VariableParameterComponent>map[0]
           if (parameterComponent) {
             console.log(parameterComponent)
             this.variableComponents = this.variableComponents.concat([parameterComponent]);
@@ -226,17 +215,17 @@ function createFormComponentFactory(
 
       const sessionStartCodeComplete = new PromiseDelegate<boolean>();
       this.myKernelService.runCode(sessionStartCode, '"session_start_code"')
-      .then((future: Kernel.IFuture) => {
-        if (future) {
-          let textContent = '';
-          future.onIOPub = (msg => {
-            if (msg.content.text) {
-              textContent = textContent.concat(String(msg.content.text));
-            }
-          });
-          future.done.then(() => sessionStartCodeComplete.resolve(JSON.parse(textContent)));
-        }
-      });
+        .then((future: Kernel.IFuture) => {
+          if (future) {
+            let textContent = '';
+            future.onIOPub = (msg => {
+              if (msg.content.text) {
+                textContent = textContent.concat(String(msg.content.text));
+              }
+            });
+            future.done.then(() => sessionStartCodeComplete.resolve(JSON.parse(textContent)));
+          }
+        });
       sessionStartCodeComplete.promise.then(isNewSession => {
         if (isNewSession) {
           console.log('Restoring old session');
@@ -280,13 +269,13 @@ function createFormComponentFactory(
           // the various components.
           return Promise.all(sectionPromiseList);
         })
-        .then(() => {
-          this.liveComponents.toArray().forEach(liveComponent => liveComponent.subscribe());
-          this.outputComponents.toArray().forEach(outputComponent => outputComponent.subscribeToVariableChanges());
-          this.sectionComponents.forEach(sectionComponent => sectionComponent.formReady(true));
-          this.variableComponents.forEach(variableComponent => variableComponent.formReady(true));
-          this.formReady.resolve(null);
-        });
+          .then(() => {
+            this.liveComponents.toArray().forEach(liveComponent => liveComponent.subscribe());
+            this.outputComponents.toArray().forEach(outputComponent => outputComponent.subscribeToVariableChanges());
+            this.sectionComponents.forEach(sectionComponent => sectionComponent.formReady(true));
+            this.variableComponents.forEach(variableComponent => variableComponent.formReady(true));
+            this.formReady.resolve(null);
+          });
       });
     }
 

@@ -1,11 +1,11 @@
 <!-- markdownlint-disable MD033 -->
 
-# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md) 
+# Scripted Forms [![Build Status](https://travis-ci.org/SimonBiggs/scriptedforms.svg?branch=master)](https://travis-ci.org/SimonBiggs/scriptedforms) [![Sauce Test Status](https://saucelabs.com/buildstatus/ScriptedForms)](https://saucelabs.com/u/ScriptedForms) [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/SimonBiggs/scriptedforms-examples/master?urlpath=scriptedforms/use/detailed-example.md)
 
 ## Project Archived
 
-This project has been archived. It was aiming to achieve similar aims to projects such as 
-[Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md). 
+This project has been archived. It was aiming to achieve similar aims to projects such as
+[Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md).
 Streamlit is building a valuable community and support. I recommend using it over ScriptedForms.
 
 ## Overview
@@ -35,8 +35,8 @@ ScriptedForms is as simple as typing the following into a terminal (or command p
 pip install scriptedforms
 ```
 
-Then to use it create a markdown file within your current directory called `quick-start.md` with any plaintext editor (such as 
-[Visual Studio Code](https://code.visualstudio.com/)). 
+Then to use it create a markdown file within your current directory called `quick-start.md` with any plaintext editor (such as
+[Visual Studio Code](https://code.visualstudio.com/)).
 Make the contents be the following:
 
 ~~~markdown
@@ -208,34 +208,14 @@ yarn pip:install
 This will install the node packages, build the javascript files and then run
 `pip install -e .` to install the python package.
 
-## Software license agreement
 
-Scripted Forms -- Making GUIs easy for everyone on your team.
+### License Change
 
-Copyright (C) 2017 Simon Biggs
+I have re-released this code base under the Apache-2.0 license so that it may
+be freely used within other projects without needing to adhere to the copyleft
+requirements of the AGPL. The comments below regarding the previous choice of
+license will be left unchanged.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version (the "AGPL-3.0+").
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License and the additional terms for more
-details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-Affrero General Public License. These aditional terms are Sections 1, 5,
-6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-where all references to the definition "License" are instead defined to
-mean the AGPL-3.0+.
-
-You should have received a copy of the Apache-2.0 along with this
-program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
 
 ### Justification for using a copyleft license
 

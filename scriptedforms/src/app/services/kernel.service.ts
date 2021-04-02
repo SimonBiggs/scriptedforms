@@ -1,28 +1,17 @@
 // Scripted Forms -- Making GUIs easy for everyone on your team.
 // Copyright (C) 2017 Simon Biggs
 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version (the "AGPL-3.0+").
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Affero General Public License and the additional terms for more
-// details.
+//     http://www.apache.org/licenses/LICENSE-2.0
 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-// ADDITIONAL TERMS are also included as allowed by Section 7 of the GNU
-// Affrero General Public License. These aditional terms are Sections 1, 5,
-// 6, 7, 8, and 9 from the Apache License, Version 2.0 (the "Apache-2.0")
-// where all references to the definition "License" are instead defined to
-// mean the AGPL-3.0+.
-
-// You should have received a copy of the Apache-2.0 along with this
-// program. If not, see <http://www.apache.org/licenses/LICENSE-2.0>.
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 /*
 This service handles all communication to the Python Kernel.
@@ -47,14 +36,14 @@ function jupyterSessionConnect(serviceManager: ServiceManager, path: string): Pr
   const promiseDelegate = new PromiseDelegate<Session.ISession>();
 
   serviceManager.sessions.findByPath(path)
-  .then(sessionModel => {
-    let session = serviceManager.sessions.connectTo(sessionModel)
-    promiseDelegate.resolve(session);
-  })
-  .catch(() => {
-    connectToNewSession(serviceManager, path)
-    .then(session => promiseDelegate.resolve(session));
-  });
+    .then(sessionModel => {
+      let session = serviceManager.sessions.connectTo(sessionModel)
+      promiseDelegate.resolve(session);
+    })
+    .catch(() => {
+      connectToNewSession(serviceManager, path)
+        .then(session => promiseDelegate.resolve(session));
+    });
 
   return promiseDelegate.promise;
 }
@@ -70,7 +59,7 @@ function connectToNewSession(serviceManager: ServiceManager, path: string): Prom
   };
 
   serviceManager.sessions.startNew(startNewOptions)
-  .then(session => promiseDelegate.resolve(session));
+    .then(session => promiseDelegate.resolve(session));
 
   return promiseDelegate.promise;
 }
@@ -83,7 +72,7 @@ export class KernelService {
   jupyterError: BehaviorSubject<KernelMessage.IErrorMsg> = new BehaviorSubject(null);
 
   queueId: number;
-  queueLog: {[queueId: number]: string};
+  queueLog: { [queueId: number]: string };
   queue: Promise<any>;
   queueLength: BehaviorSubject<number> = new BehaviorSubject(null);
 
@@ -95,30 +84,30 @@ export class KernelService {
     const sessionConnected = new PromiseDelegate<Session.ISession>();
 
     jupyterSessionConnect(this.myJupyterService.serviceManager, path)
-    .then(session => {
-      console.log(`Connection request to Jupyter Session: ${path}`);
+      .then(session => {
+        console.log(`Connection request to Jupyter Session: ${path}`);
 
-      this.session = session;
-      this.kernel = session.kernel;
-      this.queueId = 0;
-      this.queueLog = {};
-      this.queue = Promise.resolve(null);
+        this.session = session;
+        this.kernel = session.kernel;
+        this.queueId = 0;
+        this.queueLog = {};
+        this.queue = Promise.resolve(null);
 
-      this.runCode('# KernelTest', '"KernelTest"').then(future => {
-        future.done.then(() => sessionConnected.resolve(session));
+        this.runCode('# KernelTest', '"KernelTest"').then(future => {
+          future.done.then(() => sessionConnected.resolve(session));
+        });
+
+        session.iopubMessage.connect((_, msg) => {
+          if (KernelMessage.isErrorMsg(msg)) {
+            const errorMsg: KernelMessage.IErrorMsg = msg;
+            console.error(errorMsg.content);
+            this.jupyterError.next(msg);
+          }
+          if (KernelMessage.isStatusMsg(msg)) {
+            this.kernelStatus.next(msg.content.execution_state);
+          }
+        });
       });
-
-      session.iopubMessage.connect((_, msg) => {
-        if (KernelMessage.isErrorMsg(msg)) {
-          const errorMsg: KernelMessage.IErrorMsg = msg;
-          console.error(errorMsg.content);
-          this.jupyterError.next(msg);
-        }
-        if (KernelMessage.isStatusMsg(msg)) {
-          this.kernelStatus.next(msg.content.execution_state);
-        }
-      });
-    });
 
     return sessionConnected.promise;
   }
@@ -141,7 +130,7 @@ export class KernelService {
     return sessionConnected.promise;
   }
 
-  addToQueue(name: string, asyncFunction: (id: number ) => Promise<any>): Promise<any> {
+  addToQueue(name: string, asyncFunction: (id: number) => Promise<any>): Promise<any> {
     if (name) {
       console.log(`queue: add ${name}`);
     }
