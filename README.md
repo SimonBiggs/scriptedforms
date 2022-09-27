@@ -4,9 +4,11 @@
 
 ## Project Archived
 
-This project has been archived. It was aiming to achieve similar aims to projects such as
-[Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md).
-Streamlit is building a valuable community and support. I recommend using it over ScriptedForms.
+This project has been archived. This was created back in Febuary 2018. Since then
+[Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md) has
+been created and it built a successful community and is going on to success upon success.
+
+Please use Streamlit as a replacement for ScriptedForms.
 
 ## Overview
 
