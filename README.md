@@ -6,7 +6,7 @@
 
 This project has been archived. This was created back in Febuary 2018. Since then
 [Streamlit](https://github.com/streamlit/streamlit/blob/develop/README.md) has
-been created and has built a brilliantly successful library, company and community
+been created and has built a brilliant library, company and community
 and is going on to success upon success.
 
 Please use Streamlit as a replacement for ScriptedForms.
